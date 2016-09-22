@@ -1,0 +1,19 @@
+#flash_messages {
+  .flash-messages-enter {
+    opacity: 0.01;
+  }
+
+  .flash-messages-enter.flash-messages-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+
+  .flash-messages-leave {
+    opacity: 1;
+  }
+
+  .flash-messages-leave.flash-messages-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
+}

@@ -1,0 +1,14 @@
+frontend:
+  endpoint:
+    protocol: http
+    hostname: localhost # backend host
+    port: 4000          # backend port
+  cookies:
+    key: cashbox_frontend_key
+    secure: false # allow cookies only for https
+
+server:
+  port: 8080 # frontend port
+  basicAuth: # this can be removed for local development
+    user: admin
+    password: 12345678
