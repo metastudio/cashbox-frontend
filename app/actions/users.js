@@ -6,12 +6,12 @@ import * as types from 'constants/users-action-types'
 
 import { CALL_API, getJSON } from 'redux-api-middleware'
 
-const USERS_ENDPOINT = '/api/v1/users'
+const USERS_ENDPOINT = '/api'
 
 export function loadCurrentUser() {
   return {
     [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(USERS_ENDPOINT + '/current'),
+      endpoint: ApiHelpers.formatUrl(USERS_ENDPOINT + '/user_info'),
       method:   'GET',
       headers:  ApiHelpers.headers,
       types: [

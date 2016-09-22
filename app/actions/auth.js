@@ -10,7 +10,7 @@ import * as types from 'constants/auth-action-types'
 function getToken(email, password) {
   return {
     [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl('/api/v1/user_token'),
+      endpoint: ApiHelpers.formatUrl('/api/auth_token'),
       method:   'POST',
       headers:  ApiHelpers.headers,
       body:     ApiHelpers.formatJsonBody({ auth: { email: email || '', password: password || ''} }),
@@ -25,7 +25,7 @@ function getToken(email, password) {
         {
           type: types.GET_TOKEN_FAILURE,
           payload: (action, state, res) => {
-            return {_error: (res.status == 404 ? 'Invalid login or password' : res.statusText) }
+            return {_error: (res.status == 401 ? 'Invalid login or password' : res.statusText) }
           }
         }
       ]
