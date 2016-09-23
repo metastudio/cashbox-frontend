@@ -19,6 +19,7 @@ import './index.scss'
 import App from 'components/app'
 import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
+import OrganizationScene from 'components/organization'
 
 const reducer = combineReducers({
   ...reducers,
@@ -46,6 +47,7 @@ render((
         <Route path="/" component={App}>
           <IndexRoute component={DashboardScene} />
           <Route path="login" component={LoginScene} />
+          <Route path="organization" component={OrganizationScene} />
         </Route>
       </Router>
     </Provider>
