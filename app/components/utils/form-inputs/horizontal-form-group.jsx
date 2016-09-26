@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
 
-const HorizontalValidationInput = ({ field, label, children }) => {
+const HorizontalFormGroup = ({ field, label, children }) => {
   return (
     <FormGroup controlId={ field.name } validationState={ field.invalid ? 'error' : null } >
       { label && <Col componentClass={ ControlLabel } sm={ 3 }>{ label }</Col> }
@@ -13,7 +13,7 @@ const HorizontalValidationInput = ({ field, label, children }) => {
   )
 }
 
-HorizontalValidationInput.propTypes = {
+HorizontalFormGroup.propTypes = {
   field: React.PropTypes.shape({
     name:    React.PropTypes.string.isRequired,
     invalid: React.PropTypes.bool,
@@ -23,4 +23,4 @@ HorizontalValidationInput.propTypes = {
   children: React.PropTypes.node.isRequired,
 }
 
-export default HorizontalValidationInput
+export default HorizontalFormGroup
