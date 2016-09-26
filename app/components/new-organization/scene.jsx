@@ -3,9 +3,9 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 
 import AppLayout from 'components/layouts/app-layout'
-import Organization from './organization.jsx'
+import Organization from './new-organization.jsx'
 
-const OrganizationScene = () => (
+const NewOrganizationScene = () => (
   <AppLayout>
     <br />
     <Row>
@@ -18,4 +18,4 @@ const OrganizationScene = () => (
   </AppLayout>
 )
 
-export default OrganizationScene
+export default NewOrganizationScene

@@ -7,7 +7,7 @@ import { createOrganization, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
-class Organization extends React.Component {
+class NewOrganization extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -16,9 +16,11 @@ class Organization extends React.Component {
 
   handleSubmit(values) {
     const { create } = this.props
-    const { name, default_currency } = values
     return new Promise((resolve, reject) => {
-      create(name, default_currency).then(({error, payload}) => error ? reject(payload) : resolve())
+      create({
+        name: values.name,
+        defaultCurrency: values.defaultCurrency
+      }).then(({error, payload}) => error ? reject(payload) : resolve())
     })
   }
 
@@ -36,16 +38,16 @@ class Organization extends React.Component {
   }
 }
 
-Organization.propTypes = {
+NewOrganization.propTypes = {
   create:          React.PropTypes.func.isRequired,
   redirectToRoot:  React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired,
 }
 
 const dispatcher = (dispatch) => ({
-  create:          (name, default_currency) => dispatch(createOrganization(name, default_currency)),
+  create:          (data) => dispatch(createOrganization(data)),
   redirectToRoot:  () => dispatch(routeActions.push('/')),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default connect(null, dispatcher)(Organization)
+export default connect(null, dispatcher)(NewOrganization)

@@ -19,6 +19,12 @@ const MainMenu = () => (
       </LinkContainer>
     </Nav>
 
+    <Nav>
+      <LinkContainer to="organizations/new" onlyActiveOnIndex>
+        <NavItem>New Organization</NavItem>
+      </LinkContainer>
+    </Nav>
+
     <Nav pullRight>
       <LogoutItem />
     </Nav>

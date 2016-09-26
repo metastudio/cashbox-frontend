@@ -32,7 +32,7 @@ class Login extends React.Component {
 
   afterLogin() {
     this.props.addFlashMessage('You successfully signed in.')
-    this.props.addOrganization() // TODO if organizations empty
+    this.props.redirectToRoot()
   }
 
   render() {
@@ -47,7 +47,7 @@ class Login extends React.Component {
 Login.propTypes = {
   isAuthorized:    React.PropTypes.bool,
   login:           React.PropTypes.func.isRequired,
-  addOrganization: React.PropTypes.func.isRequired,
+  redirectToRoot:  React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired,
 }
 
@@ -57,7 +57,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   login:           (email, password) => dispatch(loginUser(email, password)),
-  addOrganization: () => dispatch(routeActions.push('/organization')),
+  redirectToRoot:  () => dispatch(routeActions.push('/')),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
