@@ -20,7 +20,13 @@ const MainMenu = () => (
     </Nav>
 
     <Nav>
-      <LinkContainer to="organizations/new" onlyActiveOnIndex>
+      <LinkContainer to="/organizations" onlyActiveOnIndex>
+        <NavItem>Organizations</NavItem>
+      </LinkContainer>
+    </Nav>
+
+    <Nav>
+      <LinkContainer to="/organizations/new" onlyActiveOnIndex>
         <NavItem>New Organization</NavItem>
       </LinkContainer>
     </Nav>
