@@ -31,6 +31,10 @@ const MainMenu = () => (
     </Nav>
 
     <Nav pullRight>
+      { /* TODO show organization name */ }
+    </Nav>
+
+    <Nav pullRight>
       <LogoutItem />
     </Nav>
   </Navbar>

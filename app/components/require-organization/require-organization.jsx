@@ -20,8 +20,8 @@ class RequireOrganization extends React.Component {
 
   checkOrganization(props){
     if (!props.hasOrganization) {
-      props.addFlashMessage('Please add organization.', { type: 'info' })
-      props.redirectToNewOrganization()
+      props.addFlashMessage('Please select or add organization.', { type: 'info' })
+      props.redirectToSelect()
       return
     }
   }
@@ -40,11 +40,10 @@ class RequireOrganization extends React.Component {
 }
 
 RequireOrganization.propTypes = {
-  hasOrganization:           React.PropTypes.bool.isRequired,
-  redirectToRoot:            React.PropTypes.func.isRequired,
-  redirectToNewOrganization: React.PropTypes.func.isRequired,
-  addFlashMessage:           React.PropTypes.func.isRequired,
-  children:                  React.PropTypes.node.isRequired,
+  hasOrganization:  React.PropTypes.bool.isRequired,
+  redirectToSelect: React.PropTypes.func.isRequired,
+  addFlashMessage:  React.PropTypes.func.isRequired,
+  children:         React.PropTypes.node.isRequired,
 }
 
 const select = (state) => ({
@@ -52,9 +51,8 @@ const select = (state) => ({
 })
 
 const dispatches = (dispatch) => ({
-  redirectToNewOrganization: () => dispatch(routeActions.push('/organizations/new')),
-  redirectToRoot:            () => dispatch(routeActions.push('/')),
-  addFlashMessage:           (message, options = {}) => dispatch(addFlashMessage(message, options)),
+  redirectToSelect: () => dispatch(routeActions.push('/organizations/select')),
+  addFlashMessage:  (message, options = {}) => dispatch(addFlashMessage(message, options)),
 })
 
 export default connect(select, dispatches)(RequireOrganization)
