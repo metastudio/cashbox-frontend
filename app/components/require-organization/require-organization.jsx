@@ -24,15 +24,10 @@ class RequireOrganization extends React.Component {
       props.redirectToNewOrganization()
       return
     }
-    if (props.requireAdmin && !props.isAdmin) {
-      props.addFlashMessage('You are not allowed to access this page.', { type: 'danger' })
-      props.redirectToRoot()
-      return
-    }
   }
 
   isAllowed() {
-    return this.props.hasOrganization && (!this.props.requireAdmin || this.props.isAdmin)
+    return this.props.hasOrganization
   }
 
   render() {
@@ -45,9 +40,7 @@ class RequireOrganization extends React.Component {
 }
 
 RequireOrganization.propTypes = {
-  requireAdmin:              React.PropTypes.bool,
   hasOrganization:           React.PropTypes.bool.isRequired,
-  isAdmin:                   React.PropTypes.bool.isRequired,
   redirectToRoot:            React.PropTypes.func.isRequired,
   redirectToNewOrganization: React.PropTypes.func.isRequired,
   addFlashMessage:           React.PropTypes.func.isRequired,
@@ -56,7 +49,6 @@ RequireOrganization.propTypes = {
 
 const select = (state) => ({
   hasOrganization: !!state.organizations.current,
-  isAdmin:         !!(state.auth.user && state.auth.user.isAdmin),
 })
 
 const dispatches = (dispatch) => ({

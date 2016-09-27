@@ -26,8 +26,7 @@ class NewOrganization extends React.Component {
 
   afterCreate() {
     this.props.addFlashMessage('Organization successfully created.')
-    this.props.setOrganization(this.props.id) // TODO: how to get ID of this newly created organization?
-    this.props.redirectToRoot()
+    this.props.redirectToSelect()
   }
 
   render() {
@@ -40,17 +39,17 @@ class NewOrganization extends React.Component {
 }
 
 NewOrganization.propTypes = {
-  create:          React.PropTypes.func.isRequired,
-  redirectToRoot:  React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired,
-  setOrganization: React.PropTypes.func.isRequired,
+  create:           React.PropTypes.func.isRequired,
+  redirectToSelect: React.PropTypes.func.isRequired,
+  addFlashMessage:  React.PropTypes.func.isRequired,
+  setOrganization:  React.PropTypes.func.isRequired,
 }
 
 const dispatcher = (dispatch) => ({
-  create:          (data) => dispatch(createOrganization(data)),
-  redirectToRoot:  () => dispatch(routeActions.push('/')),
-  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  setOrganization: (organizationId) => dispatch(setCurrentOrganization(organizationId)),
+  create:           (data) => dispatch(createOrganization(data)),
+  redirectToSelect: () => dispatch(routeActions.push('/organizations/select')),
+  addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
+  setOrganization:  (organizationId) => dispatch(setCurrentOrganization(organizationId)),
 })
 
 export default connect(null, dispatcher)(NewOrganization)

@@ -96,7 +96,7 @@ export function setCurrentOrganization(organizationId) {
 export function currentOrganization() {
   return (dispatch) => {
     dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_REQUEST })
-    const currentOrganization = getCookies().currentOrganizationId
+    const currentOrganizationId = getCookies().currentOrganizationId
     if (currentOrganizationId) {
       return dispatch(loadOrganization(currentOrganizationId)).then((actionResponse) => {
         if (actionResponse.error) {
