@@ -1,27 +1,36 @@
 import * as types from 'constants/organizations-action-types'
+import * as statuses from 'constants/statuses'
 
 const defaultState = {
-  current: null,
+  items:  [],
+  status: statuses.INVALID,
+  error:  null,
 }
 
 export default (state = defaultState, action) => {
-  const { type, payload } = action
+  const { type, payload, error } = action
 
   switch(type) {
-    case types.SESSION_CURRENT_ORGANIZATION_REQUEST:
+    case types.LOAD_ORGANIZATIONS_REQUEST:
       return {
         ...state,
-        current: null,
+        items:  [],
+        status: statuses.PENDING,
+        error:  null,
       }
-    case types.SESSION_CURRENT_ORGANIZATION_SUCCESS:
+    case types.LOAD_ORGANIZATIONS_SUCCESS:
       return {
         ...state,
-        current: payload.organization,
+        items:  payload.organizations,
+        status: statuses.SUCCESS,
+        error:  null,
       }
-    case types.SESSION_CURRENT_ORGANIZATION_FAILURE:
+    case types.LOAD_ORGANIZATIONS_FAILURE:
       return {
         ...state,
-        current: null,
+        items:  [],
+        status: statuses.FAILURE,
+        error:  payload
       }
     default:
       return state

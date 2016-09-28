@@ -81,32 +81,32 @@ export function loadOrganization(organizationId) {
 
 export function setCurrentOrganization(organizationId) {
   return (dispatch) => {
-    dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_REQUEST })
+    dispatch({ type: types.SET_CURRENT_ORGANIZATION_REQUEST })
     return dispatch(loadOrganization(organizationId)).then((actionResponse) => {
       if (actionResponse.error) {
-        return dispatch({ ...actionResponse, type: types.SESSION_CURRENT_ORGANIZATION_FAILURE })
+        return dispatch({ ...actionResponse, type: types.SET_CURRENT_ORGANIZATION_FAILURE })
       }
       const currentOrganizationId = actionResponse.payload.organization.id
       setCookies({ currentOrganizationId: currentOrganizationId })
-      return dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
+      return dispatch({ type: types.SET_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
     })
   }
 }
 
-export function currentOrganization() {
+export function restoreCurrentOrganization() {
   return (dispatch) => {
-    dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_REQUEST })
+    dispatch({ type: types.SET_CURRENT_ORGANIZATION_REQUEST })
     const currentOrganizationId = getCookies().currentOrganizationId
     if (currentOrganizationId) {
       return dispatch(loadOrganization(currentOrganizationId)).then((actionResponse) => {
         if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.SESSION_CURRENT_ORGANIZATION_FAILURE })
+          return dispatch({ ...actionResponse, type: types.SET_CURRENT_ORGANIZATION_FAILURE })
         }
 
-        return dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
+        return dispatch({ type: types.SET_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
       })
     } else {
-      return dispatch({ type: types.SESSION_CURRENT_ORGANIZATION_FAILURE, error: true, payload: {_error: 'Current organization not found'} })
+      return dispatch({ type: types.SET_CURRENT_ORGANIZATION_FAILURE, error: true, payload: {_error: 'Current organization not found'} })
     }
   }
 }

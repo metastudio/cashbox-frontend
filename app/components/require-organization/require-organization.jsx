@@ -47,7 +47,7 @@ RequireOrganization.propTypes = {
 }
 
 const select = (state) => ({
-  hasOrganization: !!state.organizations.current,
+  hasOrganization: !!state.currentOrganization.current,
 })
 
 const dispatches = (dispatch) => ({
