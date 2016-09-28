@@ -1,4 +1,4 @@
-import * as types from 'constants/organizations-action-types'
+import * as types from 'constants/transactions-action-types'
 import * as statuses from 'constants/statuses'
 
 const defaultState = {
@@ -8,24 +8,24 @@ const defaultState = {
 }
 
 export default (state = defaultState, action) => {
-  const { type, payload, error } = action
+  const { type, payload } = action
 
   switch(type) {
-    case types.LOAD_ORGANIZATIONS_REQUEST:
+    case types.LOAD_TRANSACTIONS_REQUEST:
       return {
         ...state,
         items:  [],
         status: statuses.PENDING,
         error:  null,
       }
-    case types.LOAD_ORGANIZATIONS_SUCCESS:
+    case types.LOAD_TRANSACTIONS_SUCCESS:
       return {
         ...state,
-        items:  payload.organizations,
+        items:  payload.transactions,
         status: statuses.SUCCESS,
         error:  null,
       }
-    case types.LOAD_ORGANIZATIONS_FAILURE:
+    case types.LOAD_TRANSACTIONS_FAILURE:
       return {
         ...state,
         items:  [],

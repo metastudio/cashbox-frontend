@@ -24,9 +24,6 @@ const MainMenu = () => (
         <LinkContainer to="/organizations/select" onlyActiveOnIndex>
           <MenuItem>Select</MenuItem>
         </LinkContainer>
-        <LinkContainer to="/organizations/new" onlyActiveOnIndex>
-          <MenuItem>New</MenuItem>
-        </LinkContainer>
       </NavDropdown>
     </Nav>
 

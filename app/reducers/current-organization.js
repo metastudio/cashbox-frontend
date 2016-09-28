@@ -1,27 +1,27 @@
-import * as types from 'constants/transactions-action-types'
+import * as types from 'constants/organizations-action-types'
 
 const defaultState = {
-  transactions: []
+  current: null,
 }
 
 export default (state = defaultState, action) => {
   const { type, payload } = action
 
   switch(type) {
-    case types.LOAD_TRANSACTIONS_REQUEST:
+    case types.SET_CURRENT_ORGANIZATION_REQUEST:
       return {
         ...state,
-        transactions: []
+        current: null,
       }
-    case types.LOAD_TRANSACTIONS_SUCCESS:
+    case types.SET_CURRENT_ORGANIZATION_SUCCESS:
       return {
         ...state,
-        transactions: payload.transactions,
+        current: payload.organization,
       }
-    case types.LOAD_TRANSACTIONS_FAILURE:
+    case types.SET_CURRENT_ORGANIZATION_FAILURE:
       return {
         ...state,
-        transactions: []
+        current: null,
       }
     default:
       return state

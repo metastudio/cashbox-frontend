@@ -1,4 +1,5 @@
 import React from 'react'
+import * as statuses from 'constants/statuses'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routeActions } from 'react-router-redux'
@@ -6,7 +7,7 @@ import { Table } from 'react-bootstrap'
 
 import Spinner from 'components/utils/spinner'
 
-import { currentOrganization, loadTransactions, addFlashMessage } from 'actions'
+import { loadTransactions, addFlashMessage } from 'actions'
 
 class Transactions extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Transactions extends React.Component {
   }
 
   componentDidMount() {
-    this.props.currentOrganization().then(({error, payload}) => error ? reject(payload) : this.props.index(payload.organization.id))
+    const { orgId, index } = this.props
+    index(orgId)
   }
 
   render() {
@@ -46,7 +48,7 @@ class Transactions extends React.Component {
             </tr>
           </thead>
           <tbody>
-            { transactions }
+            { this.props.status == statuses.SUCCESS && transactions }
           </tbody>
         </Table>
       )
@@ -55,18 +57,21 @@ class Transactions extends React.Component {
 }
 
 Transactions.propTypes = {
-  addFlashMessage:     React.PropTypes.func.isRequired,
-  currentOrganization: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired,
+  orgId:           React.PropTypes.number.isRequired,
+  index:           React.PropTypes.func.isRequired,
+  status:          React.PropTypes.string.isRequired,
 }
 
 const select = (state) => ({
-  transactions: !!(state.currentOrganization.transactions && state.organizations.current)
+  orgId:        state.currentOrganization.current.id,
+  transactions: state.transactions.items,
+  status:       state.transactions.status,
 })
 
 const dispatcher = (dispatch) => ({
   index:           (organizationId) => dispatch(loadTransactions(organizationId)),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  currentOrganization: () => dispatch(currentOrganization()),
 })
 
 export default connect(select, dispatcher)(Transactions)

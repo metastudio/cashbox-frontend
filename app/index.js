@@ -1,7 +1,7 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { render } from 'react-dom'
-import { Router, Route, IndexRoute, browserHistory} from 'react-router'
+import { Router, Route, IndexRoute, IndexRedirect, browserHistory} from 'react-router'
 import { syncHistory, routeReducer } from 'react-router-redux'
 import { combineReducers, applyMiddleware, createStore } from 'redux'
 import createLogger from 'redux-logger'
@@ -19,8 +19,7 @@ import './index.scss'
 import App from 'components/app'
 import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
-import NewOrganizationScene from 'components/new-organization'
-import SelectOrganizationScene from 'components/select-organization'
+import OrganizationsScene from 'components/organizations'
 
 const reducer = combineReducers({
   ...reducers,
@@ -48,8 +47,11 @@ render((
         <Route path="/" component={App}>
           <IndexRoute component={DashboardScene} />
           <Route path="login" component={LoginScene} />
-          <Route path="organizations/select" component={SelectOrganizationScene} />
-          <Route path="organizations/new" component={NewOrganizationScene} />
+          <Route path="organizations" component={OrganizationsScene} >
+            <IndexRedirect to="select" />
+            <Route path="select" component={OrganizationsScene.Select} />
+            <Route path="new" component={OrganizationsScene.New} />
+          </Route>
         </Route>
       </Router>
     </Provider>
