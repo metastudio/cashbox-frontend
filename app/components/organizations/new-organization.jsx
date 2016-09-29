@@ -7,7 +7,7 @@ import { createOrganization, setCurrentOrganization, addFlashMessage } from 'act
 
 import Form from './form.jsx'
 
-class New extends React.Component {
+class NewOrganization extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -42,7 +42,7 @@ class New extends React.Component {
   }
 }
 
-New.propTypes = {
+NewOrganization.propTypes = {
   create:           React.PropTypes.func.isRequired,
   redirectToSelect: React.PropTypes.func.isRequired,
   addFlashMessage:  React.PropTypes.func.isRequired,
@@ -54,4 +54,4 @@ const dispatcher = (dispatch) => ({
   addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default connect(null, dispatcher)(New)
+export default connect(null, dispatcher)(NewOrganization)

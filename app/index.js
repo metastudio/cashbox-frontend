@@ -49,8 +49,8 @@ render((
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >
             <IndexRedirect to="select" />
-            <Route path="select" component={OrganizationsScene.Select} />
-            <Route path="new" component={OrganizationsScene.New} />
+            <Route path="select" component={OrganizationsScene.SelectOrganization} />
+            <Route path="new" component={OrganizationsScene.NewOrganization} />
           </Route>
         </Route>
       </Router>
