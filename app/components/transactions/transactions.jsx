@@ -3,7 +3,7 @@ import * as statuses from 'constants/statuses'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routeActions } from 'react-router-redux'
-import { Table } from 'react-bootstrap'
+import { Row, Col, Table } from 'react-bootstrap'
 
 import Spinner from 'components/utils/spinner'
 
@@ -36,21 +36,26 @@ class Transactions extends React.Component {
       )
 
       return (
-        <Table striped responsive hover id="transactions">
-          <thead>
-            <tr>
-              <th>Amount</th>
-              <th>Category</th>
-              <th>Account</th>
-              <th>Customer</th>
-              <th>Comment</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.props.status == statuses.SUCCESS && transactions }
-          </tbody>
-        </Table>
+        <Row>
+          <Col xs={12} md={12}>
+            <Link to="/transactions/new" className="btn btn-primary">Add...</Link>
+            <Table striped responsive hover id="transactions">
+              <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Account</th>
+                  <th>Customer</th>
+                  <th>Comment</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                { this.props.status == statuses.SUCCESS && transactions }
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
       )
     }
   }
