@@ -55,18 +55,18 @@ export function loginUser(email, password) {
 
 export function restoreUser() {
   return (dispatch) => {
-    dispatch({ type: types.USER_RESTORE_REQUEST })
+    dispatch({ type: types.RESTORE_USER_REQUEST })
     const token = getCookies().token
     if (token) {
       return dispatch(loadCurrentUser()).then((actionResponse) => {
         if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.USER_RESTORE_FAILURE })
+          return dispatch({ ...actionResponse, type: types.RESTORE_USER_FAILURE })
         }
 
-        return dispatch({ type: types.USER_RESTORE_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
+        return dispatch({ type: types.RESTORE_USER_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
       })
     } else {
-      return dispatch({ type: types.USER_RESTORE_FAILURE, error: true, payload: {_error: 'Token not found'} })
+      return dispatch({ type: types.RESTORE_USER_FAILURE, error: true, payload: {_error: 'Token not found'} })
     }
   }
 }

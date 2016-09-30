@@ -3,14 +3,13 @@ import RequireLogin from 'components/utils/require-login'
 import RequireOrganization from 'components/require-organization'
 import AppLayout from 'components/layouts/app-layout'
 
-import Transactions from 'components/transactions'
-import New from 'components/transactions/new.jsx'
+import Transactions from 'components/transactions/transactions.jsx'
+import NewTransaction from 'components/transactions/new-transaction.jsx'
 
 const DashboardScene = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
-        <Transactions />
         { children }
       </AppLayout>
     </RequireOrganization>
@@ -21,6 +20,7 @@ DashboardScene.propTypes = {
   children: React.PropTypes.node
 }
 
-DashboardScene.NewTransaction = New
+DashboardScene.Transactions = Transactions
+DashboardScene.NewTransaction = NewTransaction
 
 export default DashboardScene

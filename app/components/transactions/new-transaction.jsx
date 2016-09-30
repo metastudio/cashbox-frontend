@@ -7,7 +7,7 @@ import { createTransaction, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
-class New extends React.Component {
+class NewTransaction extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -46,7 +46,7 @@ class New extends React.Component {
   }
 }
 
-New.propTypes = {
+NewTransaction.propTypes = {
   orgId:              React.PropTypes.number.isRequired,
   create:             React.PropTypes.func.isRequired,
   redirectToRootPage: React.PropTypes.func.isRequired,
@@ -65,4 +65,4 @@ const dispatcher = (dispatch) => ({
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default connect(select, dispatcher)(New)
+export default connect(select, dispatcher)(NewTransaction)

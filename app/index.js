@@ -45,13 +45,15 @@ render((
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-          <IndexRoute component={DashboardScene} />
+          <Route component={DashboardScene}>
+            <IndexRoute component={DashboardScene.Transactions} />
+            <Route path="transactions/new" component={DashboardScene.NewTransaction} />
+          </Route>
           <Route path="login" component={LoginScene} />
-          <Route path="transactions/new" component={DashboardScene.NewTransaction} />
           <Route path="organizations" component={OrganizationsScene} >
             <IndexRedirect to="select" />
-            <Route path="select" component={OrganizationsScene.Select} />
-            <Route path="new" component={OrganizationsScene.New} />
+            <Route path="select" component={OrganizationsScene.SelectOrganization} />
+            <Route path="new" component={OrganizationsScene.NewOrganization} />
           </Route>
         </Route>
       </Router>
