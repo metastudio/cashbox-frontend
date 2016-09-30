@@ -7,14 +7,14 @@ import { Panel, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { loadOrganizations, setCurrentOrganization, addFlashMessage } from 'actions'
 
-class Select extends React.Component {
+class SelectOrganization extends React.Component {
   constructor(props) {
     super(props)
     this.handleOrganizationClick = this.handleOrganizationClick.bind(this)
   }
 
   componentDidMount() {
-    this.props.index()
+    this.props.loadOrganizations()
   }
 
   handleOrganizationClick(organization) {
@@ -44,7 +44,7 @@ class Select extends React.Component {
           <Panel>
             <Link to="/organizations/new" className="btn btn-primary">New Organization</Link>
             <ListGroup id="organizations">
-              { this.props.status == statuses.SUCCESS && organizations }
+              { organizations }
             </ListGroup>
           </Panel>
         </Col>
@@ -53,8 +53,7 @@ class Select extends React.Component {
   }
 }
 
-Select.propTypes = {
-  status:             React.PropTypes.string.isRequired,
+SelectOrganization.propTypes = {
   setOrganization:    React.PropTypes.func.isRequired,
   redirectToRootPage: React.PropTypes.func.isRequired,
   addFlashMessage:    React.PropTypes.func.isRequired,
@@ -62,14 +61,13 @@ Select.propTypes = {
 
 const select = (state) => ({
   organizations: state.organizations.items,
-  status: state.organizations.status,
 })
 
 const dispatcher = (dispatch) => ({
-  index:              () => dispatch(loadOrganizations()),
+  loadOrganizations:  () => dispatch(loadOrganizations()),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
   setOrganization:    (organizationId) => dispatch(setCurrentOrganization(organizationId)),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default connect(select, dispatcher)(Select)
+export default connect(select, dispatcher)(SelectOrganization)

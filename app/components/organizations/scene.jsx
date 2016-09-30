@@ -3,8 +3,8 @@ import React from 'react'
 import RequireLogin from 'components/utils/require-login'
 import AppLayout from 'components/layouts/app-layout'
 
-import Select from './select.jsx'
-import New from './new.jsx'
+import SelectOrganization from './select-organization.jsx'
+import NewOrganization from './new-organization.jsx'
 
 const OrganizationsScene = ({ children }) => (
   <RequireLogin>
@@ -18,7 +18,7 @@ OrganizationsScene.propTypes = {
   children: React.PropTypes.node
 }
 
-OrganizationsScene.Select = Select
-OrganizationsScene.New    = New
+OrganizationsScene.SelectOrganization = SelectOrganization
+OrganizationsScene.NewOrganization    = NewOrganization
 
 export default OrganizationsScene
