@@ -3,7 +3,7 @@ import { CALL_API, getJSON } from 'redux-api-middleware'
 import ApiHelpers from './_api_helpers'
 
 import { getCookies, setCookies, clearCookies } from 'utils/cookies'
-import { loadCurrentUser } from 'actions'
+import { loadCurrentUser, restoreCurrentOrganization } from 'actions'
 
 import * as types from 'constants/auth-action-types'
 
@@ -53,21 +53,42 @@ export function loginUser(email, password) {
   }
 }
 
-export function restoreSession() {
+export function restoreUser() {
   return (dispatch) => {
-    dispatch({ type: types.SESSION_RESTORE_REQUEST })
+    dispatch({ type: types.RESTORE_USER_REQUEST })
     const token = getCookies().token
     if (token) {
       return dispatch(loadCurrentUser()).then((actionResponse) => {
         if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.SESSION_RESTORE_FAILURE })
+          return dispatch({ ...actionResponse, type: types.RESTORE_USER_FAILURE })
         }
 
-        return dispatch({ type: types.SESSION_RESTORE_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
+        return dispatch({ type: types.RESTORE_USER_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
       })
     } else {
-      return dispatch({ type: types.SESSION_RESTORE_FAILURE, error: true, payload: {_error: 'Token not found'} })
+      return dispatch({ type: types.RESTORE_USER_FAILURE, error: true, payload: {_error: 'Token not found'} })
     }
+  }
+}
+
+export function restoreSession() {
+  return (dispatch) => {
+    dispatch({ type: types.SESSION_RESTORE_REQUEST })
+
+    return dispatch(restoreUser()).then((actionResponse) => {
+      if (actionResponse.error) {
+        return dispatch({ ...actionResponse, type: types.SESSION_RESTORE_FAILURE })
+      }
+      const token = actionResponse.payload.token
+      const user  = actionResponse.payload.user
+      return dispatch(restoreCurrentOrganization()).then((actionResponse) => {
+        if (actionResponse.error) {
+          return dispatch({ ...actionResponse, type: types.SESSION_RESTORE_FAILURE })
+        }
+        return dispatch({ type: types.SESSION_RESTORE_SUCCESS, payload: { token: token, user: user, currentOrganizationId: actionResponse.payload.organization.id } })
+      })
+    })
+
   }
 }
 

@@ -1,3 +1,5 @@
 export { default as app }                  from './app'
 export { default as auth }                 from './auth'
 export { default as flashMessages }        from './flash-messages'
+export { default as organizations }        from './organizations'
+export { default as currentOrganization }  from './current-organization'

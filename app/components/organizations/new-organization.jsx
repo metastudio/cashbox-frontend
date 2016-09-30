@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
-import { Panel } from 'react-bootstrap'
+import { Panel, Row, Col } from 'react-bootstrap'
 
-import { createOrganization, addFlashMessage } from 'actions'
+import { createOrganization, setCurrentOrganization, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
@@ -26,28 +26,32 @@ class NewOrganization extends React.Component {
 
   afterCreate() {
     this.props.addFlashMessage('Organization successfully created.')
-    this.props.redirectToRoot()
+    this.props.redirectToSelect()
   }
 
   render() {
     return(
-      <Panel>
-        <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
-      </Panel>
+      <Row>
+        <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <Panel>
+            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+          </Panel>
+        </Col>
+      </Row>
     )
   }
 }
 
 NewOrganization.propTypes = {
-  create:          React.PropTypes.func.isRequired,
-  redirectToRoot:  React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired,
+  create:           React.PropTypes.func.isRequired,
+  redirectToSelect: React.PropTypes.func.isRequired,
+  addFlashMessage:  React.PropTypes.func.isRequired,
 }
 
 const dispatcher = (dispatch) => ({
-  create:          (data) => dispatch(createOrganization(data)),
-  redirectToRoot:  () => dispatch(routeActions.push('/')),
-  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
+  create:           (data) => dispatch(createOrganization(data)),
+  redirectToSelect: () => dispatch(routeActions.push('/organizations/select')),
+  addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
 export default connect(null, dispatcher)(NewOrganization)

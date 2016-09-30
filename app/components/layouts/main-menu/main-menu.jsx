@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
 import LogoutItem from './logout-item.jsx'
 
@@ -20,9 +20,15 @@ const MainMenu = () => (
     </Nav>
 
     <Nav>
-      <LinkContainer to="organizations/new" onlyActiveOnIndex>
-        <NavItem>New Organization</NavItem>
-      </LinkContainer>
+      <NavDropdown title="Organizations" id="organizations-nav-dropdown">
+        <LinkContainer to="/organizations/select" onlyActiveOnIndex>
+          <MenuItem>Select</MenuItem>
+        </LinkContainer>
+      </NavDropdown>
+    </Nav>
+
+    <Nav pullRight>
+      { /* TODO show organization name */ }
     </Nav>
 
     <Nav pullRight>
