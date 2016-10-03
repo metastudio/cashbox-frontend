@@ -20,6 +20,7 @@ import App from 'components/app'
 import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
+import Transactions from 'components/transactions'
 
 const reducer = combineReducers({
   ...reducers,
@@ -46,7 +47,7 @@ render((
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <Route component={DashboardScene}>
-            <IndexRoute component={DashboardScene.Transactions} />
+            <IndexRoute component={Transactions} />
           </Route>
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >
