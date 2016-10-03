@@ -4,7 +4,7 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routeActions } from 'react-router-redux'
-import { Row, Col, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
 import NewTransaction from './new-transaction.jsx'
