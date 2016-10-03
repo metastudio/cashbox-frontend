@@ -19,9 +19,9 @@ class NewTransaction extends React.Component {
     return new Promise((resolve, reject) => {
       create(orgId, {
         amount: values.amount,
-        categoryId: values.category.id,
-        customerId: values.customer.id,
-        bankAccountId: values.bankAccount.id,
+        categoryId: values.categoryId,
+        customerId: values.customerId,
+        bankAccountId: values.bankAccountId,
         comment: values.comment,
         date: values.date,
       }).then(({error, payload}) => error ? reject(payload) : resolve())
@@ -38,7 +38,7 @@ class NewTransaction extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
           </Panel>
         </Col>
       </Row>
