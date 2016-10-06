@@ -8,7 +8,7 @@ import FormGroup from './horizontal-form-group.jsx'
 export const HorizontalAsyncSelect = ({ label, field, ...inputProps }) => {
   return (
     <FormGroup field={ field } label={ label } >
-      <Select.Async {...inputProps} name={ field.name } value={ field.value } onChange={ field.onChange } />
+      <Select.Async {...inputProps} name={ field.name } value={ field.value } onChange={ field.onChange } cache={false} />
     </FormGroup>
   )
 }

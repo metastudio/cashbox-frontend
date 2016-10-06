@@ -5,7 +5,6 @@ import ApiHelpers from 'actions/_api_helpers'
 import { Alert, Form, Button } from 'react-bootstrap'
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs'
 
-// TODO fix fetching after change organization
 const getOptions = (orgId, input) => {
   return fetch(ApiHelpers.formatUrl(`/api/organizations/${orgId}/${input}`), { method: 'GET', headers: ApiHelpers.headers() })
     .then(response => response.json())

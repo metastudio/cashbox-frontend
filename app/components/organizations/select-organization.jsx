@@ -19,9 +19,9 @@ class SelectOrganization extends React.Component {
 
   handleOrganizationClick(organization) {
     this.props.setOrganization(organization.id).then(
-      ({error, payload}) => {
+      ({error}) => {
         if (error) {
-          reject(payload) // TODO: fix it
+          this.props.addFlashMessage('Unable to select organization.', { type: 'danger' })
         } else {
           this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
           this.props.redirectToRootPage()
