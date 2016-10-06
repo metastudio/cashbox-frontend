@@ -15,9 +15,9 @@ class NewTransaction extends React.Component {
   }
 
   handleSubmit(values) {
-    const { orgId, create } = this.props
+    const { orgId, createTransaction } = this.props
     return new Promise((resolve, reject) => {
-      create(orgId, {
+      createTransaction(orgId, {
         amount: values.amount,
         categoryId: values.categoryId,
         customerId: values.customerId,
@@ -48,10 +48,9 @@ class NewTransaction extends React.Component {
 
 NewTransaction.propTypes = {
   orgId:              React.PropTypes.number.isRequired,
-  create:             React.PropTypes.func.isRequired,
+  createTransaction:  React.PropTypes.func.isRequired,
   redirectToRootPage: React.PropTypes.func.isRequired,
   addFlashMessage:    React.PropTypes.func.isRequired,
-  loadBankAccounts:   React.PropTypes.func.isRequired,
 }
 
 const select = (state) => ({
@@ -59,8 +58,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  create:             (orgId, data) => dispatch(createTransaction(orgId, data)),
-  loadBankAccounts:   (orgId) => dispatch(loadBankAccounts(orgId)),
+  createTransaction:  (orgId, data) => dispatch(createTransaction(orgId, data)),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

@@ -4,7 +4,7 @@ import RequireLogin from 'components/utils/require-login'
 import AppLayout from 'components/layouts/app-layout'
 
 import SelectOrganization from './select-organization.jsx'
-import NewOrganization from './new-organization.jsx'
+import NewOrganization from './new.jsx'
 
 const OrganizationsScene = ({ children }) => (
   <RequireLogin>

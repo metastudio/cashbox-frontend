@@ -21,7 +21,7 @@ class SelectOrganization extends React.Component {
     this.props.setOrganization(organization.id).then(
       ({error, payload}) => {
         if (error) {
-          reject(payload)
+          reject(payload) // TODO: fix it
         } else {
           this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
           this.props.redirectToRootPage()
@@ -57,6 +57,8 @@ SelectOrganization.propTypes = {
   setOrganization:    React.PropTypes.func.isRequired,
   redirectToRootPage: React.PropTypes.func.isRequired,
   addFlashMessage:    React.PropTypes.func.isRequired,
+  loadOrganizations:  React.PropTypes.func.isRequired,
+  organizations:      React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 }
 
 const select = (state) => ({

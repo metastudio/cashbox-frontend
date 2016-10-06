@@ -3,11 +3,10 @@ import * as statuses from 'constants/statuses'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { routeActions } from 'react-router-redux'
 import { Table } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
-import NewTransaction from './new-transaction.jsx'
+import NewTransaction from './new.jsx'
 
 import { loadTransactions, addFlashMessage } from 'actions'
 
@@ -61,6 +60,7 @@ Transactions.propTypes = {
   orgId:            React.PropTypes.number.isRequired,
   loadTransactions: React.PropTypes.func.isRequired,
   status:           React.PropTypes.string.isRequired,
+  transactions:     React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 }
 
 const select = (state) => ({
