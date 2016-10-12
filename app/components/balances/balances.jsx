@@ -2,7 +2,6 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { LinkContainer } from 'react-router-bootstrap'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 
 import { loadBalances, addFlashMessage } from 'actions'
@@ -11,16 +10,20 @@ class Balances extends React.Component {
 
   componentDidMount() {
     const { orgId, loadBalances } = this.props
-    loadBalances(orgId)
+    if (orgId) {
+      loadBalances(orgId)
+    }
   }
 
   render() {
+    const showTitle = (balance) => (
+      balance.rate ? balance.currency + '/' + this.props.defaultCurrency + ', rate: ' + balance.rate + ', by: ' + moment(balance.updatedAt).format('L') : ''
+    )
+
     const balances = this.props.balances.map((balance, i) => (
-      <LinkContainer to="#" key={i}>
-        <MenuItem title={ balance.rate ? balance.currency + '/' + this.props.defaultCurrency + ', rate: ' + balance.rate + ', by: ' + moment(balance.updatedAt).format('L') : '' }>
-          { balance.total } { balance.exTotal ? '(' + balance.exTotal + ')' : '' }
-        </MenuItem>
-      </LinkContainer>
+      <MenuItem key={i} title={ showTitle(balance) }>
+        { balance.total } { balance.exTotal ? '(' + balance.exTotal + ')' : '' }
+      </MenuItem>
       )
     )
 
@@ -38,12 +41,12 @@ class Balances extends React.Component {
 
 Balances.propTypes = {
   addFlashMessage: React.PropTypes.func.isRequired,
-  orgId:           React.PropTypes.number.isRequired,
+  orgId:           React.PropTypes.number,
   loadBalances:    React.PropTypes.func.isRequired,
   status:          React.PropTypes.string.isRequired,
   balances:        React.PropTypes.array.isRequired,
-  totalAmount:     React.PropTypes.string.isRequired,
-  defaultCurrency: React.PropTypes.string.isRequired,
+  totalAmount:     React.PropTypes.string,
+  defaultCurrency: React.PropTypes.string,
 }
 
 const select = (state) => ({
