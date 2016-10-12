@@ -48,6 +48,7 @@ render((
         <Route path="/" component={App}>
           <Route component={DashboardScene}>
             <IndexRoute component={Transactions} />
+            <Route path="transactions/new" component={Transactions.NewTransaction} />
           </Route>
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
-import { createOrganization, setCurrentOrganization, addFlashMessage } from 'actions'
+import { createOrganization, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
@@ -15,9 +15,9 @@ class NewOrganization extends React.Component {
   }
 
   handleSubmit(values) {
-    const { create } = this.props
+    const { createOrganization } = this.props
     return new Promise((resolve, reject) => {
-      create({
+      createOrganization({
         name: values.name,
         defaultCurrency: values.defaultCurrency
       }).then(({error, payload}) => error ? reject(payload) : resolve())
@@ -43,15 +43,15 @@ class NewOrganization extends React.Component {
 }
 
 NewOrganization.propTypes = {
-  create:           React.PropTypes.func.isRequired,
-  redirectToSelect: React.PropTypes.func.isRequired,
-  addFlashMessage:  React.PropTypes.func.isRequired,
+  createOrganization: React.PropTypes.func.isRequired,
+  redirectToSelect:   React.PropTypes.func.isRequired,
+  addFlashMessage:    React.PropTypes.func.isRequired,
 }
 
 const dispatcher = (dispatch) => ({
-  create:           (data) => dispatch(createOrganization(data)),
-  redirectToSelect: () => dispatch(routeActions.push('/organizations/select')),
-  addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
+  createOrganization: (data) => dispatch(createOrganization(data)),
+  redirectToSelect:   () => dispatch(routeActions.push('/organizations/select')),
+  addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
 export default connect(null, dispatcher)(NewOrganization)

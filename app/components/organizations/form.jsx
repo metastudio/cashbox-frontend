@@ -5,7 +5,7 @@ import { Alert, Form, Button } from 'react-bootstrap'
 import { HorizontalFormInput } from 'components/utils/form-inputs'
 
 const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
-  <Form onSubmit={ handleSubmit }>
+  <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
     <HorizontalFormInput label="Currency" field={ defaultCurrency } />

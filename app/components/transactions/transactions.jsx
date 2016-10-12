@@ -3,10 +3,10 @@ import * as statuses from 'constants/statuses'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { routeActions } from 'react-router-redux'
 import { Table } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
+import NewTransaction from './new.jsx'
 
 import { loadTransactions, addFlashMessage } from 'actions'
 
@@ -32,6 +32,7 @@ class Transactions extends React.Component {
 
     return (
       <LoadingView status={ this.props.status }>
+        <Link to="/transactions/new" className="btn btn-primary">Add...</Link>
         { this.props.status == statuses.SUCCESS &&
           <Table striped responsive hover id="transactions">
             <thead>
@@ -47,7 +48,8 @@ class Transactions extends React.Component {
             <tbody>
               { transactions }
             </tbody>
-          </Table> }
+          </Table>
+        }
       </LoadingView>
     )
   }
@@ -58,6 +60,7 @@ Transactions.propTypes = {
   orgId:            React.PropTypes.number.isRequired,
   loadTransactions: React.PropTypes.func.isRequired,
   status:           React.PropTypes.string.isRequired,
+  transactions:     React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 }
 
 const select = (state) => ({
@@ -70,5 +73,7 @@ const dispatcher = (dispatch) => ({
   loadTransactions: (organizationId) => dispatch(loadTransactions(organizationId)),
   addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
+
+Transactions.NewTransaction = NewTransaction
 
 export default connect(select, dispatcher)(Transactions)
