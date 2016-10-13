@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 
-import { Alert, Form, Button } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 import { HorizontalFormInput } from 'components/utils/form-inputs'
 
 const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
@@ -9,7 +9,11 @@ const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, sub
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
     <HorizontalFormInput label="Currency" field={ defaultCurrency } />
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+      </Col>
+    </FormGroup>
   </Form>
 )
 
