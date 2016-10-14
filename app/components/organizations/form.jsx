@@ -1,14 +1,21 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
+import ApiHelpers from 'actions/_api_helpers'
 
 import { Alert, Form, Button } from 'react-bootstrap'
-import { HorizontalFormInput } from 'components/utils/form-inputs'
+import { HorizontalFormInput, HorizontalAsyncSelect } from 'components/utils/form-inputs'
+
+const getOptions = () => {
+  return fetch(ApiHelpers.formatUrl('/api/currencies'), { method: 'GET', headers: ApiHelpers.headers() })
+    .then(response => response.json())
+    .then(json => ({ options: json.map(item => ({ value: item, label: item })) }))
+}
 
 const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
-    <HorizontalFormInput label="Currency" field={ defaultCurrency } />
+    <HorizontalAsyncSelect label="Currency" field={ defaultCurrency } loadOptions={ () => getOptions() }/>
     <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
   </Form>
 )
