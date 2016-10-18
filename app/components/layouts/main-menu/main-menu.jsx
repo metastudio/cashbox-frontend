@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
 import LogoutItem from './logout-item.jsx'
+import CategoriesItem from './categories-item.jsx'
 
 const MainMenu = () => (
   <Navbar fluid>
@@ -24,6 +25,7 @@ const MainMenu = () => (
         <LinkContainer to="/organizations/select" onlyActiveOnIndex>
           <MenuItem>Select</MenuItem>
         </LinkContainer>
+        <CategoriesItem />
       </NavDropdown>
     </Nav>
 

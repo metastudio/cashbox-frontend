@@ -21,6 +21,7 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+import CategoriesScene from 'components/categories'
 
 const reducer = combineReducers({
   ...reducers,
@@ -55,6 +56,11 @@ render((
             <IndexRedirect to="select" />
             <Route path="select" component={OrganizationsScene.SelectOrganization} />
             <Route path="new" component={OrganizationsScene.NewOrganization} />
+          </Route>
+          <Route path="categories" component={CategoriesScene}>
+            <IndexRoute component={CategoriesScene.Categories} />
+            <Route path="new" component={CategoriesScene.NewCategory} />
+            <Route path=":categoryId/edit" component={CategoriesScene.EditCategory} />
           </Route>
         </Route>
       </Router>
