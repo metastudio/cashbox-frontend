@@ -8,7 +8,7 @@ const defaultState = {
 }
 
 export default (state = defaultState, action) => {
-  const { type, payload, error } = action
+  const { type, payload } = action
 
   switch(type) {
     case types.LOAD_ORGANIZATIONS_REQUEST:
