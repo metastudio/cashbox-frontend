@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import ApiHelpers from 'actions/_api_helpers'
 
-import { Alert, Form, Button } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs'
 
 const getOptions = (orgId, input) => {
@@ -11,16 +11,20 @@ const getOptions = (orgId, input) => {
     .then(json => ({ options: json.map(item => ({ value: item.id, label: item.name })) }))
 }
 
-const TransactionForm = ({ fields: { amount, categoryId, customerId, bankAccountId, comment, date }, handleSubmit, orgId, submitting, error }) => (
+const TransactionForm = ({ fields: { amount, category, customer, bankAccount, comment, date }, handleSubmit, orgId, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalCurrencyInput label="Amount" field={ amount } />
-    <HorizontalAsyncSelect label="Category" field={ categoryId } loadOptions={ () => getOptions(orgId, 'categories') }/>
-    <HorizontalAsyncSelect label="Customer name" field={ customerId } loadOptions={ () => getOptions(orgId, 'customers') }/>
-    <HorizontalAsyncSelect label="Bank account" field={ bankAccountId } loadOptions={ () => getOptions(orgId, 'bank_accounts') }/>
+    <HorizontalAsyncSelect label="Category" field={ category } loadOptions={ () => getOptions(orgId, 'categories') }/>
+    <HorizontalAsyncSelect label="Customer name" field={ customer } loadOptions={ () => getOptions(orgId, 'customers') }/>
+    <HorizontalAsyncSelect label="Bank account" field={ bankAccount } loadOptions={ () => getOptions(orgId, 'bank_accounts') }/>
     <HorizontalFormInput label="Comment" field={ comment } />
     <HorizontalDatePicker label="Date" field={ date } />
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+      </Col>
+    </FormGroup>
   </Form>
 )
 
@@ -34,5 +38,5 @@ TransactionForm.propTypes = {
 
 export default reduxForm({
   form: 'transaction-form',
-  fields: ['amount', 'categoryId', 'customerId', 'bankAccountId', 'comment', 'date'],
+  fields: ['amount', 'category', 'customer', 'bankAccount', 'comment', 'date'],
 })(TransactionForm)
