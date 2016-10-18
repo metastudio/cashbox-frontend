@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import ApiHelpers from 'actions/_api_helpers'
 
-import { Alert, Form, Button } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 import { HorizontalFormInput, HorizontalAsyncSelect } from 'components/utils/form-inputs'
 
 const getOptions = () => {
@@ -15,8 +15,12 @@ const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, sub
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
-    <HorizontalAsyncSelect label="Currency" field={ defaultCurrency } loadOptions={ () => getOptions() }/>
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+    <HorizontalAsyncSelect label="Currency" field={ defaultCurrency } loadOptions={ getOptions }/>
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+      </Col>
+    </FormGroup>
   </Form>
 )
 

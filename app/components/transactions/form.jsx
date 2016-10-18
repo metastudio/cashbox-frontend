@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import ApiHelpers from 'actions/_api_helpers'
 
-import { Alert, Form, Button } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs'
 
 const getOptions = (orgId, input) => {
@@ -20,7 +20,11 @@ const TransactionForm = ({ fields: { amount, categoryId, customerId, bankAccount
     <HorizontalAsyncSelect label="Bank account" field={ bankAccountId } loadOptions={ () => getOptions(orgId, 'bank_accounts') }/>
     <HorizontalFormInput label="Comment" field={ comment } />
     <HorizontalDatePicker label="Date" field={ date } />
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
+      </Col>
+    </FormGroup>
   </Form>
 )
 
