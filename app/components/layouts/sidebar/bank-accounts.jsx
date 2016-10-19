@@ -25,32 +25,36 @@ class BankAccounts extends React.Component {
       )
     )
 
-    return (
-      <LoadingView status={ this.props.status }>
-        { this.props.status == statuses.SUCCESS &&
-          <div>
-            <h2><center>Accounts</center></h2>
-            <Table striped responsive id="bankAccounts">
-              <tbody>
-                { bankAccounts }
-              </tbody>
-            </Table>
-          </div>
-        }
-      </LoadingView>
-    )
+    if (this.props.orgId) {
+      return (
+        <LoadingView status={ this.props.status }>
+          { this.props.status == statuses.SUCCESS &&
+            <div>
+              <h2><center>Accounts</center></h2>
+              <Table striped responsive id="bankAccounts">
+                <tbody>
+                  { bankAccounts }
+                </tbody>
+              </Table>
+            </div>
+          }
+        </LoadingView>
+      )
+    } else {
+      return null
+    }
   }
 }
 
 BankAccounts.propTypes = {
-  orgId:            React.PropTypes.number.isRequired,
+  orgId:            React.PropTypes.number,
   loadBankAccounts: React.PropTypes.func.isRequired,
   status:           React.PropTypes.string.isRequired,
   bankAccounts:     React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 }
 
 const select = (state) => ({
-  orgId:        state.currentOrganization.current.id,
+  orgId:        state.currentOrganization.current ? state.currentOrganization.current.id : null,
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 })
