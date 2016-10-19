@@ -3,10 +3,9 @@ import React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
 
 import MainMenu from 'components/layouts/main-menu'
+import Sidebar from 'components/layouts/sidebar'
 import Footer from 'components/layouts/footer'
 import FlashMessages from 'components/shared/flash-messages'
-
-import BankAccounts from 'components/bank-accounts'
 
 const AppLayout = ({children}) => (
   <div>
@@ -18,8 +17,7 @@ const AppLayout = ({children}) => (
           { children }
         </Col>
         <Col xs={6} md={4}>
-          <h2><center>Accounts</center></h2>
-          <BankAccounts />
+          <Sidebar />
         </Col>
       </Row>
     </Grid>

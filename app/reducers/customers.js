@@ -1,4 +1,4 @@
-import * as types from 'constants/bank-accounts-action-types'
+import * as types from 'constants/customers-action-types'
 import * as statuses from 'constants/statuses'
 
 const defaultState = {
@@ -11,31 +11,31 @@ export default (state = defaultState, action) => {
   const { type, payload } = action
 
   switch(type) {
-    case types.LOAD_BANK_ACCOUNTS_REQUEST:
+    case types.LOAD_CUSTOMERS_REQUEST:
       return {
         ...state,
         items:  [],
         status: statuses.PENDING,
         error:  null,
       }
-    case types.LOAD_BANK_ACCOUNTS_SUCCESS:
+    case types.LOAD_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        items:  payload.bankAccounts,
+        items:  payload.customers,
         status: statuses.SUCCESS,
         error:  null,
       }
-    case types.LOAD_BANK_ACCOUNTS_FAILURE:
+    case types.LOAD_CUSTOMERS_FAILURE:
       return {
         ...state,
         items:  [],
         status: statuses.FAILURE,
         error:  payload
       }
-    case types.DELETE_BANK_ACCOUNT_SUCCESS:
+    case types.DELETE_CUSTOMER_SUCCESS:
       return {
         ...state,
-        items:  state.items.filter((item) => item.id != payload.bankAccount.id),
+        items:  state.items.filter((item) => item.id != payload.customer.id),
         status: statuses.SUCCESS,
         error:  null,
       }
