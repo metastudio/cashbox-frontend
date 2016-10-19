@@ -9,7 +9,7 @@ let CustomerForm = ({ fields: { name, invoiceDetails }, handleSubmit, submitting
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
-    <HorizontalFormInput label="invoiceDetails" field={ invoiceDetails } />
+    <HorizontalFormInput componentClass="textarea" label="invoiceDetails" field={ invoiceDetails } />
     <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
   </Form>
 )

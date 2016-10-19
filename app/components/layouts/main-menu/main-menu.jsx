@@ -1,53 +1,86 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
 import Balances from 'components/balances/balances.jsx'
 import LogoutItem from './logout-item.jsx'
-import MembersItem from './members-item.jsx'
-import BankAccountsItem from './bank-accounts-item.jsx'
-import CategoriesItem from './categories-item.jsx'
-import CustomersItem from './customers-item.jsx'
 
-const MainMenu = () => (
-  <Navbar fluid>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <Link to="/" onlyActiveOnIndex>Cashbox</Link>
-      </Navbar.Brand>
-    </Navbar.Header>
+class MainMenu extends Component {
 
-    <Nav>
-      <LinkContainer to="/" onlyActiveOnIndex>
-        <NavItem>Dashboard</NavItem>
-      </LinkContainer>
-    </Nav>
+  render() {
 
-    <Nav>
-      <NavDropdown title="Organizations" id="organizations-nav-dropdown">
-        <LinkContainer to="/organizations/select" onlyActiveOnIndex>
-          <MenuItem>Select</MenuItem>
-        </LinkContainer>
-        <CustomersItem />
-        <BankAccountsItem />
-        <CategoriesItem />
-        <MembersItem />
-      </NavDropdown>
-    </Nav>
+    const organizationItems = () => {
+      if (this.props.currentOrganization) {
+        return (
+          <Nav>
+            <NavDropdown title={this.props.currentOrganization.name} id="organizations-nav-dropdown">
+              <LinkContainer to="/organizations/select" onlyActiveOnIndex>
+                <MenuItem>Select</MenuItem>
+              </LinkContainer>
+              <LinkContainer to="/customers">
+                <NavItem>Customers</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/categories">
+                <NavItem>Categories</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/bank_accounts">
+                <NavItem>Bank accounts</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/members">
+                <NavItem>Members</NavItem>
+              </LinkContainer>
+            </NavDropdown>
+          </Nav>
+        )
+      } else {
+        return (
+          <Nav>
+            <NavDropdown title="Organizations" id="organizations-nav-dropdown">
+              <LinkContainer to="/organizations/select" onlyActiveOnIndex>
+                <MenuItem>Select</MenuItem>
+              </LinkContainer>
+            </NavDropdown>
+          </Nav>
+        )
+      }
+    }
 
-    <Nav>
-      <Balances />
-    </Nav>
+    return (
+      <Navbar fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/" onlyActiveOnIndex>Cashbox</Link>
+          </Navbar.Brand>
+        </Navbar.Header>
 
-    <Nav pullRight>
-      { /* TODO show organization name */ }
-    </Nav>
+        <Nav>
+          <LinkContainer to="/" onlyActiveOnIndex>
+            <NavItem>Dashboard</NavItem>
+          </LinkContainer>
+        </Nav>
 
-    <Nav pullRight>
-      <LogoutItem />
-    </Nav>
-  </Navbar>
-)
+        { organizationItems() }
 
-export default MainMenu
+        <Nav>
+          <Balances />
+        </Nav>
+
+        <Nav pullRight>
+          <LogoutItem />
+        </Nav>
+      </Navbar>
+    )
+  }
+}
+
+MainMenu.propTypes = {
+  currentOrganization: PropTypes.object,
+}
+
+const select = (state) => ({
+  currentOrganization: state.currentOrganization.current
+})
+
+export default connect(select, null)(MainMenu)

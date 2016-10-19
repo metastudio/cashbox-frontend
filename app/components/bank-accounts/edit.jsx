@@ -21,7 +21,7 @@ class EditBankAccount extends React.Component {
     loadBankAccount(orgId, this.props.params.bankAccountId).then(
       ({error, payload}) => {
         if (error) {
-          this.props.addFlashMessage('Bank account not found.')
+          this.props.addFlashMessage('Unable to load bank account. ' + payload, { type: 'danger' })
           this.props.redirectToBankAccounts()
         } else {
           payload

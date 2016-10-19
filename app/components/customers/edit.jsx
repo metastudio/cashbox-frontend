@@ -21,7 +21,7 @@ class EditCustomer extends React.Component {
     loadCustomer(orgId, this.props.params.customerId).then(
       ({error, payload}) => {
         if (error) {
-          this.props.addFlashMessage('Customer not found.')
+          this.props.addFlashMessage('Unable to load customer. ' + payload, { type: 'danger' })
           this.props.redirectToCustomers()
         } else {
           payload

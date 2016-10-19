@@ -2,13 +2,11 @@ import React from 'react'
 import * as statuses from 'constants/statuses'
 
 import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
-import { Link } from 'react-router'
-import { Table, Button } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
 
-import { loadMembers, deleteMember, addFlashMessage } from 'actions'
+import { loadMembers, addFlashMessage } from 'actions'
 
 class Members extends React.Component {
   componentDidMount() {
@@ -62,8 +60,8 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  loadMembers:         (organizationId) => dispatch(loadMembers(organizationId)),
-  addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),
+  loadMembers:     (organizationId) => dispatch(loadMembers(organizationId)),
+  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
 export default connect(select, dispatcher)(Members)

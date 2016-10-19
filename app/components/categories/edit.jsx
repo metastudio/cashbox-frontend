@@ -21,7 +21,7 @@ class EditCategory extends React.Component {
     loadCategory(orgId, this.props.params.categoryId).then(
       ({error, payload}) => {
         if (error) {
-          this.props.addFlashMessage('Category not found.')
+          this.props.addFlashMessage('Unable to load category. ' + payload, { type: 'danger' })
           this.props.redirectToCategories()
         } else {
           payload
