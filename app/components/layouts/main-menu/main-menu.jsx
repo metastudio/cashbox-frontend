@@ -6,6 +6,7 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import Balances from 'components/balances/balances.jsx'
 import LogoutItem from './logout-item.jsx'
 import CategoriesItem from './categories-item.jsx'
+import CustomersItem from './customers-item.jsx'
 
 const MainMenu = () => (
   <Navbar fluid>
@@ -26,6 +27,7 @@ const MainMenu = () => (
         <LinkContainer to="/organizations/select" onlyActiveOnIndex>
           <MenuItem>Select</MenuItem>
         </LinkContainer>
+        <CustomersItem />
         <CategoriesItem />
       </NavDropdown>
     </Nav>
