@@ -21,6 +21,10 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+import MembersScene from 'components/members'
+import BankAccountsScene from 'components/bank-accounts'
+import CategoriesScene from 'components/categories'
+import CustomersScene from 'components/customers'
 
 const reducer = combineReducers({
   ...reducers,
@@ -55,6 +59,24 @@ render((
             <IndexRedirect to="select" />
             <Route path="select" component={OrganizationsScene.SelectOrganization} />
             <Route path="new" component={OrganizationsScene.NewOrganization} />
+          </Route>
+          <Route path="members" component={MembersScene}>
+            <IndexRoute component={MembersScene.Members} />
+          </Route>
+          <Route path="bank_accounts" component={BankAccountsScene}>
+            <IndexRoute component={BankAccountsScene.BankAccounts} />
+            <Route path="new" component={BankAccountsScene.NewBankAccount} />
+            <Route path=":bankAccountId/edit" component={BankAccountsScene.EditBankAccount} />
+          </Route>
+          <Route path="categories" component={CategoriesScene}>
+            <IndexRoute component={CategoriesScene.Categories} />
+            <Route path="new" component={CategoriesScene.NewCategory} />
+            <Route path=":categoryId/edit" component={CategoriesScene.EditCategory} />
+          </Route>
+          <Route path="customers" component={CustomersScene}>
+            <IndexRoute component={CustomersScene.Customers} />
+            <Route path="new" component={CustomersScene.NewCustomer} />
+            <Route path=":customerId/edit" component={CustomersScene.EditCustomer} />
           </Route>
         </Route>
       </Router>
