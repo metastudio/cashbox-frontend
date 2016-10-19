@@ -59,10 +59,6 @@ class MainMenu extends Component {
         </Nav>
 
         <Nav pullRight>
-          { /* TODO show organization name */ }
-        </Nav>
-
-        <Nav pullRight>
           <LogoutItem />
         </Nav>
       </Navbar>
