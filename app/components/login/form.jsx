@@ -1,20 +1,19 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 
-import { Alert, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
+import { HorizontalFormInput } from 'components/utils/form-inputs'
 
 const LoginForm = ({ fields: { email, password }, handleSubmit, submitting, error }) => (
-  <Form onSubmit={ handleSubmit }>
+  <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <FormGroup controlId="email">
-      <ControlLabel>Email address</ControlLabel>
-      <FormControl type="email" placeholder="Enter email" {...email} />
+    <HorizontalFormInput label="Email address" placeholder="Enter email" field={ email } />
+    <HorizontalFormInput label="Password" placeholder="Enter password" type="password" field={ password } />
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Login</Button>
+      </Col>
     </FormGroup>
-    <FormGroup controlId="password">
-      <ControlLabel>Password</ControlLabel>
-      <FormControl type="password" placeholder="Enter password" {...password} />
-    </FormGroup>
-    <button type="submit" className="btn btn-primary center-block" disabled={ submitting }>Login</button>
   </Form>
 )
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
+import Balances from 'components/balances/balances.jsx'
 import LogoutItem from './logout-item.jsx'
 import CategoriesItem from './categories-item.jsx'
 
@@ -27,6 +28,10 @@ const MainMenu = () => (
         </LinkContainer>
         <CategoriesItem />
       </NavDropdown>
+    </Nav>
+
+    <Nav>
+      <Balances />
     </Nav>
 
     <Nav pullRight>
