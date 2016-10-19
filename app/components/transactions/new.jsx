@@ -19,9 +19,9 @@ class NewTransaction extends React.Component {
     return new Promise((resolve, reject) => {
       createTransaction(orgId, {
         amount: values.amount,
-        categoryId: values.categoryId,
-        customerId: values.customerId,
-        bankAccountId: values.bankAccountId,
+        categoryId: values.category,
+        customerId: values.customer,
+        bankAccountId: values.bankAccount,
         comment: values.comment,
         date: values.date,
       }).then(({error, payload}) => error ? reject(payload) : resolve())
