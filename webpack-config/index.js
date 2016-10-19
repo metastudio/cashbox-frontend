@@ -6,6 +6,7 @@ module.exports = {
   devTools:        require('./dev-tools'),
   hotReload:       require('./hot-reload'),
   babelLoader:     require('./babel-loader'),
+  jqueryLoader:    require('./jquery-loader'),
   stylesLoader:    require('./styles-loader'),
   stylesDevLoader: require('./styles-dev-loader'),
   fontsLoader:     require('./fonts-loader'),

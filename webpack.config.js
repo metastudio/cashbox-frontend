@@ -42,6 +42,7 @@ var config = merge(
   WebpackConfig.vendor(),
   WebpackConfig.indexHtml(PATHS.app),
   WebpackConfig.babelLoader(),
+  WebpackConfig.jqueryLoader(),
   WebpackConfig.fontsLoader(),
   WebpackConfig.imagesLoader(),
   WebpackConfig.config(),

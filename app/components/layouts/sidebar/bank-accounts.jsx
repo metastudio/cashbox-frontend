@@ -13,7 +13,9 @@ class BankAccounts extends React.Component {
 
   componentDidMount() {
     const { orgId, loadBankAccounts } = this.props
-    loadBankAccounts(orgId)
+    if (orgId) {
+      loadBankAccounts(orgId)
+    }
   }
 
   render() {

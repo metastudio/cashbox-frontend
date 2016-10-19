@@ -17,7 +17,7 @@ let BankAccountForm = ({ fields: { name, description, invoiceDetails, currency }
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
     <HorizontalFormInput label="Description" field={ description } />
-    <HorizontalFormInput label="Invoice Details" field={ invoiceDetails } />
+    <HorizontalFormInput componentClass="textarea" label="Invoice Details" field={ invoiceDetails } />
     <HorizontalAsyncSelect label="Currency" field={ currency } loadOptions={ () => getOptions() }/>
     <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
   </Form>
