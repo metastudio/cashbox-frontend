@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
-import { createBankAccount, addFlashMessage } from 'actions'
+import { createBankAccount, clearBankAccount, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
@@ -12,6 +12,10 @@ class NewBankAccount extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.afterCreate  = this.afterCreate.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.clearBankAccount()
   }
 
   handleSubmit(values) {
@@ -47,6 +51,7 @@ class NewBankAccount extends React.Component {
 NewBankAccount.propTypes = {
   orgId:                  React.PropTypes.number.isRequired,
   createBankAccount:      React.PropTypes.func.isRequired,
+  clearBankAccount:       React.PropTypes.func.isRequired,
   redirectToBankAccounts: React.PropTypes.func.isRequired,
   addFlashMessage:        React.PropTypes.func.isRequired,
 }
@@ -57,6 +62,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   createBankAccount:      (orgId, data) => dispatch(createBankAccount(orgId, data)),
+  clearBankAccount:       () => dispatch(clearBankAccount()),
   redirectToBankAccounts: () => dispatch(routeActions.push('/bank_accounts')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

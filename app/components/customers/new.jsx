@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
-import { createCustomer, addFlashMessage } from 'actions'
+import { createCustomer, clearCustomer, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
@@ -12,6 +12,10 @@ class NewCustomer extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.afterCreate  = this.afterCreate.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.clearCustomer()
   }
 
   handleSubmit(values) {
@@ -45,6 +49,7 @@ class NewCustomer extends React.Component {
 NewCustomer.propTypes = {
   orgId:               React.PropTypes.number.isRequired,
   createCustomer:      React.PropTypes.func.isRequired,
+  clearCustomer:       React.PropTypes.func.isRequired,
   redirectToCustomers: React.PropTypes.func.isRequired,
   addFlashMessage:     React.PropTypes.func.isRequired,
 }
@@ -55,6 +60,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   createCustomer:      (orgId, data) => dispatch(createCustomer(orgId, data)),
+  clearCustomer:       () => dispatch(clearCustomer()),
   redirectToCustomers: () => dispatch(routeActions.push('/customers')),
   addFlashMessage:     (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

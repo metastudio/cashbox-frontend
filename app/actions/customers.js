@@ -125,3 +125,9 @@ export function deleteCustomer(organizationId, customerId) {
     }
   }
 }
+
+export function clearCustomer() {
+  return {
+    type: types.CLEAR_CUSTOMER,
+  }
+}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
-import { createCategory, addFlashMessage } from 'actions'
+import { createCategory, clearCategory, addFlashMessage } from 'actions'
 
 import Form from './form.jsx'
 
@@ -12,6 +12,10 @@ class NewCategory extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.afterCreate  = this.afterCreate.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.clearCategory()
   }
 
   handleSubmit(values) {
@@ -45,6 +49,7 @@ class NewCategory extends React.Component {
 NewCategory.propTypes = {
   orgId:                React.PropTypes.number.isRequired,
   createCategory:       React.PropTypes.func.isRequired,
+  clearCategory:        React.PropTypes.func.isRequired,
   redirectToCategories: React.PropTypes.func.isRequired,
   addFlashMessage:      React.PropTypes.func.isRequired,
 }
@@ -55,6 +60,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   createCategory:       (orgId, data) => dispatch(createCategory(orgId, data)),
+  clearCategory:        () => dispatch(clearCategory()),
   redirectToCategories: () => dispatch(routeActions.push('/categories')),
   addFlashMessage:      (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

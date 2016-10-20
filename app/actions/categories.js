@@ -125,3 +125,9 @@ export function deleteCategory(organizationId, categoryId) {
     }
   }
 }
+
+export function clearCategory() {
+  return {
+    type: types.CLEAR_CATEGORY,
+  }
+}

@@ -32,6 +32,13 @@ export default (state = defaultState, action) => {
         status:  statuses.FAILURE,
         error:   payload,
       }
+    case types.CLEAR_CUSTOMER:
+      return {
+        ...state,
+        current: null,
+        status:  statuses.INVALID,
+        error:   null,
+      }
     default:
       return state
   }

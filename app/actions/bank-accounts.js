@@ -125,3 +125,9 @@ export function deleteBankAccount(organizationId, bankAccountId) {
     }
   }
 }
+
+export function clearBankAccount() {
+  return {
+    type: types.CLEAR_BANK_ACCOUNT,
+  }
+}
