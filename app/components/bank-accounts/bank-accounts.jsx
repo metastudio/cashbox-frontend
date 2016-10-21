@@ -1,13 +1,15 @@
 import React from 'react'
-import * as statuses from 'constants/statuses'
-
 import { connect } from 'react-redux'
-
 import { Table } from 'react-bootstrap'
 
-import LoadingView from 'components/utils/loading-view'
+import * as statuses from 'constants/statuses'
 
 import { loadBankAccounts } from 'actions'
+
+import { getCurrentOragnizationId } from 'selectors'
+
+
+import LoadingView from 'components/utils/loading-view'
 
 class BankAccounts extends React.Component {
 
@@ -47,7 +49,7 @@ BankAccounts.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:        state.currentOrganization.current.id,
+  orgId:        getCurrentOragnizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 })
