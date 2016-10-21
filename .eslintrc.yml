@@ -35,5 +35,8 @@ rules:
     - never
   no-unused-vars:
     - warn
+    -
+      varsIgnorePattern: "^_"
+      argsIgnorePattern: "^_"
   no-console:
     - warn
