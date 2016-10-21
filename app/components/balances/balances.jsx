@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 
-import { loadBalances, addFlashMessage } from 'actions'
+import { loadOrganizationBalances, addFlashMessage } from 'actions'
 import { getCurrentOrganizationId } from 'selectors'
 
 class Balances extends React.Component {
@@ -59,7 +59,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  loadBalances:    (organizationId) => dispatch(loadBalances(organizationId)),
+  loadBalances:    (organizationId) => dispatch(loadOrganizationBalances(organizationId)),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
