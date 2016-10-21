@@ -1,112 +1,20 @@
-import humps from 'humps'
+import { createAction } from 'redux-actions'
+import { noop } from 'lodash'
 
-import ApiHelpers from './_api_helpers'
+export const loadOrganizations        = createAction('LOAD_ORGANIZATIONS')
+export const loadOrganizationsRequest = createAction('LOAD_ORGANIZATIONS_REQUEST')
+export const loadOrganizationsSuccess = createAction('LOAD_ORGANIZATIONS_SUCCESS', (organizations) => ({ organizations }))
+export const loadOrganizationsFailure = createAction('LOAD_ORGANIZATIONS_FAILURE')
 
-import * as types from 'constants/organizations-action-types'
+export const createOrganization        = createAction('CREATE_ORGANIZATION',         (data) => ({ data }), (_, resolve = noop, reject = noop) => ({ resolve, reject }))
+export const createOrganizationRequest = createAction('CREATE_ORGANIZATION_REQUEST')
+export const createOrganizationSuccess = createAction('CREATE_ORGANIZATION_SUCCESS', (organization) => ({ organization }))
+export const createOrganizationFailure = createAction('CREATE_ORGANIZATION_FAILURE')
 
-import { CALL_API, getJSON } from 'redux-api-middleware'
-import { getCookies, setCookies } from 'utils/cookies'
+export const loadOrganization        = createAction('LOAD_ORGANIZATION',         (organizationId) => ({ organizationId }))
+export const loadOrganizationRequest = createAction('LOAD_ORGANIZATION_REQUEST', (organizationId) => ({ organizationId }))
+export const loadOrganizationSuccess = createAction('LOAD_ORGANIZATION_SUCCESS', (organizationId, organization) => ({ organizationId, organization }))
+export const loadOrganizationFailure = createAction('LOAD_ORGANIZATION_FAILURE')
 
-const ORGANIZATIONS_ENDPOINT = '/api/organizations'
-
-export function loadOrganizations() {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(ORGANIZATIONS_ENDPOINT),
-      method:   'GET',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.LOAD_ORGANIZATIONS_REQUEST,
-        {
-          type: types.LOAD_ORGANIZATIONS_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ organizations: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.LOAD_ORGANIZATIONS_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function createOrganization(data) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(ORGANIZATIONS_ENDPOINT),
-      method:   'POST',
-      headers:  ApiHelpers.headers,
-      body:     ApiHelpers.formatJsonBody({ organization: data }),
-      types: [
-        types.CREATE_ORGANIZATION_REQUEST,
-        {
-          type: types.CREATE_ORGANIZATION_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ organization: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.CREATE_ORGANIZATION_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function loadOrganization(organizationId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(ORGANIZATIONS_ENDPOINT + '/' + organizationId),
-      method:   'GET',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.LOAD_ORGANIZATION_REQUEST,
-        {
-          type: types.LOAD_ORGANIZATION_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ organization: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.LOAD_ORGANIZATION_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function setCurrentOrganization(organizationId) {
-  return (dispatch) => {
-    dispatch({ type: types.SET_CURRENT_ORGANIZATION_REQUEST })
-    return dispatch(loadOrganization(organizationId)).then((actionResponse) => {
-      if (actionResponse.error) {
-        return dispatch({ ...actionResponse, type: types.SET_CURRENT_ORGANIZATION_FAILURE })
-      }
-      const currentOrganizationId = actionResponse.payload.organization.id
-      setCookies({ currentOrganizationId: currentOrganizationId })
-      return dispatch({ type: types.SET_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
-    })
-  }
-}
-
-export function restoreCurrentOrganization() {
-  return (dispatch) => {
-    dispatch({ type: types.SET_CURRENT_ORGANIZATION_REQUEST })
-    const currentOrganizationId = getCookies().currentOrganizationId
-    if (currentOrganizationId) {
-      return dispatch(loadOrganization(currentOrganizationId)).then((actionResponse) => {
-        if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.SET_CURRENT_ORGANIZATION_FAILURE })
-        }
-
-        return dispatch({ type: types.SET_CURRENT_ORGANIZATION_SUCCESS, payload: { organization: actionResponse.payload.organization } })
-      })
-    } else {
-      return dispatch({ type: types.SET_CURRENT_ORGANIZATION_FAILURE, error: true, payload: {_error: 'Current organization not found'} })
-    }
-  }
-}
+export const setCurrentOrganization        = createAction('SET_CURRENT_ORGANIZATION',         (organization) => ({ organization }), (_, resolve = noop, reject = noop) => ({ resolve, reject }))
+export const setCurrentOrganizationSuccess = createAction('SET_CURRENT_ORGANIZATION_SUCCESS', (organization) => ({ organization }))

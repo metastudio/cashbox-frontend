@@ -6,7 +6,7 @@ import * as statuses from 'constants/statuses'
 
 import { loadBankAccounts } from 'actions'
 
-import { getCurrentOragnizationId } from 'selectors'
+import { getCurrentOrganizationId } from 'selectors'
 
 
 import LoadingView from 'components/utils/loading-view'
@@ -49,7 +49,7 @@ BankAccounts.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:        getCurrentOragnizationId(state),
+  orgId:        getCurrentOrganizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 })

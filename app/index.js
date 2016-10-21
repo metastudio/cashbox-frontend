@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { render } from 'react-dom'
@@ -10,6 +12,7 @@ import promiseMiddleware from 'redux-promise'
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
 import { apiMiddleware } from 'redux-api-middleware'
+import createSagaMiddleware from 'redux-saga'
 
 import * as reducers from 'reducers'
 
@@ -22,6 +25,8 @@ import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
 
+import rootSaga from 'sagas'
+
 const reducer = combineReducers({
   ...reducers,
   routing: routeReducer,
@@ -30,16 +35,20 @@ const reducer = combineReducers({
 
 const logger = createLogger()
 const reduxRouterMiddleware = syncHistory(browserHistory)
+const sagaMiddleware = createSagaMiddleware()
 
 const createStoreWithMiddleware = applyMiddleware(
   reduxRouterMiddleware,
   thunkMiddleware,
   promiseMiddleware,
   apiMiddleware,
+  sagaMiddleware,
   logger // TODO disable in prod
 )(createStore)
 
 const store = createStoreWithMiddleware(reducer)
+
+sagaMiddleware.run(rootSaga)
 
 render((
   <IntlProvider locale={navigator.language}>

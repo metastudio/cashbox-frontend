@@ -5,6 +5,7 @@ import moment from 'moment'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 
 import { loadBalances, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class Balances extends React.Component {
 
@@ -50,7 +51,7 @@ Balances.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:           state.currentOrganization.current ? state.currentOrganization.current.id : null,
+  orgId:           getCurrentOrganizationId(state),
   totalAmount:     state.balances.totalAmount,
   defaultCurrency: state.balances.defaultCurrency,
   balances:        state.balances.totals,

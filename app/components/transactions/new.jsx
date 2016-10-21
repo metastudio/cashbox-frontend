@@ -4,6 +4,7 @@ import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
 import { createTransaction, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -54,7 +55,7 @@ NewTransaction.propTypes = {
 }
 
 const select = (state) => ({
-  orgId: state.currentOrganization.current.id,
+  orgId: getCurrentOrganizationId(state),
 })
 
 const dispatcher = (dispatch) => ({

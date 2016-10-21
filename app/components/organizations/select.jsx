@@ -1,5 +1,4 @@
 import React from 'react'
-import * as statuses from 'constants/statuses'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routeActions } from 'react-router-redux'
@@ -19,16 +18,12 @@ class SelectOrganization extends React.Component {
   }
 
   handleOrganizationClick(organization) {
-    this.props.setOrganization(organization.id).then(
-      ({error}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to select organization.', { type: 'danger' })
-        } else {
-          this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
-          this.props.redirectToRootPage()
-        }
-      }
-    )
+    this.props.setOrganization(organization).then(organization => {
+      this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
+      this.props.redirectToRootPage()
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to select organization: ${error.message}`, { type: 'danger' })
+    })
   }
 
   render() {
@@ -71,7 +66,7 @@ const select = (state) => ({
 const dispatcher = (dispatch) => ({
   loadOrganizations:  () => dispatch(loadOrganizations()),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
-  setOrganization:    (orgId) => dispatch(setCurrentOrganization(orgId)),
+  setOrganization:    (orgId) => new Promise((res, rej) => dispatch(setCurrentOrganization(orgId, res, rej))),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 

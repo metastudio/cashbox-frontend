@@ -9,6 +9,7 @@ import LoadingView from 'components/utils/loading-view'
 import NewTransaction from './new.jsx'
 
 import { loadTransactions, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class Transactions extends React.Component {
 
@@ -64,7 +65,7 @@ Transactions.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:        state.currentOrganization.current.id,
+  orgId:        getCurrentOrganizationId(state),
   transactions: state.transactions.items,
   status:       state.transactions.status,
 })
