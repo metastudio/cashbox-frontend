@@ -28,8 +28,9 @@ class LogoutItem extends Component {
 
   handleClick(e) {
     e.preventDefault()
-    this.props.logout()
-    this.props.addFlashMessage('You successfully signed out.')
+    this.props.logout().then(() => {
+      this.props.addFlashMessage('You successfully signed out.')
+    })
   }
 
   render() {
@@ -53,7 +54,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  logout:          () => dispatch(logoutUser()),
+  logout:          () => new Promise((res, rej) => dispatch(logoutUser(res, rej))),
   afterLogout:     () => dispatch(routeActions.push('/login')),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
