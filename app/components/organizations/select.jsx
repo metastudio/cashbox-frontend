@@ -6,6 +6,7 @@ import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { loadOrganizations, setCurrentOrganization, addFlashMessage } from 'actions'
+import { getOrganizationsItems } from 'selectors'
 
 class SelectOrganization extends React.Component {
   constructor(props) {
@@ -42,7 +43,9 @@ class SelectOrganization extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Link to="/organizations/new" className="btn btn-primary">New Organization</Link>
+            <p className="text-center">
+              Select an organization or <Link to="/organizations/new">create a new one</Link>.
+            </p>
             <ListGroup id="organizations">
               { organizations }
             </ListGroup>
@@ -62,13 +65,13 @@ SelectOrganization.propTypes = {
 }
 
 const select = (state) => ({
-  organizations: state.organizations.items,
+  organizations: getOrganizationsItems(state),
 })
 
 const dispatcher = (dispatch) => ({
   loadOrganizations:  () => dispatch(loadOrganizations()),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
-  setOrganization:    (organizationId) => dispatch(setCurrentOrganization(organizationId)),
+  setOrganization:    (orgId) => dispatch(setCurrentOrganization(orgId)),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
