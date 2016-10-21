@@ -16,11 +16,9 @@ class NewOrganization extends React.Component {
 
   handleSubmit(values) {
     const { createOrganization } = this.props
-    return new Promise((resolve, reject) => {
-      createOrganization({
-        name: values.name,
-        defaultCurrency: values.defaultCurrency
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return createOrganization({
+      name: values.name,
+      defaultCurrency: values.defaultCurrency
     })
   }
 
@@ -49,7 +47,7 @@ NewOrganization.propTypes = {
 }
 
 const dispatcher = (dispatch) => ({
-  createOrganization: (data) => dispatch(createOrganization(data)),
+  createOrganization: (data) => new Promise((res, rej) => dispatch(createOrganization(data, res, rej))),
   redirectToSelect:   () => dispatch(routeActions.push('/organizations/select')),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

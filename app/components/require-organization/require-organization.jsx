@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
 import { addFlashMessage } from 'actions'
+import { getHasCurrentOrganization } from 'selectors'
 
 class RequireOrganization extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ RequireOrganization.propTypes = {
 }
 
 const select = (state) => ({
-  hasOrganization: !!state.currentOrganization.current,
+  hasOrganization: getHasCurrentOrganization(state),
 })
 
 const dispatches = (dispatch) => ({

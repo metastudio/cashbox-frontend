@@ -1,29 +1,19 @@
-import * as types from 'constants/organizations-action-types'
+import { handleActions, combineActions } from 'redux-actions'
+
+import {
+  setCurrentOrganizationSuccess,
+  restoreSessionSuccess
+} from 'actions'
 
 const defaultState = {
-  current: null,
+  id:   null,
+  data: null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.SET_CURRENT_ORGANIZATION_REQUEST:
-      return {
-        ...state,
-        current: null,
-      }
-    case types.SET_CURRENT_ORGANIZATION_SUCCESS:
-      return {
-        ...state,
-        current: payload.organization,
-      }
-    case types.SET_CURRENT_ORGANIZATION_FAILURE:
-      return {
-        ...state,
-        current: null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [combineActions(setCurrentOrganizationSuccess, restoreSessionSuccess)]: (state, { payload }) => ({
+    ...state,
+    id:   payload.organization && payload.organization.id,
+    data: payload.organization,
+  }),
+}, defaultState)

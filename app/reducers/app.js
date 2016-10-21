@@ -1,28 +1,24 @@
-import * as types from 'constants/auth-action-types'
+import { handleActions } from 'redux-actions'
+
+import {
+  restoreSessionRequest, restoreSessionSuccess, restoreSessionFailure
+} from 'actions'
 
 const defaultState = {
   isSessionLoaded: false
 }
 
-export default (state = defaultState, action) => {
-  switch(action.type) {
-    case types.SESSION_RESTORE_REQUEST:
-      return {
-        ...state,
-        isSessionLoaded: false
-      }
-    case types.SESSION_RESTORE_SUCCESS:
-      return {
-        ...state,
-        isSessionLoaded: true
-      }
-    case types.SESSION_RESTORE_FAILURE:
-      return {
-        ...state,
-        isSessionLoaded: true
-      }
-    default:
-      return state
-  }
-}
-
+export default handleActions({
+  [restoreSessionRequest]: (state) => ({
+    ...state,
+    isSessionLoaded: false
+  }),
+  [restoreSessionSuccess]: (state) => ({
+    ...state,
+    isSessionLoaded: true
+  }),
+  [restoreSessionFailure]: (state) => ({
+    ...state,
+    isSessionLoaded: true
+  }),
+}, defaultState)

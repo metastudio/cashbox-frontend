@@ -1,102 +1,15 @@
-import { CALL_API, getJSON } from 'redux-api-middleware'
+import { createAction } from 'redux-actions'
+import { noop } from 'lodash'
 
-import ApiHelpers from './_api_helpers'
+export const loginUser        = createAction('LOGIN_USER',         (email, password) => ({ email, password }), (_email, _password, resolve = noop, reject = noop) => ({ resolve, reject}))
+export const loginUserRequest = createAction('LOGIN_USER_REQUEST', (email) => ({ email }))
+export const loginUserSuccess = createAction('LOGIN_USER_SUCCESS', (email, token, user) => ({ email, token, user }))
+export const loginUserFailure = createAction('LOGIN_USER_FAILURE')
 
-import { getCookies, setCookies, clearCookies } from 'utils/cookies'
-import { loadCurrentUser, restoreCurrentOrganization } from 'actions'
+export const restoreSession        = createAction('RESTORE_SESSION', undefined, (resolve = noop, reject = noop) => ({ resolve, reject }))
+export const restoreSessionRequest = createAction('RESTORE_SESSION_REQUEST')
+export const restoreSessionSuccess = createAction('RESTORE_SESSION_SUCCESS', (token, user, organization) => ({ token, user, organization }))
+export const restoreSessionFailure = createAction('RESTORE_SESSION_FAILURE')
 
-import * as types from 'constants/auth-action-types'
-
-function getToken(email, password) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl('/api/auth_token'),
-      method:   'POST',
-      headers:  ApiHelpers.headers,
-      body:     ApiHelpers.formatJsonBody({ auth: { email: email || '', password: password || ''} }),
-      types: [
-        types.GET_TOKEN_REQUEST,
-        {
-          type: types.GET_TOKEN_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ token: json.jwt }))
-          }
-        },
-        {
-          type: types.GET_TOKEN_FAILURE,
-          payload: (action, state, res) => {
-            return {_error: (res.status == 401 ? 'Invalid login or password' : res.statusText) }
-          }
-        }
-      ]
-    }
-  }
-}
-
-export function loginUser(email, password) {
-  return (dispatch) => {
-    dispatch({ type: types.LOGIN_REQUEST })
-    return dispatch(getToken(email, password)).then((actionResponse) => {
-      if (actionResponse.error) {
-        return dispatch({ ...actionResponse, type: types.LOGIN_FAILURE })
-      }
-
-      const token = actionResponse.payload.token
-      setCookies({ token: token })
-      return dispatch(loadCurrentUser()).then((actionResponse) => {
-        if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.LOGIN_FAILURE })
-        }
-        return dispatch({ type: types.LOGIN_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
-      })
-    })
-  }
-}
-
-export function restoreUser() {
-  return (dispatch) => {
-    dispatch({ type: types.RESTORE_USER_REQUEST })
-    const token = getCookies().token
-    if (token) {
-      return dispatch(loadCurrentUser()).then((actionResponse) => {
-        if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.RESTORE_USER_FAILURE })
-        }
-
-        return dispatch({ type: types.RESTORE_USER_SUCCESS, payload: { token: token, user: actionResponse.payload.user } })
-      })
-    } else {
-      return dispatch({ type: types.RESTORE_USER_FAILURE, error: true, payload: {_error: 'Token not found'} })
-    }
-  }
-}
-
-export function restoreSession() {
-  return (dispatch) => {
-    dispatch({ type: types.SESSION_RESTORE_REQUEST })
-
-    return dispatch(restoreUser()).then((actionResponse) => {
-      if (actionResponse.error) {
-        return dispatch({ ...actionResponse, type: types.SESSION_RESTORE_FAILURE })
-      }
-      const token = actionResponse.payload.token
-      const user  = actionResponse.payload.user
-      return dispatch(restoreCurrentOrganization()).then((actionResponse) => {
-        if (actionResponse.error) {
-          return dispatch({ ...actionResponse, type: types.SESSION_RESTORE_FAILURE })
-        }
-        return dispatch({ type: types.SESSION_RESTORE_SUCCESS, payload: { token: token, user: user, currentOrganizationId: actionResponse.payload.organization.id } })
-      })
-    })
-
-  }
-}
-
-export function logoutUser() {
-  clearCookies()
-
-  return {
-    type: types.LOGOUT_SUCCESS,
-  }
-}
-
+export const logoutUser        = createAction('LOGOUT_USER', undefined, (resolve = noop, reject = noop) => ({ resolve, reject }))
+export const logoutUserSuccess = createAction('LOGOUT_USER_SUCCESS')

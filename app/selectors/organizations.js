@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
 
-export const getCurrentOragnization = state => state.currentOrganization.current
+export const getCurrentOrganization   = state => state.currentOrganization.data
+export const getCurrentOrganizationId = state => state.currentOrganization.id
 
-export const getCurrentOragnizationId = createSelector(getCurrentOragnization, organization => organization && organization.id)
+export const getHasCurrentOrganization = createSelector(getCurrentOrganization, org => !!org)
 
 export const getOrganizationsItems = state => state.organizations.items

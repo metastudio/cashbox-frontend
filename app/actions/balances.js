@@ -1,32 +1,6 @@
-import humps from 'humps'
+import { createAction } from 'redux-actions'
 
-import ApiHelpers from './_api_helpers'
-
-import * as types from 'constants/balances-action-types'
-
-import { CALL_API, getJSON } from 'redux-api-middleware'
-
-const balancesEndpoint = (orgId) => `/api/organizations/${orgId}/total_balances`
-
-export function loadBalances(organizationId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(balancesEndpoint(organizationId)),
-      method:   'GET',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.LOAD_ORGANIZATION_BALANCES_REQUEST,
-        {
-          type: types.LOAD_ORGANIZATION_BALANCES_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ balances: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.LOAD_ORGANIZATION_BALANCES_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
+export const loadOrganizationBalances        = createAction('LOAD_ORGANIZATION_BALANCES',         (organizationId) => ({ organizationId }))
+export const loadOrganizationBalancesRequest = createAction('LOAD_ORGANIZATION_BALANCES_REQUEST', (organizationId) => ({ organizationId }))
+export const loadOrganizationBalancesSuccess = createAction('LOAD_ORGANIZATION_BALANCES_SUCCESS', (organizationId, balances) => ({ organizationId, balances }))
+export const loadOrganizationBalancesFailure = createAction('LOAD_ORGANIZATION_BALANCES_FAILURE')
