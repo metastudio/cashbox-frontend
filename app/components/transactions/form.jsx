@@ -1,23 +1,39 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import ApiHelpers from 'actions/_api_helpers'
-
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
+
+import { getOrganizationCategories, getOrganizationCustomers, getOrganizationBankAccounts } from 'api'
+
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs'
 
-const getOptions = (orgId, input) => {
-  return fetch(ApiHelpers.formatUrl(`/api/organizations/${orgId}/${input}`), { method: 'GET', headers: ApiHelpers.headers() })
-    .then(response => response.json())
-    .then(json => ({ options: json.map(item => ({ value: item.id, label: item.name })) }))
+// TOOD: refactor to use actions and redux-saga
+const getCategoryOptions = (orgId) => {
+  return getOrganizationCategories(orgId).then((categories) => ({
+    options: categories.map(category => ({ value: category.id, label: category.name }))
+  }))
+}
+
+// TOOD: refactor to use actions and redux-saga
+const getCustomerOptions = (orgId) => {
+  return getOrganizationCustomers(orgId).then((customers) => ({
+    options: customers.map(customer => ({ value: customer.id, label: customer.name }))
+  }))
+}
+
+// TOOD: refactor to use actions and redux-saga
+const getBankAccountOptions = (orgId) => {
+  return getOrganizationBankAccounts(orgId).then((bankAccounts) => ({
+    options: bankAccounts.map(bankAccount => ({ value: bankAccount.id, label: bankAccount.name }))
+  }))
 }
 
 const TransactionForm = ({ fields: { amount, category, customer, bankAccount, comment, date }, handleSubmit, orgId, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalCurrencyInput label="Amount" field={ amount } />
-    <HorizontalAsyncSelect label="Category" field={ category } loadOptions={ () => getOptions(orgId, 'categories') }/>
-    <HorizontalAsyncSelect label="Customer name" field={ customer } loadOptions={ () => getOptions(orgId, 'customers') }/>
-    <HorizontalAsyncSelect label="Bank account" field={ bankAccount } loadOptions={ () => getOptions(orgId, 'bank_accounts') }/>
+    <HorizontalAsyncSelect label="Category" field={ category } loadOptions={ () => getCategoryOptions(orgId) }/>
+    <HorizontalAsyncSelect label="Customer name" field={ customer } loadOptions={ () => getCustomerOptions(orgId) }/>
+    <HorizontalAsyncSelect label="Bank account" field={ bankAccount } loadOptions={ () => getBankAccountOptions(orgId) }/>
     <HorizontalFormInput label="Comment" field={ comment } />
     <HorizontalDatePicker label="Date" field={ date } />
     <FormGroup>

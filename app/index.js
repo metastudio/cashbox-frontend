@@ -11,7 +11,6 @@ import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise'
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
-import { apiMiddleware } from 'redux-api-middleware'
 import createSagaMiddleware from 'redux-saga'
 
 import * as reducers from 'reducers'
@@ -41,7 +40,6 @@ const createStoreWithMiddleware = applyMiddleware(
   reduxRouterMiddleware,
   thunkMiddleware,
   promiseMiddleware,
-  apiMiddleware,
   sagaMiddleware,
   logger // TODO disable in prod
 )(createStore)
