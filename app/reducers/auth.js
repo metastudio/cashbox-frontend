@@ -1,9 +1,9 @@
 import { handleActions, combineActions } from 'redux-actions'
 
 import {
-  restoreSessionRequest, restoreSessionSuccess, restoreSessionFailure,
-  loginUserRequest,      loginUserSuccess,      loginUserFailure,
-  logoutUserSuccess,
+  restoreSession,
+  loginUser,
+  logoutUser,
 } from 'actions'
 
 const defaultState = {
@@ -12,22 +12,22 @@ const defaultState = {
 }
 
 export default handleActions({
-  [combineActions(restoreSessionRequest, loginUserRequest)]: (state) => ({
+  [combineActions(restoreSession.request, loginUser.request)]: (state) => ({
     ...state,
     token: null,
     user: null,
   }),
-  [combineActions(restoreSessionSuccess, loginUserSuccess)]: (state, { payload }) => ({
+  [combineActions(restoreSession.success, loginUser.success)]: (state, { payload }) => ({
     ...state,
     token: payload.token,
     user:  payload.user,
   }),
-  [combineActions(restoreSessionFailure, loginUserFailure)]: (state) => ({
+  [combineActions(restoreSession.failure, loginUser.failure)]: (state) => ({
     ...state,
     token:  null,
     user:   null,
   }),
-  [logoutUserSuccess]: (state) => ({
+  [logoutUser.success]: (state) => ({
     ...state,
     token:  null,
     user:   null,

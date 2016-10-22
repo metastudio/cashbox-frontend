@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions'
 import * as statuses from 'constants/statuses'
 
 import {
-  loadOrganizationBalancesRequest, loadOrganizationBalancesSuccess, loadOrganizationBalancesFailure,
+  loadOrganizationBalances,
 } from 'actions'
 
 const defaultState = {
@@ -15,7 +15,7 @@ const defaultState = {
 }
 
 export default handleActions({
-  [loadOrganizationBalancesRequest]: (state) => ({
+  [loadOrganizationBalances.request]: (state) => ({
     ...state,
     totalAmount:     null,
     defaultCurrency: null,
@@ -23,7 +23,7 @@ export default handleActions({
     status:          statuses.PENDING,
     error:           null,
   }),
-  [loadOrganizationBalancesSuccess]: (state, { payload }) => ({
+  [loadOrganizationBalances.success]: (state, { payload }) => ({
     ...state,
     totalAmount:     payload.balances.totalAmount,
     defaultCurrency: payload.balances.defaultCurrency,
@@ -31,7 +31,7 @@ export default handleActions({
     status:          statuses.SUCCESS,
     error:           null,
   }),
-  [loadOrganizationBalancesFailure]: (state, { payload }) => ({
+  [loadOrganizationBalances.failure]: (state, { payload }) => ({
     ...state,
     totalAmount:     null,
     defaultCurrency: null,
