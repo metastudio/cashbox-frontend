@@ -4,6 +4,7 @@ import authSaga          from './auth'
 import balancesSaga      from './balances'
 import bankAccountsSaga  from './bank-accounts'
 import organizationsSaga from './organizations'
+import transactionsSaga  from './transactions'
 
 export default function* rootSaga() {
   yield [
@@ -11,5 +12,6 @@ export default function* rootSaga() {
     fork(balancesSaga),
     fork(bankAccountsSaga),
     fork(organizationsSaga),
+    fork(transactionsSaga),
   ]
 }
