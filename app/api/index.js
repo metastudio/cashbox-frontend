@@ -1,5 +1,6 @@
 export * from './balances'
 export * from './bank-accounts'
+export * from './currencies'
 export * from './organizations'
 export * from './token'
 export * from './transactions'
