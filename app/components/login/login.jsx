@@ -24,10 +24,7 @@ class Login extends React.Component {
     const { login } = this.props
     const { email, password } = values
 
-    return new Promise((resolve, reject) => {
-
-      login(email, password).then(({error, payload}) => error ? reject(payload) : resolve())
-    })
+    return login(email, password)
   }
 
   afterLogin() {
@@ -56,7 +53,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  login:           (email, password) => dispatch(loginUser(email, password)),
+  login:           (email, password) => new Promise((res, rej) => dispatch(loginUser(email, password, res, rej))),
   redirectToRoot:  () => dispatch(routeActions.push('/')),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

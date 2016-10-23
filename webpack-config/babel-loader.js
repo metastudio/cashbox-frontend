@@ -4,7 +4,13 @@ module.exports = function () {
       loaders: [
         {
           test: /\.jsx?$/,
-          loader: 'babel?presets[]=es2015&presets[]=stage-2&presets[]=react',
+          loader: 'babel',
+          query: {
+            presets: ['es2015', 'stage-2', 'react'],
+            plugins: [
+              ['babel-plugin-transform-builtin-extend', { globals: ['Error', 'Array'] }]
+            ]
+          },
           exclude: /node_modules/,
         }
       ]

@@ -1,5 +1,10 @@
-import * as types from 'constants/organizations-action-types'
+import { handleActions } from 'redux-actions'
+
 import * as statuses from 'constants/statuses'
+
+import {
+  loadOrganizationsRequest, loadOrganizationsSuccess, loadOrganizationsFailure,
+} from 'actions'
 
 const defaultState = {
   items:  [],
@@ -7,32 +12,23 @@ const defaultState = {
   error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_ORGANIZATIONS_REQUEST:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.PENDING,
-        error:  null,
-      }
-    case types.LOAD_ORGANIZATIONS_SUCCESS:
-      return {
-        ...state,
-        items:  payload.organizations,
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    case types.LOAD_ORGANIZATIONS_FAILURE:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.FAILURE,
-        error:  payload
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadOrganizationsRequest]: (state) => ({
+    ...state,
+    items:  [],
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadOrganizationsSuccess]: (state, { payload }) => ({
+    ...state,
+    items:  payload.organizations,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadOrganizationsFailure]: (state, { payload }) => ({
+    ...state,
+    items:  [],
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+}, defaultState)

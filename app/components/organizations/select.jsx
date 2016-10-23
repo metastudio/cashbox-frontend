@@ -1,11 +1,11 @@
 import React from 'react'
-import * as statuses from 'constants/statuses'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { loadOrganizations, setCurrentOrganization, addFlashMessage } from 'actions'
+import { getOrganizationsItems } from 'selectors'
 
 class SelectOrganization extends React.Component {
   constructor(props) {
@@ -18,16 +18,12 @@ class SelectOrganization extends React.Component {
   }
 
   handleOrganizationClick(organization) {
-    this.props.setOrganization(organization.id).then(
-      ({error}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to select organization.', { type: 'danger' })
-        } else {
-          this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
-          this.props.redirectToRootPage()
-        }
-      }
-    )
+    this.props.setOrganization(organization).then(organization => {
+      this.props.addFlashMessage('Organization ' + organization.name + ' selected.')
+      this.props.redirectToRootPage()
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to select organization: ${error.message}`, { type: 'danger' })
+    })
   }
 
   render() {
@@ -42,7 +38,9 @@ class SelectOrganization extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Link to="/organizations/new" className="btn btn-primary">New Organization</Link>
+            <p className="text-center">
+              Select an organization or <Link to="/organizations/new">create a new one</Link>.
+            </p>
             <ListGroup id="organizations">
               { organizations }
             </ListGroup>
@@ -62,13 +60,13 @@ SelectOrganization.propTypes = {
 }
 
 const select = (state) => ({
-  organizations: state.organizations.items,
+  organizations: getOrganizationsItems(state),
 })
 
 const dispatcher = (dispatch) => ({
   loadOrganizations:  () => dispatch(loadOrganizations()),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
-  setOrganization:    (organizationId) => dispatch(setCurrentOrganization(organizationId)),
+  setOrganization:    (orgId) => new Promise((res, rej) => dispatch(setCurrentOrganization(orgId, res, rej))),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 

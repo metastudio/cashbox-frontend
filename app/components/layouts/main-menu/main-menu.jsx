@@ -80,7 +80,7 @@ MainMenu.propTypes = {
 }
 
 const select = (state) => ({
-  currentOrganization: state.currentOrganization.current
+  currentOrganization: state.currentOrganization.data
 })
 
 export default connect(select, null)(MainMenu)

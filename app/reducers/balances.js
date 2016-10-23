@@ -1,5 +1,10 @@
-import * as types from 'constants/balances-action-types'
+import { handleActions } from 'redux-actions'
+
 import * as statuses from 'constants/statuses'
+
+import {
+  loadOrganizationBalancesRequest, loadOrganizationBalancesSuccess, loadOrganizationBalancesFailure,
+} from 'actions'
 
 const defaultState = {
   totalAmount: null,
@@ -9,38 +14,29 @@ const defaultState = {
   error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_ORGANIZATION_BALANCES_REQUEST:
-      return {
-        ...state,
-        totalAmount: null,
-        defaultCurrency: null,
-        totals: [],
-        status: statuses.PENDING,
-        error:  null,
-      }
-    case types.LOAD_ORGANIZATION_BALANCES_SUCCESS:
-      return {
-        ...state,
-        totalAmount: payload.balances.totalAmount,
-        defaultCurrency: payload.balances.defaultCurrency,
-        totals: payload.balances.totals,
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    case types.LOAD_ORGANIZATION_BALANCES_FAILURE:
-      return {
-        ...state,
-        totalAmount: null,
-        defaultCurrency: null,
-        totals: [],
-        status: statuses.FAILURE,
-        error:  payload
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadOrganizationBalancesRequest]: (state) => ({
+    ...state,
+    totalAmount:     null,
+    defaultCurrency: null,
+    totals:          [],
+    status:          statuses.PENDING,
+    error:           null,
+  }),
+  [loadOrganizationBalancesSuccess]: (state, { payload }) => ({
+    ...state,
+    totalAmount:     payload.balances.totalAmount,
+    defaultCurrency: payload.balances.defaultCurrency,
+    totals:          payload.balances.totals,
+    status:          statuses.SUCCESS,
+    error:           null,
+  }),
+  [loadOrganizationBalancesFailure]: (state, { payload }) => ({
+    ...state,
+    totalAmount:     null,
+    defaultCurrency: null,
+    totals:          [],
+    status:          statuses.FAILURE,
+    error:           payload
+  }),
+}, defaultState)

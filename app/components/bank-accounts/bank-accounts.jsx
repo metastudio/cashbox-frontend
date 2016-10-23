@@ -1,14 +1,16 @@
 import React from 'react'
-import * as statuses from 'constants/statuses'
-
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import { Link } from 'react-router'
 import { Table, Button } from 'react-bootstrap'
 
-import LoadingView from 'components/utils/loading-view'
+import * as statuses from 'constants/statuses'
 
 import { loadBankAccounts, deleteBankAccount, addFlashMessage } from 'actions'
+
+import { getCurrentOrganizationId } from 'selectors'
+
+import LoadingView from 'components/utils/loading-view'
 
 class BankAccounts extends React.Component {
   constructor(props) {
@@ -92,7 +94,7 @@ BankAccounts.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:        state.currentOrganization.current.id,
+  orgId:        getCurrentOrganizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 })

@@ -1,42 +1,35 @@
-import * as types from 'constants/auth-action-types'
+import { handleActions, combineActions } from 'redux-actions'
+
+import {
+  restoreSessionRequest, restoreSessionSuccess, restoreSessionFailure,
+  loginUserRequest,      loginUserSuccess,      loginUserFailure,
+  logoutUserSuccess,
+} from 'actions'
 
 const defaultState = {
-  token:  null,
-  user:   null,
+  token: null,
+  user:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.RESTORE_USER_REQUEST:
-    case types.LOGIN_REQUEST:
-      return {
-        ...state,
-        token: null,
-        user: null,
-      }
-    case types.RESTORE_USER_SUCCESS:
-    case types.LOGIN_SUCCESS:
-      return {
-        ...state,
-        token:  payload.token,
-        user:   payload.user,
-      }
-    case types.RESTORE_USER_FAILURE:
-    case types.LOGIN_FAILURE:
-      return {
-        ...state,
-        token:  null,
-        user:   null,
-      }
-    case types.LOGOUT_SUCCESS:
-      return {
-        ...state,
-        token:  null,
-        user:   null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [combineActions(restoreSessionRequest, loginUserRequest)]: (state) => ({
+    ...state,
+    token: null,
+    user: null,
+  }),
+  [combineActions(restoreSessionSuccess, loginUserSuccess)]: (state, { payload }) => ({
+    ...state,
+    token: payload.token,
+    user:  payload.user,
+  }),
+  [combineActions(restoreSessionFailure, loginUserFailure)]: (state) => ({
+    ...state,
+    token:  null,
+    user:   null,
+  }),
+  [logoutUserSuccess]: (state) => ({
+    ...state,
+    token:  null,
+    user:   null,
+  }),
+}, defaultState)

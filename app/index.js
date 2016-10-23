@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { render } from 'react-dom'
@@ -10,6 +12,7 @@ import promiseMiddleware from 'redux-promise'
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
 import { apiMiddleware } from 'redux-api-middleware'
+import createSagaMiddleware from 'redux-saga'
 
 import * as reducers from 'reducers'
 
@@ -26,6 +29,8 @@ import BankAccountsScene from 'components/bank-accounts'
 import CategoriesScene from 'components/categories'
 import CustomersScene from 'components/customers'
 
+import rootSaga from 'sagas'
+
 const reducer = combineReducers({
   ...reducers,
   routing: routeReducer,
@@ -34,16 +39,20 @@ const reducer = combineReducers({
 
 const logger = createLogger()
 const reduxRouterMiddleware = syncHistory(browserHistory)
+const sagaMiddleware = createSagaMiddleware()
 
 const createStoreWithMiddleware = applyMiddleware(
   reduxRouterMiddleware,
   thunkMiddleware,
   promiseMiddleware,
   apiMiddleware,
+  sagaMiddleware,
   logger // TODO disable in prod
 )(createStore)
 
 const store = createStoreWithMiddleware(reducer)
+
+sagaMiddleware.run(rootSaga)
 
 render((
   <IntlProvider locale={navigator.language}>
@@ -57,8 +66,8 @@ render((
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >
             <IndexRedirect to="select" />
-            <Route path="select" component={OrganizationsScene.SelectOrganization} />
-            <Route path="new" component={OrganizationsScene.NewOrganization} />
+            <Route path="select" component={OrganizationsScene.Select} />
+            <Route path="new" component={OrganizationsScene.New} />
           </Route>
           <Route path="members" component={MembersScene}>
             <IndexRoute component={MembersScene.Members} />
