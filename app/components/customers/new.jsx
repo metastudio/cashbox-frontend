@@ -4,6 +4,7 @@ import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
 import { createCustomer, clearCustomer, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -20,11 +21,9 @@ class NewCustomer extends React.Component {
 
   handleSubmit(values) {
     const { orgId, createCustomer } = this.props
-    return new Promise((resolve, reject) => {
-      createCustomer(orgId, {
-        name: values.name,
-        invoiceDetails: values.invoiceDetails,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return createCustomer(orgId, {
+      name: values.name,
+      invoiceDetails: values.invoiceDetails,
     })
   }
 
@@ -55,11 +54,11 @@ NewCustomer.propTypes = {
 }
 
 const select = (state) => ({
-  orgId: state.currentOrganization.current.id,
+  orgId: getCurrentOrganizationId(state),
 })
 
 const dispatcher = (dispatch) => ({
-  createCustomer:      (orgId, data) => dispatch(createCustomer(orgId, data)),
+  createCustomer:      (orgId, data) => new Promise((res, rej) => dispatch(createCustomer(orgId, data, res, rej))),
   clearCustomer:       () => dispatch(clearCustomer()),
   redirectToCustomers: () => dispatch(routeActions.push('/customers')),
   addFlashMessage:     (message, type = null) => dispatch(addFlashMessage(message, type)),

@@ -1,45 +1,36 @@
-import * as types from 'constants/categories-action-types'
+import { handleActions } from 'redux-actions'
 import * as statuses from 'constants/statuses'
+import { loadCategory, clearCategory } from 'actions'
 
 const defaultState = {
-  current: null,
-  status:  statuses.INVALID,
-  error:   null,
+  data:   null,
+  status: statuses.INVALID,
+  error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_CATEGORY_REQUEST:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.PENDING,
-        error:   null,
-      }
-    case types.LOAD_CATEGORY_SUCCESS:
-      return {
-        ...state,
-        current: payload.category,
-        status:  statuses.SUCCESS,
-        error:   null,
-      }
-    case types.LOAD_CATEGORY_FAILURE:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.FAILURE,
-        error:   payload,
-      }
-    case types.CLEAR_CATEGORY:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.INVALID,
-        error:   null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadCategory.request]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadCategory.success]: (state, { payload }) => ({
+    ...state,
+    data:   payload.category,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadCategory.failure]: (state, { payload }) => ({
+    ...state,
+    data:   null,
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+  [clearCategory]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.INVALID,
+    error:  null
+  }),
+}, defaultState)

@@ -1,5 +1,7 @@
-import * as types from 'constants/bank-accounts-action-types'
+import { handleActions } from 'redux-actions'
+
 import * as statuses from 'constants/statuses'
+import { loadBankAccounts, deleteBankAccount } from 'actions'
 
 const defaultState = {
   items:  [],
@@ -7,39 +9,29 @@ const defaultState = {
   error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_BANK_ACCOUNTS_REQUEST:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.PENDING,
-        error:  null,
-      }
-    case types.LOAD_BANK_ACCOUNTS_SUCCESS:
-      return {
-        ...state,
-        items:  payload.bankAccounts,
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    case types.LOAD_BANK_ACCOUNTS_FAILURE:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.FAILURE,
-        error:  payload
-      }
-    case types.DELETE_BANK_ACCOUNT_SUCCESS:
-      return {
-        ...state,
-        items:  state.items.filter((item) => item.id != payload.bankAccount.id),
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadBankAccounts.request]: (state) => ({
+    ...state,
+    items:  [],
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadBankAccounts.success]: (state, { payload }) => ({
+    ...state,
+    items:  payload.bankAccounts,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadBankAccounts.failure]: (state, { payload }) => ({
+    ...state,
+    items:  [],
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+  [deleteBankAccount.success]: (state, { payload }) => ({
+    ...state,
+    items:  state.items.filter((item) => item.id != payload.bankAccount.id),
+    status: statuses.SUCCESS,
+    error:  null
+  }),
+}, defaultState)

@@ -9,6 +9,7 @@ import { Table, Button } from 'react-bootstrap'
 import LoadingView from 'components/utils/loading-view'
 
 import { loadCategories, deleteCategory, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class Categories extends React.Component {
   constructor(props) {
@@ -86,14 +87,14 @@ Categories.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:      state.currentOrganization.current.id,
+  orgId:      getCurrentOrganizationId(state),
   categories: state.categories.items,
   status:     state.categories.status,
 })
 
 const dispatcher = (dispatch) => ({
   loadCategories:         (organizationId) => dispatch(loadCategories(organizationId)),
-  deleteCategory:         (organizationId, categoryId) => dispatch(deleteCategory(organizationId, categoryId)),
+  deleteCategory:         (organizationId, categoryId) => new Promise((res, rej) => dispatch(deleteCategory(organizationId, categoryId, res, rej))),
   redirectToEditCategory: (categoryId) => dispatch(routeActions.push(`/categories/${categoryId}/edit`)),
   redirectToCategories:   () => dispatch(routeActions.push('/categories')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),

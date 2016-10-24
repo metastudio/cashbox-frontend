@@ -32,7 +32,7 @@ CategoryForm = reduxForm({
 
 CategoryForm = connect(
   state => ({
-    initialValues: state.category.current ? state.category.current : {}
+    initialValues: state.category.data ? state.category.data : {}
   })
 )(CategoryForm)
 

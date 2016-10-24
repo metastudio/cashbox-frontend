@@ -1,133 +1,29 @@
-import humps from 'humps'
+import { createAction } from 'redux-actions'
+import { noop } from 'lodash'
 
-import ApiHelpers from './_api_helpers'
+export const loadCustomers = createAction('LOAD_CUSTOMERS', (organizationId) => ({ organizationId }))
+loadCustomers.request = createAction('LOAD_CUSTOMERS_REQUEST', (organizationId) => ({ organizationId }))
+loadCustomers.success = createAction('LOAD_CUSTOMERS_SUCCESS', (organizationId, customers) => ({ organizationId, customers }))
+loadCustomers.failure = createAction('LOAD_CUSTOMERS_FAILURE')
 
-import * as types from 'constants/customers-action-types'
+export const createCustomer = createAction('CREATE_CUSTOMER', (organizationId, data) => ({ organizationId, data }), (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }))
+createCustomer.request = createAction('CREATE_CUSTOMER_REQUEST', (organizationId) => ({ organizationId }))
+createCustomer.success = createAction('CREATE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
+createCustomer.failure = createAction('CREATE_CUSTOMER_FAILURE')
 
-import { CALL_API, getJSON } from 'redux-api-middleware'
+export const loadCustomer = createAction('LOAD_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }))
+loadCustomer.request = createAction('LOAD_CUSTOMER_REQUEST', (organizationId, customerId) => ({ organizationId, customerId }))
+loadCustomer.success = createAction('LOAD_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
+loadCustomer.failure = createAction('LOAD_CUSTOMER_FAILURE')
 
-const customersEndpoint = (orgId) => `/api/organizations/${orgId}/customers`
-const customerEndpoint = (orgId, customerId) => `/api/organizations/${orgId}/customers/${customerId}`
+export const updateCustomer = createAction('UPDATE_CUSTOMER', (organizationId, customerId, data) => ({ organizationId, customerId, data }), (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }))
+updateCustomer.request = createAction('UPDATE_CUSTOMER_REQUEST', (organizationId, customerId) => ({ organizationId, customerId }))
+updateCustomer.success = createAction('UPDATE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
+updateCustomer.failure = createAction('UPDATE_CUSTOMER_FAILURE')
 
-export function loadCustomers(organizationId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(customersEndpoint(organizationId)),
-      method:   'GET',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.LOAD_CUSTOMERS_REQUEST,
-        {
-          type: types.LOAD_CUSTOMERS_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ customers: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.LOAD_CUSTOMERS_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
+export const deleteCustomer = createAction('DELETE_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }))
+deleteCustomer.request = createAction('DELETE_CUSTOMER_REQUEST', (organizationId, customerId) => ({ organizationId, customerId }))
+deleteCustomer.success = createAction('DELETE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
+deleteCustomer.failure = createAction('DELETE_CUSTOMER_FAILURE')
 
-export function createCustomer(organizationId, data) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(customersEndpoint(organizationId)),
-      method:   'POST',
-      headers:  ApiHelpers.headers,
-      body:     ApiHelpers.formatJsonBody({ customer: data }),
-      types: [
-        types.CREATE_CUSTOMER_REQUEST,
-        {
-          type: types.CREATE_CUSTOMER_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ customer: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.CREATE_CUSTOMER_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function loadCustomer(organizationId, customerId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(customerEndpoint(organizationId, customerId)),
-      method:   'GET',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.LOAD_CUSTOMER_REQUEST,
-        {
-          type: types.LOAD_CUSTOMER_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ customer: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.LOAD_CUSTOMER_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function updateCustomer(organizationId, customerId, data) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(customerEndpoint(organizationId, customerId)),
-      method:   'PUT',
-      headers:  ApiHelpers.headers,
-      body:     ApiHelpers.formatJsonBody({ customer: data }),
-      types: [
-        types.UPDATE_CUSTOMER_REQUEST,
-        {
-          type: types.UPDATE_CUSTOMER_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ customer: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.UPDATE_CUSTOMER_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function deleteCustomer(organizationId, customerId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiHelpers.formatUrl(customerEndpoint(organizationId, customerId)),
-      method:   'DELETE',
-      headers:  ApiHelpers.headers,
-      types: [
-        types.DELETE_CUSTOMER_REQUEST,
-        {
-          type: types.DELETE_CUSTOMER_SUCCESS,
-          payload: (action, state, res) => {
-            return getJSON(res).then((json) => ({ customer: humps.camelizeKeys(json) }))
-          }
-        },
-        {
-          type: types.DELETE_CUSTOMER_FAILURE,
-          payload: ApiHelpers.failurePayload
-        }
-      ]
-    }
-  }
-}
-
-export function clearCustomer() {
-  return {
-    type: types.CLEAR_CUSTOMER,
-  }
-}
+export const clearCustomer = createAction('CLEAR_CUSTOMER')

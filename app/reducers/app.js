@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 import {
-  restoreSessionRequest, restoreSessionSuccess, restoreSessionFailure
+  restoreSession
 } from 'actions'
 
 const defaultState = {
@@ -9,15 +9,15 @@ const defaultState = {
 }
 
 export default handleActions({
-  [restoreSessionRequest]: (state) => ({
+  [restoreSession.request]: (state) => ({
     ...state,
     isSessionLoaded: false
   }),
-  [restoreSessionSuccess]: (state) => ({
+  [restoreSession.success]: (state) => ({
     ...state,
     isSessionLoaded: true
   }),
-  [restoreSessionFailure]: (state) => ({
+  [restoreSession.failure]: (state) => ({
     ...state,
     isSessionLoaded: true
   }),

@@ -7,6 +7,7 @@ import { Table } from 'react-bootstrap'
 import LoadingView from 'components/utils/loading-view'
 
 import { loadMembers, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class Members extends React.Component {
   componentDidMount() {
@@ -54,7 +55,7 @@ Members.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:   state.currentOrganization.current.id,
+  orgId:   getCurrentOrganizationId(state),
   members: state.members.items,
   status:  state.members.status,
 })

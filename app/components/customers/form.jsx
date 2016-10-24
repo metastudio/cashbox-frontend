@@ -28,7 +28,7 @@ CustomerForm = reduxForm({
 
 CustomerForm = connect(
   state => ({
-    initialValues: state.customer.current ? state.customer.current : {}
+    initialValues: state.customer.data ? state.customer.data : {}
   })
 )(CustomerForm)
 

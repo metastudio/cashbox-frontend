@@ -6,6 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
 import { loadCategory, updateCategory, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -32,11 +33,9 @@ class EditCategory extends React.Component {
 
   handleSubmit(values) {
     const { orgId, category, updateCategory } = this.props
-    return new Promise((resolve, reject) => {
-      updateCategory(orgId, category.id, {
-        name: values.name,
-        type: values.type,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return updateCategory(orgId, category.id, {
+      name: values.name,
+      type: values.type,
     })
   }
 
@@ -74,14 +73,14 @@ EditCategory.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:    state.currentOrganization.current.id,
-  category: state.category.current,
+  orgId:    getCurrentOrganizationId(state),
+  category: state.category.data,
   status:   state.category.status,
 })
 
 const dispatcher = (dispatch) => ({
-  loadCategory:         (orgId, categoryId) => dispatch(loadCategory(orgId, categoryId)),
-  updateCategory:       (orgId, categoryId, data) => dispatch(updateCategory(orgId, categoryId, data)),
+  loadCategory:         (orgId, categoryId) => new Promise((res, rej) => dispatch(loadCategory(orgId, categoryId, res, rej))),
+  updateCategory:       (orgId, categoryId, data) => new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej))),
   redirectToCategories: () => dispatch(routeActions.push('/categories')),
   addFlashMessage:      (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

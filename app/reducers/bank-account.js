@@ -1,45 +1,36 @@
-import * as types from 'constants/bank-accounts-action-types'
+import { handleActions } from 'redux-actions'
 import * as statuses from 'constants/statuses'
+import { loadBankAccount, clearBankAccount } from 'actions'
 
 const defaultState = {
-  current: null,
-  status:  statuses.INVALID,
-  error:   null,
+  data:   null,
+  status: statuses.INVALID,
+  error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_BANK_ACCOUNT_REQUEST:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.PENDING,
-        error:   null,
-      }
-    case types.LOAD_BANK_ACCOUNT_SUCCESS:
-      return {
-        ...state,
-        current: payload.bankAccount,
-        status:  statuses.SUCCESS,
-        error:   null,
-      }
-    case types.LOAD_BANK_ACCOUNT_FAILURE:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.FAILURE,
-        error:   payload,
-      }
-    case types.CLEAR_BANK_ACCOUNT:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.INVALID,
-        error:   null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadBankAccount.request]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadBankAccount.success]: (state, { payload }) => ({
+    ...state,
+    data:   payload.bankAccount,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadBankAccount.failure]: (state, { payload }) => ({
+    ...state,
+    data:   null,
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+  [clearBankAccount]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.INVALID,
+    error:  null
+  }),
+}, defaultState)

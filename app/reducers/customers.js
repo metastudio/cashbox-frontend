@@ -1,5 +1,7 @@
-import * as types from 'constants/customers-action-types'
+import { handleActions } from 'redux-actions'
+
 import * as statuses from 'constants/statuses'
+import { loadCustomers, deleteCustomer } from 'actions'
 
 const defaultState = {
   items:  [],
@@ -7,39 +9,29 @@ const defaultState = {
   error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_CUSTOMERS_REQUEST:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.PENDING,
-        error:  null,
-      }
-    case types.LOAD_CUSTOMERS_SUCCESS:
-      return {
-        ...state,
-        items:  payload.customers,
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    case types.LOAD_CUSTOMERS_FAILURE:
-      return {
-        ...state,
-        items:  [],
-        status: statuses.FAILURE,
-        error:  payload
-      }
-    case types.DELETE_CUSTOMER_SUCCESS:
-      return {
-        ...state,
-        items:  state.items.filter((item) => item.id != payload.customer.id),
-        status: statuses.SUCCESS,
-        error:  null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadCustomers.request]: (state) => ({
+    ...state,
+    items:  [],
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadCustomers.success]: (state, { payload }) => ({
+    ...state,
+    items:  payload.customers,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadCustomers.failure]: (state, { payload }) => ({
+    ...state,
+    items:  [],
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+  [deleteCustomer.success]: (state, { payload }) => ({
+    ...state,
+    items:  state.items.filter((item) => item.id != payload.customer.id),
+    status: statuses.SUCCESS,
+    error:  null
+  }),
+}, defaultState)

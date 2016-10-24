@@ -6,6 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
 import { loadCustomer, updateCustomer, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -32,11 +33,9 @@ class EditCustomer extends React.Component {
 
   handleSubmit(values) {
     const { orgId, customer, updateCustomer } = this.props
-    return new Promise((resolve, reject) => {
-      updateCustomer(orgId, customer.id, {
-        name: values.name,
-        invoiceDetails: values.invoiceDetails,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return updateCustomer(orgId, customer.id, {
+      name: values.name,
+      invoiceDetails: values.invoiceDetails,
     })
   }
 
@@ -74,14 +73,14 @@ EditCustomer.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:    state.currentOrganization.current.id,
-  customer: state.customer.current,
+  orgId:    getCurrentOrganizationId(state),
+  customer: state.customer.data,
   status:   state.customer.status,
 })
 
 const dispatcher = (dispatch) => ({
-  loadCustomer:        (orgId, customerId) => dispatch(loadCustomer(orgId, customerId)),
-  updateCustomer:      (orgId, customerId, data) => dispatch(updateCustomer(orgId, customerId, data)),
+  loadCustomer:        (orgId, customerId) => new Promise((res, rej) => dispatch(loadCustomer(orgId, customerId, res, rej))),
+  updateCustomer:      (orgId, customerId, data) => new Promise((res, rej) => dispatch(updateCustomer(orgId, customerId, data, res, rej))),
   redirectToCustomers: () => dispatch(routeActions.push('/customers')),
   addFlashMessage:     (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

@@ -17,15 +17,13 @@ class NewTransaction extends React.Component {
 
   handleSubmit(values) {
     const { orgId, createTransaction } = this.props
-    return new Promise((resolve, reject) => {
-      createTransaction(orgId, {
-        amount: values.amount,
-        categoryId: values.category,
-        customerId: values.customer,
-        bankAccountId: values.bankAccount,
-        comment: values.comment,
-        date: values.date,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return createTransaction(orgId, {
+      amount: values.amount,
+      categoryId: values.category,
+      customerId: values.customer,
+      bankAccountId: values.bankAccount,
+      comment: values.comment,
+      date: values.date,
     })
   }
 
@@ -59,7 +57,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  createTransaction:  (orgId, data) => dispatch(createTransaction(orgId, data)),
+  createTransaction:  (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
   redirectToRootPage: () => dispatch(routeActions.push('/')),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

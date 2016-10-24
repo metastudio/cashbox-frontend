@@ -101,7 +101,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   loadBankAccounts:          (organizationId) => dispatch(loadBankAccounts(organizationId)),
-  deleteBankAccount:         (organizationId, bankAccountId) => dispatch(deleteBankAccount(organizationId, bankAccountId)),
+  deleteBankAccount:         (organizationId, bankAccountId) => new Promise((res, rej) => dispatch(deleteBankAccount(organizationId, bankAccountId, res, rej))),
   redirectToEditBankAccount: (bankAccountId) => dispatch(routeActions.push(`/bank_accounts/${bankAccountId}/edit`)),
   redirectToBankAccounts:    () => dispatch(routeActions.push('/bank_accounts')),
   addFlashMessage:           (message, type = null) => dispatch(addFlashMessage(message, type)),

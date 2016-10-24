@@ -4,16 +4,16 @@ import { call, put } from 'redux-saga/effects'
 import { getOrganizationBalances } from 'api'
 
 import {
-  loadOrganizationBalances, loadOrganizationBalancesRequest, loadOrganizationBalancesSuccess, loadOrganizationBalancesFailure,
+  loadOrganizationBalances,
 } from 'actions'
 
 function* handleLoadOrganizationBalances({ payload: { organizationId }}) {
   try {
-    yield put(loadOrganizationBalancesRequest(organizationId))
+    yield put(loadOrganizationBalances.request(organizationId))
     const balances = yield call(getOrganizationBalances, organizationId)
-    yield put(loadOrganizationBalancesSuccess(organizationId, balances))
+    yield put(loadOrganizationBalances.success(organizationId, balances))
   } catch (error) {
-    yield put(loadOrganizationBalancesFailure(error))
+    yield put(loadOrganizationBalances.failure(error))
   }
 }
 

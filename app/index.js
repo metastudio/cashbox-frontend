@@ -11,7 +11,6 @@ import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise'
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
-import { apiMiddleware } from 'redux-api-middleware'
 import createSagaMiddleware from 'redux-saga'
 
 import * as reducers from 'reducers'
@@ -45,7 +44,6 @@ const createStoreWithMiddleware = applyMiddleware(
   reduxRouterMiddleware,
   thunkMiddleware,
   promiseMiddleware,
-  apiMiddleware,
   sagaMiddleware,
   logger // TODO disable in prod
 )(createStore)
@@ -61,7 +59,7 @@ render((
         <Route path="/" component={App}>
           <Route component={DashboardScene}>
             <IndexRoute component={Transactions} />
-            <Route path="transactions/new" component={Transactions.NewTransaction} />
+            <Route path="transactions/new" component={Transactions.New} />
           </Route>
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >
@@ -74,18 +72,18 @@ render((
           </Route>
           <Route path="bank_accounts" component={BankAccountsScene}>
             <IndexRoute component={BankAccountsScene.BankAccounts} />
-            <Route path="new" component={BankAccountsScene.NewBankAccount} />
-            <Route path=":bankAccountId/edit" component={BankAccountsScene.EditBankAccount} />
+            <Route path="new" component={BankAccountsScene.New} />
+            <Route path=":bankAccountId/edit" component={BankAccountsScene.Edit} />
           </Route>
           <Route path="categories" component={CategoriesScene}>
             <IndexRoute component={CategoriesScene.Categories} />
-            <Route path="new" component={CategoriesScene.NewCategory} />
-            <Route path=":categoryId/edit" component={CategoriesScene.EditCategory} />
+            <Route path="new" component={CategoriesScene.New} />
+            <Route path=":categoryId/edit" component={CategoriesScene.Edit} />
           </Route>
           <Route path="customers" component={CustomersScene}>
             <IndexRoute component={CustomersScene.Customers} />
-            <Route path="new" component={CustomersScene.NewCustomer} />
-            <Route path=":customerId/edit" component={CustomersScene.EditCustomer} />
+            <Route path="new" component={CustomersScene.New} />
+            <Route path=":customerId/edit" component={CustomersScene.Edit} />
           </Route>
         </Route>
       </Router>

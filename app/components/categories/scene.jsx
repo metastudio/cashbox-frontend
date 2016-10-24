@@ -4,8 +4,8 @@ import RequireLogin from 'components/utils/require-login'
 import AppLayout from 'components/layouts/app-layout'
 
 import Categories from './categories.jsx'
-import NewCategory from './new.jsx'
-import EditCategory from './edit.jsx'
+import New from './new.jsx'
+import Edit from './edit.jsx'
 
 const CategoriesScene = ({ children }) => (
   <RequireLogin>
@@ -20,7 +20,7 @@ CategoriesScene.propTypes = {
 }
 
 CategoriesScene.Categories = Categories
-CategoriesScene.NewCategory = NewCategory
-CategoriesScene.EditCategory = EditCategory
+CategoriesScene.New = New
+CategoriesScene.Edit = Edit
 
 export default CategoriesScene

@@ -1,45 +1,36 @@
-import * as types from 'constants/customers-action-types'
+import { handleActions } from 'redux-actions'
 import * as statuses from 'constants/statuses'
+import { loadCustomer, clearCustomer } from 'actions'
 
 const defaultState = {
-  current: null,
-  status:  statuses.INVALID,
-  error:   null,
+  data:   null,
+  status: statuses.INVALID,
+  error:  null,
 }
 
-export default (state = defaultState, action) => {
-  const { type, payload } = action
-
-  switch(type) {
-    case types.LOAD_CUSTOMER_REQUEST:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.PENDING,
-        error:   null,
-      }
-    case types.LOAD_CUSTOMER_SUCCESS:
-      return {
-        ...state,
-        current: payload.customer,
-        status:  statuses.SUCCESS,
-        error:   null,
-      }
-    case types.LOAD_CUSTOMER_FAILURE:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.FAILURE,
-        error:   payload,
-      }
-    case types.CLEAR_CUSTOMER:
-      return {
-        ...state,
-        current: null,
-        status:  statuses.INVALID,
-        error:   null,
-      }
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [loadCustomer.request]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.PENDING,
+    error:  null,
+  }),
+  [loadCustomer.success]: (state, { payload }) => ({
+    ...state,
+    data:   payload.customer,
+    status: statuses.SUCCESS,
+    error:  null,
+  }),
+  [loadCustomer.failure]: (state, { payload }) => ({
+    ...state,
+    data:   null,
+    status: statuses.FAILURE,
+    error:  payload
+  }),
+  [clearCustomer]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.INVALID,
+    error:  null
+  }),
+}, defaultState)

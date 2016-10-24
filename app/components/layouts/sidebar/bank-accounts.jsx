@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 import LoadingView from 'components/utils/loading-view'
 
 import { loadBankAccounts } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class BankAccounts extends React.Component {
 
@@ -56,7 +57,7 @@ BankAccounts.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:        state.currentOrganization.current ? state.currentOrganization.current.id : null,
+  orgId:        getCurrentOrganizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 })

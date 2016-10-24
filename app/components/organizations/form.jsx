@@ -1,14 +1,16 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import ApiHelpers from 'actions/_api_helpers'
-
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
+
+import { getCurrencies } from 'api'
+
 import { HorizontalFormInput, HorizontalAsyncSelect } from 'components/utils/form-inputs'
 
+// TODO: refactor to use actions and saga
 const getOptions = () => {
-  return fetch(ApiHelpers.formatUrl('/api/currencies'), { method: 'GET', headers: ApiHelpers.headers() })
-    .then(response => response.json())
-    .then(json => ({ options: json.map(item => ({ value: item, label: item })) }))
+  return getCurrencies().then((currencies) => ({
+    options: currencies.map(item => ({ value: item, label: item }))
+  }))
 }
 
 const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (

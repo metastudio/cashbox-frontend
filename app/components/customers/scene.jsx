@@ -4,8 +4,8 @@ import RequireLogin from 'components/utils/require-login'
 import AppLayout from 'components/layouts/app-layout'
 
 import Customers from './customers.jsx'
-import NewCustomer from './new.jsx'
-import EditCustomer from './edit.jsx'
+import New from './new.jsx'
+import Edit from './edit.jsx'
 
 const CustomersScene = ({ children }) => (
   <RequireLogin>
@@ -20,7 +20,7 @@ CustomersScene.propTypes = {
 }
 
 CustomersScene.Customers = Customers
-CustomersScene.NewCustomer = NewCustomer
-CustomersScene.EditCustomer = EditCustomer
+CustomersScene.New = New
+CustomersScene.Edit = Edit
 
 export default CustomersScene

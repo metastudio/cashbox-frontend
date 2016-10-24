@@ -4,6 +4,7 @@ import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
 import { createBankAccount, clearBankAccount, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -20,13 +21,11 @@ class NewBankAccount extends React.Component {
 
   handleSubmit(values) {
     const { orgId, createBankAccount } = this.props
-    return new Promise((resolve, reject) => {
-      createBankAccount(orgId, {
-        name: values.name,
-        description: values.description,
-        invoiceDetails: values.invoiceDetails,
-        currency: values.currency,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return createBankAccount(orgId, {
+      name: values.name,
+      description: values.description,
+      invoiceDetails: values.invoiceDetails,
+      currency: values.currency,
     })
   }
 
@@ -57,11 +56,11 @@ NewBankAccount.propTypes = {
 }
 
 const select = (state) => ({
-  orgId: state.currentOrganization.current.id,
+  orgId: getCurrentOrganizationId(state),
 })
 
 const dispatcher = (dispatch) => ({
-  createBankAccount:      (orgId, data) => dispatch(createBankAccount(orgId, data)),
+  createBankAccount:      (orgId, data) => new Promise((res, rej) => dispatch(createBankAccount(orgId, data, res, rej))),
   clearBankAccount:       () => dispatch(clearBankAccount()),
   redirectToBankAccounts: () => dispatch(routeActions.push('/bank_accounts')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),

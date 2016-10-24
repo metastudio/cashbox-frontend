@@ -4,6 +4,7 @@ import { routeActions } from 'react-router-redux'
 import { Panel, Row, Col } from 'react-bootstrap'
 
 import { createCategory, clearCategory, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -20,11 +21,9 @@ class NewCategory extends React.Component {
 
   handleSubmit(values) {
     const { orgId, createCategory } = this.props
-    return new Promise((resolve, reject) => {
-      createCategory(orgId, {
-        name: values.name,
-        type: values.type,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return createCategory(orgId, {
+      name: values.name,
+      type: values.type,
     })
   }
 
@@ -55,11 +54,11 @@ NewCategory.propTypes = {
 }
 
 const select = (state) => ({
-  orgId: state.currentOrganization.current.id,
+  orgId: getCurrentOrganizationId(state),
 })
 
 const dispatcher = (dispatch) => ({
-  createCategory:       (orgId, data) => dispatch(createCategory(orgId, data)),
+  createCategory:       (orgId, data) => new Promise((res, rej) => dispatch(createCategory(orgId, data, res, rej))),
   clearCategory:        () => dispatch(clearCategory()),
   redirectToCategories: () => dispatch(routeActions.push('/categories')),
   addFlashMessage:      (message, type = null) => dispatch(addFlashMessage(message, type)),

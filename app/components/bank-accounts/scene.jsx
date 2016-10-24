@@ -4,8 +4,8 @@ import RequireLogin from 'components/utils/require-login'
 import AppLayout from 'components/layouts/app-layout'
 
 import BankAccounts from './bank-accounts.jsx'
-import NewBankAccount from './new.jsx'
-import EditBankAccount from './edit.jsx'
+import New from './new.jsx'
+import Edit from './edit.jsx'
 
 const BankAccountsScene = ({ children }) => (
   <RequireLogin>
@@ -20,7 +20,7 @@ BankAccountsScene.propTypes = {
 }
 
 BankAccountsScene.BankAccounts = BankAccounts
-BankAccountsScene.NewBankAccount = NewBankAccount
-BankAccountsScene.EditBankAccount = EditBankAccount
+BankAccountsScene.New = New
+BankAccountsScene.Edit = Edit
 
 export default BankAccountsScene

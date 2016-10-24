@@ -6,6 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
 import { loadBankAccount, updateBankAccount, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 import Form from './form.jsx'
 
@@ -32,13 +33,11 @@ class EditBankAccount extends React.Component {
 
   handleSubmit(values) {
     const { orgId, bankAccount, updateBankAccount } = this.props
-    return new Promise((resolve, reject) => {
-      updateBankAccount(orgId, bankAccount.id, {
-        name: values.name,
-        description: values.description,
-        invoiceDetails: values.invoiceDetails,
-        currency: values.currency,
-      }).then(({error, payload}) => error ? reject(payload) : resolve())
+    return updateBankAccount(orgId, bankAccount.id, {
+      name: values.name,
+      description: values.description,
+      invoiceDetails: values.invoiceDetails,
+      currency: values.currency,
     })
   }
 
@@ -76,14 +75,14 @@ EditBankAccount.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:       state.currentOrganization.current.id,
-  bankAccount: state.bankAccount.current,
+  orgId:       getCurrentOrganizationId(state),
+  bankAccount: state.bankAccount.data,
   status:      state.bankAccount.status,
 })
 
 const dispatcher = (dispatch) => ({
-  loadBankAccount:        (orgId, bankAccountId) => dispatch(loadBankAccount(orgId, bankAccountId)),
-  updateBankAccount:      (orgId, bankAccountId, data) => dispatch(updateBankAccount(orgId, bankAccountId, data)),
+  loadBankAccount:        (orgId, bankAccountId) => new Promise((res, rej) => dispatch(loadBankAccount(orgId, bankAccountId, res, rej))),
+  updateBankAccount:      (orgId, bankAccountId, data) => new Promise((res, rej) => dispatch(updateBankAccount(orgId, bankAccountId, data, res, rej))),
   redirectToBankAccounts: () => dispatch(routeActions.push('/bank_accounts')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),
 })

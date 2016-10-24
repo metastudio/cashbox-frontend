@@ -9,6 +9,7 @@ import { Table, Button } from 'react-bootstrap'
 import LoadingView from 'components/utils/loading-view'
 
 import { loadCustomers, deleteCustomer, addFlashMessage } from 'actions'
+import { getCurrentOrganizationId } from 'selectors'
 
 class Customers extends React.Component {
   constructor(props) {
@@ -86,14 +87,14 @@ Customers.propTypes = {
 }
 
 const select = (state) => ({
-  orgId:     state.currentOrganization.current.id,
+  orgId:     getCurrentOrganizationId(state),
   customers: state.customers.items,
   status:    state.customers.status,
 })
 
 const dispatcher = (dispatch) => ({
   loadCustomers:          (organizationId) => dispatch(loadCustomers(organizationId)),
-  deleteCustomer:         (organizationId, customerId) => dispatch(deleteCustomer(organizationId, customerId)),
+  deleteCustomer:         (organizationId, customerId) => new Promise((res, rej) => dispatch(deleteCustomer(organizationId, customerId, res, rej))),
   redirectToEditCustomer: (customerId) => dispatch(routeActions.push(`/customers/${customerId}/edit`)),
   redirectToCustomers:    () => dispatch(routeActions.push('/customers')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),
