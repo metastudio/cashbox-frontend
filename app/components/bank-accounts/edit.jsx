@@ -19,16 +19,12 @@ class EditBankAccount extends React.Component {
 
   componentDidMount() {
     const { orgId, loadBankAccount } = this.props
-    loadBankAccount(orgId, this.props.params.bankAccountId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to load bank account. ' + payload, { type: 'danger' })
-          this.props.redirectToBankAccounts()
-        } else {
-          payload
-        }
-      }
-    )
+    loadBankAccount(orgId, this.props.params.bankAccountId).then(bankAccount => {
+      bankAccount
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to load bank account: ${error.message}`, { type: 'danger' })
+      this.props.redirectToBankAccounts()
+    })
   }
 
   handleSubmit(values) {

@@ -11,7 +11,7 @@ createBankAccount.request = createAction('CREATE_BANK_ACCOUNT_REQUEST', (organiz
 createBankAccount.success = createAction('CREATE_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 createBankAccount.failure = createAction('CREATE_BANK_ACCOUNT_FAILURE')
 
-export const loadBankAccount = createAction('LOAD_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
+export const loadBankAccount = createAction('LOAD_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }), (_organizationId, _bankAccountId, resolve = noop, reject = noop) => ({ resolve, reject }))
 loadBankAccount.request = createAction('LOAD_BANK_ACCOUNT_REQUEST', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
 loadBankAccount.success = createAction('LOAD_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 loadBankAccount.failure = createAction('LOAD_BANK_ACCOUNT_FAILURE')
@@ -21,7 +21,7 @@ updateBankAccount.request = createAction('UPDATE_BANK_ACCOUNT_REQUEST', (organiz
 updateBankAccount.success = createAction('UPDATE_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 updateBankAccount.failure = createAction('UPDATE_BANK_ACCOUNT_FAILURE')
 
-export const deleteBankAccount = createAction('DELETE_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
+export const deleteBankAccount = createAction('DELETE_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }), (_organizationId, _bankAccountId, resolve = noop, reject = noop) => ({ resolve, reject }))
 deleteBankAccount.request = createAction('DELETE_BANK_ACCOUNT_REQUEST', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
 deleteBankAccount.success = createAction('DELETE_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 deleteBankAccount.failure = createAction('DELETE_BANK_ACCOUNT_FAILURE')

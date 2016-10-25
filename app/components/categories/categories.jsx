@@ -29,16 +29,12 @@ class Categories extends React.Component {
 
   handleDeleteCategoryClick(categoryId) {
     const { orgId, deleteCategory } = this.props
-    deleteCategory(orgId, categoryId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to delete category. ' + payload, { type: 'danger' })
-        } else {
-          this.props.addFlashMessage('Category successfully deleted.')
-          this.props.redirectToCategories()
-        }
-      }
-    )
+    deleteCategory(orgId, categoryId).then(category => {
+      this.props.addFlashMessage('Category ' + category.name + ' successfully deleted.')
+      this.props.redirectToCategories()
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to delete category: ${error.message}`, { type: 'danger' })
+    })
   }
 
   render() {

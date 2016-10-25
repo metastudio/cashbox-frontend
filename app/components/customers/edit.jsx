@@ -19,16 +19,12 @@ class EditCustomer extends React.Component {
 
   componentDidMount() {
     const { orgId, loadCustomer } = this.props
-    loadCustomer(orgId, this.props.params.customerId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to load customer. ' + payload, { type: 'danger' })
-          this.props.redirectToCustomers()
-        } else {
-          payload
-        }
-      }
-    )
+    loadCustomer(orgId, this.props.params.customerId).then(customer => {
+      customer
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to load customer: ${error.message}`, { type: 'danger' })
+      this.props.redirectToCustomers()
+    })
   }
 
   handleSubmit(values) {

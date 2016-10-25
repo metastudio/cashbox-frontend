@@ -28,13 +28,15 @@ function* handleLoadCategories({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadCategory({ payload: { organizationId, categoryId }}) {
+function* handleLoadCategory({ payload: { organizationId, categoryId }, meta: { resolve, reject } }) {
   try {
     yield put(loadCategory.request(organizationId, categoryId))
     const category = yield call(getOrganizationCategory, organizationId, categoryId)
     yield put(loadCategory.success(organizationId, category))
+    yield call(resolve, category)
   } catch (error) {
     yield put(loadCategory.failure(error))
+    yield call(reject, error)
   }
 }
 
@@ -64,13 +66,15 @@ function* handleUpdateCategory({ payload: { organizationId, categoryId, data }, 
   }
 }
 
-function* handleDeleteCategory({ payload: { organizationId, categoryId }}) {
+function* handleDeleteCategory({ payload: { organizationId, categoryId }, meta: { resolve, reject } }) {
   try {
     yield put(deleteCategory.request(organizationId, categoryId))
     const category = yield call(deleteOrganizationCategory, organizationId, categoryId)
     yield put(deleteCategory.success(organizationId, category))
+    yield call(resolve, category)
   } catch (error) {
     yield put(deleteCategory.failure(error))
+    yield call(reject, error)
   }
 }
 

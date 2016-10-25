@@ -11,7 +11,7 @@ createCategory.request = createAction('CREATE_CATEGORY_REQUEST', (organizationId
 createCategory.success = createAction('CREATE_CATEGORY_SUCCESS', (organizationId, category) => ({ organizationId, category }))
 createCategory.failure = createAction('CREATE_CATEGORY_FAILURE')
 
-export const loadCategory = createAction('LOAD_CATEGORY', (organizationId, categoryId) => ({ organizationId, categoryId }))
+export const loadCategory = createAction('LOAD_CATEGORY', (organizationId, categoryId) => ({ organizationId, categoryId }), (_organizationId, _categoryId, resolve = noop, reject = noop) => ({ resolve, reject }))
 loadCategory.request = createAction('LOAD_CATEGORY_REQUEST', (organizationId, categoryId) => ({ organizationId, categoryId }))
 loadCategory.success = createAction('LOAD_CATEGORY_SUCCESS', (organizationId, category) => ({ organizationId, category }))
 loadCategory.failure = createAction('LOAD_CATEGORY_FAILURE')
@@ -21,7 +21,7 @@ updateCategory.request = createAction('UPDATE_CATEGORY_REQUEST', (organizationId
 updateCategory.success = createAction('UPDATE_CATEGORY_SUCCESS', (organizationId, category) => ({ organizationId, category }))
 updateCategory.failure = createAction('UPDATE_CATEGORY_FAILURE')
 
-export const deleteCategory = createAction('DELETE_CATEGORY', (organizationId, categoryId) => ({ organizationId, categoryId }))
+export const deleteCategory = createAction('DELETE_CATEGORY', (organizationId, categoryId) => ({ organizationId, categoryId }), (_organizationId, _categoryId, resolve = noop, reject = noop) => ({ resolve, reject }))
 deleteCategory.request = createAction('DELETE_CATEGORY_REQUEST', (organizationId, categoryId) => ({ organizationId, categoryId }))
 deleteCategory.success = createAction('DELETE_CATEGORY_SUCCESS', (organizationId, category) => ({ organizationId, category }))
 deleteCategory.failure = createAction('DELETE_CATEGORY_FAILURE')

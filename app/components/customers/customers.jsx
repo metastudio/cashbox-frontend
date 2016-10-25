@@ -29,16 +29,12 @@ class Customers extends React.Component {
 
   handleDeleteCustomerClick(customerId) {
     const { orgId, deleteCustomer } = this.props
-    deleteCustomer(orgId, customerId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to delete customer. ' + payload, { type: 'danger' })
-        } else {
-          this.props.addFlashMessage('Customer successfully deleted.')
-          this.props.redirectToCustomers()
-        }
-      }
-    )
+    deleteCustomer(orgId, customerId).then(customer => {
+      this.props.addFlashMessage('Customer ' + customer.name + ' successfully deleted.')
+      this.props.redirectToCustomers()
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to delete customer: ${error.message}`, { type: 'danger' })
+    })
   }
 
   render() {

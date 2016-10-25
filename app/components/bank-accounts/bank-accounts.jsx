@@ -30,16 +30,12 @@ class BankAccounts extends React.Component {
 
   handleDeleteBankAccountClick(bankAccountId) {
     const { orgId, deleteBankAccount } = this.props
-    deleteBankAccount(orgId, bankAccountId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to delete bank account. ' + payload, { type: 'danger' })
-        } else {
-          this.props.addFlashMessage('Bank account successfully deleted.')
-          this.props.redirectToBankAccounts()
-        }
-      }
-    )
+    deleteBankAccount(orgId, bankAccountId).then(bankAccount => {
+      this.props.addFlashMessage('Bank account ' + bankAccount.name + ' successfully deleted.')
+      this.props.redirectToBankAccounts()
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to delete bank account: ${error.message}`, { type: 'danger' })
+    })
   }
 
   render() {

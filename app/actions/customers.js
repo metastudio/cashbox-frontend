@@ -11,7 +11,7 @@ createCustomer.request = createAction('CREATE_CUSTOMER_REQUEST', (organizationId
 createCustomer.success = createAction('CREATE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
 createCustomer.failure = createAction('CREATE_CUSTOMER_FAILURE')
 
-export const loadCustomer = createAction('LOAD_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }))
+export const loadCustomer = createAction('LOAD_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }), (_organizationId, _categoryId, resolve = noop, reject = noop) => ({ resolve, reject }))
 loadCustomer.request = createAction('LOAD_CUSTOMER_REQUEST', (organizationId, customerId) => ({ organizationId, customerId }))
 loadCustomer.success = createAction('LOAD_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
 loadCustomer.failure = createAction('LOAD_CUSTOMER_FAILURE')
@@ -21,7 +21,7 @@ updateCustomer.request = createAction('UPDATE_CUSTOMER_REQUEST', (organizationId
 updateCustomer.success = createAction('UPDATE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
 updateCustomer.failure = createAction('UPDATE_CUSTOMER_FAILURE')
 
-export const deleteCustomer = createAction('DELETE_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }))
+export const deleteCustomer = createAction('DELETE_CUSTOMER', (organizationId, customerId) => ({ organizationId, customerId }), (_organizationId, _categoryId, resolve = noop, reject = noop) => ({ resolve, reject }))
 deleteCustomer.request = createAction('DELETE_CUSTOMER_REQUEST', (organizationId, customerId) => ({ organizationId, customerId }))
 deleteCustomer.success = createAction('DELETE_CUSTOMER_SUCCESS', (organizationId, customer) => ({ organizationId, customer }))
 deleteCustomer.failure = createAction('DELETE_CUSTOMER_FAILURE')

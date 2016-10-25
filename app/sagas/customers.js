@@ -28,13 +28,15 @@ function* handleLoadCustomers({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadCustomer({ payload: { organizationId, customerId }}) {
+function* handleLoadCustomer({ payload: { organizationId, customerId }, meta: { resolve, reject } }) {
   try {
     yield put(loadCustomer.request(organizationId, customerId))
     const customer = yield call(getOrganizationCustomer, organizationId, customerId)
     yield put(loadCustomer.success(organizationId, customer))
+    yield call(resolve, customer)
   } catch (error) {
     yield put(loadCustomer.failure(error))
+    yield call(reject, error)
   }
 }
 
@@ -64,13 +66,15 @@ function* handleUpdateCustomer({ payload: { organizationId, customerId, data }, 
   }
 }
 
-function* handleDeleteCustomer({ payload: { organizationId, customerId }}) {
+function* handleDeleteCustomer({ payload: { organizationId, customerId }, meta: { resolve, reject } }) {
   try {
     yield put(deleteCustomer.request(organizationId, customerId))
     const customer = yield call(deleteOrganizationCustomer, organizationId, customerId)
     yield put(deleteCustomer.success(organizationId, customer))
+    yield call(resolve, customer)
   } catch (error) {
     yield put(deleteCustomer.failure(error))
+    yield call(reject, error)
   }
 }
 

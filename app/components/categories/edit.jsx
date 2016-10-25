@@ -19,16 +19,12 @@ class EditCategory extends React.Component {
 
   componentDidMount() {
     const { orgId, loadCategory } = this.props
-    loadCategory(orgId, this.props.params.categoryId).then(
-      ({error, payload}) => {
-        if (error) {
-          this.props.addFlashMessage('Unable to load category. ' + payload, { type: 'danger' })
-          this.props.redirectToCategories()
-        } else {
-          payload
-        }
-      }
-    )
+    loadCategory(orgId, this.props.params.categoryId).then(category => {
+      category
+    }).catch(error => {
+      this.props.addFlashMessage(`Unable to load category: ${error.message}`, { type: 'danger' })
+      this.props.redirectToCategories()
+    })
   }
 
   handleSubmit(values) {

@@ -28,13 +28,15 @@ function* handleLoadBankAccounts({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadBankAccount({ payload: { organizationId, bankAccountId }}) {
+function* handleLoadBankAccount({ payload: { organizationId, bankAccountId }, meta: { resolve, reject } }) {
   try {
     yield put(loadBankAccount.request(organizationId, bankAccountId))
     const bankAccount = yield call(getOrganizationBankAccount, organizationId, bankAccountId)
     yield put(loadBankAccount.success(organizationId, bankAccount))
+    yield call(resolve, bankAccount)
   } catch (error) {
     yield put(loadBankAccount.failure(error))
+    yield call(reject, error)
   }
 }
 
@@ -64,13 +66,15 @@ function* handleUpdateBankAccount({ payload: { organizationId, bankAccountId, da
   }
 }
 
-function* handleDeleteBankAccount({ payload: { organizationId, bankAccountId }}) {
+function* handleDeleteBankAccount({ payload: { organizationId, bankAccountId }, meta: { resolve, reject } }) {
   try {
     yield put(deleteBankAccount.request(organizationId, bankAccountId))
     const bankAccount = yield call(deleteOrganizationBankAccount, organizationId, bankAccountId)
     yield put(deleteBankAccount.success(organizationId, bankAccount))
+    yield call(resolve, bankAccount)
   } catch (error) {
     yield put(deleteBankAccount.failure(error))
+    yield call(reject, error)
   }
 }
 
