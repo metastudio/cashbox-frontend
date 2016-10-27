@@ -19,12 +19,7 @@ class EditBankAccount extends React.Component {
 
   componentDidMount() {
     const { orgId, loadBankAccount } = this.props
-    loadBankAccount(orgId, this.props.params.bankAccountId).then(bankAccount => {
-      bankAccount
-    }).catch(error => {
-      this.props.addFlashMessage(`Unable to load bank account: ${error.message}`, { type: 'danger' })
-      this.props.redirectToBankAccounts()
-    })
+    loadBankAccount(orgId, this.props.params.bankAccountId)
   }
 
   handleSubmit(values) {
@@ -77,7 +72,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  loadBankAccount:        (orgId, bankAccountId) => new Promise((res, rej) => dispatch(loadBankAccount(orgId, bankAccountId, res, rej))),
+  loadBankAccount:        (orgId, bankAccountId) => dispatch(loadBankAccount(orgId, bankAccountId)),
   updateBankAccount:      (orgId, bankAccountId, data) => new Promise((res, rej) => dispatch(updateBankAccount(orgId, bankAccountId, data, res, rej))),
   redirectToBankAccounts: () => dispatch(routeActions.push('/bank_accounts')),
   addFlashMessage:        (message, type = null) => dispatch(addFlashMessage(message, type)),

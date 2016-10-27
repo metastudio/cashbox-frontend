@@ -28,15 +28,13 @@ function* handleLoadCategories({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadCategory({ payload: { organizationId, categoryId }, meta: { resolve, reject } }) {
+function* handleLoadCategory({ payload: { organizationId, categoryId }}) {
   try {
     yield put(loadCategory.request(organizationId, categoryId))
     const category = yield call(getOrganizationCategory, organizationId, categoryId)
     yield put(loadCategory.success(organizationId, category))
-    yield call(resolve, category)
   } catch (error) {
     yield put(loadCategory.failure(error))
-    yield call(reject, error)
   }
 }
 

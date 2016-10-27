@@ -19,12 +19,7 @@ class EditCategory extends React.Component {
 
   componentDidMount() {
     const { orgId, loadCategory } = this.props
-    loadCategory(orgId, this.props.params.categoryId).then(category => {
-      category
-    }).catch(error => {
-      this.props.addFlashMessage(`Unable to load category: ${error.message}`, { type: 'danger' })
-      this.props.redirectToCategories()
-    })
+    loadCategory(orgId, this.props.params.categoryId)
   }
 
   handleSubmit(values) {
@@ -75,7 +70,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  loadCategory:         (orgId, categoryId) => new Promise((res, rej) => dispatch(loadCategory(orgId, categoryId, res, rej))),
+  loadCategory:         (orgId, categoryId) => dispatch(loadCategory(orgId, categoryId)),
   updateCategory:       (orgId, categoryId, data) => new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej))),
   redirectToCategories: () => dispatch(routeActions.push('/categories')),
   addFlashMessage:      (message, type = null) => dispatch(addFlashMessage(message, type)),

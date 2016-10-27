@@ -19,12 +19,7 @@ class EditCustomer extends React.Component {
 
   componentDidMount() {
     const { orgId, loadCustomer } = this.props
-    loadCustomer(orgId, this.props.params.customerId).then(customer => {
-      customer
-    }).catch(error => {
-      this.props.addFlashMessage(`Unable to load customer: ${error.message}`, { type: 'danger' })
-      this.props.redirectToCustomers()
-    })
+    loadCustomer(orgId, this.props.params.customerId)
   }
 
   handleSubmit(values) {
@@ -75,7 +70,7 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  loadCustomer:        (orgId, customerId) => new Promise((res, rej) => dispatch(loadCustomer(orgId, customerId, res, rej))),
+  loadCustomer:        (orgId, customerId) => dispatch(loadCustomer(orgId, customerId)),
   updateCustomer:      (orgId, customerId, data) => new Promise((res, rej) => dispatch(updateCustomer(orgId, customerId, data, res, rej))),
   redirectToCustomers: () => dispatch(routeActions.push('/customers')),
   addFlashMessage:     (message, type = null) => dispatch(addFlashMessage(message, type)),

@@ -28,15 +28,13 @@ function* handleLoadBankAccounts({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadBankAccount({ payload: { organizationId, bankAccountId }, meta: { resolve, reject } }) {
+function* handleLoadBankAccount({ payload: { organizationId, bankAccountId }}) {
   try {
     yield put(loadBankAccount.request(organizationId, bankAccountId))
     const bankAccount = yield call(getOrganizationBankAccount, organizationId, bankAccountId)
     yield put(loadBankAccount.success(organizationId, bankAccount))
-    yield call(resolve, bankAccount)
   } catch (error) {
     yield put(loadBankAccount.failure(error))
-    yield call(reject, error)
   }
 }
 

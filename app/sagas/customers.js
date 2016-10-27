@@ -28,15 +28,13 @@ function* handleLoadCustomers({ payload: { organizationId }}) {
   }
 }
 
-function* handleLoadCustomer({ payload: { organizationId, customerId }, meta: { resolve, reject } }) {
+function* handleLoadCustomer({ payload: { organizationId, customerId }}) {
   try {
     yield put(loadCustomer.request(organizationId, customerId))
     const customer = yield call(getOrganizationCustomer, organizationId, customerId)
     yield put(loadCustomer.success(organizationId, customer))
-    yield call(resolve, customer)
   } catch (error) {
     yield put(loadCustomer.failure(error))
-    yield call(reject, error)
   }
 }
 

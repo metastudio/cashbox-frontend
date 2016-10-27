@@ -11,7 +11,7 @@ createBankAccount.request = createAction('CREATE_BANK_ACCOUNT_REQUEST', (organiz
 createBankAccount.success = createAction('CREATE_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 createBankAccount.failure = createAction('CREATE_BANK_ACCOUNT_FAILURE')
 
-export const loadBankAccount = createAction('LOAD_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }), (_organizationId, _bankAccountId, resolve = noop, reject = noop) => ({ resolve, reject }))
+export const loadBankAccount = createAction('LOAD_BANK_ACCOUNT', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
 loadBankAccount.request = createAction('LOAD_BANK_ACCOUNT_REQUEST', (organizationId, bankAccountId) => ({ organizationId, bankAccountId }))
 loadBankAccount.success = createAction('LOAD_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }))
 loadBankAccount.failure = createAction('LOAD_BANK_ACCOUNT_FAILURE')
