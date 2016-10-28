@@ -39,7 +39,7 @@ BankAccountForm = reduxForm({
 
 BankAccountForm = connect(
   state => ({
-    initialValues: state.bankAccount.data ? state.bankAccount.data : {}
+    initialValues: state.bankAccount.data ? state.bankAccount.data : { name: '', currency: 'USD' }
   })
 )(BankAccountForm)
 

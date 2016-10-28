@@ -1,5 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 
 import { getOrganizationCategories, getOrganizationCustomers, getOrganizationBankAccounts } from 'api'
@@ -27,7 +28,7 @@ const getBankAccountOptions = (orgId) => {
   }))
 }
 
-const TransactionForm = ({ fields: { amount, category, customer, bankAccount, comment, date }, handleSubmit, orgId, submitting, error }) => (
+let TransactionForm = ({ fields: { amount, category, customer, bankAccount, comment, date }, handleSubmit, orgId, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalCurrencyInput label="Amount" field={ amount } />
@@ -52,7 +53,15 @@ TransactionForm.propTypes = {
   orgId:        React.PropTypes.number.isRequired,
 }
 
-export default reduxForm({
+TransactionForm = reduxForm({
   form: 'transaction-form',
   fields: ['amount', 'category', 'customer', 'bankAccount', 'comment', 'date'],
 })(TransactionForm)
+
+TransactionForm = connect(
+  state => ({
+    initialValues: { amount: '0.00' }
+  })
+)(TransactionForm)
+
+export default TransactionForm
