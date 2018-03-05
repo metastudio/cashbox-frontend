@@ -23,6 +23,7 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+import UserScene from 'components/user/scene.jsx'
 
 import rootSaga from 'sagas'
 
@@ -62,6 +63,10 @@ render((
             <IndexRedirect to="select" />
             <Route path="select" component={OrganizationsScene.Select} />
             <Route path="new" component={OrganizationsScene.New} />
+          </Route>
+          <Route path="user" component={UserScene}>
+            <IndexRedirect to="profile" />
+            <Route path="profile" component={UserScene.Profile} />
           </Route>
         </Route>
       </Router>

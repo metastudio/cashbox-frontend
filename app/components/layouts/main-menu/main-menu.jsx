@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 
 import Balances from 'components/balances/balances.jsx'
-import LogoutItem from './logout-item.jsx'
+import ProfileItem from './profile-item.jsx'
 
 const MainMenu = () => (
   <Navbar fluid>
@@ -33,11 +33,7 @@ const MainMenu = () => (
     </Nav>
 
     <Nav pullRight>
-      { /* TODO show organization name */ }
-    </Nav>
-
-    <Nav pullRight>
-      <LogoutItem />
+      <ProfileItem />
     </Nav>
   </Navbar>
 )

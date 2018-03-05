@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
-import { NavItem } from 'react-bootstrap'
+import { MenuItem } from 'react-bootstrap'
 
 import { logoutUser, addFlashMessage } from 'actions'
 
@@ -35,9 +35,9 @@ class LogoutItem extends Component {
 
   render() {
     return(
-      <NavItem onClick={ this.handleClick } >
-        <i className="fa fa-sign-out" aria-hidden="true"></i>
-      </NavItem>
+      <MenuItem onClick={ this.handleClick } rel="nofollow">
+        Sign out
+      </MenuItem>
     )
   }
 }
