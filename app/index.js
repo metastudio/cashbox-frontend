@@ -23,11 +23,8 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
-<<<<<<< HEAD
 import InvoicesScene from 'components/invoices'
-=======
 import UserScene from 'components/user/scene.jsx'
->>>>>>> master
 
 import rootSaga from 'sagas'
 
