@@ -23,6 +23,7 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+import InvoicesScene from 'components/invoices'
 
 import rootSaga from 'sagas'
 
@@ -62,6 +63,9 @@ render((
             <IndexRedirect to="select" />
             <Route path="select" component={OrganizationsScene.Select} />
             <Route path="new" component={OrganizationsScene.New} />
+          </Route>
+          <Route path="invoices" component={InvoicesScene} >
+            <Route path="list" component={InvoicesScene.List} />
           </Route>
         </Route>
       </Router>

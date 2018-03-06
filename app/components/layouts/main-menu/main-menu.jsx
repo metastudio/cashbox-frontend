@@ -33,11 +33,15 @@ const MainMenu = () => (
     </Nav>
 
     <Nav pullRight>
-      { /* TODO show organization name */ }
+      <LogoutItem />
     </Nav>
 
     <Nav pullRight>
-      <LogoutItem />
+      <LinkContainer to="/invoices" onlyActiveOnIndex>
+        <NavItem >
+          Invoices
+        </NavItem>
+      </LinkContainer>
     </Nav>
   </Navbar>
 )
