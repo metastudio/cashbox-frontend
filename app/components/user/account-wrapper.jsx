@@ -7,9 +7,9 @@ import {
 } from 'actions'
 
 import {
-  userInitialValuesSelector,
-  userIdSelector
-} from 'selectors'
+  selectUserInitialValues,
+  selectUserId
+} from 'selectors/users'
 
 import AccountForm from './account-form.jsx'
 
@@ -59,8 +59,8 @@ AccountWrapper.propTypes = {
 }
 
 const select = (state) => ({
-  initialValues: userInitialValuesSelector(state),
-  userId: userIdSelector(state),
+  initialValues: selectUserInitialValues(state),
+  userId: selectUserId(state),
 })
 
 const dispatcher = (dispatch) => ({

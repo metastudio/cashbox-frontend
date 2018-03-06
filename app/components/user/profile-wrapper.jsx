@@ -7,9 +7,9 @@ import {
 } from 'actions'
 
 import {
-  userInitialValuesSelector,
-  userIdSelector
-} from 'selectors'
+  selectUserInitialValues,
+  selectUserId
+} from 'selectors/users'
 
 import ProfileForm from './profile-form.jsx'
 
@@ -53,8 +53,8 @@ ProfileWrapper.propTypes = {
 }
 
 const select = (state) => ({
-  initialValues: userInitialValuesSelector(state),
-  userId: userIdSelector(state),
+  initialValues: selectUserInitialValues(state),
+  userId: selectUserId(state),
 })
 
 const dispatcher = (dispatch) => ({
