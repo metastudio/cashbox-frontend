@@ -4,6 +4,9 @@ import {
   restoreSession,
   loginUser,
   logoutUser,
+  updateProfile,
+  updateAccount,
+  cancelAccount
 } from 'actions'
 
 const defaultState = {
@@ -27,9 +30,14 @@ export default handleActions({
     token:  null,
     user:   null,
   }),
-  [logoutUser.success]: (state) => ({
+  [combineActions(logoutUser.success, cancelAccount.success)]: (state) => ({
     ...state,
     token:  null,
     user:   null,
   }),
+  [combineActions(updateProfile.success, updateAccount.success)]: (state, { payload }) => ({
+    ...state,
+    token: state.token,
+    user:  payload.user
+  })
 }, defaultState)
