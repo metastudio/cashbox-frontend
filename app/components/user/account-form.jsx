@@ -5,6 +5,14 @@ import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 
 import { VerticalTextInput } from 'components/utils/form-inputs'
 
+const validate = (values) => {
+  const errors = {}
+  if (values.password != values.passwordConfirmation) {
+    errors.passwordConfirmation = 'don\'t match password'
+  }
+  return errors
+}
+
 const AccountForm = ({ fields: { email, currentPassword, password, passwordConfirmation }, handleSubmit, submitting, error }) => {
   return(<Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
@@ -52,5 +60,6 @@ AccountForm.propTypes = {
 
 export default reduxForm({
   form: 'accountForm',
-  fields: ['email', 'currentPassword', 'password', 'passwordConfirmation']
+  fields: ['email', 'currentPassword', 'password', 'passwordConfirmation'],
+  validate
 })(AccountForm)

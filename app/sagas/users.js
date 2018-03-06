@@ -16,36 +16,30 @@ import {
 
 export function* handleUpdateProfile({ payload: { userId, data }, meta: { resolve, reject } }) {
   try {
-    yield put(updateProfile.request(userId))
     const user = yield call(updateProfileApi, userId, data)
     yield put(updateProfile.success(user))
     yield call(resolve, user)
   } catch (error) {
-    yield put(updateProfile.failure(error))
     yield call(reject, error.errors)
   }
 }
 
 export function* handleUpdateAccount({ payload: { userId, data }, meta: { resolve, reject }}) {
   try {
-    yield put(updateAccount.request(userId))
     const user = yield call(updateAccountApi, userId, data)
     yield put(updateAccount.success(user))
     yield call(resolve, user)
   } catch (error) {
-    yield put(updateAccount.failure(error))
     yield call(reject, error.errors)
   }
 }
 
 export function* handleCancelAccount({ payload: { userId }, meta: { resolve, reject }}) {
   try {
-    yield put(cancelAccount.request(userId))
     yield call(cancelAccountApi, userId)
     yield put(updateAccount.success)
     yield call(resolve)
   } catch (error) {
-    yield put(cancelAccount.failure(error))
     yield call(reject, error)
   }
 }

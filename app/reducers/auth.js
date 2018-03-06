@@ -35,19 +35,9 @@ export default handleActions({
     token:  null,
     user:   null,
   }),
-  [combineActions(updateProfile.request, updateAccount.request, cancelAccount.request)]: (state) => ({
-    ...state,
-    token: state.token,
-    user:  state.user
-  }),
   [combineActions(updateProfile.success, updateAccount.success)]: (state, { payload }) => ({
     ...state,
     token: state.token,
     user:  payload.user
-  }),
-  [combineActions(updateProfile.failure, updateAccount.failure, cancelAccount.failure)]: (state) => ({
-    ...state,
-    token: state.token,
-    user:  state.user
   })
 }, defaultState)

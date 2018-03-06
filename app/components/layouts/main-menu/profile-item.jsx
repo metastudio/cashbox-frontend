@@ -4,22 +4,17 @@ import { NavDropdown, MenuItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import LogoutItem from './logout-item.jsx'
+import { userFullNameSelector } from 'selectors'
 
-class ProfileItem extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return(
-      <NavDropdown title={ this.props.userFullName } id="user_links">
-        <LinkContainer to="/user/profile" onlyActiveOnIndex>
-          <MenuItem>Edit profile</MenuItem>
-        </LinkContainer>
-        <LogoutItem />
-      </NavDropdown>
-    )
-  }
+const ProfileItem = ({ userFullName }) => {
+  return(
+    <NavDropdown title={ userFullName } id="user_links">
+      <LinkContainer to="/user/profile" onlyActiveOnIndex>
+        <MenuItem>Edit profile</MenuItem>
+      </LinkContainer>
+      <LogoutItem />
+    </NavDropdown>
+  )
 }
 
 ProfileItem.propTypes = {
@@ -27,7 +22,7 @@ ProfileItem.propTypes = {
 }
 
 const select = (state) => ({
-  userFullName: state.auth.user.fullName,
+  userFullName: userFullNameSelector(state),
 })
 
 export default connect(select)(ProfileItem)

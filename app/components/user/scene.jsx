@@ -25,4 +25,3 @@ UserScene.propTypes = {
 UserScene.Profile = Profile
 
 export default UserScene
-
