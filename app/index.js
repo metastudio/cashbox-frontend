@@ -23,7 +23,11 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+<<<<<<< HEAD
 import InvoicesScene from 'components/invoices'
+=======
+import UserScene from 'components/user/scene.jsx'
+>>>>>>> master
 
 import rootSaga from 'sagas'
 
@@ -66,6 +70,10 @@ render((
           </Route>
           <Route path="invoices" component={InvoicesScene} >
             <Route path="list" component={InvoicesScene.List} />
+          </Route>
+          <Route path="user" component={UserScene}>
+            <IndexRedirect to="profile" />
+            <Route path="profile" component={UserScene.Profile} />
           </Route>
         </Route>
       </Router>
