@@ -1,14 +1,14 @@
 import React from 'react'
 import RequireLogin from 'components/utils/require-login'
 import RequireOrganization from 'components/require-organization'
-import AppLayout from 'components/layouts/app-layout'
+import MainLayout from 'components/layouts/main-layout'
 
 const DashboardScene = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
-      <AppLayout>
+      <MainLayout>
         { children }
-      </AppLayout>
+      </MainLayout>
     </RequireOrganization>
   </RequireLogin>
 )

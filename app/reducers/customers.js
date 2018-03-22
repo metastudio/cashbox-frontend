@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 import * as statuses from 'constants/statuses'
-import { loadBankAccounts, deleteBankAccount } from 'actions'
+import { loadCustomers, deleteCustomer } from 'actions'
 
 const defaultState = {
   items:  [],
@@ -10,27 +10,27 @@ const defaultState = {
 }
 
 export default handleActions({
-  [loadBankAccounts.request]: (state) => ({
+  [loadCustomers.request]: (state) => ({
     ...state,
     items:  [],
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadBankAccounts.success]: (state, { payload }) => ({
+  [loadCustomers.success]: (state, { payload }) => ({
     ...state,
-    items:  payload.bankAccounts,
+    items:  payload.customers,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadBankAccounts.failure]: (state, { payload }) => ({
+  [loadCustomers.failure]: (state, { payload }) => ({
     ...state,
     items:  [],
     status: statuses.FAILURE,
     error:  payload
   }),
-  [deleteBankAccount.success]: (state, { payload }) => ({
+  [deleteCustomer.success]: (state, { payload }) => ({
     ...state,
-    items:  state.items.filter((item) => item.id != payload.bankAccount.id),
+    items:  state.items.filter((item) => item.id != payload.customer.id),
     status: statuses.SUCCESS,
     error:  null
   }),

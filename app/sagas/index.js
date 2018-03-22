@@ -5,6 +5,9 @@ import balancesSaga      from './balances'
 import bankAccountsSaga  from './bank-accounts'
 import organizationsSaga from './organizations'
 import transactionsSaga  from './transactions'
+import customersSaga     from './customers'
+import categoriesSaga    from './categories'
+import membersSaga       from './members'
 import usersSaga         from './users'
 
 export default function* rootSaga() {
@@ -14,6 +17,9 @@ export default function* rootSaga() {
     fork(bankAccountsSaga),
     fork(organizationsSaga),
     fork(transactionsSaga),
+    fork(customersSaga),
+    fork(categoriesSaga),
+    fork(membersSaga),
     fork(usersSaga)
   ]
 }

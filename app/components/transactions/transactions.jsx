@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import { Table } from 'react-bootstrap'
 
 import LoadingView from 'components/utils/loading-view'
-import NewTransaction from './new.jsx'
+import New from './new.jsx'
 
 import { loadTransactions, addFlashMessage } from 'actions'
 import { getCurrentOrganizationId } from 'selectors'
@@ -75,6 +75,6 @@ const dispatcher = (dispatch) => ({
   addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-Transactions.NewTransaction = NewTransaction
+Transactions.New = New
 
 export default connect(select, dispatcher)(Transactions)

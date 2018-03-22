@@ -23,6 +23,10 @@ import LoginScene from 'components/login'
 import DashboardScene from 'components/dashboard'
 import OrganizationsScene from 'components/organizations'
 import Transactions from 'components/transactions'
+import MembersScene from 'components/members'
+import BankAccountsScene from 'components/bank-accounts'
+import CategoriesScene from 'components/categories'
+import CustomersScene from 'components/customers'
 import UserScene from 'components/user/scene.jsx'
 
 import rootSaga from 'sagas'
@@ -56,13 +60,31 @@ render((
         <Route path="/" component={App}>
           <Route component={DashboardScene}>
             <IndexRoute component={Transactions} />
-            <Route path="transactions/new" component={Transactions.NewTransaction} />
+            <Route path="transactions/new" component={Transactions.New} />
           </Route>
           <Route path="login" component={LoginScene} />
           <Route path="organizations" component={OrganizationsScene} >
             <IndexRedirect to="select" />
             <Route path="select" component={OrganizationsScene.Select} />
             <Route path="new" component={OrganizationsScene.New} />
+          </Route>
+          <Route path="members" component={MembersScene}>
+            <IndexRoute component={MembersScene.Members} />
+          </Route>
+          <Route path="bank_accounts" component={BankAccountsScene}>
+            <IndexRoute component={BankAccountsScene.BankAccounts} />
+            <Route path="new" component={BankAccountsScene.New} />
+            <Route path=":bankAccountId/edit" component={BankAccountsScene.Edit} />
+          </Route>
+          <Route path="categories" component={CategoriesScene}>
+            <IndexRoute component={CategoriesScene.Categories} />
+            <Route path="new" component={CategoriesScene.New} />
+            <Route path=":categoryId/edit" component={CategoriesScene.Edit} />
+          </Route>
+          <Route path="customers" component={CustomersScene}>
+            <IndexRoute component={CustomersScene.Customers} />
+            <Route path="new" component={CustomersScene.New} />
+            <Route path=":customerId/edit" component={CustomersScene.Edit} />
           </Route>
           <Route path="user" component={UserScene}>
             <IndexRedirect to="profile" />
