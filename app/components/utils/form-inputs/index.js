@@ -10,3 +10,5 @@ export * from './horizontal-currency-input.jsx'
 
 export * from './inline-input.jsx'
 export * from './inline-react-async-select.jsx'
+
+export * from './vertical-text-input.jsx'

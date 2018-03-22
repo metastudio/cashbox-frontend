@@ -27,6 +27,7 @@ import MembersScene from 'components/members'
 import BankAccountsScene from 'components/bank-accounts'
 import CategoriesScene from 'components/categories'
 import CustomersScene from 'components/customers'
+import UserScene from 'components/user/scene.jsx'
 
 import rootSaga from 'sagas'
 
@@ -84,6 +85,10 @@ render((
             <IndexRoute component={CustomersScene.Customers} />
             <Route path="new" component={CustomersScene.New} />
             <Route path=":customerId/edit" component={CustomersScene.Edit} />
+          </Route>
+          <Route path="user" component={UserScene}>
+            <IndexRedirect to="profile" />
+            <Route path="profile" component={UserScene.Profile} />
           </Route>
         </Route>
       </Router>
