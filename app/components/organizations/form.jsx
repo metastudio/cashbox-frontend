@@ -1,5 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
 
 import { getCurrencies } from 'api'
@@ -13,7 +14,7 @@ const getOptions = () => {
   }))
 }
 
-const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
+let OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
@@ -33,7 +34,15 @@ OrganizationForm.propTypes = {
   error:        React.PropTypes.string,
 }
 
-export default reduxForm({
+OrganizationForm = reduxForm({
   form: 'organization-form',
   fields: ['name', 'defaultCurrency'],
 })(OrganizationForm)
+
+OrganizationForm = connect(
+  state => ({
+    initialValues: { name: '', defaultCurrency: 'USD' }
+  })
+)(OrganizationForm)
+
+export default OrganizationForm
