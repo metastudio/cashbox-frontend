@@ -8,16 +8,20 @@ module.exports = function () {
       ],
     },
     plugins: [
-      new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
     ],
     module: {
-      postLoaders: [
+      rules: [
         {
           test: /\.jsx?$/,
-          loader: 'react-hot',
-          exclude: /node_modules/
+
+          use: [{
+            loader: 'react-hot-loader'
+          }],
+
+          exclude: /node_modules/,
+          enforce: 'post'
         },
       ]
     }

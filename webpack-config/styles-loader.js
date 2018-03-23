@@ -3,14 +3,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = function () {
   return {
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('css')
+          use: ExtractTextPlugin.extract('css')
         },
         {
           test: /\.scss$/,
-          loader: ExtractTextPlugin.extract(['css', 'sass'])
+          use: ExtractTextPlugin.extract(['css', 'sass'])
         },
       ]
     },

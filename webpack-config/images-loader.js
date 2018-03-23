@@ -1,11 +1,25 @@
 module.exports = function () {
   return {
     module: {
-      loaders: [
-        { test: /\.png$/, loader: 'url-loader?limit=100000' },
-        { test: /\.svg$/, loader: 'url-loader?limit=100000' },
-        { test: /\.jpg$/, loader: 'file' },
-        { test: /\.gif$/, loader: 'file' },
+      rules: [
+        { test: /\.png$/, use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 100000
+          }
+        }] },
+        { test: /\.svg$/, use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 100000
+          }
+        }] },
+        { test: /\.jpg$/, use: [{
+          loader: 'file-loader'
+        }] },
+        { test: /\.gif$/, use: [{
+          loader: 'file-loader'
+        }] },
       ]
     }
   }

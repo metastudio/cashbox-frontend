@@ -1,10 +1,15 @@
 module.exports = function () {
   return {
     module: {
-      loaders: [
+      rules: [
         {
           test: /bootstrap.+\.(jsx|js)$/,
-          loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+          use: [{
+            loader: 'imports-loader',
+            options: {
+              jQuery: 'jquery'
+            }
+          }]
         }
       ]
     }
