@@ -9,7 +9,7 @@ module.exports = function () {
       vendor: dependencies,
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin('vendor', '[name].js'),
+      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: '[name].js' }),
     ],
   }
 }

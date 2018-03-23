@@ -1,14 +1,24 @@
 module.exports = function () {
   return {
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
-          loaders: ['style', 'css']
+          use: [{
+            loader: 'style-loader'
+          }, {
+            loader: 'css-loader'
+          }]
         },
         {
           test: /\.scss$/,
-          loaders: ['style', 'css', 'sass']
+          use: [{
+            loader: 'style-loader'
+          }, {
+            loader: 'css-loader'
+          }, {
+            loader: 'sass-loader'
+          }]
         },
       ]
     }

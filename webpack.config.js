@@ -15,8 +15,7 @@ const PATHS = {
 
 const common = {
   resolve: {
-    root: PATHS.app,
-    modulesDirectories: [ 'node_modules', 'lib' ]
+    modules: [ PATHS.app, 'node_modules', 'lib' ],
   },
 
   entry: {
