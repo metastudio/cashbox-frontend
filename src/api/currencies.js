@@ -1,5 +1,5 @@
-import { prepareURL, getApi } from './_helpers'
+import { prepareURL, getApi } from './_helpers';
 
-const currenciesURL = () => prepareURL('/api/currencies')
+const currenciesURL = () => prepareURL('/api/currencies');
 
-export const getCurrencies = () => getApi(currenciesURL())
+export const getCurrencies = () => getApi(currenciesURL());

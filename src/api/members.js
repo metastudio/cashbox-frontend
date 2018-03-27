@@ -1,6 +1,5 @@
-import { prepareURL, getApi } from './_helpers'
+import { prepareURL, getApi } from './_helpers';
 
-const membersURL = (orgId) => prepareURL(`/api/organizations/${orgId}/members`)
-const memberURL = (orgId, memberId) => prepareURL(`/api/organizations/${orgId}/members/${memberId}`)
+const membersURL = (orgId) => prepareURL(`/api/organizations/${orgId}/members`);
 
-export const getOrganizationMembers = (orgId) => getApi(membersURL(orgId))
+export const getOrganizationMembers = (orgId) => getApi(membersURL(orgId));

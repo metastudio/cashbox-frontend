@@ -1,47 +1,47 @@
-import fetch from 'isomorphic-fetch'
-import humps from 'humps'
-import Url   from 'url'
-import { getCookies } from 'utils/cookies/index.js'
-import { HttpError, ValidationError } from './errors'
+import fetch from 'isomorphic-fetch';
+import humps from 'humps';
+import Url   from 'url';
+import { getCookies } from 'utils/cookies';
+import { HttpError, ValidationError } from './errors';
 
 const headers = (headers = {}) => {
-  const token = getCookies().token
-  const basicAuth = token ? {'Authorization': token} : null
+  const token = getCookies().token;
+  const basicAuth = token ? { 'Authorization': token } : null;
 
   return {
     'Accept': 'application/vnd.forge.v1',
     'Content-Type': 'application/json',
     ...basicAuth,
     ...headers,
-  }
-}
+  };
+};
 
-const formatJsonBody = (json) => JSON.stringify(humps.decamelizeKeys(json))
+const formatJsonBody = (json) => JSON.stringify(humps.decamelizeKeys(json));
 
 const fetchApi = (url, fullOptions = {}) => {
-  const { camelizeSkipFilter, ...options } = fullOptions
+  const { camelizeSkipFilter, ...options } = fullOptions;
 
   return fetch(url, {
     headers: headers(),
     ...options
   }).then(response => {
-    if (response.status == 204) {
+    if (response.status === 204) {
       // Empty body
-      return {}
-    } else if (response.ok || response.status == 422) {
+      return {};
+    } else if (response.ok || response.status === 422) {
       return response.json().then(j => {
-        const json = humps.camelizeKeys(j, camelizeSkipFilter)
+        const json = humps.camelizeKeys(j, camelizeSkipFilter);
         if (response.ok) {
-          return json
+          return json;
         } else {
-          throw new ValidationError(json)
+          throw new ValidationError(json);
         }
-      })
+      });
     } else {
-      throw new HttpError(response)
+      throw new HttpError(response);
     }
-  })
-}
+  });
+};
 
 export const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
@@ -49,10 +49,10 @@ export const prepareURL = (pathname, query = {}) => Url.format({
   port:     process.env.REACT_APP_BACKEND_PORT,
   query:    humps.decamelizeKeys(query),
   pathname: pathname,
-})
+});
 
-export const getApi    = (url, options = {})       => fetchApi(url, { ...options, method: 'GET' })
-export const postApi   = (url, data, options = {}) => fetchApi(url, { ...options, method: 'POST',  body: formatJsonBody(data) })
-export const putApi    = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PUT',   body: formatJsonBody(data) })
-export const patchApi  = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PATCH', body: formatJsonBody(data) })
-export const deleteApi = (url, options = {})       => fetchApi(url, { ...options, method: 'DELETE' })
+export const getApi    = (url, options = {})       => fetchApi(url, { ...options, method: 'GET' });
+export const postApi   = (url, data, options = {}) => fetchApi(url, { ...options, method: 'POST',  body: formatJsonBody(data) });
+export const putApi    = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PUT',   body: formatJsonBody(data) });
+export const patchApi  = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PATCH', body: formatJsonBody(data) });
+export const deleteApi = (url, options = {})       => fetchApi(url, { ...options, method: 'DELETE' });
