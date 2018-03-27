@@ -1,51 +1,52 @@
-import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Modal, Button } from 'react-bootstrap';
 
 export default class Confirmation extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       show: true,
-    }
+    };
 
-    this.handleDismiss = this.handleDismiss.bind(this)
-    this.handleCancel  = this.handleCancel.bind(this)
-    this.handleConfirm = this.handleConfirm.bind(this)
+    this.handleDismiss = this.handleDismiss.bind(this);
+    this.handleCancel  = this.handleCancel.bind(this);
+    this.handleConfirm = this.handleConfirm.bind(this);
   }
 
   hide(callback) {
     this.setState({
       show: false,
-    }, callback)
+    }, callback);
   }
 
   handleDismiss() {
     this.hide(() => {
-      this.props.dispose()
-    })
+      this.props.dispose();
+    });
   }
 
   handleCancel() {
     this.hide(() => {
-      this.props.reject()
-    })
+      this.props.reject();
+    });
   }
 
   handleConfirm() {
     this.hide(() => {
-      this.props.resolve()
-    })
+      this.props.resolve();
+    });
   }
 
   render() {
-    var header = null
+    var header = null;
     if (this.props.title) {
       header = (
         <Modal.Header>
           <Modal.Title>{this.props.title}</Modal.Title>
         </Modal.Header>
-      )
+      );
     }
     return (
       <div className="static-modal">
@@ -60,21 +61,21 @@ export default class Confirmation extends React.Component {
           </Modal.Footer>
         </Modal>
       </div>
-    )
+    );
   }
 }
 
 Confirmation.propTypes = {
-  okLabel:      React.PropTypes.string.isRequired,
-  cancelLabel:  React.PropTypes.string.isRequired,
-  confirmation: React.PropTypes.string.isRequired,
-  title:        React.PropTypes.string,
-  dispose:      React.PropTypes.func.isRequired,
-  reject:       React.PropTypes.func.isRequired,
-  resolve:      React.PropTypes.func.isRequired,
-}
+  okLabel:      PropTypes.string.isRequired,
+  cancelLabel:  PropTypes.string.isRequired,
+  confirmation: PropTypes.string.isRequired,
+  title:        PropTypes.string,
+  dispose:      PropTypes.func.isRequired,
+  reject:       PropTypes.func.isRequired,
+  resolve:      PropTypes.func.isRequired,
+};
 
 Confirmation.defaultProps = {
   okLabel:     'OK',
   cancelLabel: 'Cancel',
-}
+};
