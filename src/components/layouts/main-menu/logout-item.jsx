@@ -37,7 +37,6 @@ class LogoutItem extends React.Component {
 LogoutItem.propTypes = {
   isAuthorized:    PropTypes.bool,
   logout:          PropTypes.func.isRequired,
-  afterLogout:     PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
 };
 

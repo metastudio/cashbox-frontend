@@ -13,15 +13,11 @@ import OrganizationsScene from 'components/organizations';
 // import MembersScene       from 'components/members';
 // import BankAccountsScene  from 'components/bank-accounts';
 // import CategoriesScene    from 'components/categories';
-// import CustomersScene     from 'components/customers';
+import CustomersScene     from 'components/customers';
 // import UserScene          from 'components/user';
 
 /* <Router history={ browserHistory} >
 <Route path="/" component={ App }>
-  <Route component={ DashboardScene }>
-    <IndexRoute component={ Transactions } />
-    <Route path="transactions/new" component={ Transactions.New } />
-  </Route>
   <Route path="login" component={ LoginScene } />
   <Route path="members" component={ MembersScene }>
     <IndexRoute component={ MembersScene.Members } />
@@ -35,11 +31,6 @@ import OrganizationsScene from 'components/organizations';
     <IndexRoute component={CategoriesScene.Categories} />
     <Route path="new" component={CategoriesScene.New} />
     <Route path=":categoryId/edit" component={CategoriesScene.Edit} />
-  </Route>
-  <Route path="customers" component={CustomersScene}>
-    <IndexRoute component={CustomersScene.Customers} />
-    <Route path="new" component={CustomersScene.New} />
-    <Route path=":customerId/edit" component={CustomersScene.Edit} />
   </Route>
   <Route path="user" component={UserScene}>
     <IndexRedirect to="profile" />
@@ -63,6 +54,7 @@ class App extends React.Component {
             <Route exact path="/" component={ DashboardScene } />
             <Route path="/login" component={ LoginScene } />
             <Route path="/organizations" component={ OrganizationsScene } />
+            <Route path="/customers" component={ CustomersScene } />
           </div>
         </BrowserRouter>
       );
