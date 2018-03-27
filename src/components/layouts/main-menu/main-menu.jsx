@@ -1,13 +1,14 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
-import Balances from 'components/balances/balances.jsx'
-import ProfileItem from './profile-item.jsx'
+import Balances from 'components/balances/balances.jsx';
+import ProfileItem from './profile-item.jsx';
 
-class MainMenu extends Component {
+class MainMenu extends React.Component {
 
   render() {
 
@@ -16,7 +17,7 @@ class MainMenu extends Component {
         return (
           <Nav>
             <NavDropdown title={this.props.currentOrganization.name} id="organizations-nav-dropdown">
-              <LinkContainer to="/organizations/select" onlyActiveOnIndex>
+              <LinkContainer to="/organizations/select">
                 <MenuItem>Select</MenuItem>
               </LinkContainer>
               <LinkContainer to="/customers">
@@ -33,30 +34,30 @@ class MainMenu extends Component {
               </LinkContainer>
             </NavDropdown>
           </Nav>
-        )
+        );
       } else {
         return (
           <Nav>
             <NavDropdown title="Organizations" id="organizations-nav-dropdown">
-              <LinkContainer to="/organizations/select" onlyActiveOnIndex>
+              <LinkContainer to="/organizations/select">
                 <MenuItem>Select</MenuItem>
               </LinkContainer>
             </NavDropdown>
           </Nav>
-        )
+        );
       }
-    }
+    };
 
     return (
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/" onlyActiveOnIndex>Cashbox</Link>
+            <NavLink to="/" exact>Cashbox</NavLink>
           </Navbar.Brand>
         </Navbar.Header>
 
         <Nav>
-          <LinkContainer to="/" onlyActiveOnIndex>
+          <LinkContainer to="/" exact>
             <NavItem>Dashboard</NavItem>
           </LinkContainer>
         </Nav>
@@ -71,16 +72,16 @@ class MainMenu extends Component {
           <ProfileItem />
         </Nav>
       </Navbar>
-    )
+    );
   }
 }
 
 MainMenu.propTypes = {
   currentOrganization: PropTypes.object,
-}
+};
 
 const select = (state) => ({
   currentOrganization: state.currentOrganization.data
-})
+});
 
-export default connect(select, null)(MainMenu)
+export default connect(select, null)(MainMenu);
