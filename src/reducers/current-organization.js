@@ -1,9 +1,7 @@
 import { handleActions, combineActions } from 'redux-actions'
 
-import {
-  setCurrentOrganization,
-  restoreSession,
-} from 'actions'
+import { setCurrentOrganization } from 'actions/organizations.js';
+import { restoreSession } from 'actions/auth.js';
 
 const defaultState = {
   id:   null,

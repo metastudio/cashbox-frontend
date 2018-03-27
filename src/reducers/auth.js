@@ -4,10 +4,12 @@ import {
   restoreSession,
   loginUser,
   logoutUser,
+} from 'actions/auth.js';
+import {
   updateProfile,
   updateAccount,
   cancelAccount
-} from 'actions'
+} from 'actions/users.js'
 
 const defaultState = {
   token: null,

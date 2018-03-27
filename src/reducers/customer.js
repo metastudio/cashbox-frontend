@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
-import * as statuses from 'constants/statuses'
-import { loadCategory, clearCategory } from 'actions'
+
+import * as statuses from 'constants/statuses.js'
+import { loadCustomer, clearCustomer } from 'actions/customers.js'
 
 const defaultState = {
   data:   null,
@@ -9,25 +10,25 @@ const defaultState = {
 }
 
 export default handleActions({
-  [loadCategory.request]: (state) => ({
+  [loadCustomer.request]: (state) => ({
     ...state,
     data:   null,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadCategory.success]: (state, { payload }) => ({
+  [loadCustomer.success]: (state, { payload }) => ({
     ...state,
-    data:   payload.category,
+    data:   payload.customer,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadCategory.failure]: (state, { payload }) => ({
+  [loadCustomer.failure]: (state, { payload }) => ({
     ...state,
     data:   null,
     status: statuses.FAILURE,
     error:  payload
   }),
-  [clearCategory]: (state) => ({
+  [clearCustomer]: (state) => ({
     ...state,
     data:   null,
     status: statuses.INVALID,

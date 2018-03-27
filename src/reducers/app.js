@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 
 import {
   restoreSession
-} from 'actions'
+} from 'actions/auth.js'
 
 const defaultState = {
   isSessionLoaded: false

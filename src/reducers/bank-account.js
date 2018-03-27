@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
-import * as statuses from 'constants/statuses'
-import { loadBankAccount, clearBankAccount } from 'actions'
+
+import * as statuses from 'constants/statuses.js'
+import { loadBankAccount, clearBankAccount } from 'actions/bank-accounts.js'
 
 const defaultState = {
   data:   null,

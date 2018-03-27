@@ -1,10 +1,10 @@
 import { handleActions } from 'redux-actions'
 
-import * as statuses from 'constants/statuses'
+import * as statuses from 'constants/statuses.js'
 
 import {
   loadOrganizationBalances,
-} from 'actions'
+} from 'actions/balances.js'
 
 const defaultState = {
   totalAmount: null,

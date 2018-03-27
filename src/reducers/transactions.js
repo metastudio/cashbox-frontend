@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
-import * as statuses from 'constants/statuses'
-import { loadTransactions } from 'actions'
+import * as statuses from 'constants/statuses.js'
+import { loadTransactions } from 'actions/transactions.js'
 
 const defaultState = {
   items:  [],

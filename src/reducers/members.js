@@ -1,10 +1,7 @@
 import { handleActions } from 'redux-actions'
 
-import * as statuses from 'constants/statuses'
-
-import {
-  loadOrganizations,
-} from 'actions'
+import * as statuses from 'constants/statuses.js'
+import { loadMembers } from 'actions/members.js'
 
 const defaultState = {
   items:  [],
@@ -13,19 +10,19 @@ const defaultState = {
 }
 
 export default handleActions({
-  [loadOrganizations.request]: (state) => ({
+  [loadMembers.request]: (state) => ({
     ...state,
     items:  [],
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadOrganizations.success]: (state, { payload }) => ({
+  [loadMembers.success]: (state, { payload }) => ({
     ...state,
-    items:  payload.organizations,
+    items:  payload.members,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadOrganizations.failure]: (state, { payload }) => ({
+  [loadMembers.failure]: (state, { payload }) => ({
     ...state,
     items:  [],
     status: statuses.FAILURE,
