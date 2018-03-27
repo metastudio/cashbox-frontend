@@ -1,5 +1,6 @@
-import React from 'react'
-import CurrencyInput from 'react-currency-input'
+import React from 'react';
+import PropTypes from 'prop-types';
+import CurrencyInput from 'react-currency-input';
 
 import FormGroup from './horizontal-form-group.jsx'
 
@@ -12,6 +13,6 @@ export const HorizontalCurrencyInput = ({ label, field, ...inputProps }) => {
 }
 
 HorizontalCurrencyInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
 }

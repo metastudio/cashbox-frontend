@@ -1,7 +1,8 @@
-import React from 'react'
-import Select from 'react-select'
-import 'react-select/dist/react-select.css'
-import './async-select-fix.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+import './async-select-fix.css';
 
 import FormGroup from './inline-form-group.jsx'
 
@@ -12,8 +13,8 @@ export  const InlineReactAsyncSelect = ({ field, label, labelProps, ...inputProp
 )
 
 InlineReactAsyncSelect.propTypes = {
-  field:       React.PropTypes.object.isRequired,
-  label:       React.PropTypes.string.isRequired,
-  loadOptions: React.PropTypes.func.isRequired,
-  labelProps:  React.PropTypes.object,
+  field:       PropTypes.object.isRequired,
+  label:       PropTypes.string.isRequired,
+  loadOptions: PropTypes.func.isRequired,
+  labelProps:  PropTypes.object,
 }

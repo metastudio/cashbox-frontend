@@ -1,5 +1,6 @@
-import React from 'react'
-import { FormControl } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormControl } from 'react-bootstrap';
 
 import FormGroup from './horizontal-form-group.jsx'
 
@@ -32,9 +33,9 @@ export const HorizontalFormInput = ({ label, field, ...inputProps }) => {
 }
 
 HorizontalFormInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
-  type:  React.PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
+  type:  PropTypes.string.isRequired,
 }
 
 HorizontalFormInput.defaultProps = {

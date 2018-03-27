@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { FormControl } from 'react-bootstrap'
 
 import FormGroup from './horizontal-form-group.jsx'
@@ -25,6 +26,6 @@ export const HorizontalFileInput = ({ field, label, ...inputProps }) => {
 }
 
 HorizontalFileInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
 }

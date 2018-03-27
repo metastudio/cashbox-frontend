@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import './async-select-fix.css'
@@ -14,7 +15,7 @@ export const HorizontalAsyncSelect = ({ label, field, ...inputProps }) => {
 }
 
 HorizontalAsyncSelect.propTypes = {
-  field:       React.PropTypes.object.isRequired,
-  label:       React.PropTypes.string.isRequired,
-  loadOptions: React.PropTypes.func.isRequired,
+  field:       PropTypes.object.isRequired,
+  label:       PropTypes.string.isRequired,
+  loadOptions: PropTypes.func.isRequired,
 }

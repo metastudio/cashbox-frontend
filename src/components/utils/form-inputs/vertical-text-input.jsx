@@ -1,7 +1,8 @@
-import React from 'react'
-import { FormControl, FormGroup, Col, ControlLabel, HelpBlock } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormControl, FormGroup, Col, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-import { domOnlyProps } from 'components/utils/form-inputs'
+import { domOnlyProps } from 'components/utils/form-inputs/horizontal-form-input.jsx';
 
 export const VerticalTextInput = ({ field, label, help, ...inputProps }) => {
   return (
@@ -20,10 +21,10 @@ export const VerticalTextInput = ({ field, label, help, ...inputProps }) => {
 }
 
 VerticalTextInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string,
-  help:  React.PropTypes.string,
-  type:  React.PropTypes.string
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  help:  PropTypes.string,
+  type:  PropTypes.string
 }
 
 VerticalTextInput.defaultProps = {

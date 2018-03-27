@@ -1,5 +1,6 @@
-import React from 'react'
-import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const HorizontalFormGroup = ({ field, label, children }) => {
   return (
@@ -14,13 +15,13 @@ const HorizontalFormGroup = ({ field, label, children }) => {
 }
 
 HorizontalFormGroup.propTypes = {
-  field: React.PropTypes.shape({
-    name:    React.PropTypes.string.isRequired,
-    invalid: React.PropTypes.bool,
-    error:   React.PropTypes.string,
+  field: PropTypes.shape({
+    name:    PropTypes.string.isRequired,
+    invalid: PropTypes.bool,
+    error:   PropTypes.string,
   }).isRequired,
-  label: React.PropTypes.string,
-  children: React.PropTypes.node.isRequired,
+  label:    PropTypes.string,
+  children: PropTypes.node.isRequired,
 }
 
 export default HorizontalFormGroup

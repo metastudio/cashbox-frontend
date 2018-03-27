@@ -1,5 +1,6 @@
-import React from 'react'
-import { Row, Col, FormControl } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Row, Col, FormControl } from 'react-bootstrap';
 
 import FormGroup from './horizontal-form-group.jsx'
 
@@ -41,6 +42,6 @@ export const HorizontalImageInput = ({ field, label, ...inputProps }) => {
 }
 
 HorizontalImageInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
 }

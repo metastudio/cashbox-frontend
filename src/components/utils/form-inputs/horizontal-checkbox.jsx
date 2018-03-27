@@ -1,5 +1,6 @@
-import React from 'react'
-import { Checkbox } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox } from 'react-bootstrap';
 
 import FormGroup from './horizontal-form-group.jsx'
 
@@ -12,6 +13,6 @@ export const HorizontalCheckbox = ({ field, label, ...inputProps }) => {
 }
 
 HorizontalCheckbox.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
 }

@@ -1,5 +1,6 @@
-import React from 'react'
-import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 const InlineFormGroup = ({ field, label, labelProps, children, ...groupProps }) => (
   <FormGroup controlId={ field.name } validationState={ field.invalid ? 'error' : null } {...groupProps} >
@@ -11,14 +12,14 @@ const InlineFormGroup = ({ field, label, labelProps, children, ...groupProps }) 
 )
 
 InlineFormGroup.propTypes = {
-  field: React.PropTypes.shape({
-    name:    React.PropTypes.string.isRequired,
-    invalid: React.PropTypes.bool,
-    error:   React.PropTypes.string,
+  field: PropTypes.shape({
+    name:    PropTypes.string.isRequired,
+    invalid: PropTypes.bool,
+    error:   PropTypes.string,
   }).isRequired,
-  label:      React.PropTypes.string,
-  labelProps: React.PropTypes.object,
-  children:   React.PropTypes.node.isRequired,
+  label:      PropTypes.string,
+  labelProps: PropTypes.object,
+  children:   PropTypes.node.isRequired,
 }
 
 export default InlineFormGroup
