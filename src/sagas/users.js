@@ -1,18 +1,17 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 import { stopSubmit } from 'redux-form'
 
-import { 
+import {
   updateProfile as updateProfileApi,
   updateAccount as updateAccountApi,
   cancelAccount as cancelAccountApi
-} from 'api'
+} from 'api/index.js'
 
 import {
   updateProfile,
   updateAccount,
   cancelAccount
-} from 'actions'
+} from 'actions/users.js'
 
 export function* handleUpdateProfile({ payload: { userId, data }, meta: { resolve, reject } }) {
   try {

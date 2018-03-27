@@ -1,14 +1,13 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { getCookies, setCookies, clearCookies } from 'utils/cookies'
-import { postToken, getCurrentUser, getOrganization } from 'api'
+import { getCookies, setCookies, clearCookies } from 'utils/cookies/index.js'
+import { postToken, getCurrentUser, getOrganization } from 'api/index.js'
 
 import {
   restoreSession,
   loginUser,
   logoutUser,
-} from 'actions'
+} from 'actions/auth.js'
 
 function* handleRestoreSession({ meta: { resolve, reject }}) {
   try {

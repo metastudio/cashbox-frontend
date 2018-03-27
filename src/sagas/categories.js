@@ -1,14 +1,13 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { ValidationError } from 'api/errors'
+import { ValidationError } from 'api/errors.js'
 import {
   getOrganizationCategories,
   getOrganizationCategory,
   postOrganizationCategory,
   putOrganizationCategory,
   deleteOrganizationCategory,
-} from 'api'
+} from 'api/index.js'
 
 import {
   loadCategories,
@@ -16,7 +15,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
-} from 'actions'
+} from 'actions/categories.js'
 
 function* handleLoadCategories({ payload: { organizationId }}) {
   try {

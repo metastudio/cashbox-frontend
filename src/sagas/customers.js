@@ -1,14 +1,13 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { ValidationError } from 'api/errors'
+import { ValidationError } from 'api/errors.js'
 import {
   getOrganizationCustomers,
   getOrganizationCustomer,
   postOrganizationCustomer,
   putOrganizationCustomer,
   deleteOrganizationCustomer,
-} from 'api'
+} from 'api/index.js'
 
 import {
   loadCustomers,
@@ -16,7 +15,7 @@ import {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} from 'actions'
+} from 'actions/customers.js'
 
 function* handleLoadCustomers({ payload: { organizationId }}) {
   try {

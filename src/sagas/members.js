@@ -1,10 +1,9 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { ValidationError } from 'api/errors'
-import { getOrganizationMembers } from 'api'
+import { ValidationError } from 'api/errors.js'
+import { getOrganizationMembers } from 'api/index.js'
 
-import { loadMembers } from 'actions'
+import { loadMembers } from 'actions/members.js'
 
 function* handleLoadMembers({ payload: { organizationId }}) {
   try {

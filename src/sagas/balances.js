@@ -1,11 +1,10 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { getOrganizationBalances } from 'api'
+import { getOrganizationBalances } from 'api/index.js'
 
 import {
   loadOrganizationBalances,
-} from 'actions'
+} from 'actions/balances.js'
 
 function* handleLoadOrganizationBalances({ payload: { organizationId }}) {
   try {

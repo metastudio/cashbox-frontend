@@ -1,14 +1,13 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { ValidationError } from 'api/errors'
+import { ValidationError } from 'api/errors.js'
 import {
   getOrganizationBankAccounts,
   getOrganizationBankAccount,
   postOrganizationBankAccount,
   putOrganizationBankAccount,
   deleteOrganizationBankAccount,
-} from 'api'
+} from 'api/index.js'
 
 import {
   loadBankAccounts,
@@ -16,7 +15,7 @@ import {
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
-} from 'actions'
+} from 'actions/bank-accounts.js'
 
 function* handleLoadBankAccounts({ payload: { organizationId }}) {
   try {

@@ -1,15 +1,15 @@
-import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
-import { setCookies } from 'utils/cookies'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
-import { ValidationError } from 'api/errors'
-import { getOrganizations, postOrganization } from 'api'
+import { setCookies } from 'utils/cookies/index.js'
+
+import { ValidationError } from 'api/errors.js'
+import { getOrganizations, postOrganization } from 'api/index.js'
 
 import {
   loadOrganizations,
   createOrganization,
   setCurrentOrganization,
-} from 'actions'
+} from 'actions/organizations.js'
 
 function* handleLoadOrganizations() {
   try {
