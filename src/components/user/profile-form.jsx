@@ -1,9 +1,10 @@
-import React from 'react'
-import { reduxForm } from 'redux-form'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
 
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
 
-import { VerticalTextInput } from 'components/utils/form-inputs'
+import { VerticalTextInput } from 'components/utils/form-inputs';
 
 const ProfileForm = ({ fields: { fullName, phoneNumber }, handleSubmit, submitting, error }) => {
   return(<Form horizontal onSubmit={ handleSubmit }>
@@ -12,7 +13,7 @@ const ProfileForm = ({ fields: { fullName, phoneNumber }, handleSubmit, submitti
       label="Full name *"
       placeholder="Enter full name"
       field={ fullName }
-      />
+    />
     <VerticalTextInput
       label="Phone number"
       placeholder="Enter phone number"
@@ -23,18 +24,18 @@ const ProfileForm = ({ fields: { fullName, phoneNumber }, handleSubmit, submitti
         <Button bsStyle="primary" type="submit" disabled={ submitting }>Update profile</Button>
       </Col>
     </FormGroup>
-  </Form>)
-}
+  </Form>);
+};
 
 ProfileForm.propTypes = {
-  fields:       React.PropTypes.object.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired,
-  submitting:   React.PropTypes.bool,
-  error:        React.PropTypes.string,
-  store:        React.PropTypes.object
-}
+  fields:       PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting:   PropTypes.bool,
+  error:        PropTypes.string,
+  store:        PropTypes.object
+};
 
 export default reduxForm({
   form: 'profileForm',
   fields: ['fullName', 'phoneNumber'],
-})(ProfileForm)
+})(ProfileForm);
