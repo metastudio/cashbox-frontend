@@ -12,7 +12,7 @@ import DashboardScene     from 'components/dashboard';
 import TransactionsScene  from 'components/transactions';
 import OrganizationsScene from 'components/organizations';
 // import MembersScene       from 'components/members';
-// import BankAccountsScene  from 'components/bank-accounts';
+import BankAccountsScene  from 'components/bank-accounts';
 import CategoriesScene    from 'components/categories';
 import CustomersScene     from 'components/customers';
 // import UserScene          from 'components/user';
@@ -22,11 +22,6 @@ import CustomersScene     from 'components/customers';
   <Route path="login" component={ LoginScene } />
   <Route path="members" component={ MembersScene }>
     <IndexRoute component={ MembersScene.Members } />
-  </Route>
-  <Route path="bank_accounts" component={BankAccountsScene}>
-    <IndexRoute component={BankAccountsScene.BankAccounts} />
-    <Route path="new" component={BankAccountsScene.New} />
-    <Route path=":bankAccountId/edit" component={BankAccountsScene.Edit} />
   </Route>
   <Route path="categories" component={CategoriesScene}>
     <IndexRoute component={CategoriesScene.Categories} />
@@ -58,6 +53,7 @@ class App extends React.Component {
             <Route path="/organizations" component={ OrganizationsScene } />
             <Route path="/customers" component={ CustomersScene } />
             <Route path="/categories" component={ CategoriesScene } />
+            <Route path="/bank_accounts" component={BankAccountsScene} />
           </div>
         </BrowserRouter>
       );
