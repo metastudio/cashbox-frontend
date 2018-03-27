@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form'
 
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
-import { HorizontalFormInput } from 'components/utils/form-inputs'
+import { HorizontalFormInput } from 'components/utils/form-inputs';
 
 const LoginForm = ({ fields: { email, password }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
@@ -18,10 +19,10 @@ const LoginForm = ({ fields: { email, password }, handleSubmit, submitting, erro
 )
 
 LoginForm.propTypes = {
-  fields:       React.PropTypes.object.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired,
-  submitting:   React.PropTypes.bool,
-  error:        React.PropTypes.string,
+  fields:       PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting:   PropTypes.bool,
+  error:        PropTypes.string,
 }
 
 export default reduxForm({

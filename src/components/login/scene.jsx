@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Row, Col } from 'react-bootstrap'
 
-import GuestLayout from 'components/layouts/guest-layout'
-import Login from './login.jsx'
+import GuestLayout from 'components/layouts/guest-layout';
+import Login from './login.jsx';
 
 const LoginScene = () => (
   <GuestLayout>
