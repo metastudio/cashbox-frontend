@@ -1,8 +1,6 @@
-/*global __CONFIG__*/
-
 import Cookies from 'js-cookie'
 
-let COOKIE_KEY = __CONFIG__.cookies.key
+const COOKIE_KEY = process.env.REACT_APP_COOKIES_KEY;
 
 export function getCookies() {
   return Cookies.getJSON(COOKIE_KEY) || {}
@@ -11,7 +9,7 @@ export function getCookies() {
 export function setCookies(changes) {
   const newState = Object.assign({}, getCookies(), changes)
 
-  Cookies.set(COOKIE_KEY, newState, __CONFIG__.cookies)
+  Cookies.set(COOKIE_KEY, newState, { key: COOKIE_KEY, secure: false })
 }
 
 export function clearCookies() {
