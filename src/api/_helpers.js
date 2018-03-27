@@ -1,9 +1,7 @@
-/*global __CONFIG__*/
-
 import fetch from 'isomorphic-fetch'
 import humps from 'humps'
 import Url   from 'url'
-import { getCookies } from 'utils/cookies'
+import { getCookies } from 'utils/cookies/index.js'
 import { HttpError, ValidationError } from './errors'
 
 const headers = (headers = {}) => {
@@ -46,8 +44,10 @@ const fetchApi = (url, fullOptions = {}) => {
 }
 
 export const prepareURL = (pathname, query = {}) => Url.format({
-  ...__CONFIG__.endpoint,
-  query: humps.decamelizeKeys(query),
+  protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
+  hostname: process.env.REACT_APP_BACKEND_HOSTNAME,
+  port:     process.env.REACT_APP_BACKEND_PORT,
+  query:    humps.decamelizeKeys(query),
   pathname: pathname,
 })
 
