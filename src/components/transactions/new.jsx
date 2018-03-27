@@ -1,10 +1,12 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
-import { Panel, Row, Col } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
+import { Panel, Row, Col } from 'react-bootstrap';
 
-import { createTransaction, addFlashMessage } from 'actions'
-import { getCurrentOrganizationId } from 'selectors'
+import { addFlashMessage } from 'actions/flash-messages.js';
+import { createTransaction } from 'actions/transactions.js';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import Form from './form.jsx'
 
@@ -28,8 +30,8 @@ class NewTransaction extends React.Component {
   }
 
   afterCreate() {
-    this.props.addFlashMessage('Transaction successfully created.')
-    this.props.redirectToRootPage()
+    this.props.addFlashMessage('Transaction successfully created.');
+    this.props.history.push('/');
   }
 
   render() {
@@ -46,10 +48,10 @@ class NewTransaction extends React.Component {
 }
 
 NewTransaction.propTypes = {
-  orgId:              React.PropTypes.number.isRequired,
-  createTransaction:  React.PropTypes.func.isRequired,
-  redirectToRootPage: React.PropTypes.func.isRequired,
-  addFlashMessage:    React.PropTypes.func.isRequired,
+  orgId:              PropTypes.number.isRequired,
+  createTransaction:  PropTypes.func.isRequired,
+  addFlashMessage:    PropTypes.func.isRequired,
+  history:            PropTypes.object.isRequired
 }
 
 const select = (state) => ({
@@ -58,8 +60,7 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   createTransaction:  (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
-  redirectToRootPage: () => dispatch(routeActions.push('/')),
   addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default connect(select, dispatcher)(NewTransaction)
+export default withRouter(connect(select, dispatcher)(NewTransaction));

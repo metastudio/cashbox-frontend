@@ -1,10 +1,13 @@
-import React from 'react'
-import { reduxForm } from 'redux-form'
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
 
-import { getOrganizationCategories, getOrganizationCustomers, getOrganizationBankAccounts } from 'api'
+import { getOrganizationCategories } from 'api/categories.js';
+import { getOrganizationCustomers } from 'api/customers.js';
+import { getOrganizationBankAccounts } from 'api/bank-accounts.js';
 
-import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs'
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
 const getCategoryOptions = (orgId) => {
@@ -45,11 +48,11 @@ const TransactionForm = ({ fields: { amount, category, customer, bankAccount, co
 )
 
 TransactionForm.propTypes = {
-  fields:       React.PropTypes.object.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired,
-  submitting:   React.PropTypes.bool,
-  error:        React.PropTypes.string,
-  orgId:        React.PropTypes.number.isRequired,
+  fields:       PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting:   PropTypes.bool,
+  error:        PropTypes.string,
+  orgId:        PropTypes.number.isRequired,
 }
 
 export default reduxForm({

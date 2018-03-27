@@ -1,14 +1,13 @@
-import React from 'react'
-import * as statuses from 'constants/statuses'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Table } from 'react-bootstrap';
 
-import { connect } from 'react-redux'
+import * as statuses from 'constants/statuses.js';
+import { loadBankAccounts } from 'actions/bank-accounts.js';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
-import { Table } from 'react-bootstrap'
-
-import LoadingView from 'components/utils/loading-view'
-
-import { loadBankAccounts } from 'actions'
-import { getCurrentOrganizationId } from 'selectors'
+import LoadingView from 'components/utils/loading-view';
 
 class BankAccounts extends React.Component {
 
@@ -50,10 +49,10 @@ class BankAccounts extends React.Component {
 }
 
 BankAccounts.propTypes = {
-  orgId:            React.PropTypes.number,
-  loadBankAccounts: React.PropTypes.func.isRequired,
-  status:           React.PropTypes.string.isRequired,
-  bankAccounts:     React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  orgId:            PropTypes.number,
+  loadBankAccounts: PropTypes.func.isRequired,
+  status:           PropTypes.string.isRequired,
+  bankAccounts:     PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 const select = (state) => ({

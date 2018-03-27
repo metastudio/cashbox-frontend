@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { connect } from 'react-redux'
 
-import { removeFlashMessage } from 'actions'
+import { removeFlashMessage } from 'actions/flash-messages.js';
 import FlashMessage from './flash-message.jsx'
 
 import './flash-messages.scss'
@@ -16,8 +17,8 @@ const FlashMessages = ({ messages, removeMessage }) => (
 )
 
 FlashMessages.propTypes = {
-  messages:      React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  removeMessage: React.PropTypes.func,
+  messages:      PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeMessage: PropTypes.func,
 }
 
 const select = (state) => ({

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 import { Alert } from 'react-bootstrap'
 
@@ -50,8 +51,8 @@ export default class FlashMessage extends React.Component {
 }
 
 FlashMessage.propTypes = {
-  message: React.PropTypes.object.isRequired,
-  handleClose: React.PropTypes.func.isRequired,
-  autoClose: React.PropTypes.bool,
-  closeTimeout: React.PropTypes.number
+  message:      PropTypes.object.isRequired,
+  handleClose:  PropTypes.func.isRequired,
+  autoClose:    PropTypes.bool,
+  closeTimeout: PropTypes.number
 }

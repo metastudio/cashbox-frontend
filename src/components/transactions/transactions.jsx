@@ -1,15 +1,17 @@
-import React from 'react'
-import * as statuses from 'constants/statuses'
-import moment from 'moment'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { Table } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap';
+
+import * as statuses from 'constants/statuses.js';
+import { addFlashMessage } from 'actions/flash-messages.js';
+import { loadTransactions } from 'actions/transactions.js';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view'
 import New from './new.jsx'
-
-import { loadTransactions, addFlashMessage } from 'actions'
-import { getCurrentOrganizationId } from 'selectors'
 
 class Transactions extends React.Component {
 
@@ -57,11 +59,11 @@ class Transactions extends React.Component {
 }
 
 Transactions.propTypes = {
-  addFlashMessage:  React.PropTypes.func.isRequired,
-  orgId:            React.PropTypes.number.isRequired,
-  loadTransactions: React.PropTypes.func.isRequired,
-  status:           React.PropTypes.string.isRequired,
-  transactions:     React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  addFlashMessage:  PropTypes.func.isRequired,
+  orgId:            PropTypes.number.isRequired,
+  loadTransactions: PropTypes.func.isRequired,
+  status:           PropTypes.string.isRequired,
+  transactions:     PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 const select = (state) => ({
