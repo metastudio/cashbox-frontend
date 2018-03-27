@@ -15,21 +15,7 @@ import MembersScene       from 'components/members';
 import BankAccountsScene  from 'components/bank-accounts';
 import CategoriesScene    from 'components/categories';
 import CustomersScene     from 'components/customers';
-// import UserScene          from 'components/user';
-
-/* <Router history={ browserHistory} >
-<Route path="/" component={ App }>
-  <Route path="categories" component={CategoriesScene}>
-    <IndexRoute component={CategoriesScene.Categories} />
-    <Route path="new" component={CategoriesScene.New} />
-    <Route path=":categoryId/edit" component={CategoriesScene.Edit} />
-  </Route>
-  <Route path="user" component={UserScene}>
-    <IndexRedirect to="profile" />
-    <Route path="profile" component={UserScene.Profile} />
-  </Route>
-</Route>
-</Router> */
+import UserScene          from 'components/user';
 
 class App extends React.Component {
   componentDidMount() {
@@ -51,6 +37,7 @@ class App extends React.Component {
             <Route path="/categories" component={ CategoriesScene } />
             <Route path="/bank_accounts" component={BankAccountsScene} />
             <Route path="/members" component={ MembersScene } />
+            <Route path="/user" component={ UserScene }/>
           </div>
         </BrowserRouter>
       );
