@@ -10,14 +10,13 @@ import { addFlashMessage } from 'actions/flash-messages.js';
 import { loadTransactions } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
-import LoadingView from 'components/utils/loading-view'
-import New from './new.jsx'
+import LoadingView from 'components/utils/loading-view';
 
 class Transactions extends React.Component {
 
   componentDidMount() {
-    const { orgId, loadTransactions } = this.props
-    loadTransactions(orgId)
+    const { orgId, loadTransactions } = this.props;
+    loadTransactions(orgId);
   }
 
   render() {
@@ -30,13 +29,12 @@ class Transactions extends React.Component {
         <td>{ transaction.comment }</td>
         <td>{ moment(transaction.date).format('L') }</td>
       </tr>
-      )
-    )
+    ));
 
     return (
       <LoadingView status={ this.props.status }>
         <Link to="/transactions/new" className="btn btn-primary">Add...</Link>
-        { this.props.status == statuses.SUCCESS &&
+        { this.props.status === statuses.SUCCESS &&
           <Table striped responsive hover id="transactions">
             <thead>
               <tr>
@@ -54,7 +52,7 @@ class Transactions extends React.Component {
           </Table>
         }
       </LoadingView>
-    )
+    );
   }
 }
 
@@ -64,19 +62,17 @@ Transactions.propTypes = {
   loadTransactions: PropTypes.func.isRequired,
   status:           PropTypes.string.isRequired,
   transactions:     PropTypes.arrayOf(PropTypes.object).isRequired,
-}
+};
 
 const select = (state) => ({
   orgId:        getCurrentOrganizationId(state),
   transactions: state.transactions.items,
   status:       state.transactions.status,
-})
+});
 
 const dispatcher = (dispatch) => ({
   loadTransactions: (organizationId) => dispatch(loadTransactions(organizationId)),
   addFlashMessage:  (message, type = null) => dispatch(addFlashMessage(message, type)),
-})
+});
 
-Transactions.New = New
-
-export default connect(select, dispatcher)(Transactions)
+export default connect(select, dispatcher)(Transactions);
