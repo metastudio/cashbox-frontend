@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
+import { withRouter } from 'react-router-dom';
 
-import { addFlashMessage } from 'actions'
+import { addFlashMessage } from 'actions/flash-messages.js';
 
 class RequireLogin extends React.Component {
   constructor(props) {
@@ -21,12 +22,12 @@ class RequireLogin extends React.Component {
   checkAuth(props){
     if (!props.isAuthorized) {
       props.addFlashMessage('Login is required.', { type: 'danger' })
-      props.redirectToLoginPage()
+      props.history.push('/login');
       return
     }
     if (props.requireAdmin && !props.isAdmin) {
       props.addFlashMessage('You are not allowed to access this page.', { type: 'danger' })
-      props.redirectToRoot()
+      props.history.push('/');
       return
     }
   }
@@ -39,19 +40,18 @@ class RequireLogin extends React.Component {
     if (this.isAllowed()) {
       return this.props.children
     } else {
-      return null
+      return null;
     }
   }
 }
 
 RequireLogin.propTypes = {
-  requireAdmin:        React.PropTypes.bool,
-  isAuthorized:        React.PropTypes.bool.isRequired,
-  isAdmin:             React.PropTypes.bool.isRequired,
-  redirectToRoot:      React.PropTypes.func.isRequired,
-  redirectToLoginPage: React.PropTypes.func.isRequired,
-  addFlashMessage:     React.PropTypes.func.isRequired,
-  children:            React.PropTypes.node.isRequired,
+  requireAdmin:    PropTypes.bool,
+  isAuthorized:    PropTypes.bool.isRequired,
+  isAdmin:         PropTypes.bool.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  children:        PropTypes.node.isRequired,
+  history:         PropTypes.object.isRequired
 }
 
 const select = (state) => ({
@@ -60,9 +60,7 @@ const select = (state) => ({
 })
 
 const dispatches = (dispatch) => ({
-  redirectToRoot:      () => dispatch(routeActions.push('/')),
-  redirectToLoginPage: () => dispatch(routeActions.push('/login')),
-  addFlashMessage:     (message, options = {}) => dispatch(addFlashMessage(message, options)),
+  addFlashMessage: (message, options = {}) => dispatch(addFlashMessage(message, options)),
 })
 
-export default connect(select, dispatches)(RequireLogin)
+export default withRouter(connect(select, dispatches)(RequireLogin));

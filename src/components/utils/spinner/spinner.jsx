@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const Spinner = ({ title }) => (
   <span className="spinner">
@@ -8,7 +9,7 @@ const Spinner = ({ title }) => (
 )
 
 Spinner.propTypes = {
-  title: React.PropTypes.string,
+  title: PropTypes.string,
 }
 Spinner.defaultProps = {
   title: 'Loading...'

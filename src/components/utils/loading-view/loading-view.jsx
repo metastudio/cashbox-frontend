@@ -1,7 +1,8 @@
-import React from 'react'
-import { Alert } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Alert } from 'react-bootstrap';
 
-import * as statuses from 'constants/statuses'
+import * as statuses from 'constants/statuses.js'
 
 import Spinner from 'components/utils/spinner'
 
@@ -32,10 +33,10 @@ const LoadingView = ({status, error, onTryAgain, children}) => {
 }
 
 LoadingView.propTypes = {
-  status:     React.PropTypes.string.isRequired,
-  error:      React.PropTypes.string.isRequired,
-  onTryAgain: React.PropTypes.func,
-  children:   React.PropTypes.node.isRequired,
+  status:     PropTypes.string.isRequired,
+  error:      PropTypes.string.isRequired,
+  onTryAgain: PropTypes.func,
+  children:   PropTypes.node.isRequired,
 }
 
 LoadingView.defaultProps = {
