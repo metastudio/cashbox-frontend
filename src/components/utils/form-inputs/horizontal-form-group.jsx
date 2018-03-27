@@ -11,8 +11,8 @@ const HorizontalFormGroup = ({ field, label, children }) => {
         { field.invalid && <HelpBlock>{ field.error }</HelpBlock> }
       </Col>
     </FormGroup>
-  )
-}
+  );
+};
 
 HorizontalFormGroup.propTypes = {
   field: PropTypes.shape({
@@ -22,6 +22,6 @@ HorizontalFormGroup.propTypes = {
   }).isRequired,
   label:    PropTypes.string,
   children: PropTypes.node.isRequired,
-}
+};
 
-export default HorizontalFormGroup
+export default HorizontalFormGroup;

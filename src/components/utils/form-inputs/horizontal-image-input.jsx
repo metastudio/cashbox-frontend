@@ -2,30 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, FormControl } from 'react-bootstrap';
 
-import FormGroup from './horizontal-form-group.jsx'
+import FormGroup from './horizontal-form-group.jsx';
 
 export const HorizontalImageInput = ({ field, label, ...inputProps }) => {
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const file = e.target.files[0]
+    const file = e.target.files[0];
 
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = (upload) => {
-      field.onChange(upload.target.result)
-    }
-    reader.readAsDataURL(file)
-  }
+      field.onChange(upload.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const imgSrc = () => {
     if (field.dirty) {
-      return field.value
+      return field.value;
     } else {
       if (field.value && field.value.thumb) {
-        return field.value.thumb.url
+        return field.value.thumb.url;
       }
     }
-  }
+  };
 
   return (
     <FormGroup field={ field } label={ label } >
@@ -38,10 +38,10 @@ export const HorizontalImageInput = ({ field, label, ...inputProps }) => {
         </Col>
       </Row>
     </FormGroup>
-  )
-}
+  );
+};
 
 HorizontalImageInput.propTypes = {
   field: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
-}
+};

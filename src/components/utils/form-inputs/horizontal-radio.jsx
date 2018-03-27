@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from 'react-bootstrap';
 
-import FormGroup from './horizontal-form-group.jsx'
+import FormGroup from './horizontal-form-group.jsx';
 
 export const HorizontalRadio = ({ label, field, collection, ...inputProps }) => {
   return (
@@ -15,11 +15,11 @@ export const HorizontalRadio = ({ label, field, collection, ...inputProps }) => 
         ))
       }
     </FormGroup>
-  )
-}
+  );
+};
 
 HorizontalRadio.propTypes = {
   field:      PropTypes.object.isRequired,
   label:      PropTypes.string,
   collection: PropTypes.array.isRequired,
-}
+};

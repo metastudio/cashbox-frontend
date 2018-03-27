@@ -17,16 +17,16 @@ export const VerticalTextInput = ({ field, label, help, ...inputProps }) => {
         { help && <HelpBlock>{ help }</HelpBlock> }
       </Col>
     </FormGroup>
-  )
-}
+  );
+};
 
 VerticalTextInput.propTypes = {
   field: PropTypes.object.isRequired,
   label: PropTypes.string,
   help:  PropTypes.string,
   type:  PropTypes.string
-}
+};
 
 VerticalTextInput.defaultProps = {
   type: 'text'
-}
+};

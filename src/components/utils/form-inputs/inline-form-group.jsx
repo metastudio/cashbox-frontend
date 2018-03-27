@@ -9,7 +9,7 @@ const InlineFormGroup = ({ field, label, labelProps, children, ...groupProps }) 
     { children }
     { field.invalid && <HelpBlock>{ field.error }</HelpBlock> }
   </FormGroup>
-)
+);
 
 InlineFormGroup.propTypes = {
   field: PropTypes.shape({
@@ -20,6 +20,6 @@ InlineFormGroup.propTypes = {
   label:      PropTypes.string,
   labelProps: PropTypes.object,
   children:   PropTypes.node.isRequired,
-}
+};
 
-export default InlineFormGroup
+export default InlineFormGroup;
