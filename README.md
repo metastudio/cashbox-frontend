@@ -6,39 +6,27 @@ You may get it here https://github.com/metastudio/cashbox
 ## Install packages
 
 ```sh
-$ npm install
+$ yarn install
 ```
 
 ## Make configuration
 
-Copy `config/default.yml.sample` to `config/default.yml` and edit this file.
+Copy `.env.sample` to `.env.local` and edit this file.
 
 ## Run development server
 
 ```sh
-$ npm start
+$ yarn start
 ```
 
 ## ESLint
 
-To make checking with [eslint](http://eslint.org) use command:
+To make ESLint work you have to install additional packages globally:
 
-```
-npm run eslint
-```
-
-# Deploy to staging
-
-Make sure you have `config/staging.yml` file and it have proper values
-
-Install `shipit` and `shipit-deploy` gem globally:
-
-```
-npm install shipit shipit-deploy --global
+```sh
+$ npm install -g eslint-config-react-app babel-eslint@^7.2.3 eslint@^4.1.1 eslint-plugin-flowtype@^2.34.1 eslint-plugin-import@^2.6.0 eslint-plugin-jsx-a11y@^5.1.1 eslint-plugin-react@^7.1.0
 ```
 
-Run deploy command from project folder (config files is searched related to current folder)
+## TSLint
 
-```
-shipit staging deploy
-```
+Should work out of the box.
