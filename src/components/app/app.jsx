@@ -11,7 +11,7 @@ import LoginScene         from 'components/login';
 import DashboardScene     from 'components/dashboard';
 import TransactionsScene  from 'components/transactions';
 import OrganizationsScene from 'components/organizations';
-// import MembersScene       from 'components/members';
+import MembersScene       from 'components/members';
 import BankAccountsScene  from 'components/bank-accounts';
 import CategoriesScene    from 'components/categories';
 import CustomersScene     from 'components/customers';
@@ -19,10 +19,6 @@ import CustomersScene     from 'components/customers';
 
 /* <Router history={ browserHistory} >
 <Route path="/" component={ App }>
-  <Route path="login" component={ LoginScene } />
-  <Route path="members" component={ MembersScene }>
-    <IndexRoute component={ MembersScene.Members } />
-  </Route>
   <Route path="categories" component={CategoriesScene}>
     <IndexRoute component={CategoriesScene.Categories} />
     <Route path="new" component={CategoriesScene.New} />
@@ -54,6 +50,7 @@ class App extends React.Component {
             <Route path="/customers" component={ CustomersScene } />
             <Route path="/categories" component={ CategoriesScene } />
             <Route path="/bank_accounts" component={BankAccountsScene} />
+            <Route path="/members" component={ MembersScene } />
           </div>
         </BrowserRouter>
       );
