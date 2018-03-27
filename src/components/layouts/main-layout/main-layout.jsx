@@ -10,7 +10,9 @@ import FlashMessages from 'components/utils/flash-messages';
 
 const MainLayout = ({ children }) => (
   <div>
-    <MainMenu />
+    <header>
+      <MainMenu />
+    </header>
     <Grid fluid>
       <Row>
         <Col xs={ 12 } md={ 8 }>
