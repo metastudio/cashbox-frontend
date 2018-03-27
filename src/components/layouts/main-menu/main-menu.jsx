@@ -5,13 +5,12 @@ import { NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
-import Balances from 'components/balances/balances.jsx';
+import Balances from 'components/balances';
 import ProfileItem from './profile-item.jsx';
 
 class MainMenu extends React.Component {
 
   render() {
-
     const organizationItems = () => {
       if (this.props.currentOrganization) {
         return (

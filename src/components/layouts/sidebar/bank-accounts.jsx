@@ -12,9 +12,9 @@ import LoadingView from 'components/utils/loading-view';
 class BankAccounts extends React.Component {
 
   componentDidMount() {
-    const { orgId, loadBankAccounts } = this.props
+    const { orgId, loadBankAccounts } = this.props;
     if (orgId) {
-      loadBankAccounts(orgId)
+      loadBankAccounts(orgId);
     }
   }
 
@@ -24,13 +24,12 @@ class BankAccounts extends React.Component {
         <td>{ bankAccount.name } ({ bankAccount.currency })</td>
         <td>{ bankAccount.balance }</td>
       </tr>
-      )
-    )
+    ));
 
     if (this.props.orgId) {
       return (
         <LoadingView status={ this.props.status }>
-          { this.props.status == statuses.SUCCESS &&
+          { this.props.status === statuses.SUCCESS &&
             <div>
               <h2><center>Accounts</center></h2>
               <Table striped responsive id="bankAccounts">
@@ -41,9 +40,9 @@ class BankAccounts extends React.Component {
             </div>
           }
         </LoadingView>
-      )
+      );
     } else {
-      return null
+      return null;
     }
   }
 }
@@ -53,16 +52,16 @@ BankAccounts.propTypes = {
   loadBankAccounts: PropTypes.func.isRequired,
   status:           PropTypes.string.isRequired,
   bankAccounts:     PropTypes.arrayOf(PropTypes.object).isRequired,
-}
+};
 
 const select = (state) => ({
   orgId:        getCurrentOrganizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
-})
+});
 
 const dispatcher = (dispatch) => ({
   loadBankAccounts: (organizationId) => dispatch(loadBankAccounts(organizationId)),
-})
+});
 
-export default connect(select, dispatcher)(BankAccounts)
+export default connect(select, dispatcher)(BankAccounts);

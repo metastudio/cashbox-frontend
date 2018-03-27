@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 
-import { loadOrganizationBalances, addFlashMessage } from 'actions'
-import { getCurrentOrganizationId } from 'selectors'
+import { addFlashMessage } from 'actions/flash-messages.js';
+import { loadOrganizationBalances } from 'actions/balances.js';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 class Balances extends React.Component {
 
@@ -41,13 +43,13 @@ class Balances extends React.Component {
 }
 
 Balances.propTypes = {
-  addFlashMessage: React.PropTypes.func.isRequired,
-  orgId:           React.PropTypes.number,
-  loadBalances:    React.PropTypes.func.isRequired,
-  status:          React.PropTypes.string.isRequired,
-  balances:        React.PropTypes.array.isRequired,
-  totalAmount:     React.PropTypes.string,
-  defaultCurrency: React.PropTypes.string,
+  addFlashMessage: PropTypes.func.isRequired,
+  orgId:           PropTypes.number,
+  loadBalances:    PropTypes.func.isRequired,
+  status:          PropTypes.string.isRequired,
+  balances:        PropTypes.array.isRequired,
+  totalAmount:     PropTypes.string,
+  defaultCurrency: PropTypes.string,
 }
 
 const select = (state) => ({
