@@ -9,10 +9,11 @@ import Spinner from 'components/utils/spinner';
 
 import LoginScene         from 'components/login';
 import DashboardScene     from 'components/dashboard';
+import TransactionsScene  from 'components/transactions';
 import OrganizationsScene from 'components/organizations';
 // import MembersScene       from 'components/members';
 // import BankAccountsScene  from 'components/bank-accounts';
-// import CategoriesScene    from 'components/categories';
+import CategoriesScene    from 'components/categories';
 import CustomersScene     from 'components/customers';
 // import UserScene          from 'components/user';
 
@@ -52,9 +53,11 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Route exact path="/" component={ DashboardScene } />
+            <Route path="/transactions" component={ TransactionsScene } />
             <Route path="/login" component={ LoginScene } />
             <Route path="/organizations" component={ OrganizationsScene } />
             <Route path="/customers" component={ CustomersScene } />
+            <Route path="/categories" component={ CategoriesScene } />
           </div>
         </BrowserRouter>
       );
