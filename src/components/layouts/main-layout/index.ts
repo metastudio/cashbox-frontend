@@ -1,1 +1,1 @@
-export { default } from './main-layout.jsx';
+export { default } from './main-layout';

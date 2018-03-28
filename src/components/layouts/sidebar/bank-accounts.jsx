@@ -31,7 +31,7 @@ class BankAccounts extends React.Component {
         <LoadingView status={ this.props.status }>
           { this.props.status === statuses.SUCCESS &&
             <div>
-              <h2><center>Accounts</center></h2>
+              <h2>Accounts</h2>
               <Table striped responsive id="bankAccounts">
                 <tbody>
                   { bankAccounts }

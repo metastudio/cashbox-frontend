@@ -1,33 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import { Grid, Col, Row } from 'react-bootstrap';
 
 import MainMenu      from 'components/layouts/main-menu';
 import Sidebar       from 'components/layouts/sidebar';
-import Footer        from 'components/layouts/footer';
 import FlashMessages from 'components/utils/flash-messages';
 
-const MainLayout = ({ children }) => (
-  <div>
-    <MainMenu />
+const MainLayout: React.SFC<{}> = ({ children }) => (
+  <>
+    <header>
+      <MainMenu />
+    </header>
     <Grid fluid>
       <Row>
         <Col xs={ 12 } md={ 8 }>
           <FlashMessages />
           { children }
         </Col>
-        <Col xs={ 6 } md={ 4 }>
+        <Col xs={ 12 } md={ 4 }>
           <Sidebar />
         </Col>
       </Row>
     </Grid>
-    <Footer />
-  </div>
+  </>
 );
-
-MainLayout.propTypes = {
-  children: PropTypes.node,
-};
 
 export default MainLayout;

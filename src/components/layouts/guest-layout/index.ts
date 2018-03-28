@@ -1,1 +1,1 @@
-export { default } from './guest-layout.jsx';
+export { default } from './guest-layout';

@@ -1,1 +1,1 @@
-export { default } from './flash-messages.jsx';
+export { default } from './flash-messages';

@@ -1,1 +1,1 @@
-export { default } from './app-layout.jsx';
+export { default } from './app-layout';
