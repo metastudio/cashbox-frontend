@@ -12,3 +12,6 @@ export * from './inline-input.jsx'
 export * from './inline-react-async-select.jsx'
 
 export * from './vertical-text-input.jsx'
+export * from './vertical-date-picker.jsx'
+export * from './vertical-currency-input.jsx'
+export * from './vertical-select.jsx'

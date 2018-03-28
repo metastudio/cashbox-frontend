@@ -65,8 +65,12 @@ render((
             <Route path="select" component={OrganizationsScene.Select} />
             <Route path="new" component={OrganizationsScene.New} />
           </Route>
-          <Route path="invoices" component={InvoicesScene} >
+          <Route path="/invoices" component={InvoicesScene} >
+            <IndexRedirect to="list" />
             <Route path="list" component={InvoicesScene.List} />
+            <Route path="new" component={InvoicesScene.New} />
+            <Route path=":id" component={InvoicesScene.Show} />
+            <Route path=":id/edit" component={InvoicesScene.Edit} />
           </Route>
           <Route path="user" component={UserScene}>
             <IndexRedirect to="profile" />

@@ -1,15 +1,18 @@
 import React from 'react'
 
 import RequireLogin from 'components/utils/require-login'
-import AppLayout from 'components/layouts/app-layout'
+import MainLayout from 'components/layouts/main-layout'
 
 import List from './list.jsx'
+import New from './new.jsx'
+import Show from './show.jsx'
+import Edit from './edit.jsx'
 
 const InvoicesScene = ({ children }) => (
   <RequireLogin>
-    <AppLayout>
+    <MainLayout>
       { children }
-    </AppLayout>
+    </MainLayout>
   </RequireLogin>
 )
 
@@ -18,5 +21,8 @@ InvoicesScene.propTypes = {
 }
 
 InvoicesScene.List = List
+InvoicesScene.New = New
+InvoicesScene.Show = Show
+InvoicesScene.Edit = Edit
 
 export default InvoicesScene
