@@ -7,7 +7,6 @@ import {
 } from 'actions'
 
 const defaultState = {
-  currentInvoice: null,
   items: [],
   pagination: null,
   unpaid_count: null
@@ -32,8 +31,10 @@ export default handleActions({
   }),
   [loadInvoice.success]: (state, { payload }) => ({
     ...state,
-    currentInvoice: payload.invoice,
-    items: state.items
+    items: [
+      payload.invoice,
+      ...state.items
+    ]
   })
 }, defaultState)
 

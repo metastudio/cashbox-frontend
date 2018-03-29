@@ -6,13 +6,14 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import { getCurrentOrganizationId } from 'selectors'
 import { selectUserFullName } from 'selectors/users'
-import { getCurrentInvoice } from 'selectors/invoices'
+import { invoiceSelector } from 'selectors/invoices'
 import {
   loadInvoice,
   destroyInvoice,
   addFlashMessage,
   downloadInvoicePDF,
 } from 'actions'
+
 import {
   Header,
   InvoiceTable,
@@ -26,8 +27,10 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { orgId, loadInvoice } = this.props
-    loadInvoice(orgId, this.props.params.id)
+    const { orgId, loadInvoice, invoice } = this.props
+    if(!invoice) {
+      loadInvoice(orgId, this.props.params.id)
+    }
   }
 
   destroyInvoice() {
@@ -71,10 +74,10 @@ Invoice.propTypes = {
   params:         React.PropTypes.object
 }
 
-const select = (state) => ({
+const select = (state, props) => ({
   orgId:        getCurrentOrganizationId(state),
   userFullName: selectUserFullName(state),
-  invoice:      getCurrentInvoice(state)
+  invoice:      invoiceSelector(state, props.params.id)
 })
 
 const dispatcher = (dispatch) => ({
