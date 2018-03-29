@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions'
 
 import {
   loadInvoices,
@@ -19,17 +19,9 @@ export default handleActions({
       items: payload.invoices,
       pagination: payload.pagination,
       unpaidCount: payload.unpaidСount,
-      currentInvoice: null
     })
   },
-  [createInvoice.success]: (state, { payload }) => ({
-    ...state,
-    items: [
-      payload.invoice,
-      ...state.items
-    ]
-  }),
-  [loadInvoice.success]: (state, { payload }) => ({
+  [combineActions(createInvoice.success, loadInvoice.success)]: (state, { payload }) => ({
     ...state,
     items: [
       payload.invoice,

@@ -6,6 +6,7 @@ import {
   postInvoice,
   getInvoice,
   deleteInvoice,
+  patchInvoice
 } from 'api'
 
 import { ValidationError } from 'api/errors'
@@ -15,7 +16,8 @@ import {
   createInvoice,
   loadInvoice,
   destroyInvoice,
-  downloadInvoicePDF
+  downloadInvoicePDF,
+  updateInvoice
 } from 'actions'
 
 function* handleLoadInvoices({ payload: { organizationId, params }}) {
@@ -73,9 +75,24 @@ function* handleDownoadInvoicePDF({ payload: { organizationId, invoiceId }}) {
   }
 }
 
+function* handleUpdateInvoice({ payload: { organizationId, invoiceId, data }, meta: { resolve, reject } }) {
+  try {
+    yield put(updateInvoice.request(organizationId))
+    yield console.log(data)
+    const invoice = yield call(patchInvoice, organizationId, invoiceId, data)
+    yield put(updateInvoice.success(organizationId, invoice))
+    yield call(resolve, invoice)
+  } catch (error) {
+    yield put(updateInvoice.failure(error))
+    const errors = error instanceof ValidationError ? error.errors : { _error: error.message }
+    yield call(reject, errors)
+  }
+}
+
 export default function* () {
   yield takeEvery(loadInvoices.toString(),  handleLoadInvoices)
   yield takeEvery(createInvoice.toString(), handleCreateInvoice)
+  yield takeEvery(updateInvoice.toString(), handleUpdateInvoice)
   yield takeEvery(loadInvoice.toString(), handleLoadInvoice)
   yield takeEvery(destroyInvoice.toString(), handleDestroyInvoice)
 }

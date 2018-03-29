@@ -9,9 +9,9 @@ export const VerticalSelect = ({ field, label, collection, help, ...inputProps }
     <FormGroup field={ field } label={ label } help={ help }>
       <FormControl componentClass="select" {...inputProps} {...domOnlyProps(field)} >
         {
-          collection.map((i) => (
-            <option key={ i.value } value={ i.value } >
-              { i.label }
+          collection.map((item, index) => (
+            <option key={ index } value={ item.value } >
+              { item.label }
             </option>
           ))
         }

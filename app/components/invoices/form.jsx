@@ -10,7 +10,7 @@ import {
 } from 'components/utils/form-inputs'
 
 
-const InvoiceForm = ({ fields: { currency, number, customerName, startsAt, endsAt, amount, sentAt, paidAt, invoiceItems }, customers, handleSubmit, submitting, error }) => {
+const InvoiceForm = ({ fields: { currency, number, customerName, startsAt, endsAt, amount, sentAt, paidAt, invoiceItems }, customers, handleSubmit, submitting, error, action }) => {
   return(<Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <VerticalSelect 
@@ -120,7 +120,7 @@ const InvoiceForm = ({ fields: { currency, number, customerName, startsAt, endsA
 
     <FormGroup>
       <Col sm={9}>
-        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create Invoice</Button>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>{ action } Invoice</Button>
       </Col>
     </FormGroup>
   </Form>)
@@ -133,7 +133,8 @@ InvoiceForm.propTypes = {
   error:        React.PropTypes.string,
   store:        React.PropTypes.object,
   initialValue: React.PropTypes.object,
-  customers:    React.PropTypes.array.isRequired
+  customers:    React.PropTypes.array.isRequired,
+  action:       React.PropTypes.string.isRequired
 }
 
 export default reduxForm({
@@ -152,5 +153,6 @@ export default reduxForm({
     'invoiceItems[].date',
     'invoiceItems[].hours',
     'invoiceItems[].description',
+    'invoiceItems[].id'
   ]
 })(InvoiceForm)

@@ -27,3 +27,8 @@ export const downloadInvoicePDF = createAction('DOWNLOAD_INVOICE_PDF', (organiza
 downloadInvoicePDF.request = createAction('DOWNLOAD_INVOICE_PDF_REQUEST', (organizationId, invoiceId) => ({ organizationId, invoiceId }))
 downloadInvoicePDF.success = createAction('DOWNLOAD_INVOICE_PDF_SUCCESS', (organizationId, pdf) => ({ organizationId, pdf }))
 downloadInvoicePDF.failure = createAction('DOWNLOAD_INVOICE_PDF_FAILURE')
+
+export const updateInvoice = createAction('UPDATE_INVOICE', (organizationId, invoiceId, data) => ({ organizationId, invoiceId, data }), (_organizationId, _invoiceId, _data, resolve = noop, reject = noop) => ({ resolve, reject }))
+updateInvoice.request = createAction('UPDATE_INVOICE_REQUEST', (organizationId) => ({ organizationId }))
+updateInvoice.success = createAction('UPDATE_INVOICE_SUCCESS', (organizationId, invoice) => ({ organizationId, invoice }))
+updateInvoice.failure = createAction('UPDATE_INVOICE_FAILURE')

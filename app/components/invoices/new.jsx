@@ -68,6 +68,7 @@ class NewInvoice extends React.Component {
           customers={ this.customersToOptions() }
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterCreate }
+          action="Create"
         />
       </Col>
     )

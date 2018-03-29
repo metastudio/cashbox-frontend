@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, deleteApi } from './_helpers'
+import { prepareURL, getApi, postApi, deleteApi, patchApi } from './_helpers'
 
 const invoicesListUrl = (orgId, params) => prepareURL(`/api/organizations/${orgId}/invoices`, params)
 const newInvoiceUrl = (orgId) => prepareURL(`/api/organizations/${orgId}/invoices`)
@@ -10,4 +10,5 @@ export const postInvoice = (orgId, data) => postApi(newInvoiceUrl(orgId), { invo
 export const getInvoice  = (orgId, invoiceId) => getApi(invoiceUrl(orgId, invoiceId))
 export const deleteInvoice = (orgId, invoiceId) => deleteApi(invoiceUrl(orgId, invoiceId))
 export const getInvoicePDF = (orgId, invoiceId) => getApi(invoicePDFUrl(orgId, invoiceId))
+export const patchInvoice = (orgId, invoiceId, data) => patchApi(invoiceUrl(orgId, invoiceId), { invoice: data })
 
