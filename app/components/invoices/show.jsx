@@ -39,11 +39,19 @@ class Invoice extends React.Component {
   }
 
   downloadPDF() {
-
+    const { orgId, invoice, downloadPDF } = this.props
+    return downloadPDF(orgId, invoice.id)
   }
 
   render() {
+
     if( this.props.invoice ) {
+      const CompleteInvoiceButton = () => {
+        if(!this.props.invoice.paidAt) {
+          return(<Button bsStyle="primary">Complete Invoice</Button>)
+        }
+      }
+
       return <div>
         <div className='page-header'>
           <ButtonGroup className='pull-right'>
@@ -51,7 +59,7 @@ class Invoice extends React.Component {
             <LinkContainer to={ this.props.invoice ? `/invoices/${ this.props.invoice.id }/edit` : '' }>
               <Button>Edit</Button>
             </LinkContainer>
-            <Button bsStyle="primary">Complete Invoice</Button>
+            <CompleteInvoiceButton />
             <Button onClick={ this.downloadPDF }>Download as PDF</Button>
           </ButtonGroup>
           <Header invoice={ this.props.invoice } />
@@ -71,7 +79,8 @@ Invoice.propTypes = {
   loadInvoice:    React.PropTypes.func.isRequired,
   destroyInvoice: React.PropTypes.func.isRequired,
   userFullName:   React.PropTypes.string.isRequired,
-  params:         React.PropTypes.object
+  params:         React.PropTypes.object,
+  downloadPDF:  React.PropTypes.func.isRequired
 }
 
 const select = (state, props) => ({
@@ -89,10 +98,6 @@ const dispatcher = (dispatch) => ({
     dispatch(routeActions.push('/invoices'))
   }),
   downloadPDF: (organizationId, invoiceId) => dispatch(downloadInvoicePDF(organizationId, invoiceId))
-  // createInvoice: (orgId, data) => new Promise((res, rej) => {
-  //   dispatch(createInvoiceAction(orgId, data, res, rej))
-  // })
-  // addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
 export default connect(select, dispatcher)(Invoice)

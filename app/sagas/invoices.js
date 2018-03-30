@@ -6,7 +6,8 @@ import {
   postInvoice,
   getInvoice,
   deleteInvoice,
-  patchInvoice
+  patchInvoice,
+  getInvoicePDF
 } from 'api'
 
 import { ValidationError } from 'api/errors'
@@ -68,7 +69,7 @@ function* handleDestroyInvoice({ payload: { organizationId, invoiceId }, meta: {
 function* handleDownoadInvoicePDF({ payload: { organizationId, invoiceId }}) {
   try {
     yield put(loadInvoice.request(organizationId, invoiceId))
-    const invoice = yield call(getInvoice, organizationId, invoiceId)
+    const invoice = yield call(getInvoicePDF, organizationId, invoiceId)
     yield put(loadInvoice.success(organizationId, invoice))
   } catch (error) {
     yield put(loadInvoice.failure(error))
@@ -78,7 +79,6 @@ function* handleDownoadInvoicePDF({ payload: { organizationId, invoiceId }}) {
 function* handleUpdateInvoice({ payload: { organizationId, invoiceId, data }, meta: { resolve, reject } }) {
   try {
     yield put(updateInvoice.request(organizationId))
-    yield console.log(data)
     const invoice = yield call(patchInvoice, organizationId, invoiceId, data)
     yield put(updateInvoice.success(organizationId, invoice))
     yield call(resolve, invoice)
@@ -95,5 +95,6 @@ export default function* () {
   yield takeEvery(updateInvoice.toString(), handleUpdateInvoice)
   yield takeEvery(loadInvoice.toString(), handleLoadInvoice)
   yield takeEvery(destroyInvoice.toString(), handleDestroyInvoice)
+  yield takeEvery(downloadInvoicePDF.toString(), handleDownoadInvoicePDF)
 }
 

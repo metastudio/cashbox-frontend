@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 export const Header = ({ invoice }) => {
   const number = () => {
     if(invoice.number) {
-      return `#${invoice.numnber}`
+      return `#${invoice.number}`
     }
   }
 

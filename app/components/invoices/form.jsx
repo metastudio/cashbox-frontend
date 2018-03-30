@@ -105,7 +105,7 @@ const InvoiceForm = ({ fields: { currency, number, customerName, startsAt, endsA
 
         <a href='' onClick={(e) => {
           e.preventDefault()
-          invoiceItems.removeField(index)  // remove from index
+          invoiceItems.removeField(index)
         }}><i/> Delete
         </a>
       </FormGroup>

@@ -26,12 +26,13 @@ class EditInvoice extends React.Component {
 
   handleSubmit(values) {
     const { orgId, updateInvoice } = this.props
+    const preparePrice = (price) => parseFloat(price.split(',').join(''))
     return updateInvoice(
       orgId,
       this.props.params.id,
       {
         currency: values.currency,
-        amount: values.amount,
+        amount: preparePrice(values.amount),
         number: values.number,
         customerId: values.customerName,
         startsAt: values.startsAt,
@@ -43,7 +44,8 @@ class EditInvoice extends React.Component {
           customerId: item.customerName,
           date: item.date,
           hours: item.hours,
-          description: item.description
+          description: item.description,
+          amount: preparePrice(item.amount)
         }))
       }
     )
@@ -58,7 +60,8 @@ class EditInvoice extends React.Component {
     }
 
     const convertDate = (date) => {
-      const [day, month, year] = date.split('/')
+      const dateSeparator = date.includes('/') ? '/' : '-'
+      const [day, month, year] = date.split(dateSeparator)
       const result = new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
       return result.toISOString()
     }
