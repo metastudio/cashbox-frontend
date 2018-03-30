@@ -44,7 +44,7 @@ class EditCustomer extends React.Component {
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
               <Panel>
-                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } />
+                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.customer } />
               </Panel>
             </Col>
           </Row>

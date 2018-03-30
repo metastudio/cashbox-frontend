@@ -46,7 +46,7 @@ class EditBankAccount extends React.Component {
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
               <Panel>
-                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } />
+                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.bankAccount } />
               </Panel>
             </Col>
           </Row>
@@ -68,9 +68,9 @@ EditBankAccount.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:       getCurrentOrganizationId(state),
-  bankAccount: state.bankAccount.data,
-  status:      state.bankAccount.status,
+  orgId:         getCurrentOrganizationId(state),
+  bankAccount:   state.bankAccount.data,
+  status:        state.bankAccount.status,
 });
 
 const dispatcher = (dispatch) => ({

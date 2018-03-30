@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Alert, Form, Button } from 'react-bootstrap';
 import { HorizontalFormInput } from 'components/utils/form-inputs';
 
-let CustomerForm = ({ fields: { name, invoiceDetails }, handleSubmit, submitting, error }) => (
+const CustomerForm = ({ fields: { name, invoiceDetails }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
@@ -22,15 +22,7 @@ CustomerForm.propTypes = {
   error:        PropTypes.string,
 };
 
-CustomerForm = reduxForm({
-  form: 'transaction-form',
+export default reduxForm({
+  form: 'customer-form',
   fields: ['name', 'invoiceDetails'],
-})(CustomerForm);
-
-CustomerForm = connect(
-  state => ({
-    initialValues: state.customer.data ? state.customer.data : {}
-  })
-)(CustomerForm);
-
-export default CustomerForm;
+})(CustomerForm)
