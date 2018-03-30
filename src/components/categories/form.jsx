@@ -10,7 +10,7 @@ const getOptions = () => {
   return [{ value: 'Income', label: 'Income' }, { value: 'Expense', label: 'Expense' }];
 };
 
-let CategoryForm = ({ fields: { name, type }, handleSubmit, submitting, error }) => (
+const CategoryForm = ({ fields: { name, type }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
@@ -26,15 +26,7 @@ CategoryForm.propTypes = {
   error:        PropTypes.string,
 };
 
-CategoryForm = reduxForm({
-  form: 'categoryForm',
+export default reduxForm({
+  form: 'category-form',
   fields: ['name', 'type'],
-})(CategoryForm);
-
-CategoryForm = connect(
-  state => ({
-    initialValues: state.category.data ? state.category.data : {}
-  })
-)(CategoryForm);
-
-export default CategoryForm;
+})(CategoryForm)

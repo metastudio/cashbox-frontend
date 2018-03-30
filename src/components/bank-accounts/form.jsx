@@ -15,7 +15,7 @@ const getOptions = () => {
   }));
 };
 
-let BankAccountForm = ({ fields: { name, description, invoiceDetails, currency }, handleSubmit, submitting, error }) => (
+const BankAccountForm = ({ fields: { name, description, invoiceDetails, currency }, handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <HorizontalFormInput label="Name" field={ name } />
@@ -33,15 +33,7 @@ BankAccountForm.propTypes = {
   error:        PropTypes.string,
 };
 
-BankAccountForm = reduxForm({
+export default reduxForm({
   form: 'transaction-form',
   fields: ['name', 'description', 'invoiceDetails', 'currency'],
-})(BankAccountForm);
-
-BankAccountForm = connect(
-  state => ({
-    initialValues: state.bankAccount.data ? state.bankAccount.data : {}
-  })
-)(BankAccountForm);
-
-export default BankAccountForm;
+})(BankAccountForm)
