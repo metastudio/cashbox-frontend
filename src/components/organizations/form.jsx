@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
 
 import { getCurrencies } from 'api/currencies.js';
@@ -14,11 +14,11 @@ const getOptions = () => {
   }));
 };
 
-const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, submitting, error }) => (
+const OrganizationForm = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <HorizontalFormInput label="Name" field={ name } />
-    <HorizontalAsyncSelect label="Currency" field={ defaultCurrency } loadOptions={ getOptions }/>
+    <Field name="name" label="Name" component={ HorizontalFormInput } />
+    <Field name="defaultCurrency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
     <FormGroup>
       <Col smOffset={3} sm={9}>
         <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
@@ -28,7 +28,6 @@ const OrganizationForm = ({ fields: { name, defaultCurrency }, handleSubmit, sub
 );
 
 OrganizationForm.propTypes = {
-  fields:       PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
@@ -36,5 +35,4 @@ OrganizationForm.propTypes = {
 
 export default reduxForm({
   form: 'organization-form',
-  fields: ['name', 'defaultCurrency'],
 })(OrganizationForm);

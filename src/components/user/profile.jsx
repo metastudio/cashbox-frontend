@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Grid } from 'react-bootstrap';
+import { Row, Col, Grid } from 'react-bootstrap';
 
 import AccountWrapper from './account-wrapper.jsx';
 import ProfileWrapper from './profile-wrapper.jsx';
@@ -7,16 +7,18 @@ import CancelAccount from './cancel-account.jsx';
 
 const Profile = () => {
   return (
-    <div className="col-sm-6">
+    <div>
       <h1>Edit User</h1>
-      <Grid>
-        <Col sm={6}>
-          <ProfileWrapper />
-          <CancelAccount />
-        </Col>
-        <Col sm={6}>
-          <AccountWrapper />
-        </Col>
+      <Grid fluid>
+        <Row>
+          <Col xs={ 6 } md={ 6 }>
+            <ProfileWrapper />
+            <CancelAccount />
+          </Col>
+          <Col xs={ 6 } md={ 6 }>
+            <AccountWrapper />
+          </Col>
+        </Row>
       </Grid>
     </div>
   );

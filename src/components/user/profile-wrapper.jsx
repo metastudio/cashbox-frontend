@@ -36,7 +36,7 @@ class ProfileWrapper extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="col-xs-12">
         <h2>Profile :</h2>
         <ProfileForm onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate } initialValues={ this.props.initialValues } />
       </div>

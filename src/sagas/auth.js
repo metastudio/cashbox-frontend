@@ -11,6 +11,8 @@ import {
   logoutUser,
 } from 'actions/auth.js';
 
+import { SubmissionError } from 'redux-form';
+
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
@@ -44,7 +46,7 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     yield call(resolve, user);
   } catch (error) {
     yield put(loginUser.failure(error));
-    yield call(reject, { _error: (error.code === 401 ? 'Invalid login or password' : error.message) });
+    yield call(reject, new SubmissionError({ _error: (error.code === 401 ? 'Invalid login or password' : error.message) }));
   }
 }
 
@@ -55,7 +57,7 @@ function* handleLogoutUser({ meta: { resolve } }) {
 }
 
 export default function* () {
-  yield takeEvery(restoreSession.toString(),      handleRestoreSession);
-  yield takeEvery(loginUser.toString(),           handleLoginUser);
-  yield takeEvery(logoutUser.toString(),          handleLogoutUser);
+  yield takeEvery(restoreSession.toString(), handleRestoreSession);
+  yield takeEvery(loginUser.toString(),      handleLoginUser);
+  yield takeEvery(logoutUser.toString(),     handleLogoutUser);
 }

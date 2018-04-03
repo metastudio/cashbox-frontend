@@ -38,7 +38,7 @@ class AccountWrapper extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="col-xs-12">
         <h2>Account Settings:</h2>
         <AccountForm
           onSubmit={this.handleSubmit}

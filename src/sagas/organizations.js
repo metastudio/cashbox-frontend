@@ -2,7 +2,6 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { setCookies } from 'utils/cookies';
 
-import { ValidationError } from 'api/errors.js';
 import { getOrganizations, postOrganization } from 'api/organizations.js';
 
 import {
@@ -29,8 +28,7 @@ function* handleCreateOrganization({ payload: { data }, meta: { resolve, reject 
     yield call(resolve, organization);
   } catch (error) {
     yield put(createOrganization.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 
