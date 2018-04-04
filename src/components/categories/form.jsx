@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
 import { HorizontalFormInput, HorizontalSelect } from 'components/utils/form-inputs';
 
 const getOptions = () => {
@@ -14,8 +14,12 @@ const CategoryForm = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
-    <Field name="type" label="Type" component={ HorizontalSelect } collection={ getOptions() } />
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
+    <Field name="type" label="Type" component={ HorizontalSelect } collection={ getOptions() } prompt="Select Type" />
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
+      </Col>
+    </FormGroup>
   </Form>
 );
 

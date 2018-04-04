@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { getCurrencies } from 'api/currencies.js';
 
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
 import { HorizontalFormInput, HorizontalAsyncSelect } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
@@ -21,8 +21,12 @@ const BankAccountForm = ({ handleSubmit, submitting, error }) => (
     <Field name="name" label="Name" component={ HorizontalFormInput } />
     <Field name="description" label="Description" component={ HorizontalFormInput } />
     <Field name="invoiceDetails" label="Invoice Details" componentClass="textarea" type="textarea" component={ HorizontalFormInput } />
-    <Field name="currency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions() } />
-    <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
+    <Field name="currency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
+    <FormGroup>
+      <Col smOffset={3} sm={9}>
+        <Button bsStyle="primary" type="submit" disabled={ submitting }>Submit</Button>
+      </Col>
+    </FormGroup>
   </Form>
 );
 
