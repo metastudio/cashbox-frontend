@@ -1,4 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
+const InvoiceNumber = ({ invoice }) => {
+  if(invoice.number){
+    return <p>
+      <strong>Invoice #${invoice.number}</strong>
+    </p>
+  }
+  return null
+}
 
 export const InvoiceTable = ({ invoice, userFullName }) => {
   const itemsHeader = (items, currency) => {
@@ -24,11 +34,7 @@ export const InvoiceTable = ({ invoice, userFullName }) => {
   ))
 
   const number = () => {
-    if(invoice.number){
-      return <p>
-        <strong>Invoice #${invoice.number}</strong>
-      </p>
-    }
+
   }
 
   return(
@@ -62,7 +68,7 @@ export const InvoiceTable = ({ invoice, userFullName }) => {
         <td></td>
         <td className="text-right">
           <strong className="text-uppercase">Date: { invoice.endsAt }</strong>
-          { number }
+          <InvoiceNumber invoice={invoice} />
         </td>
       </tr>
       <tr>
@@ -92,6 +98,6 @@ export const InvoiceTable = ({ invoice, userFullName }) => {
 }
 
 InvoiceTable.propTypes = {
-  invoice:      React.PropTypes.object.isRequired,
-  userFullName: React.PropTypes.string.isRequired
+  invoice:      PropTypes.object.isRequired,
+  userFullName: PropTypes.string.isRequired
 }

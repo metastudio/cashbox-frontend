@@ -1,6 +1,7 @@
-import React from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Button } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export const InvoiceRow = ({ invoice }) => {
   const dateOutput = (date) => (date ? date : '-')
@@ -22,6 +23,6 @@ export const InvoiceRow = ({ invoice }) => {
 }
 
 InvoiceRow.propTypes = {
-  invoice:  React.PropTypes.object.isRequired,
-  active:   React.PropTypes.string
+  invoice:  PropTypes.object.isRequired,
+  active:   PropTypes.string
 }

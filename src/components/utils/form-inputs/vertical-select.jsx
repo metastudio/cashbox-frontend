@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FormControl } from 'react-bootstrap'
 
 import FormGroup from './vertical-form-group.jsx'
@@ -21,8 +22,8 @@ export const VerticalSelect = ({ field, label, collection, help, ...inputProps }
 }
 
 VerticalSelect.propTypes = {
-  field:      React.PropTypes.object.isRequired,
-  label:      React.PropTypes.string.isRequired,
-  collection: React.PropTypes.array.isRequired,
-  help:       React.PropTypes.string
+  field:      PropTypes.object.isRequired,
+  label:      PropTypes.string.isRequired,
+  collection: PropTypes.array.isRequired,
+  help:       PropTypes.string
 }

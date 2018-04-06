@@ -1,22 +1,25 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Button, Table } from 'react-bootstrap'
-import queryString from 'query-string'
-import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { getCurrentOrganizationId } from 'selectors'
-import { loadInvoices } from 'actions'
+import { connect } from 'react-redux';
+import { Button, Table } from 'react-bootstrap';
+import queryString from 'query-string';
+import { LinkContainer } from 'react-router-bootstrap';
+
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { loadInvoices } from 'actions/invoices.js';
 import { 
   InvoiceRow,
   Navigation,
   TableHeader
-} from './list_components'
-import { paginationSelector, unpaidCountSelector } from 'selectors/invoices'
+} from './list_components';
+import { paginationSelector, unpaidCountSelector } from 'selectors/invoices.js';
 
 class Invoices extends React.Component {
   componentDidMount() {
     const { orgId, loadInvoices, location } = this.props
     const queryParams = queryString.parse(location.search)
+    console.log(queryParams)
     loadInvoices(orgId, queryParams)
   }
 
@@ -65,12 +68,12 @@ class Invoices extends React.Component {
 }
 
 Invoices.propTypes = {
-  orgId:        React.PropTypes.number,
-  invoices:     React.PropTypes.array,
-  loadInvoices: React.PropTypes.func,
-  location:     React.PropTypes.object,
-  unpaidCount:  React.PropTypes.number,
-  pagination:   React.PropTypes.object
+  orgId:        PropTypes.number,
+  invoices:     PropTypes.array,
+  loadInvoices: PropTypes.func,
+  location:     PropTypes.object,
+  unpaidCount:  PropTypes.number,
+  pagination:   PropTypes.object
 }
 
 const select = (state) => ({

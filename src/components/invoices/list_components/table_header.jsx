@@ -1,6 +1,7 @@
-import React from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Button } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export const TableHeader = ({ unpaid, s }) => {
   const toggleSortIndex = (sortIndex) => {
@@ -73,7 +74,7 @@ export const TableHeader = ({ unpaid, s }) => {
 }
 
 TableHeader.propTypes = {
-  unpaid: React.PropTypes.bool,
-  s:      React.PropTypes.string
+  unpaid: PropTypes.bool,
+  s:      PropTypes.string
 }
 

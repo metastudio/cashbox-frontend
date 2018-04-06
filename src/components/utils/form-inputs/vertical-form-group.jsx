@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FormGroup, Col, ControlLabel, HelpBlock } from 'react-bootstrap'
 
 const VerticalFormGroup = ({ field, label, help, children }) => {
@@ -18,10 +19,10 @@ const VerticalFormGroup = ({ field, label, help, children }) => {
 }
 
 VerticalFormGroup.propTypes = {
-  field:    React.PropTypes.object.isRequired,
-  label:    React.PropTypes.string,
-  help:     React.PropTypes.string,
-  children: React.PropTypes.node.isRequired
+  field:    PropTypes.object.isRequired,
+  label:    PropTypes.string,
+  help:     PropTypes.string,
+  children: PropTypes.node.isRequired
 }
 
 export default VerticalFormGroup

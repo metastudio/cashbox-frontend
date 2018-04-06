@@ -1,5 +1,6 @@
-import React from 'react'
-import { Nav, NavItem } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Nav, NavItem } from 'react-bootstrap';
 
 export const Navigation = ({ unpaidCount, activeKey }) => (
   <Nav bsStyle="tabs" activeKey={ activeKey } >
@@ -14,7 +15,7 @@ export const Navigation = ({ unpaidCount, activeKey }) => (
 
 
 Navigation.propTypes = {
-  unpaidCount:  React.PropTypes.number,
-  activeKey:    React.PropTypes.number
+  unpaidCount:  PropTypes.number,
+  activeKey:    PropTypes.number
 }
 

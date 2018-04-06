@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CurrencyInput from 'react-currency-input'
 
 import FormGroup from './vertical-form-group.jsx'
@@ -12,7 +13,7 @@ export const VerticalCurrencyInput = ({ label, field, help, ...inputProps }) => 
 }
 
 VerticalCurrencyInput.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string.isRequired,
-  help:  React.PropTypes.string
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
+  help:  PropTypes.string
 }

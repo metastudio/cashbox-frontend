@@ -4,7 +4,7 @@ import {
   loadInvoices,
   createInvoice,
   loadInvoice
-} from 'actions'
+} from 'actions/invoices.js'
 
 const defaultState = {
   items: [],

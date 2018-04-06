@@ -1,18 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ButtonGroup, Button } from 'react-bootstrap'
-import { routeActions } from 'react-router-redux'
+// import { routeActions } from 'react-router-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import { getCurrentOrganizationId } from 'selectors'
-import { selectUserFullName } from 'selectors/users'
-import { invoiceSelector } from 'selectors/invoices'
+import { getCurrentOrganizationId } from 'selectors/organizations.js'
+import { selectUserFullName } from 'selectors/users.js'
+import { invoiceSelector } from 'selectors/invoices.js'
 import {
   loadInvoice,
   destroyInvoice,
-  addFlashMessage,
   downloadInvoicePDF,
-} from 'actions'
+} from 'actions/invoices.js'
+import { addFlashMessage } from 'actions/flash-messages.js'
 
 import {
   Header,
@@ -29,7 +30,7 @@ class Invoice extends React.Component {
   componentDidMount() {
     const { orgId, loadInvoice, invoice } = this.props
     if(!invoice) {
-      loadInvoice(orgId, this.props.params.id)
+      loadInvoice(orgId, this.props.match.params.id)
     }
   }
 
@@ -74,20 +75,22 @@ class Invoice extends React.Component {
 }
 
 Invoice.propTypes = {
-  orgId:          React.PropTypes.number.isRequired,
-  invoice:        React.PropTypes.object,
-  loadInvoice:    React.PropTypes.func.isRequired,
-  destroyInvoice: React.PropTypes.func.isRequired,
-  userFullName:   React.PropTypes.string.isRequired,
-  params:         React.PropTypes.object,
-  downloadPDF:  React.PropTypes.func.isRequired
+  orgId:          PropTypes.number.isRequired,
+  invoice:        PropTypes.object,
+  loadInvoice:    PropTypes.func.isRequired,
+  destroyInvoice: PropTypes.func.isRequired,
+  userFullName:   PropTypes.string.isRequired,
+  params:         PropTypes.object,
+  downloadPDF:    PropTypes.func.isRequired
 }
 
-const select = (state, props) => ({
+const select = (state, props) => {
+  console.log(props)
+  return({
   orgId:        getCurrentOrganizationId(state),
   userFullName: selectUserFullName(state),
-  invoice:      invoiceSelector(state, props.params.id)
-})
+  invoice:      invoiceSelector(state, props.match.params.id)
+}) }
 
 const dispatcher = (dispatch) => ({
   loadInvoice: (organizationId, invoiceId) => dispatch(loadInvoice(organizationId, invoiceId)),
@@ -95,7 +98,7 @@ const dispatcher = (dispatch) => ({
     dispatch(destroyInvoice(organizationId, invoiceId, res, rej))
   }).then(() => {
     dispatch(addFlashMessage('Invoice successfully destroyed', null))
-    dispatch(routeActions.push('/invoices'))
+    // dispatch(routeActions.push('/invoices'))
   }),
   downloadPDF: (organizationId, invoiceId) => dispatch(downloadInvoicePDF(organizationId, invoiceId))
 })

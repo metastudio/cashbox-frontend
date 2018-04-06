@@ -1,14 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Col } from 'react-bootstrap'
-import { routeActions } from 'react-router-redux'
+// import { routeActions } from 'react-router';
 
-import { getCurrentOrganizationId } from 'selectors'
-import {
-  loadCustomers,
-  createInvoice as createInvoiceAction,
-  addFlashMessage
-} from 'actions'
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { createInvoice as createInvoiceAction } from 'actions/invoices.js';
+import { loadCustomers } from 'actions/customers.js';
+import { addFlashMessage } from 'actions/flash-messages.js';
 
 import Form from './form.jsx'
 
@@ -41,7 +40,7 @@ class NewInvoice extends React.Component {
   afterCreate() {
     const { redirectToList, addFlashMessage } = this.props
     addFlashMessage('Invoice was created successfully')
-    redirectToList()
+    // redirectToList()
   }
 
   componentDidMount() {
@@ -76,12 +75,12 @@ class NewInvoice extends React.Component {
 }
 
 NewInvoice.propTypes = {
-  orgId:            React.PropTypes.number,
-  customers:        React.PropTypes.array,
-  loadCustomers:    React.PropTypes.func,
-  createInvoice:    React.PropTypes.func,
-  redirectToList:   React.PropTypes.func,
-  addFlashMessage:  React.PropTypes.func
+  orgId:            PropTypes.number,
+  customers:        PropTypes.array,
+  loadCustomers:    PropTypes.func,
+  createInvoice:    PropTypes.func,
+  redirectToList:   PropTypes.func,
+  addFlashMessage:  PropTypes.func
 }
 
 const select = (state) => ({
@@ -95,7 +94,7 @@ const dispatcher = (dispatch) => ({
     dispatch(createInvoiceAction(orgId, data, res, rej))
   }),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  redirectToList: () => dispatch(routeActions.push('/invoices'))
+  // redirectToList: () => dispatch(routeActions.push('/invoices'))
 })
 
 export default connect(select, dispatcher)(NewInvoice)

@@ -12,3 +12,4 @@ export { default as category }             from './category';
 export { default as customers }            from './customers';
 export { default as customer }             from './customer';
 export { default as balances }             from './balances';
+export { default as invoices }             from './invoices';

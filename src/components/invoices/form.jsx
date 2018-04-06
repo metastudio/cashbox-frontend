@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 import { Form, Alert, FormGroup, Col, Button } from 'react-bootstrap'
 
@@ -127,14 +128,14 @@ const InvoiceForm = ({ fields: { currency, number, customerName, startsAt, endsA
 }
 
 InvoiceForm.propTypes = {
-  fields:       React.PropTypes.object.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired,
-  submitting:   React.PropTypes.bool,
-  error:        React.PropTypes.string,
-  store:        React.PropTypes.object,
-  initialValue: React.PropTypes.object,
-  customers:    React.PropTypes.array.isRequired,
-  action:       React.PropTypes.string.isRequired
+  fields:       PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting:   PropTypes.bool,
+  error:        PropTypes.string,
+  store:        PropTypes.object,
+  initialValue: PropTypes.object,
+  customers:    PropTypes.array.isRequired,
+  action:       PropTypes.string.isRequired
 }
 
 export default reduxForm({

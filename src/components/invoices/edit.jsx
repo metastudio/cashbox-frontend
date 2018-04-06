@@ -1,17 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Col } from 'react-bootstrap'
-import { routeActions } from 'react-router-redux'
+// import { routeActions } from 'react-router-redux'
 import { find } from 'lodash'
 
-import { getCurrentOrganizationId } from 'selectors'
-import { invoiceSelector } from 'selectors/invoices'
+import { getCurrentOrganizationId } from 'selectors/organizations.js'
+import { invoiceSelector } from 'selectors/invoices.js'
 import {
-  loadCustomers,
   updateInvoice as updateInvoiceAction,
-  addFlashMessage,
   loadInvoice
-} from 'actions'
+} from 'actions/invoices.js'
+import { loadCustomers } from 'actions/customers.js'
+import { addFlashMessage } from 'actions/flash-messages.js'
 
 import Form from './form.jsx'
 
@@ -91,16 +92,16 @@ class EditInvoice extends React.Component {
   afterCreate() {
     const { redirectToList, addFlashMessage } = this.props
     addFlashMessage('Invoice was updated successfully')
-    redirectToList()
+    // redirectToList()
   }
 
   componentDidMount() {
-    const { orgId, loadCustomers, customers, invoice, params, loadInvoice } = this.props
+    const { orgId, loadCustomers, customers, invoice, match, loadInvoice } = this.props
     if (customers <= 0) {
       loadCustomers(orgId)
     }
     if (!invoice) {
-      loadInvoice(orgId, params.id)
+      loadInvoice(orgId, match.params.id)
     }
   }
 
@@ -134,22 +135,21 @@ class EditInvoice extends React.Component {
 }
 
 EditInvoice.propTypes = {
-  orgId:            React.PropTypes.number,
-  customers:        React.PropTypes.array,
-  loadCustomers:    React.PropTypes.func,
-  updateInvoice:    React.PropTypes.func,
-  redirectToList:   React.PropTypes.func,
-  addFlashMessage:  React.PropTypes.func,
-  initialValues:    React.PropTypes.object,
-  invoice:          React.PropTypes.object,
-  loadInvoice:      React.PropTypes.func.isRequired,
-  params:           React.PropTypes.object.isRequired
+  orgId:            PropTypes.number,
+  customers:        PropTypes.array,
+  loadCustomers:    PropTypes.func,
+  updateInvoice:    PropTypes.func,
+  redirectToList:   PropTypes.func,
+  addFlashMessage:  PropTypes.func,
+  initialValues:    PropTypes.object,
+  invoice:          PropTypes.object,
+  loadInvoice:      PropTypes.func.isRequired
 }
 
 const select = (state, props) => ({
   orgId:      getCurrentOrganizationId(state),
   customers:  state.customers.items,
-  invoice:    invoiceSelector(state, props.params.id)
+  invoice:    invoiceSelector(state, props.match.params.id)
 })
 
 const dispatcher = (dispatch) => ({
@@ -158,7 +158,7 @@ const dispatcher = (dispatch) => ({
     dispatch(updateInvoiceAction(orgId, invoiceId, data, res, rej))
   }),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  redirectToList: () => dispatch(routeActions.push('/invoices')),
+  // redirectToList: () => dispatch(routeActions.push('/invoices')),
   loadInvoice: (organizationId, invoiceId) => dispatch(loadInvoice(organizationId, invoiceId))
 })
 

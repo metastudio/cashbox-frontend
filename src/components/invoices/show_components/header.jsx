@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 export const Header = ({ invoice }) => {
   const number = () => {
@@ -20,5 +21,5 @@ export const Header = ({ invoice }) => {
 }
 
 Header.propTypes = {
-  invoice: React.PropTypes.object.isRequired
+  invoice: PropTypes.object.isRequired
 }

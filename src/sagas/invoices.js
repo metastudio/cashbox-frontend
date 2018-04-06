@@ -8,9 +8,9 @@ import {
   deleteInvoice,
   patchInvoice,
   getInvoicePDF
-} from 'api'
+} from 'api/invoices.js'
 
-import { ValidationError } from 'api/errors'
+import { ValidationError } from 'api/errors.js'
 
 import {
   loadInvoices,
@@ -19,7 +19,7 @@ import {
   destroyInvoice,
   downloadInvoicePDF,
   updateInvoice
-} from 'actions'
+} from 'actions/invoices.js'
 
 function* handleLoadInvoices({ payload: { organizationId, params }}) {
   try {

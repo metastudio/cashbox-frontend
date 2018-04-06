@@ -1,5 +1,6 @@
 import React from 'react'
-import DatePicker from 'react-bootstrap-date-picker'
+import PropTypes from 'prop-types'
+import DatePicker from 'react-datepicker'
 
 import FormGroup from './vertical-form-group.jsx'
 
@@ -12,7 +13,7 @@ export const VerticalDatePicker = ({ field, label, help, ...inputProps }) => {
 }
 
 VerticalDatePicker.propTypes = {
-  field: React.PropTypes.object.isRequired,
-  label: React.PropTypes.string,
-  help:  React.PropTypes.string
+  field: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  help:  PropTypes.string
 }
