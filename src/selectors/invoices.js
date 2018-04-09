@@ -1,6 +1,6 @@
-import { find } from 'lodash'
+const selectInvoices            = (state) => state.invoices.items;
+const selectInvoicesStatus      = (state) => state.invoices.status;
+const selectInvoicesPagination  = (state) => state.invoices.paginationSelector;
+const selectInvoicesUnpaidCount = (state) => state.invoices.unpaidCount;
 
-export const invoiceSelector = (state, id) => find(state.invoices.items, { id: parseInt(id) })
-export const invoicesSelector = (state) => state.invoices.items
-export const paginationSelector = (state) => state.invoices.paginationSelector
-export const unpaidCountSelector = (state) => state.invoices.unpaidCount
+export { selectInvoices, selectInvoicesStatus, selectInvoicesPagination, selectInvoicesUnpaidCount };
