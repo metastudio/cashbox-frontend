@@ -19,7 +19,6 @@ class Invoices extends React.Component {
   componentDidMount() {
     const { orgId, loadInvoices, location } = this.props
     const queryParams = queryString.parse(location.search)
-    console.log(queryParams)
     loadInvoices(orgId, queryParams)
   }
 
@@ -34,7 +33,6 @@ class Invoices extends React.Component {
   render() {
     if (this.props.invoices) {
       const queryParams = queryString.parse(this.props.location.search)
-      console.log(queryParams)
   
       const invoices = this.props.invoices.map((invoice) => (
         <InvoiceRow invoice={ invoice } key={ invoice.id } />
@@ -85,7 +83,6 @@ const select = (state) => ({
 
 const dispatcher = (dispatch) => ({
   loadInvoices:    (organizationId, params) => dispatch(loadInvoices(organizationId, params)),
-  // addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
 export default connect(select, dispatcher)(Invoices)

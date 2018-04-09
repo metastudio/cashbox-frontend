@@ -4,10 +4,10 @@ import { Nav, NavItem } from 'react-bootstrap';
 
 export const Navigation = ({ unpaidCount, activeKey }) => (
   <Nav bsStyle="tabs" activeKey={ activeKey } >
-    <NavItem eventKey={ 1 } href="/invoices/list">
+    <NavItem eventKey={ 1 } href="/invoices">
       Invoices
     </NavItem>
-    <NavItem eventKey={ 2 } href="/invoices/list?q[unpaid]=true">
+    <NavItem eventKey={ 2 } href="/invoices?q[unpaid]=true">
       { `Unpaid (${ unpaidCount })` }
     </NavItem>
   </Nav>

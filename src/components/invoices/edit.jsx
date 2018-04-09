@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Col } from 'react-bootstrap'
-// import { routeActions } from 'react-router-redux'
 import { find } from 'lodash'
 
 import { getCurrentOrganizationId } from 'selectors/organizations.js'
@@ -30,7 +29,7 @@ class EditInvoice extends React.Component {
     const preparePrice = (price) => parseFloat(price.split(',').join(''))
     return updateInvoice(
       orgId,
-      this.props.params.id,
+      this.props.match.params.id,
       {
         currency: values.currency,
         amount: preparePrice(values.amount),
@@ -90,9 +89,9 @@ class EditInvoice extends React.Component {
   }
 
   afterCreate() {
-    const { redirectToList, addFlashMessage } = this.props
+    const { redirectToList, addFlashMessage, history } = this.props
     addFlashMessage('Invoice was updated successfully')
-    // redirectToList()
+    history.push('/invoices')
   }
 
   componentDidMount() {
@@ -139,7 +138,6 @@ EditInvoice.propTypes = {
   customers:        PropTypes.array,
   loadCustomers:    PropTypes.func,
   updateInvoice:    PropTypes.func,
-  redirectToList:   PropTypes.func,
   addFlashMessage:  PropTypes.func,
   initialValues:    PropTypes.object,
   invoice:          PropTypes.object,
@@ -158,7 +156,6 @@ const dispatcher = (dispatch) => ({
     dispatch(updateInvoiceAction(orgId, invoiceId, data, res, rej))
   }),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  // redirectToList: () => dispatch(routeActions.push('/invoices')),
   loadInvoice: (organizationId, invoiceId) => dispatch(loadInvoice(organizationId, invoiceId))
 })
 

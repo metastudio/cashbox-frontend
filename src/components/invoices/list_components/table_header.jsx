@@ -13,7 +13,7 @@ export const TableHeader = ({ unpaid, s }) => {
   }
 
   const prepareLink = (sort) => {
-    let link = `/invoices/list?q[s]=${sort}`
+    let link = `/invoices?q[s]=${sort}`
     if (s && s.includes(sort)) {
       const sortIndex = s.split(' ')[1]
       link = `${link}+${toggleSortIndex(sortIndex)}`

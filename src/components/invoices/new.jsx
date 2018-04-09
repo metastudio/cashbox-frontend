@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Col } from 'react-bootstrap'
-// import { routeActions } from 'react-router';
 
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { createInvoice as createInvoiceAction } from 'actions/invoices.js';
@@ -38,9 +37,9 @@ class NewInvoice extends React.Component {
   }
 
   afterCreate() {
-    const { redirectToList, addFlashMessage } = this.props
+    const { redirectToList, addFlashMessage, history } = this.props
     addFlashMessage('Invoice was created successfully')
-    // redirectToList()
+    history.push('/invoices')
   }
 
   componentDidMount() {
@@ -94,7 +93,6 @@ const dispatcher = (dispatch) => ({
     dispatch(createInvoiceAction(orgId, data, res, rej))
   }),
   addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
-  // redirectToList: () => dispatch(routeActions.push('/invoices'))
 })
 
 export default connect(select, dispatcher)(NewInvoice)

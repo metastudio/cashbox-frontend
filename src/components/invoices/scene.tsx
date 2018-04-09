@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Redirect } from 'react-router';
+import { Route } from 'react-router';
 
 import RequireLogin from 'components/utils/require-login';
 import MainLayout from 'components/layouts/main-layout';
@@ -12,8 +12,7 @@ import Edit from './edit.jsx';
 const InvoicesScene: React.SFC<{}> = () => (
   <RequireLogin>
     <MainLayout>
-      <Route exact path="/invoices" render={ () => <Redirect to="/invoices/list" /> } />
-      <Route path="/invoices/list" component={ List } />
+      <Route exact path="/invoices" component={ List } />
       <Route path="/invoices/new" component={ New } />
       <Route path="/invoices/:id/edit" component={ Edit } />
       <Route exact path="/invoices/:id" component={ Show } />
