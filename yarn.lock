@@ -84,15 +84,22 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.41":
+"@types/react@*":
+  version "16.3.6"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.6.tgz#50cec71f14cbaaf49a53167dc1d6739be1d43f12"
+  dependencies:
+    csstype "^2.0.0"
+
+"@types/react@^16.0.41":
   version "16.0.41"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.41.tgz#72146737f4d439dc95a53315de4bfb43ac8542ca"
 
-"@types/redux-form@^4":
-  version "4.0.37"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-4.0.37.tgz#e466cdccd543c9a1efbb929a2431f06971610564"
+"@types/redux-form@^7.2.2":
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.2.tgz#8afe23ff0d21370f0921e3d942df5e889bd22866"
   dependencies:
     "@types/react" "*"
+    redux "^3.6.0"
 
 "@types/redux-logger@^2.3":
   version "2.10.0"
@@ -2151,6 +2158,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-0.2.37.tgz#541097234cb2513c83ceed3acddc27ff27987d54"
   dependencies:
     cssom "0.3.x"
+
+csstype@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.1.1.tgz#37b01a7a9958ef0b88167ff6678deccd732e0ae2"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
