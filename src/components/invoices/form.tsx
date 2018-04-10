@@ -59,7 +59,7 @@ type Props = OwnProps & InjectedFormProps<InvoiceFormData, OwnProps>;
 // );
 
 const InvoiceForm: React.SFC<Props> = (props) => (
-  <Form horizontal onSubmit={ props.handleSubmit }>
+  <Form onSubmit={ props.handleSubmit }>
     { props.error && <Alert bsStyle="danger">{ props.error }</Alert> }
 
     <Field name="currency" component={ VerticalCurrencySelect } label="Currency *" />

@@ -8,4 +8,4 @@ export * from './horizontal-image-input.jsx';
 export * from './async-select.jsx';
 export * from './select.jsx';
 export * from './currency-input.jsx';
-export * from './submit-button.jsx';
+export * from './submit-button';
