@@ -3,14 +3,14 @@ import { connect, Dispatch } from 'react-redux';
 import { Col, PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import * as statuses from 'constants/statuses';
+import * as statuses from 'constants/statuses.js';
 import { Invoice, InvoiceParams } from 'model-types';
 import { loadInvoice, updateInvoice } from 'actions/invoices.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
-import Form, { InvoiceFormData } from './form.jsx';
+import Form, { InvoiceFormData } from './form';
 import LoadingView from '../utils/loading-view';
 
 interface StateProps {

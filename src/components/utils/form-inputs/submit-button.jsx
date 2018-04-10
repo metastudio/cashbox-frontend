@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 import { wrapHorizontalFormSubmit } from './horizontal-form-submit.jsx';
-import { wrapVerticalFormSubmit } from './vertical-form-submit.jsx';
 
 const SubmitButton = ({ children, submitting, invalid, submitSucceeded, submitFailed, ...buttonProps }) => {
   let icon = '';
@@ -31,7 +30,7 @@ const SubmitButton = ({ children, submitting, invalid, submitSucceeded, submitFa
 };
 
 SubmitButton.propTypes = {
-  children:        PropTypes.node,
+  ...Button.propTypes,
   submitting:      PropTypes.bool.isRequired,
   invalid:         PropTypes.bool,
   submitFailed:    PropTypes.bool,
@@ -45,6 +44,5 @@ SubmitButton.defaultProps = {
 };
 
 const HorizontalFormSubmitButton = wrapHorizontalFormSubmit(SubmitButton);
-const VerticalFormSubmitButton   = wrapVerticalFormSubmit(SubmitButton);
 
-export { SubmitButton, HorizontalFormSubmitButton, VerticalFormSubmitButton };
+export { SubmitButton, HorizontalFormSubmitButton };

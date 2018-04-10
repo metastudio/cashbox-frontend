@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice } from 'model-types';
-import * as statuses from 'constants/statuses';
+import * as statuses from 'constants/statuses.js';
 import {
   loadInvoice,
   destroyInvoice,

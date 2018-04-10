@@ -8,7 +8,7 @@ import { createInvoice as createInvoiceAction } from 'actions/invoices.js';
 import { loadCustomers } from 'actions/customers.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 
-import Form from './form.jsx'
+import Form from './form'
 
 class NewInvoice extends React.Component {
   constructor(props) {

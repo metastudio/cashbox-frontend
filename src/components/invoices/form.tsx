@@ -8,7 +8,7 @@ import {
   VerticalCurrencySelect,
   VerticalDatePicker,
   VerticalCurrencyInput,
-  VerticalFormSubmitButton,
+  SubmitButton,
 } from 'components/utils/form-inputs';
 import { VerticalCustomersSelect } from 'components/customers/select-field';
 
@@ -58,9 +58,9 @@ type Props = OwnProps & InjectedFormProps<InvoiceFormData, OwnProps>;
 //   </>
 // );
 
-const InvoiceForm: React.SFC<Props> = ({ handleSubmit, submitting, error, action }) => (
-  <Form horizontal onSubmit={ handleSubmit }>
-    { error && <Alert bsStyle="danger">{ error }</Alert> }
+const InvoiceForm: React.SFC<Props> = (props) => (
+  <Form horizontal onSubmit={ props.handleSubmit }>
+    { props.error && <Alert bsStyle="danger">{ props.error }</Alert> }
 
     <Field name="currency" component={ VerticalCurrencySelect } label="Currency *" />
     <Field name="number" component={ VerticalFormInput } type="number" label="Number" />
@@ -74,9 +74,14 @@ const InvoiceForm: React.SFC<Props> = ({ handleSubmit, submitting, error, action
     <h3>Invoice items:</h3>
     { /* <FieldArray name="invoiceItems" component={ InvoiceItemsFields } /> */ }
 
-    <VerticalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>
-      { action } Invoice
-    </VerticalFormSubmitButton>
+    <SubmitButton
+      submitting={ props.submitting }
+      invalid={ props.invalid }
+      submitSucceeded={ props.submitSucceeded }
+      submitFailed={ props.submitFailed }
+    >
+      { props.action } Invoice
+    </SubmitButton>
   </Form>
 );
 

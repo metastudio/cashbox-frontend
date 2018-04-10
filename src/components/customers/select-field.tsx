@@ -4,14 +4,14 @@ import { Async } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Customer } from 'model-types';
-import { loadCustomers } from 'actions/customers';
+import { loadCustomers } from 'actions/customers.js';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
+
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
-
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
-import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group.jsx';
-import { getCurrentOrganizationId } from 'selectors/organizations';
 
 interface OwnProps {
   emptyTitle?: string;

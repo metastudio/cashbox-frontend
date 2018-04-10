@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-16-bootstrap-date-picker';
 
 import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
-import { wrapVerticalFormGroup } from './vertical-form-group.jsx';
+import { wrapVerticalFormGroup } from './vertical-form-group';
 
 export const DatePickerInput = ({ input, onValueChange, ...inputProps }) => {
   delete inputProps.meta;

@@ -6,7 +6,7 @@ import MainLayout from 'components/layouts/main-layout';
 
 import List from './list';
 import New from './new.jsx';
-import Show from './show.jsx';
+import Show from './show';
 import Edit from './edit';
 
 const InvoicesScene: React.SFC<{}> = () => (
