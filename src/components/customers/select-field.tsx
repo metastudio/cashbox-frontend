@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { Async } from 'react-select';
+import { Async, Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Customer } from 'model-types';
@@ -37,12 +37,16 @@ const CustomersSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, ...
 
   delete inputProps.meta;
 
+  const handleChange = (value: Option<string>) => {
+    input.onChange(value && value.value);
+  };
+
   return (
     <Async
       { ...inputProps }
       name={ input.name }
       value={ String(input.value) }
-      onChange={ (value) => input.onChange(value) }
+      onChange={ handleChange }
       onBlur={ () => input.onBlur(input.value) }
       cache={ {} }
       loadOptions={ loadOptions }
