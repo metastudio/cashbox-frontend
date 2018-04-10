@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CurrencyFormInput from 'react-currency-input';
 
 import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
+import { wrapVerticalFormGroup } from './vertical-form-group.jsx';
 
 export const CurrencyInput = ({ input, label, ...inputProps }) => {
   delete inputProps.meta;
@@ -19,5 +20,6 @@ CurrencyInput.propTypes = {
 };
 
 const HorizontalCurrencyInput = wrapHorizontalFormGroup(CurrencyInput);
+const VerticalCurrencyInput   = wrapVerticalFormGroup(CurrencyInput);
 
-export { HorizontalCurrencyInput };
+export { HorizontalCurrencyInput, VerticalCurrencyInput };
