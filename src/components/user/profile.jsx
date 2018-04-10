@@ -11,11 +11,11 @@ const Profile = () => {
       <h1>Edit User</h1>
       <Grid fluid>
         <Row>
-          <Col xs={ 6 } md={ 6 }>
+          <Col xs={ 12 } md={ 6 } >
             <ProfileWrapper />
             <CancelAccount />
           </Col>
-          <Col xs={ 6 } md={ 6 }>
+          <Col xs={ 12 } md={ 6 } >
             <AccountWrapper />
           </Col>
         </Row>

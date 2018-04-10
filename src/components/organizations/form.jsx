@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 
 import { getCurrencies } from 'api/currencies.js';
 
-import { HorizontalFormInput, HorizontalAsyncSelect } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
 
 // TODO: refactor to use actions and saga
 const getOptions = () => {
@@ -19,11 +19,7 @@ const OrganizationForm = ({ handleSubmit, submitting, error }) => (
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
     <Field name="defaultCurrency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
-    <FormGroup>
-      <Col smOffset={3} sm={9}>
-        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
-      </Col>
-    </FormGroup>
+    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Create</HorizontalFormSubmitButton>
   </Form>
 );
 

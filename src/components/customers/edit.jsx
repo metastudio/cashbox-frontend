@@ -8,6 +8,7 @@ import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { loadCustomer, updateCustomer } from 'actions/customers.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
 import Form from './form.jsx';
@@ -29,7 +30,7 @@ class EditCustomer extends React.Component {
     return updateCustomer(orgId, customer.id, {
       name: values.name,
       invoiceDetails: values.invoiceDetails,
-    });
+    }).catch(prepareSubmissionError);
   }
 
   afterUpdate() {
@@ -44,7 +45,9 @@ class EditCustomer extends React.Component {
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
               <Panel>
-                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.customer } />
+                <Panel.Body>
+                  <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.customer } />
+                </Panel.Body>
               </Panel>
             </Col>
           </Row>

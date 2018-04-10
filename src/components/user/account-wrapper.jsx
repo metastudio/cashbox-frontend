@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateAccount as updateAccountAction } from 'actions/users.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import {
   selectUserInitialValues,
@@ -29,7 +30,7 @@ class AccountWrapper extends React.Component {
         password: values.password,
         passwordConfirmation: values.passwordConfirmation
       }
-    );
+    ).catch(prepareSubmissionError);
   }
 
   afterCreate() {

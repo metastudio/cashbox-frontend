@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateProfile as updateProfileAction } from 'actions/users.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import {
   selectUserInitialValues,
@@ -27,7 +28,7 @@ class ProfileWrapper extends React.Component {
         fullName: values.fullName,
         profileAttributes: { phoneNumber: values.phoneNumber }
       }
-    );
+    ).catch(prepareSubmissionError);
   }
 
   afterCreate() {
@@ -36,7 +37,7 @@ class ProfileWrapper extends React.Component {
 
   render() {
     return(
-      <div className="col-xs-12">
+      <div>
         <h2>Profile :</h2>
         <ProfileForm onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate } initialValues={ this.props.initialValues } />
       </div>

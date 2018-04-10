@@ -2,9 +2,7 @@ import fetch from 'isomorphic-fetch';
 import humps from 'humps';
 import Url   from 'url';
 import { getCookies } from 'utils/cookies';
-import { HttpError } from './errors';
-
-import { SubmissionError } from 'redux-form';
+import { HttpError, ValidationError } from './errors';
 
 const headers = (headers = {}) => {
   const token = getCookies().token;
@@ -36,7 +34,7 @@ const fetchApi = (url, fullOptions = {}) => {
         if (response.ok) {
           return json;
         } else {
-          throw new SubmissionError(json);
+          throw new ValidationError(json);
         }
       });
     } else {

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-import './form-horizontal-fix.css';
-
 const HorizontalFormGroup = ({ input, meta, label, children }) => {
   const error = Array.isArray(meta.error) ? meta.error.join(', ') : meta.error;
 

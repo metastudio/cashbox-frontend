@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 
 import { getOrganizationCategories } from 'api/categories.js';
 import { getOrganizationCustomers } from 'api/customers.js';
 import { getOrganizationBankAccounts } from 'api/bank-accounts.js';
 
-import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
 const getCategoryOptions = (orgId) => {
@@ -39,11 +39,7 @@ const TransactionForm = ({ handleSubmit, orgId, submitting, error }) => (
     <Field name="bankAccount" label="Bank account" component={ HorizontalAsyncSelect } loadOptions={ () => getBankAccountOptions(orgId) } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <FormGroup>
-      <Col smOffset={3} sm={9}>
-        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
-      </Col>
-    </FormGroup>
+    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Create</HorizontalFormSubmitButton>
   </Form>
 )
 

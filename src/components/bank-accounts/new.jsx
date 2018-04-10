@@ -7,6 +7,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createBankAccount, clearBankAccount } from 'actions/bank-accounts.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
 
@@ -28,7 +29,7 @@ class NewBankAccount extends React.Component {
       description: values.description,
       invoiceDetails: values.invoiceDetails,
       currency: values.currency,
-    });
+    }).catch(prepareSubmissionError);
   }
 
   afterCreate() {
@@ -41,7 +42,9 @@ class NewBankAccount extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            <Panel.Body>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            </Panel.Body>
           </Panel>
         </Col>
       </Row>

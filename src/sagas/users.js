@@ -18,7 +18,7 @@ export function* handleUpdateProfile({ payload: { userId, data }, meta: { resolv
     yield put(updateProfile.success(user));
     yield call(resolve, user);
   } catch (error) {
-    yield call(reject, error.errors);
+    yield call(reject, error);
   }
 }
 
@@ -28,7 +28,7 @@ export function* handleUpdateAccount({ payload: { userId, data }, meta: { resolv
     yield put(updateAccount.success(user));
     yield call(resolve, user);
   } catch (error) {
-    yield call(reject, error.errors);
+    yield call(reject, error);
   }
 }
 

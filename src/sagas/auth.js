@@ -46,7 +46,7 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     yield call(resolve, user);
   } catch (error) {
     yield put(loginUser.failure(error));
-    yield call(reject, new SubmissionError({ _error: (error.code === 401 ? 'Invalid login or password' : error.message) }));
+    yield call(reject, error);
   }
 }
 
