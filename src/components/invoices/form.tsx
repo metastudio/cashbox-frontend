@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Form, Alert } from 'react-bootstrap';
+import { reduxForm, Field, FieldArray, InjectedFormProps, WrappedFieldArrayProps, GenericFieldArray } from 'redux-form';
+import { Form, Alert, Button } from 'react-bootstrap';
 
 import { Money } from 'model-types';
 import {
@@ -36,27 +36,30 @@ export interface InvoiceFormData {
 
 type Props = OwnProps & InjectedFormProps<InvoiceFormData, OwnProps>;
 
-// interface InvoiceItemFieldsProps {
-//   name: string;
-// }
+interface InvoiceItemFieldsProps {
+  name: string;
+  idx:  number;
+}
 
-// const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name }) => (
-//   <Row>
-//     <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
-//     <Field name={ `${name}.amount` } component={ VerticalCurrencyInput } label="Amount *" />
-//     <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />
-//     <Field name={ `${name}.hours` } component={ VerticalFormInput } type="number" label="Hours" />
-//     <Field name={ `${name}.description` } component={ VerticalFormInput } type="textarea" label="Description" />
-//   </Row>
-// );
+const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
+  <>
+    <h4>Item { idx + 1 }</h4>
+    <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
+    <Field name={ `${name}.amount` } component={ VerticalCurrencyInput } label="Amount *" />
+    <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />
+    <Field name={ `${name}.hours` } component={ VerticalFormInput } type="number" label="Hours" />
+    <Field name={ `${name}.description` } component={ VerticalFormInput } type="textarea" label="Description" />
+  </>
+);
 
-// const InvoiceItemsFields: React.SFC<WrappedFieldArrayProps<InvoiceItemFormData>> = ({ fields }) => (
-//   <>
-//     { fields.map((name, i) => <InvoiceItemFields key={ i } name={ name } />) }
+const InvoiceItemsFields: React.SFC<WrappedFieldArrayProps<InvoiceItemFormData>> = ({ fields }) => (
+  <>
+    { fields.map((name, i) => <InvoiceItemFields key={ i } name={ name } idx={ i } />) }
 
-//     <Button onClick={ () => fields.push({}) }>Add Item</Button>
-//   </>
-// );
+    <Button onClick={ () => fields.push({}) }>Add Item</Button>
+  </>
+);
+const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<InvoiceItemFormData>;
 
 const InvoiceForm: React.SFC<Props> = (props) => (
   <Form onSubmit={ props.handleSubmit }>
@@ -72,7 +75,7 @@ const InvoiceForm: React.SFC<Props> = (props) => (
     <Field name="paidAt" component={ VerticalDatePicker } label="Paid at" />
 
     <h3>Invoice items:</h3>
-    { /* <FieldArray name="invoiceItems" component={ InvoiceItemsFields } /> */ }
+    <InvoiceItemsArray name="invoiceItems" component={ InvoiceItemsFields } />
 
     <SubmitButton
       submitting={ props.submitting }
