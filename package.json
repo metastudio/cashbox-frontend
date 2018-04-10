@@ -7,6 +7,7 @@
     "font-awesome": "^4.7.0",
     "humps": "^2.0.1",
     "js-cookie": "^2.0.3",
+    "js-money": "^0.6.3",
     "moment": "^2.15.1",
     "react": "^16.2.0",
     "react-16-bootstrap-date-picker": "^5.1.2",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
+    "@types/js-money": "^0.6.0",
     "@types/node": "^9.6.0",
     "@types/query-string": "^5.1.0",
     "@types/react": "^16.0.41",
