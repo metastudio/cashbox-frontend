@@ -1,6 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { ValidationError } from 'api/errors.js';
 import { getOrganizationTransactions, postOrganizationTransaction } from 'api/transactions.js';
 
 import { loadTransactions, createTransaction } from 'actions/transactions.js';
@@ -23,8 +22,7 @@ function* handleCreateTransaction({ payload: { organizationId, data }, meta: { r
     yield call(resolve, transaction);
   } catch (error) {
     yield put(createTransaction.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 

@@ -6,6 +6,7 @@ import { Panel } from 'react-bootstrap'
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { loginUser } from 'actions/auth.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx'
 
@@ -19,7 +20,7 @@ class Login extends React.Component {
     const { login } = this.props
     const { email, password } = values
 
-    return login(email, password)
+    return login(email, password).catch(prepareSubmissionError);
   }
 
   render() {
@@ -28,7 +29,9 @@ class Login extends React.Component {
     } else {
       return(
         <Panel>
-          <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterLogin } />
+          <Panel.Body>
+            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterLogin } />
+          </Panel.Body>
         </Panel>
       );
     }

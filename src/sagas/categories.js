@@ -1,6 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { ValidationError } from 'api/errors.js';
 import {
   getOrganizationCategories,
   getOrganizationCategory,
@@ -45,8 +44,7 @@ function* handleCreateCategory({ payload: { organizationId, data }, meta: { reso
     yield call(resolve, category);
   } catch (error) {
     yield put(createCategory.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 
@@ -58,8 +56,7 @@ function* handleUpdateCategory({ payload: { organizationId, categoryId, data }, 
     yield call(resolve, category);
   } catch (error) {
     yield put(updateCategory.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 

@@ -7,6 +7,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx'
 
@@ -26,7 +27,7 @@ class NewTransaction extends React.Component {
       bankAccountId: values.bankAccount,
       comment: values.comment,
       date: values.date,
-    })
+    }).catch(prepareSubmissionError);
   }
 
   afterCreate() {
@@ -39,7 +40,9 @@ class NewTransaction extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
+            <Panel.Body>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
+            </Panel.Body>
           </Panel>
         </Col>
       </Row>

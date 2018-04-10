@@ -7,6 +7,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createCategory, clearCategory } from 'actions/categories.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
 
@@ -26,7 +27,7 @@ class NewCategory extends React.Component {
     return createCategory(orgId, {
       name: values.name,
       type: values.type,
-    });
+    }).catch(prepareSubmissionError);
   }
 
   afterCreate() {
@@ -39,7 +40,9 @@ class NewCategory extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            <Panel.Body>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            </Panel.Body>
           </Panel>
         </Col>
       </Row>

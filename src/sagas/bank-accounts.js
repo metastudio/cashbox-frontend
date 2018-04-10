@@ -1,6 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { ValidationError } from 'api/errors.js';
 import {
   getOrganizationBankAccounts,
   getOrganizationBankAccount,
@@ -45,8 +44,7 @@ function* handleCreateBankAccount({ payload: { organizationId, data }, meta: { r
     yield call(resolve, bankAccount);
   } catch (error) {
     yield put(createBankAccount.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 
@@ -58,8 +56,7 @@ function* handleUpdateBankAccount({ payload: { organizationId, bankAccountId, da
     yield call(resolve, bankAccount);
   } catch (error) {
     yield put(updateBankAccount.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 

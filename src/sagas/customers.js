@@ -1,6 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { ValidationError } from 'api/errors.js';
 import {
   getOrganizationCustomers,
   getOrganizationCustomer,
@@ -45,8 +44,7 @@ function* handleCreateCustomer({ payload: { organizationId, data }, meta: { reso
     yield call(resolve, customer);
   } catch (error) {
     yield put(createCustomer.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 
@@ -58,8 +56,7 @@ function* handleUpdateCustomer({ payload: { organizationId, customerId, data }, 
     yield call(resolve, customer);
   } catch (error) {
     yield put(updateCustomer.failure(error));
-    const errors = error instanceof ValidationError ? error.errors : { _error: error.message };
-    yield call(reject, errors);
+    yield call(reject, error);
   }
 }
 

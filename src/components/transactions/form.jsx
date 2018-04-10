@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
+import { reduxForm, Field } from 'redux-form';
+import { Alert, Form } from 'react-bootstrap';
 
 import { getOrganizationCategories } from 'api/categories.js';
 import { getOrganizationCustomers } from 'api/customers.js';
 import { getOrganizationBankAccounts } from 'api/bank-accounts.js';
 
-import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalDatePicker, HorizontalCurrencyInput, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
 const getCategoryOptions = (orgId) => {
@@ -30,25 +30,20 @@ const getBankAccountOptions = (orgId) => {
   }))
 }
 
-const TransactionForm = ({ fields: { amount, category, customer, bankAccount, comment, date }, handleSubmit, orgId, submitting, error }) => (
+const TransactionForm = ({ handleSubmit, orgId, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <HorizontalCurrencyInput label="Amount" field={ amount } />
-    <HorizontalAsyncSelect label="Category" field={ category } loadOptions={ () => getCategoryOptions(orgId) }/>
-    <HorizontalAsyncSelect label="Customer name" field={ customer } loadOptions={ () => getCustomerOptions(orgId) }/>
-    <HorizontalAsyncSelect label="Bank account" field={ bankAccount } loadOptions={ () => getBankAccountOptions(orgId) }/>
-    <HorizontalFormInput label="Comment" field={ comment } />
-    <HorizontalDatePicker label="Date" field={ date } />
-    <FormGroup>
-      <Col smOffset={3} sm={9}>
-        <Button bsStyle="primary" type="submit" disabled={ submitting }>Create</Button>
-      </Col>
-    </FormGroup>
+    <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
+    <Field name="category" label="Category" component={ HorizontalAsyncSelect } loadOptions={ () => getCategoryOptions(orgId) } />
+    <Field name="customer" label="Customer name" component={ HorizontalAsyncSelect } loadOptions={ () => getCustomerOptions(orgId) } />
+    <Field name="bankAccount" label="Bank account" component={ HorizontalAsyncSelect } loadOptions={ () => getBankAccountOptions(orgId) } />
+    <Field name="comment" label="Comment" component={ HorizontalFormInput } />
+    <Field name="date" label="Date" component={ HorizontalDatePicker } />
+    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Create</HorizontalFormSubmitButton>
   </Form>
 )
 
 TransactionForm.propTypes = {
-  fields:       PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
@@ -56,6 +51,5 @@ TransactionForm.propTypes = {
 }
 
 export default reduxForm({
-  form: 'transaction-form',
-  fields: ['amount', 'category', 'customer', 'bankAccount', 'comment', 'date'],
+  form: 'transaction-form'
 })(TransactionForm)
