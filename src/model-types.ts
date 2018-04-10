@@ -1,3 +1,4 @@
 export interface Invoice {
-  id: number | string;
+  id:     number;
+  paidAt: string;
 }
