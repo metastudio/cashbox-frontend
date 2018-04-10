@@ -4,10 +4,10 @@ import { Route } from 'react-router';
 import RequireLogin from 'components/utils/require-login';
 import MainLayout from 'components/layouts/main-layout';
 
-import List from './list.jsx';
+import List from './list';
 import New from './new.jsx';
 import Show from './show.jsx';
-import Edit from './edit.jsx';
+import Edit from './edit';
 
 const InvoicesScene: React.SFC<{}> = () => (
   <RequireLogin>
