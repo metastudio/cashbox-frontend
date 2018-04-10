@@ -6,6 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createOrganization } from 'actions/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
 
@@ -21,7 +22,7 @@ class NewOrganization extends React.Component {
     return createOrganization({
       name: values.name,
       defaultCurrency: values.defaultCurrency
-    });
+    }).catch(prepareSubmissionError);
   }
 
   afterCreate() {
@@ -34,7 +35,9 @@ class NewOrganization extends React.Component {
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            <Panel.Body>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+            </Panel.Body>
           </Panel>
         </Col>
       </Row>

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 
-import { Alert, Form, Button, FormGroup, Col } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 
-import { VerticalTextInput } from 'components/utils/form-inputs';
+import { VerticalFormInput, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
 
 const validate = (values) => {
   const errors = {};
@@ -14,44 +14,18 @@ const validate = (values) => {
   return errors;
 };
 
-const AccountForm = ({ fields: { email, currentPassword, password, passwordConfirmation }, handleSubmit, submitting, error }) => {
+const AccountForm = ({ handleSubmit, submitting, error }) => {
   return(<Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <VerticalTextInput
-      field={ email }
-      label="Email *"
-    />
-
-    <VerticalTextInput
-      field={ currentPassword }
-      label="Current password *"
-      help="we need your current password to confirm your changes"
-      type="password"
-    />
-
-    <VerticalTextInput
-      field={ password }
-      label="Password"
-      help="leave it blank if you don't want to change it"
-      type="password"
-    />
-
-    <VerticalTextInput
-      field={ passwordConfirmation }
-      label="Password confirmation"
-      type="password"
-    />
-
-    <FormGroup>
-      <Col sm={9}>
-        <Button bsStyle="primary" type="submit" disabled={ submitting }>Update account</Button>
-      </Col>
-    </FormGroup>
+    <Field name="email" label="Email *" component={ VerticalFormInput } />
+    <Field name="currentPassword" label="Current password *" type="password" help="we need your current password to confirm your changes" component={ VerticalFormInput } />
+    <Field name="password" label="Password" type="password" help="leave it blank if you don't want to change it" component={ VerticalFormInput } />
+    <Field name="passwordConfirmation" label="Password confirmation" type="password" component={ VerticalFormInput } />
+    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Update account</HorizontalFormSubmitButton>
   </Form>);
 };
 
 AccountForm.propTypes = {
-  fields:       PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
@@ -61,6 +35,5 @@ AccountForm.propTypes = {
 
 export default reduxForm({
   form: 'accountForm',
-  fields: ['email', 'currentPassword', 'password', 'passwordConfirmation'],
   validate
 })(AccountForm);
