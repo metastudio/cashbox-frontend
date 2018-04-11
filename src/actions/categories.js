@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 import { noop } from 'lodash'
 
-export const loadCategories = createAction('LOAD_CATEGORIES', (organizationId) => ({ organizationId }))
+export const loadCategories = createAction('LOAD_CATEGORIES', (organizationId) => ({ organizationId }), (_orgId, resolve = noop, reject = noop) => ({ resolve, reject }));
 loadCategories.request = createAction('LOAD_CATEGORIES_REQUEST', (organizationId) => ({ organizationId }))
 loadCategories.success = createAction('LOAD_CATEGORIES_SUCCESS', (organizationId, categories) => ({ organizationId, categories }))
 loadCategories.failure = createAction('LOAD_CATEGORIES_FAILURE')
