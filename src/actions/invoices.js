@@ -5,8 +5,18 @@ export const switchUnpaid = createAction('SWITCH_UNPAID');
 
 export const loadInvoices = createAction('LOAD_INVOICES', (organizationId, params) => ({ organizationId, params }));
 loadInvoices.request = createAction('LOAD_INVOICES_REQUEST', (organizationId) => ({ organizationId }));
-loadInvoices.success = createAction('LOAD_INVOICES_SUCCESS', (organizationId, invoices, pagination, unpaidСount) => ({ organizationId, invoices, pagination, unpaidСount }));
+loadInvoices.success = createAction('LOAD_INVOICES_SUCCESS', (organizationId, invoices, pagination) => ({ organizationId, invoices, pagination }));
 loadInvoices.failure = createAction('LOAD_INVOICES_FAILURE');
+
+export const loadUnpaidInvoices = createAction('LOAD_UNPAID_INVOICES', (organizationId, params) => ({ organizationId, params }));
+loadUnpaidInvoices.request = createAction('LOAD_UNPAID_INVOICES_REQUEST', (organizationId) => ({ organizationId }));
+loadUnpaidInvoices.success = createAction('LOAD_UNPAID_INVOICES_SUCCESS', (organizationId, invoices, pagination) => ({ organizationId, invoices, pagination }));
+loadUnpaidInvoices.failure = createAction('LOAD_UNPAID_INVOICES_FAILURE');
+
+export const loadUnpaidInvoicesCount = createAction('LOAD_UNPAID_INVOICES_COUNT', (organizationId) => ({ organizationId }));
+loadUnpaidInvoicesCount.request = createAction('LOAD_UNPAID_INVOICES_COUNT_REQUEST', (organizationId) => ({ organizationId }));
+loadUnpaidInvoicesCount.success = createAction('LOAD_UNPAID_INVOICES_COUNT_SUCCESS', (organizationId, unpaidCount) => ({ organizationId, unpaidCount }));
+loadUnpaidInvoicesCount.failure = createAction('LOAD_UNPAID_INVOICES_COUNT_FAILURE');
 
 export const createInvoice = createAction('CREATE_INVOICE', (organizationId, data) => ({ organizationId, data }), (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }));
 createInvoice.request = createAction('CREATE_INVOICE_REQUEST', (organizationId) => ({ organizationId }));

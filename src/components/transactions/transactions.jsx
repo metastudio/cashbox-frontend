@@ -10,7 +10,7 @@ import { loadTransactions } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view';
-import ModalForm from './modal-form.jsx';
+import NewTransaction from './new.jsx';
 
 class Transactions extends React.Component {
 
@@ -33,7 +33,7 @@ class Transactions extends React.Component {
 
     return (
       <LoadingView status={ this.props.status }>
-        <ModalForm />
+        <NewTransaction />
         { this.props.status === statuses.SUCCESS &&
           <Table striped responsive hover id="transactions">
             <thead>

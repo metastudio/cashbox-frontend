@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 import { noop } from 'lodash'
 
-export const loadBankAccounts = createAction('LOAD_BANK_ACCOUNTS', (organizationId) => ({ organizationId }))
+export const loadBankAccounts = createAction('LOAD_BANK_ACCOUNTS', (organizationId) => ({ organizationId }), (_orgId, resolve = noop, reject = noop) => ({ resolve, reject }));
 loadBankAccounts.request = createAction('LOAD_BANK_ACCOUNTS_REQUEST', (organizationId) => ({ organizationId }))
 loadBankAccounts.success = createAction('LOAD_BANK_ACCOUNTS_SUCCESS', (organizationId, bankAccounts) => ({ organizationId, bankAccounts }))
 loadBankAccounts.failure = createAction('LOAD_BANK_ACCOUNTS_FAILURE')

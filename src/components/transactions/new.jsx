@@ -11,7 +11,7 @@ import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx'
 
-class ModalForm extends React.Component {
+class NewTransaction extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -68,7 +68,7 @@ class ModalForm extends React.Component {
   }
 }
 
-ModalForm.propTypes = {
+NewTransaction.propTypes = {
   orgId:              PropTypes.number.isRequired,
   createTransaction:  PropTypes.func.isRequired,
   addFlashMessage:    PropTypes.func.isRequired,
@@ -84,4 +84,4 @@ const dispatcher = (dispatch) => ({
   addFlashMessage:   (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default withRouter(connect(select, dispatcher)(ModalForm));
+export default withRouter(connect(select, dispatcher)(NewTransaction));
