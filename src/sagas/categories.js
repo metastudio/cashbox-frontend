@@ -16,13 +16,15 @@ import {
   deleteCategory,
 } from 'actions/categories.js';
 
-function* handleLoadCategories({ payload: { organizationId } }) {
+function* handleLoadCategories({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {
     yield put(loadCategories.request(organizationId));
     const categories = yield call(getOrganizationCategories, organizationId);
     yield put(loadCategories.success(organizationId, categories));
+    yield call(resolve, categories);
   } catch (error) {
     yield put(loadCategories.failure(error));
+    yield call(reject, error);
   }
 }
 
