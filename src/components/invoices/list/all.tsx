@@ -40,17 +40,15 @@ class AllInvoices extends React.Component<Props> {
   }
 
   render() {
-    const { status, invoices, location: { search } } = this.props;
+    const { status, invoices } = this.props;
 
     if (status !== statuses.SUCCESS || !invoices) {
       return <LoadingView status={ this.props.status } />;
     }
 
-    const queryParams = QS.parse(search);
-
     return(
       <Table hover striped responsive>
-        <TableHeader unpaid={ false } s={ queryParams['q[s]'] } />
+        <TableHeader />
         <TableBody invoices={ invoices } />
       </Table>
     );

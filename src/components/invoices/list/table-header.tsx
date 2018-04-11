@@ -1,62 +1,49 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import * as QS from 'query-string';
 
-interface Props {
-  unpaid: boolean;
-  s: string;
-}
+type Props = RouteComponentProps<{}>;
 
-const InvoicesTableHeader: React.SFC<Props> = ({ unpaid, s }) => {
-  const toggleSortIndex = (sortIndex: string) => {
-    if (sortIndex === 'asc') {
-      return('desc');
-    } else {
-      return('asc');
+const headers = [
+  { sort: 'customerName', title: 'Customer' },
+  { sort: 'endsAt', title: 'Date range' },
+  { sort: 'amountCents', title: 'Invoice total' },
+  { sort: 'sentAt', title: 'Sent date' },
+  { sort: 'paidAt', title: 'Paid date' },
+];
+
+const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } }) => {
+  const sortParam: string | undefined = QS.parse(search)['q[s]'];
+
+  const toggleSortIndex = (sortIndex: string) => sortIndex === 'asc' ? 'desc' : 'asc';
+
+  const prepareLink = (sort: string): string => {
+    let order = 'asc';
+    if (sortParam && sortParam.includes(sort)) {
+      order = toggleSortIndex(sortParam.split(' ')[1]);
+    } else if (sort === 'endsAt') {
+      order = 'desc';
     }
+
+    return `${pathname}?q[s]=${sort}+${order}`;
   };
 
-  const prepareLink = (sort: string) => {
-    let link = `/invoices?q[s]=${sort}`;
-    if (s && s.includes(sort)) {
-      const sortIndex = s.split(' ')[1];
-      link = `${link}+${toggleSortIndex(sortIndex)}`;
-    } else if (sort === 'ends_at') {
-      link = `${link}+desc`;
-    } else {
-      link = `${link}+asc`;
-    }
-
-    if (unpaid) {
-      return(`${link}&q[unpaid]=true`);
-    } else {
-      return(link);
-    }
-  };
-
-  const prepareTitle = ({ title, sort }: { title: string, sort: string }) => {
+  const prepareTitle = ({ title, sort }: { title: string, sort: string }): string => {
     const ascRender = '▼';
     const descRender = '▲';
-    if (s && s.includes(sort)) {
-      const sortIndex = s.split(' ')[1];
+    if (sortParam && sortParam.includes(sort)) {
+      const sortIndex = sortParam.split(' ')[1];
       if (sortIndex === 'asc') {
         return(`${title} ${ascRender}`);
       } else {
         return(`${title} ${descRender}`);
       }
-    } else if (!s && sort === 'ends_at') {
+    } else if (!sortParam && sort === 'endsAt') {
       return(`${title} ${ascRender}`);
     } else {
       return(title);
     }
   };
-
-  const headers = [
-    { sort: 'customer_name', title: 'Customer' },
-    { sort: 'ends_at', title: 'Date range' },
-    { sort: 'amount_cents', title: 'Invoice total' },
-    { sort: 'sent_at', title: 'Sent date' },
-    { sort: 'paid_at', title: 'Paid date' },
-  ];
 
   const renderHeaders = headers.map((header) => (
     <th key={ header.sort }>
@@ -76,4 +63,4 @@ const InvoicesTableHeader: React.SFC<Props> = ({ unpaid, s }) => {
   );
 };
 
-export default InvoicesTableHeader;
+export default withRouter(InvoicesTableHeader);
