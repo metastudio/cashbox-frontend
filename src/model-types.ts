@@ -1,7 +1,4 @@
-export interface Money {
-  cents: number;
-  toString: () => string;
-}
+import { Money } from 'utils/money';
 
 export interface Customer {
   id:       number;
@@ -20,6 +17,7 @@ export interface InoviceItem {
 export interface Invoice {
   id:           number;
   customerId:   number;
+  customerName: string;
   amount:       Money;
   currency:     string;
   number:       number;

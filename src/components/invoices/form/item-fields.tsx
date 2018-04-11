@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 
-import { Money } from 'model-types';
+import { Money } from 'utils/money';
 import {
   VerticalFormInput,
   VerticalDatePicker,
