@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 interface Props {
   submitting:       boolean;
@@ -49,9 +49,11 @@ SubmitButton.defaultProps = {
 };
 
 const HorizontalSubmitButton: React.SFC<Props> = (props) => (
-  <Col smOffset={ 3 } sm={ 9 }>
-    <SubmitButton { ...props } />
-  </Col>
+  <Row>
+    <Col smOffset={ 3 } sm={ 9 }>
+      <SubmitButton { ...props } />
+    </Col>
+  </Row>
 );
 
 export { SubmitButton, HorizontalSubmitButton };

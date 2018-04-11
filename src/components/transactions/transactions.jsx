@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
@@ -11,6 +10,7 @@ import { loadTransactions } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view';
+import NewTransaction from './new.jsx';
 
 class Transactions extends React.Component {
 
@@ -33,7 +33,7 @@ class Transactions extends React.Component {
 
     return (
       <LoadingView status={ this.props.status }>
-        <Link to="/transactions/new" className="btn btn-primary">Add...</Link>
+        <NewTransaction />
         { this.props.status === statuses.SUCCESS &&
           <Table striped responsive hover id="transactions">
             <thead>

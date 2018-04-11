@@ -6,7 +6,6 @@ import { Alert, Form } from 'react-bootstrap';
 import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import { HorizontalCustomersSelect } from 'components/customers/select-field';
-
 import {
   HorizontalFormInput,
   HorizontalDatePicker,
