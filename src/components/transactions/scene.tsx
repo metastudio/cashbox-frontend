@@ -6,14 +6,12 @@ import RequireOrganization from 'components/require-organization';
 import MainLayout from 'components/layouts/main-layout';
 
 import List from './transactions.jsx';
-import New from './new.jsx';
 
 const DashboardScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <MainLayout>
         <Route exact path="/transactions" component={ List } />
-        <Route path="/transactions/new" component={ New } />
       </MainLayout>
     </RequireOrganization>
   </RequireLogin>

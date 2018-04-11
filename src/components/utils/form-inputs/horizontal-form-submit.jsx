@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, FormGroup } from 'react-bootstrap';
+import { Row, Col, FormGroup } from 'react-bootstrap';
 
 const HorizontalFormSubmit = ({ children }) => {
   return (
-    <Col smOffset={3} sm={9}>
-      { children }
-    </Col>
+    <Row>
+      <Col smOffset={3} sm={9}>
+        { children }
+      </Col>
+    </Row>
   );
 };
 

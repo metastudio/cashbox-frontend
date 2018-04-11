@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import { Panel, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransaction } from 'actions/transactions.js';
@@ -11,11 +11,26 @@ import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx'
 
-class NewTransaction extends React.Component {
+class ModalForm extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.afterCreate  = this.afterCreate.bind(this)
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      show: false
+    };
+  }
+
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
   }
 
   handleSubmit(values) {
@@ -37,20 +52,22 @@ class NewTransaction extends React.Component {
 
   render() {
     return(
-      <Row>
-        <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
-          <Panel>
-            <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <div>
+        <Button bsStyle="primary" onClick={ this.handleShow } >Add...</Button>
+        <Modal show={ this.state.show } onHide={ this.handleClose }>
+          <Modal.Header closeButton>
+            <Modal.Title>New Transaction</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
+          </Modal.Body>
+        </Modal>
+      </div>
     )
   }
 }
 
-NewTransaction.propTypes = {
+ModalForm.propTypes = {
   orgId:              PropTypes.number.isRequired,
   createTransaction:  PropTypes.func.isRequired,
   addFlashMessage:    PropTypes.func.isRequired,
@@ -62,8 +79,8 @@ const select = (state) => ({
 })
 
 const dispatcher = (dispatch) => ({
-  createTransaction:  (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
-  addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
+  createTransaction: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
+  addFlashMessage:   (message, type = null) => dispatch(addFlashMessage(message, type)),
 })
 
-export default withRouter(connect(select, dispatcher)(NewTransaction));
+export default withRouter(connect(select, dispatcher)(ModalForm));
