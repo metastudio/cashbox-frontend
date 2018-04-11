@@ -47,7 +47,6 @@ class NewTransaction extends React.Component {
 
   afterCreate() {
     this.props.addFlashMessage('Transaction successfully created.');
-    this.props.history.push('/');
     this.handleClose();
   }
 
