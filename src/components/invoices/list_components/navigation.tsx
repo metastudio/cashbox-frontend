@@ -1,8 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
 
-export const Navigation = ({ unpaidCount, activeKey }) => (
+interface Props {
+  unpaidCount: number;
+  activeKey?: string | number;
+}
+
+const Navigation: React.SFC<Props> = ({ unpaidCount, activeKey }) => (
   <Nav bsStyle="tabs" activeKey={ activeKey } >
     <NavItem eventKey={ 1 } href="/invoices">
       Invoices
@@ -11,11 +15,6 @@ export const Navigation = ({ unpaidCount, activeKey }) => (
       { `Unpaid (${ unpaidCount })` }
     </NavItem>
   </Nav>
-)
+);
 
-
-Navigation.propTypes = {
-  unpaidCount:  PropTypes.number,
-  activeKey:    PropTypes.number
-}
-
+export default Navigation;

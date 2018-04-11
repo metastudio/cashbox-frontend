@@ -7,13 +7,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice } from 'model-types';
 import * as statuses from 'constants/statuses.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { loadInvoices } from 'actions/invoices.js';
-import {
-  InvoiceRow,
-  Navigation,
-  TableHeader
-} from './list_components';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import {
   selectInvoices,
   selectInvoicesStatus,
@@ -22,6 +17,11 @@ import {
 } from 'selectors/invoices.js';
 
 import LoadingView from 'components/utils/loading-view';
+import {
+  InvoiceRow,
+  Navigation,
+  TableHeader
+} from './list_components';
 
 interface StateProps {
   orgId:       number;
@@ -72,9 +72,7 @@ class Invoices extends React.Component<Props> {
         </div>
         <Navigation unpaidCount={ this.props.unpaidCount } activeKey={ queryParams['q[unpaid]'] ? 2 : 1 } />
         <Table hover striped responsive>
-          <thead>
-            <TableHeader unpaid={ Boolean(queryParams['q[unpaid]']) } s={ queryParams['q[s]'] } />
-          </thead>
+          <TableHeader unpaid={ Boolean(queryParams['q[unpaid]']) } s={ queryParams['q[s]'] } />
           <tbody>
             { invoices }
           </tbody>
