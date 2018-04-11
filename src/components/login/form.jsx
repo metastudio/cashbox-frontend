@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form'
 
 import { Alert, Form } from 'react-bootstrap'
-import { HorizontalFormInput, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
 const LoginForm = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="email" label="Email address" placeholder="Enter email" type="email" component={ HorizontalFormInput } />
     <Field name="password" label="Password" placeholder="Enter password" type="password" component={ HorizontalFormInput } />
-    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Login</HorizontalFormSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>Login</HorizontalSubmitButton>
   </Form>
 )
 

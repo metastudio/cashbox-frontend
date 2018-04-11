@@ -1,1 +1,1 @@
-export { default } from './loading-view.jsx';
+export { default } from './loading-view';

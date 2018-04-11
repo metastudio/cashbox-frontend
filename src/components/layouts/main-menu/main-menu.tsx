@@ -5,6 +5,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import Balances from './balances';
 import OrganizationItem from './organization-item';
 import ProfileItem from './profile-item';
+import Invoices from './invoices';
 
 const MainMenu = () => (
   <Navbar inverse fluid>
@@ -22,6 +23,10 @@ const MainMenu = () => (
 
     <Nav pullRight>
       <ProfileItem />
+    </Nav>
+
+    <Nav pullRight>
+      <Invoices />
     </Nav>
   </Navbar>
 );

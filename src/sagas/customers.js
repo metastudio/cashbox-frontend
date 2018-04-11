@@ -16,13 +16,15 @@ import {
   deleteCustomer,
 } from 'actions/customers.js';
 
-function* handleLoadCustomers({ payload: { organizationId } }) {
+function* handleLoadCustomers({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {
     yield put(loadCustomers.request(organizationId));
     const customers = yield call(getOrganizationCustomers, organizationId);
     yield put(loadCustomers.success(organizationId, customers));
+    yield call(resolve, customers);
   } catch (error) {
     yield put(loadCustomers.failure(error));
+    yield call(reject, error);
   }
 }
 
