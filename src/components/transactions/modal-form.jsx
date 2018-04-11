@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Tabs, Tab } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransaction } from 'actions/transactions.js';
@@ -19,9 +19,11 @@ class ModalForm extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleTabSelect = this.handleTabSelect.bind(this);
 
     this.state = {
-      show: false
+      show: false,
+      key: 1
     };
   }
 
@@ -31,6 +33,10 @@ class ModalForm extends React.Component {
 
   handleShow() {
     this.setState({ show: true });
+  }
+
+  handleTabSelect(key) {
+    this.setState({ key: key });
   }
 
   handleSubmit(values) {
@@ -60,7 +66,17 @@ class ModalForm extends React.Component {
             <Modal.Title>New Transaction</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
+            <Tabs activeKey={ this.state.key } onSelect={ this.handleTabSelect } id="transactionType">
+              <Tab eventKey={ 1 } title="Income">
+                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" />
+              </Tab>
+              <Tab eventKey={ 2 } title="Expense">
+                <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Expense" />
+              </Tab>
+              <Tab eventKey={ 3 } title="Transfer">
+                Tab 3 content
+              </Tab>
+            </Tabs>
           </Modal.Body>
         </Modal>
       </div>

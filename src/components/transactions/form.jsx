@@ -16,8 +16,8 @@ import {
 } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
-const getCategoryOptions = (orgId) => {
-  return getOrganizationCategories(orgId).then((categories) => ({
+const getCategoryOptions = (orgId, type) => {
+  return getOrganizationCategories(orgId, type).then((categories) => ({
     options: categories.map(category => ({ value: category.id, label: category.name }))
   }));
 };
@@ -29,11 +29,11 @@ const getBankAccountOptions = (orgId) => {
   }));
 };
 
-const TransactionForm = ({ handleSubmit, orgId, submitting, error }) => (
+const TransactionForm = ({ handleSubmit, orgId, type, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    <Field name="category" label="Category" component={ HorizontalAsyncSelect } loadOptions={ () => getCategoryOptions(orgId) } />
+    <Field name="category" label="Category" component={ HorizontalAsyncSelect } loadOptions={ () => getCategoryOptions(orgId, type) } />
     <Field name="customer" label="Customer name" component={ HorizontalCustomersSelect } />
     <Field name="bankAccount" label="Bank account" component={ HorizontalAsyncSelect } loadOptions={ () => getBankAccountOptions(orgId) } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
@@ -47,6 +47,7 @@ TransactionForm.propTypes = {
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
   orgId:        PropTypes.number.isRequired,
+  type:         PropTypes.string,
 };
 
 export default reduxForm({
