@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { connect } from 'react-redux';
 
 import { getCurrencies } from 'api/currencies.js';
 
 import { Alert, Form } from 'react-bootstrap';
-import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga
 const getOptions = () => {
@@ -22,7 +21,7 @@ const BankAccountForm = ({ handleSubmit, submitting, error }) => (
     <Field name="description" label="Description" component={ HorizontalFormInput } />
     <Field name="invoiceDetails" label="Invoice Details" componentClass="textarea" type="textarea" component={ HorizontalFormInput } />
     <Field name="currency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
-    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Submit</HorizontalFormSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>Submit</HorizontalSubmitButton>
   </Form>
 );
 
@@ -33,5 +32,5 @@ BankAccountForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transaction-form',
-})(BankAccountForm)
+  form: 'transactionForm',
+})(BankAccountForm);

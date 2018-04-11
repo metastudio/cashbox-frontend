@@ -5,7 +5,7 @@ import { Alert, Form } from 'react-bootstrap';
 
 import { getCurrencies } from 'api/currencies.js';
 
-import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalFormSubmitButton } from 'components/utils/form-inputs';
+import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
 // TODO: refactor to use actions and saga
 const getOptions = () => {
@@ -19,7 +19,7 @@ const OrganizationForm = ({ handleSubmit, submitting, error }) => (
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
     <Field name="defaultCurrency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
-    <HorizontalFormSubmitButton bsStyle="primary" type="submit" disabled={ submitting }>Create</HorizontalFormSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
   </Form>
 );
 

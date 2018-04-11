@@ -33,7 +33,7 @@ class Transactions extends React.Component {
 
     return (
       <LoadingView status={ this.props.status }>
-        <ModalForm/>
+        <ModalForm />
         { this.props.status === statuses.SUCCESS &&
           <Table striped responsive hover id="transactions">
             <thead>

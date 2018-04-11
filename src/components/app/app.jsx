@@ -16,6 +16,7 @@ import BankAccountsScene  from 'components/bank-accounts';
 import CategoriesScene    from 'components/categories';
 import CustomersScene     from 'components/customers';
 import UserScene          from 'components/user';
+import InvoicesScene      from 'components/invoices';
 
 class App extends React.Component {
   componentDidMount() {
@@ -38,6 +39,7 @@ class App extends React.Component {
             <Route path="/bank_accounts" component={BankAccountsScene} />
             <Route path="/members" component={ MembersScene } />
             <Route path="/user" component={ UserScene }/>
+            <Route path='/invoices' component={ InvoicesScene }/>
           </div>
         </BrowserRouter>
       );
