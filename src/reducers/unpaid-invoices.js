@@ -2,7 +2,7 @@ import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import {
-  loadInvoices,
+  loadUnpaidInvoices,
   createInvoice,
   updateInvoice,
   destroyInvoice,
@@ -16,12 +16,12 @@ const defaultState = {
 };
 
 export default handleActions({
-  [loadInvoices.request]: (state) => ({
+  [loadUnpaidInvoices.request]: (state) => ({
     ...state,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadInvoices.success]: (state, { payload }) => ({
+  [loadUnpaidInvoices.success]: (state, { payload }) => ({
     ...state,
     status:     statuses.SUCCESS,
     error:      null,
@@ -32,7 +32,7 @@ export default handleActions({
     ...state,
     status: statuses.INVALID,
   }),
-  [loadInvoices.failure]: (state, { payload }) => ({
+  [loadUnpaidInvoices.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
     error:  payload

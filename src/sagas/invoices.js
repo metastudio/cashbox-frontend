@@ -2,6 +2,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 
 import {
   getInvoices,
+  getUnpaidInvoices,
+  getUnpaidInvoicesCount,
   postInvoice,
   getInvoice,
   deleteInvoice,
@@ -11,6 +13,8 @@ import {
 
 import {
   loadInvoices,
+  loadUnpaidInvoices,
+  loadUnpaidInvoicesCount,
   createInvoice,
   loadInvoice,
   destroyInvoice,
@@ -21,10 +25,30 @@ import {
 function* handleLoadInvoices({ payload: { organizationId, params } }) {
   try {
     yield put(loadInvoices.request(organizationId));
-    const { invoices, pagination, unpaidCount } = yield call(getInvoices, organizationId, params);
-    yield put(loadInvoices.success(organizationId, invoices, pagination, unpaidCount));
+    const { invoices, pagination } = yield call(getInvoices, organizationId, params);
+    yield put(loadInvoices.success(organizationId, invoices, pagination));
   } catch (error) {
     yield put(loadInvoices.failure(error));
+  }
+}
+
+function* handleLoadUnpaidInvoices({ payload: { organizationId, params } }) {
+  try {
+    yield put(loadUnpaidInvoices.request(organizationId));
+    const { invoices, pagination } = yield call(getUnpaidInvoices, organizationId, params);
+    yield put(loadUnpaidInvoices.success(organizationId, invoices, pagination));
+  } catch (error) {
+    yield put(loadUnpaidInvoices.failure(error));
+  }
+}
+
+function* handleLoadUnpaidInvoicesCount({ payload: { organizationId } }) {
+  try {
+    yield put(loadUnpaidInvoicesCount.request(organizationId));
+    const { unpaidCount } = yield call(getUnpaidInvoicesCount, organizationId);
+    yield put(loadUnpaidInvoicesCount.success(organizationId, unpaidCount));
+  } catch (error) {
+    yield put(loadUnpaidInvoicesCount.failure(error));
   }
 }
 
@@ -85,11 +109,13 @@ function* handleUpdateInvoice({ payload: { organizationId, invoiceId, data }, me
 }
 
 export default function* () {
-  yield takeEvery(loadInvoices.toString(),       handleLoadInvoices);
-  yield takeEvery(createInvoice.toString(),      handleCreateInvoice);
-  yield takeEvery(updateInvoice.toString(),      handleUpdateInvoice);
-  yield takeEvery(loadInvoice.toString(),        handleLoadInvoice);
-  yield takeEvery(destroyInvoice.toString(),     handleDestroyInvoice);
-  yield takeEvery(downloadInvoicePDF.toString(), handleDownoadInvoicePDF);
+  yield takeEvery(loadInvoices,            handleLoadInvoices);
+  yield takeEvery(loadUnpaidInvoices,      handleLoadUnpaidInvoices);
+  yield takeEvery(loadUnpaidInvoicesCount, handleLoadUnpaidInvoicesCount);
+  yield takeEvery(createInvoice,           handleCreateInvoice);
+  yield takeEvery(updateInvoice,           handleUpdateInvoice);
+  yield takeEvery(loadInvoice,             handleLoadInvoice);
+  yield takeEvery(destroyInvoice,          handleDestroyInvoice);
+  yield takeEvery(downloadInvoicePDF,      handleDownoadInvoicePDF);
 }
 
