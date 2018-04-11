@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { Col, PageHeader } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice, InvoiceParams } from 'model-types';
@@ -52,14 +52,14 @@ class NewInvoice extends React.Component<Props> {
 
   render() {
     return(
-      <Col sm={ 6 } smOffset={ 3 }>
+      <>
         <PageHeader>New Invoice</PageHeader>
         <Form
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterCreate }
           action="Create"
         />
-      </Col>
+      </>
     );
   }
 }
