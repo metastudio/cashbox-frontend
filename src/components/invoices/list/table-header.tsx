@@ -5,11 +5,11 @@ import * as QS from 'query-string';
 type Props = RouteComponentProps<{}>;
 
 const headers = [
-  { sort: 'customerName', title: 'Customer' },
-  { sort: 'endsAt', title: 'Date range' },
-  { sort: 'amountCents', title: 'Invoice total' },
-  { sort: 'sentAt', title: 'Sent date' },
-  { sort: 'paidAt', title: 'Paid date' },
+  { sort: 'customer_name', title: 'Customer' },
+  { sort: 'ends_at', title: 'Date range' },
+  { sort: 'amount_cents', title: 'Invoice total' },
+  { sort: 'sent_at', title: 'Sent date' },
+  { sort: 'paid_at', title: 'Paid date' },
 ];
 
 const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } }) => {
@@ -21,7 +21,7 @@ const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } 
     let order = 'asc';
     if (sortParam && sortParam.includes(sort)) {
       order = toggleSortIndex(sortParam.split(' ')[1]);
-    } else if (sort === 'endsAt') {
+    } else if (sort === 'ends_at') {
       order = 'desc';
     }
 
@@ -38,7 +38,7 @@ const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } 
       } else {
         return(`${title} ${descRender}`);
       }
-    } else if (!sortParam && sort === 'endsAt') {
+    } else if (!sortParam && sort === 'ends_at') {
       return(`${title} ${ascRender}`);
     } else {
       return(title);

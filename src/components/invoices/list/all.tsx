@@ -27,15 +27,21 @@ interface DispatchProps {
 type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
 
 class AllInvoices extends React.Component<Props> {
+  loadData = (props: Props) => {
+    const { orgId, load, location: { search } } = props;
+    load(orgId, QS.parse(search));
+  }
+
   componentDidMount() {
-    const { orgId, load, location } = this.props;
-    load(orgId, QS.parse(location.search));
+    this.loadData(this.props);
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    if (this.props.location.search !== nextProps.location.search) {
-      const { orgId, load, location } = this.props;
-      load(orgId, QS.parse(location.search));
+    const { status, location: { search: nextSearch } } = nextProps;
+    const { location: { search: oldSearch } } = this.props;
+
+    if (status === statuses.INVALID || oldSearch !== nextSearch) {
+      this.loadData(nextProps);
     }
   }
 
