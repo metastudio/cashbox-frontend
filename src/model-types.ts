@@ -13,6 +13,7 @@ export interface BankAccount {
 export interface Category {
   id:       number;
   name:     string;
+  type:     string;
 }
 
 export interface InoviceItem {
