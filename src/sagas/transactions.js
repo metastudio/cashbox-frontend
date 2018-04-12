@@ -1,8 +1,16 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getOrganizationTransactions, postOrganizationTransaction } from 'api/transactions.js';
+import {
+  getOrganizationTransactions,
+  postOrganizationTransaction,
+  postOrganizationTransfer
+} from 'api/transactions.js';
 
-import { loadTransactions, createTransaction } from 'actions/transactions.js';
+import {
+  loadTransactions,
+  createTransaction,
+  createTransfer
+} from 'actions/transactions.js';
 
 function* handleLoadTransactions({ payload: { organizationId } }) {
   try {
@@ -26,7 +34,20 @@ function* handleCreateTransaction({ payload: { organizationId, data }, meta: { r
   }
 }
 
+function* handleCreateTransfer({ payload: { organizationId, data }, meta: { resolve, reject } }) {
+  try {
+    yield put(createTransfer.request(organizationId));
+    const transfer = yield call(postOrganizationTransfer, organizationId, data);
+    yield put(createTransfer.success(organizationId, transfer));
+    yield call(resolve, transfer);
+  } catch (error) {
+    yield put(createTransfer.failure(error));
+    yield call(reject, error);
+  }
+}
+
 export default function* () {
   yield takeEvery(loadTransactions.toString(),  handleLoadTransactions);
   yield takeEvery(createTransaction.toString(), handleCreateTransaction);
+  yield takeEvery(createTransfer.toString(),    handleCreateTransfer);
 }

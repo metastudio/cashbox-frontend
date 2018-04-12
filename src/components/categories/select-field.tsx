@@ -15,6 +15,7 @@ import 'components/utils/form-inputs/async-select-fix.css';
 
 interface OwnProps {
   emptyTitle?: string;
+  type: string;
 }
 
 interface StateProps {
@@ -27,11 +28,11 @@ interface DispatchProps {
 
 type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
 
-const CategoriesSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, ...inputProps }) => {
+const CategoriesSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, type, ...inputProps }) => {
   const loadOptions = () => (
     load(orgId).then((categories) => ({
       options: (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-        .concat(categories.map(c => ({ value: String(c.id), label: c.name })))
+        .concat(categories.filter((item) => item.type === type).map(c => ({ value: String(c.id), label: c.name })))
     }))
   );
 

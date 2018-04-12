@@ -10,3 +10,8 @@ export const createTransaction = createAction('CREATE_TRANSACTION', (organizatio
 createTransaction.request = createAction('CREATE_TRANSACTION_REQUEST', (organizationId) => ({ organizationId }))
 createTransaction.success = createAction('CREATE_TRANSACTION_SUCCESS', (organizationId, transaction) => ({ organizationId, transaction }))
 createTransaction.failure = createAction('CREATE_TRANSACTION_FAILURE')
+
+export const createTransfer = createAction('CREATE_TRANSFER', (organizationId, data) => ({ organizationId, data }), (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }))
+createTransfer.request = createAction('CREATE_TRANSFER_REQUEST', (organizationId) => ({ organizationId }))
+createTransfer.success = createAction('CREATE_TRANSFER_SUCCESS', (organizationId, transfer) => ({ organizationId, transfer }))
+createTransfer.failure = createAction('CREATE_TRANSFER_FAILURE')
