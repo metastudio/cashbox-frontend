@@ -14,3 +14,5 @@ export { default as category }             from './category';
 export { default as customers }            from './customers';
 export { default as customer }             from './customer';
 export { default as balances }             from './balances';
+export { default as unpaidInvoices }       from './unpaid-invoices';
+export { default as unpaidInvoicesCount }  from './unpaid-invoices-count';

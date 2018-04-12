@@ -5,6 +5,17 @@ export interface Customer {
   name:     string;
 }
 
+export interface BankAccount {
+  id:       number;
+  name:     string;
+}
+
+export interface Category {
+  id:       number;
+  name:     string;
+  type:     string;
+}
+
 export interface InoviceItem {
   id:           number;
   customerId:   number;

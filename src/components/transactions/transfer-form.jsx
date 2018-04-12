@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Alert, Form } from 'react-bootstrap';
 
-import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
-import { HorizontalCustomersSelect } from 'components/customers/select-field';
 import {
   HorizontalFormInput,
   HorizontalDatePicker,
@@ -13,20 +11,21 @@ import {
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
-const TransactionForm = ({ handleSubmit, orgId, type, submitting, error }) => (
+const TransferForm = ({ handleSubmit, orgId, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
+    <Field name="fromBankAccount" label="From" component={ HorizontalBankAccountsSelect } />
+    <Field name="toBankAccount" label="To" component={ HorizontalBankAccountsSelect } />
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    <Field name="category" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
-    <Field name="customer" label="Customer name" component={ HorizontalCustomersSelect } />
-    <Field name="bankAccount" label="Bank account" component={ HorizontalBankAccountsSelect } />
+    <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } />
+    <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
     <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
   </Form>
 );
 
-TransactionForm.propTypes = {
+TransferForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
@@ -35,5 +34,5 @@ TransactionForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transaction-form'
-})(TransactionForm);
+  form: 'transfer-form'
+})(TransferForm);

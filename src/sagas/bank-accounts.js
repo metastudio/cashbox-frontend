@@ -16,13 +16,15 @@ import {
   deleteBankAccount,
 } from 'actions/bank-accounts.js';
 
-function* handleLoadBankAccounts({ payload: { organizationId } }) {
+function* handleLoadBankAccounts({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {
     yield put(loadBankAccounts.request(organizationId));
     const bankAccounts = yield call(getOrganizationBankAccounts, organizationId);
     yield put(loadBankAccounts.success(organizationId, bankAccounts));
+    yield call(resolve, bankAccounts);
   } catch (error) {
     yield put(loadBankAccounts.failure(error));
+    yield call(reject, error);
   }
 }
 
