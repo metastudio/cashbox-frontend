@@ -12,6 +12,8 @@ import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import LoadingView from 'components/utils/loading-view';
 import NewTransaction from './new.jsx';
 
+import './css/default.scss';
+
 class Transactions extends React.Component {
 
   componentDidMount() {
@@ -21,7 +23,7 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions.map((transaction) => (
-      <tr key={ transaction.id }>
+      <tr key={ transaction.id } className={  }>
         <td>{ transaction.amount }</td>
         <td>{ transaction.category.name }</td>
         <td>{ transaction.bankAccount.name }</td>

@@ -1,0 +1,15 @@
+$negative-color: #f2dede;
+$positive-color: #dff0d8;
+$transfer-color: #fcf8e3;
+
+.negative {
+  background-color: $negative-color
+}
+
+.positive {
+  background-color: $positive-color;
+}
+
+.transfer {
+  background-color: $transfer-color;
+}
