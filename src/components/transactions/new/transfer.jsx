@@ -37,9 +37,7 @@ class NewTransfer extends React.Component {
 
   render() {
     return(
-      <div>
-        <TransferForm onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
-      </div>
+      <TransferForm onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } />
     )
   }
 }

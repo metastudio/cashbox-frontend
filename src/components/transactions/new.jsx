@@ -13,11 +13,9 @@ class NewTransaction extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleTabSelect = this.handleTabSelect.bind(this);
 
     this.state = {
-      show: false,
-      key: 1
+      show: false
     };
   }
 
@@ -29,10 +27,6 @@ class NewTransaction extends React.Component {
     this.setState({ show: true });
   }
 
-  handleTabSelect(key) {
-    this.setState({ key: key });
-  }
-
   render() {
     return(
       <div>
@@ -42,7 +36,7 @@ class NewTransaction extends React.Component {
             <Modal.Title>New Transaction</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Tabs activeKey={ this.state.key } onSelect={ this.handleTabSelect } id="transactionType">
+            <Tabs defaultActiveKey={ 1 } id="transactionType">
               <Tab eventKey={ 1 } title="Income">
                 <NewIncomeTransaction />
               </Tab>

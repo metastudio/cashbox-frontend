@@ -36,9 +36,7 @@ class NewExpenseTransaction extends React.Component {
 
   render() {
     return(
-      <div>
-        <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Expense" />
-      </div>
+      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Expense" />
     )
   }
 }
