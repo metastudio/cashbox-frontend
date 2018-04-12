@@ -1,6 +1,6 @@
 import { prepareURL, getApi, postApi, putApi, deleteApi } from './_helpers';
 
-const categoriesURL = (orgId, params) => prepareURL(`/api/organizations/${orgId}/categories`);
+const categoriesURL = (orgId) => prepareURL(`/api/organizations/${orgId}/categories`);
 const categoryURL = (orgId, categoryId) => prepareURL(`/api/organizations/${orgId}/categories/${categoryId}`);
 
 export const getOrganizationCategories  = (orgId) => getApi(categoriesURL(orgId));
