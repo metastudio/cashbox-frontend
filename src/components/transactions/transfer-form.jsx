@@ -11,7 +11,7 @@ import {
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
-const TransferForm = ({ handleSubmit, orgId, submitting, error }) => (
+const TransferForm = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="fromBankAccount" label="From" component={ HorizontalBankAccountsSelect } />
@@ -29,7 +29,6 @@ TransferForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
-  orgId:        PropTypes.number.isRequired,
   type:         PropTypes.string.isRequired,
 };
 

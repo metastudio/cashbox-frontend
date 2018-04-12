@@ -8,11 +8,12 @@ import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { loadTransactions } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { formatMoney } from 'utils/money';
 
 import LoadingView from 'components/utils/loading-view';
 import NewTransaction from './new.jsx';
 
-import './css/default.scss';
+import './css/default.css';
 
 class Transactions extends React.Component {
 
@@ -21,10 +22,18 @@ class Transactions extends React.Component {
     loadTransactions(orgId);
   }
 
+  getBgColorClass(transaction) {
+    if (transaction.category && transaction.category.name === 'Transfer') {
+      return 'transfer';
+    } else {
+      return (transaction.amount.fractional > 0 ? 'positive' : 'negative');
+    }
+  }
+
   render() {
     const transactions = this.props.transactions.map((transaction) => (
-      <tr key={ transaction.id } className={  }>
-        <td>{ transaction.amount }</td>
+      <tr key={ transaction.id } className={ this.getBgColorClass(transaction) }>
+        <td>{ formatMoney(transaction.amount) }</td>
         <td>{ transaction.category.name }</td>
         <td>{ transaction.bankAccount.name }</td>
         <td>{ transaction.customer && transaction.customer.name }</td>
