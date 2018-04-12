@@ -31,7 +31,7 @@ TransactionForm.propTypes = {
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
   orgId:        PropTypes.number.isRequired,
-  type:         PropTypes.string,
+  type:         PropTypes.string.isRequired,
 };
 
 export default reduxForm({

@@ -15,7 +15,7 @@ import 'components/utils/form-inputs/async-select-fix.css';
 
 interface OwnProps {
   emptyTitle?: string;
-  type?: string;
+  type: string;
 }
 
 interface StateProps {
