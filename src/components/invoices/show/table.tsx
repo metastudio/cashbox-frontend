@@ -3,6 +3,7 @@ import { Table as BsTable } from 'react-bootstrap';
 
 import { Invoice } from 'model-types';
 import { formatMoney } from 'utils/money';
+import Items from './items';
 
 interface Props {
   invoice:      Invoice;
@@ -62,6 +63,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
           </h2>
         </td>
       </tr>
+      <Items invoice={ invoice } />
     </tbody>
   </BsTable>
 );
