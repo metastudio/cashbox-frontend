@@ -8,20 +8,12 @@ export interface Props {
 }
 
 const Header: React.SFC<Props> = ({ invoice }) => {
-  const invoiceNumber = () => {
-    if (!invoice.number) { return ''; }
-    return `#${invoice.number}`;
-  };
-
-  const invoiceDateRange = () => {
-    return([invoice.startsAt, invoice.endsAt].filter(x => !!x).join(' - '));
-  };
-
+  const invoiceDateRange = [invoice.startsAt, invoice.endsAt].filter(x => !!x).join(' - ');
   return (
     <h2>
       <Link to="/invoices/list">Invoices</Link>
       &nbsp;/
-      Invoice { invoiceNumber() } { invoice.customerName } from { invoiceDateRange() }
+      Invoice { invoice.number ? `#${invoice.number}` : '' } { invoice.customerName } from { invoiceDateRange }
     </h2>
   );
 };
