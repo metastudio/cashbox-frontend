@@ -1,5 +1,5 @@
-const selectTransactions       = (state) => state.invoices.items;
-const selectTransactionsStatus = (state) => state.invoices.status;
+const selectTransactions       = (state) => state.transactions.items;
+const selectTransactionsStatus = (state) => state.transactions.status;
 
 export {
   selectTransactions,

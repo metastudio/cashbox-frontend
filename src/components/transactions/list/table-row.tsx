@@ -3,7 +3,7 @@ import * as Moment from 'moment';
 
 import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
-import './css/default.css';
+import './../css/default.css';
 
 interface Props {
   transaction: Transaction;

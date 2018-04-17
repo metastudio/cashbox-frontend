@@ -26,13 +26,24 @@ type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
 
 class Transactions extends React.Component<Props> {
 
-  componentDidMount() {
+  loadData(props: Props) {
     const { orgId, load } = this.props;
     load(orgId);
   }
 
+  componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  componentWillReceiveProps(props: Props) {
+    if (this.props.status === statuses.INVALID) {
+      this.loadData(this.props);
+    }
+  }
+
   render() {
     const { status, transactions } = this.props;
+
     if (status !== statuses.SUCCESS || !transactions) {
       return <LoadingView status={ status } />;
     }

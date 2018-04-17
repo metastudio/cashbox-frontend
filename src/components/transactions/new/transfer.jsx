@@ -8,7 +8,7 @@ import { createTransfer } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 
-import TransferForm from './../transfer-form.jsx';
+import TransferForm from './../form/transfer-form.jsx';
 
 class NewTransfer extends React.Component {
   constructor(props) {

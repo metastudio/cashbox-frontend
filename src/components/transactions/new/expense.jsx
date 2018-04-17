@@ -8,7 +8,7 @@ import { createTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form from './../form.jsx';
+import Form from './../form/form.jsx';
 
 class NewExpenseTransaction extends React.Component {
   constructor(props) {

@@ -1,12 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
 
 import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
 import NewTransfer from './new/transfer.jsx';
 
-class NewTransaction extends React.Component {
-  constructor(props) {
+interface Props {
+}
+
+interface State {
+  show: true | false;
+}
+
+class NewTransaction extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.handleShow = this.handleShow.bind(this);
