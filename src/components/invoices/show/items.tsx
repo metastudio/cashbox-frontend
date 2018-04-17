@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Items: React.SFC<Props> = ({ invoice: { invoiceItems, currency }}) => {
-  if (invoiceItems.length <= 0) { return <></>; }
+  if (invoiceItems.length <= 0) { return null; }
 
   const items = invoiceItems.map((item, index) => (
     <tr key={ index } >
