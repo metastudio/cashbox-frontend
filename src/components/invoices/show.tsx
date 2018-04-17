@@ -16,7 +16,8 @@ import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUserFullName } from 'selectors/users.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
-import { Header, InvoiceTable } from './show_components';
+import Header from './show/header';
+import InvoiceTable from './show/table';
 import LoadingView from '../utils/loading-view';
 
 interface StateProps {
@@ -67,9 +68,6 @@ class ShowInvoice extends React.Component<Props> {
     }
 
     const { invoice, userFullName } = this.props;
-
-    const completeInvoiceButton = invoice.paidAt ? <Button bsStyle="primary">Complete Invoice</Button> : null;
-
     return (
       <>
         <div className="page-header">
@@ -78,7 +76,7 @@ class ShowInvoice extends React.Component<Props> {
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            { completeInvoiceButton }
+            { !invoice.paidAt ? <Button bsStyle="primary">Complete Invoice</Button> : null }
             <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
           </ButtonGroup>
           <Header invoice={ invoice } />

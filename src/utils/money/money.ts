@@ -4,6 +4,7 @@ interface Money {
   currency: {
     isoCode: string;
     subunitToUnit: number;
+    symbol: string;
   };
 }
 
