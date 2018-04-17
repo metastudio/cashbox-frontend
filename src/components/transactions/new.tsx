@@ -5,15 +5,12 @@ import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
 import NewTransfer from './new/transfer.jsx';
 
-interface Props {
-}
-
 interface State {
-  show: true | false;
+  show: boolean;
 }
 
-class NewTransaction extends React.Component<Props, State> {
-  constructor(props: Props) {
+class NewTransaction extends React.Component<{}, State> {
+  constructor(props: {}) {
     super(props);
 
     this.handleShow = this.handleShow.bind(this);

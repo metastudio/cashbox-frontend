@@ -29,7 +29,6 @@ TransferForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
-  type:         PropTypes.string.isRequired,
 };
 
 export default reduxForm({
