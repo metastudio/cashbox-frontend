@@ -26,16 +26,18 @@ export interface InoviceItem {
 }
 
 export interface Invoice {
-  id:           number;
-  customerId:   number;
-  customerName: string;
-  amount:       Money;
-  currency:     string;
-  number:       number;
-  endsAt:       Date;
-  paidAt?:      Date;
-  startsAt?:    Date;
-  sentAt?:      Date;
+  id:               number;
+  customerId:       number;
+  customerName:     string;
+  amount:           Money;
+  currency:         string;
+  number:           number;
+  endsAt:           Date;
+  paidAt?:          Date;
+  startsAt?:        Date;
+  sentAt?:          Date;
+  invoiceDetails?:  string;
+  customerDetails?: string;
 
   invoiceItems: InoviceItem[];
 }
