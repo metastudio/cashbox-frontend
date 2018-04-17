@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Invoice } from 'model-types';
 import { AmountDecorator } from 'components/utils/decorators/amount_decorator';
+import Items from './items';
 
 interface Props {
   invoice:      Invoice;
@@ -71,6 +72,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => {
             </h2>
           </td>
         </tr>
+        <Items invoice={ invoice } />
       </tbody>
     </table>
   );
