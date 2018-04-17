@@ -1,11 +1,11 @@
 .negative {
-  background-color: #d59595 !important;
+  color: #8B0000;
 }
 
 .positive {
-  background-color: #a3d48e !important;
+  color: #006400;
 }
 
 .transfer {
-  background-color: #f2e187 !important;
+  color: #B8860B;
 }

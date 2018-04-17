@@ -16,6 +16,16 @@ export interface Category {
   type:     string;
 }
 
+export interface Transaction {
+  id:          number;
+  amount:      Money;
+  category:    Category;
+  bankAccount: BankAccount;
+  customer:    Customer;
+  date?:       Date;
+  comment?:    string;
+}
+
 export interface InoviceItem {
   id:           number;
   customerId:   number;
