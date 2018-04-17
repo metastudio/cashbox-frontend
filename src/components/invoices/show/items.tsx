@@ -22,10 +22,10 @@ const Items: React.SFC<Props> = ({ invoice: { invoiceItems, currency }}) => {
   return(
     <>
       <tr>
-        <td><strong>Task</strong></td>
-        <td><strong>Date</strong></td>
-        <td className="text-right"><strong>Hours</strong></td>
-        <td className="text-right"><strong>{ currency }</strong></td>
+        <th>Task</th>
+        <th>Date</th>
+        <th className="text-right">Hours</th>
+        <th className="text-right">{ currency }</th>
       </tr>
       { items }
     </>
