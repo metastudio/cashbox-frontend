@@ -15,3 +15,16 @@ export const createTransfer = createAction('CREATE_TRANSFER', (organizationId, d
 createTransfer.request = createAction('CREATE_TRANSFER_REQUEST', (organizationId) => ({ organizationId }));
 createTransfer.success = createAction('CREATE_TRANSFER_SUCCESS', (organizationId, transfer) => ({ organizationId, transfer }));
 createTransfer.failure = createAction('CREATE_TRANSFER_FAILURE');
+
+export const loadTransaction = createAction('LOAD_TRANSACTION', (organizationId, transactionId) => ({ organizationId, transactionId }));
+loadTransaction.request = createAction('LOAD_TRANSACTION_REQUEST', (organizationId, transactionId) => ({ organizationId, transactionId }));
+loadTransaction.success = createAction('LOAD_TRANSACTION_SUCCESS', (organizationId, transaction) => ({ organizationId, transaction }));
+loadTransaction.failure = createAction('LOAD_TRANSACTION_FAILURE');
+
+export const updateTransaction = createAction('UPDATE_TRANSACTION', (organizationId, transactionId, data) => ({ organizationId, transactionId, data }),
+  (_organizationId, _transactionId, _data, resolve = noop, reject = noop) => ({ resolve, reject }));
+updateTransaction.request = createAction('UPDATE_TRANSACTION_REQUEST', (organizationId) => ({ organizationId }));
+updateTransaction.success = createAction('UPDATE_TRANSACTION_SUCCESS', (organizationId, transaction) => ({ organizationId, transaction }));
+updateTransaction.failure = createAction('UPDATE_TRANSACTION_FAILURE');
+
+export const clearTransaction = createAction('CLEAR_TRANSACTION');

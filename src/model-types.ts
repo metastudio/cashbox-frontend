@@ -16,6 +16,16 @@ export interface Category {
   type:     string;
 }
 
+export interface TransferOut {
+  id:          number;
+  amount:      Money;
+  category:    Category;
+  bankAccount: BankAccount;
+  customer:    Customer;
+  date?:       Date;
+  comment?:    string;
+}
+
 export interface Transaction {
   id:          number;
   amount:      Money;
@@ -24,6 +34,8 @@ export interface Transaction {
   customer:    Customer;
   date?:       Date;
   comment?:    string;
+  
+  transfer_out?: TransferOut;
 }
 
 export interface InoviceItem {

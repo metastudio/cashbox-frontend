@@ -17,12 +17,12 @@ const TransactionForm = ({ handleSubmit, type, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    <Field name="category" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
-    <Field name="customer" label="Customer name" component={ HorizontalCustomersSelect } />
-    <Field name="bankAccount" label="Bank account" component={ HorizontalBankAccountsSelect } />
+    <Field name="categoryId" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
+    <Field name="customerId" label="Customer name" component={ HorizontalCustomersSelect } />
+    <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>Submit</HorizontalSubmitButton>
   </Form>
 );
 
