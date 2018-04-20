@@ -21,7 +21,6 @@ export interface TransferOut {
   amount:      Money;
   category:    Category;
   bankAccount: BankAccount;
-  customer:    Customer;
   date?:       Date;
   comment?:    string;
 }
@@ -31,7 +30,7 @@ export interface Transaction {
   amount:      Money;
   category:    Category;
   bankAccount: BankAccount;
-  customer:    Customer;
+  customer?:    Customer;
   date?:       Date;
   comment?:    string;
   

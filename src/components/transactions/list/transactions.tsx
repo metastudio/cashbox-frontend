@@ -69,9 +69,9 @@ class Transactions extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:         getCurrentOrganizationId(state),
-  status:        selectTransactionsStatus(state),
-  transactions:  selectTransactions(state),
+  orgId:        getCurrentOrganizationId(state),
+  status:       selectTransactionsStatus(state),
+  transactions: selectTransactions(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

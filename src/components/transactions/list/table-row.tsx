@@ -28,7 +28,7 @@ class TransactionsTableRow extends React.Component<Props> {
     if (t.category && t.category.name === 'Transfer') {
       return 'transfer';
     } else {
-      return  Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
+      return Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
     }
   }
 
