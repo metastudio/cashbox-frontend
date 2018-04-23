@@ -26,6 +26,15 @@ export interface Transaction {
   comment?:    string;
 }
 
+export interface TransactionParams {
+  amount?:        Money;
+  categoryId?:    number;
+  customerId?:    number;
+  bankAccountId?: number;
+  date?:          Date;
+  comment?:       string;
+}
+
 export interface InoviceItem {
   id:           number;
   customerId:   number;

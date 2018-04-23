@@ -4,7 +4,7 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Invoice } from 'model-types';
+import { Invoice, Customer } from 'model-types';
 import * as statuses from 'constants/statuses.js';
 import {
   loadInvoice,
@@ -15,16 +15,20 @@ import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUserFullName } from 'selectors/users.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
+import { selectCustomers } from 'selectors/customers.js';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';
+import CompleteInvoiceButton from './show/complete.jsx';
 import LoadingView from '../utils/loading-view';
+import { loadCustomers } from 'actions/customers.js';
 
 interface StateProps {
   orgId:        number;
   status:       string;
   invoice:      Invoice | null;
   userFullName: string;
+  customers:    Customer[];
 }
 
 interface DispatchProps {
@@ -35,12 +39,14 @@ interface DispatchProps {
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
-type Props =  RouteProps & StateProps & DispatchProps;
+type Props = RouteProps & StateProps & DispatchProps;
 
 class ShowInvoice extends React.Component<Props> {
   componentDidMount() {
-    const { orgId, load, match } = this.props;
+    const { orgId, load, match, customers } = this.props;
     load(orgId, Number(match.params.id));
+    if (customers) { return; }
+    loadCustomers(orgId);
   }
 
   handleDestroy = () => {
@@ -76,7 +82,7 @@ class ShowInvoice extends React.Component<Props> {
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            { !invoice.paidAt ? <Button bsStyle="primary">Complete Invoice</Button> : null }
+            { !invoice.paidAt ? <CompleteInvoiceButton /> : null }
             <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
           </ButtonGroup>
           <Header invoice={ invoice } />
@@ -93,6 +99,7 @@ const mapState = (state: {}) => ({
   status:       selectInvoiceStatus(state),
   invoice:      selectInvoice(state),
   userFullName: selectUserFullName(state),
+  customers:    selectCustomers(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
@@ -102,6 +109,7 @@ const mapDispatch = (dispatch: Dispatch<{}>) => ({
   }),
   downloadPDF:  (orgId: number, invoiceId: number | string) => dispatch(downloadInvoicePDF(orgId, invoiceId)),
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
+  loadCustomers: (orgId: number) => dispatch(loadCustomers(orgId)),
 });
 
 export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(ShowInvoice));
