@@ -54,7 +54,7 @@ class ShowInvoice extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.status !== statuses.SUCCESS || !this.props.invoice) {
+    if (this.props.status !== statuses.SUCCESS || !this.props.invoice || !this.props.customers) {
       return <LoadingView status={ this.props.status } />;
     }
 

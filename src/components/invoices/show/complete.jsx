@@ -11,7 +11,8 @@ import { selectInvoice } from 'selectors/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectCustomerByName, selectCustomers } from 'selectors/customers.js';
 import { prepareSubmissionError } from 'utils/errors';
-
+import { formatMoney } from 'utils/money';
+import { createTransaction } from 'actions/transactions.js';
 
 class CompleteInvoiceButton extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class CompleteInvoiceButton extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.afterCreate = this.afterCreate.bind(this);
+    this.initialValues = this.initialValues.bind(this);
 
     this.state = {
       show: false
@@ -27,6 +29,7 @@ class CompleteInvoiceButton extends React.Component {
   }
 
   handleSubmit = (values) => {
+    console.log(parseFloat(values.amount));
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
       amount: values.amount,
@@ -40,7 +43,7 @@ class CompleteInvoiceButton extends React.Component {
 
   afterCreate = () => {
     this.props.flashMessage('Transaction successfully created.');
-    this.props.history.push('/transactions');
+    this.props.history.push('/invoices');
   }
 
   handleClose() {
@@ -52,31 +55,31 @@ class CompleteInvoiceButton extends React.Component {
     console.log(this.props.invoice);
   }
 
+  initialValues() {
+    const { invoice } = this.props
+    return({
+      amount: formatMoney(invoice.amount, false),
+      customer: invoice.customer ? invoice.customer.id : null
+    })
+  }
+
   render() {
-    if (this.props.customers) {
-      return([
-        <Button key='button' bsStyle="primary" onClick={ this.handleShow } >Complete Invoice</Button>,
-        <Modal key='modal' show={ this.state.show } onHide={ this.handleClose }>
-          <Modal.Header closeButton>
-            <Modal.Title>New Transaction</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              onSubmit={ this.handleSubmit }
-              onSubmitSuccess={ this.afterCreate }
-              initialValues= {
-                {
-                  amount: this.props.invoice.amount.fractional,
-                }
-              }
-              type="Income"
-            />
-          </Modal.Body>
-        </Modal>
-      ])
-    } else {
-      return null;
-    }
+    return([
+      <Button key='button' bsStyle="primary" onClick={ this.handleShow } >Complete Invoice</Button>,
+      <Modal key='modal' show={ this.state.show } onHide={ this.handleClose }>
+        <Modal.Header closeButton>
+          <Modal.Title>New Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form
+            onSubmit={ this.handleSubmit }
+            onSubmitSuccess={ this.afterCreate }
+            initialValues= { this.initialValues() }
+            type="Income"
+          />
+        </Modal.Body>
+      </Modal>
+    ])
   }
 }
 
@@ -96,6 +99,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   flashMessage: (msg) => dispatch(addFlashMessage(msg)),
+  createTransaction: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
 });
 
-export default connect(mapState, mapDispatch)(CompleteInvoiceButton);
+export default withRouter(connect(mapState, mapDispatch)(CompleteInvoiceButton));

@@ -1,8 +1,9 @@
 import { Money } from 'utils/money';
 
 export interface Customer {
-  id:       number;
-  name:     string;
+  id:               number;
+  name:             string;
+  invoice_details:  string;
 }
 
 export interface BankAccount {
@@ -42,6 +43,7 @@ export interface InoviceItem {
   date?:        Date;
   hours?:       number;
   description?: string;
+  customer?:    Customer;
 }
 
 export interface Invoice {
@@ -57,6 +59,7 @@ export interface Invoice {
   sentAt?:          Date;
   invoiceDetails?:  string;
   customerDetails?: string;
+  customer?:        Customer;
 
   invoiceItems: InoviceItem[];
 }
