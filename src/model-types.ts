@@ -3,7 +3,7 @@ import { Money } from 'utils/money';
 export interface Customer {
   id:               number;
   name:             string;
-  invoice_details:  string;
+  invoiceDetails:   string;
 }
 
 export interface BankAccount {
