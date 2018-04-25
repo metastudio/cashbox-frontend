@@ -30,9 +30,9 @@ class CompleteInvoiceButton extends React.Component {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
       amount: values.amount,
-      categoryId: values.category,
-      customerId: values.customer,
-      bankAccountId: values.bankAccount,
+      categoryId: values.categoryId,
+      customerId: values.customerId,
+      bankAccountId: values.bankAccountId,
       comment: values.comment,
       date: values.date,
     }).catch(prepareSubmissionError);
@@ -55,7 +55,7 @@ class CompleteInvoiceButton extends React.Component {
     const { invoice } = this.props
     return({
       amount: moneyToString(invoice.amount),
-      customer: invoice.customerId
+      customerId: invoice.customerId
     })
   }
 

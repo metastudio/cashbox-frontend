@@ -37,11 +37,6 @@ const formatMoney = (money?: Money): string | null => {
 
 const moneyToString = (money?: Money): string | null => {
   if (!money) { return null; }
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> yuri/transactions-edit
   const float = Number(money.fractional) / money.currency.subunitToUnit;
   return float.toString();
 };
