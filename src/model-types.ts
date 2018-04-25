@@ -43,7 +43,6 @@ export interface InoviceItem {
   date?:        Date;
   hours?:       number;
   description?: string;
-  customer?:    Customer;
 }
 
 export interface Invoice {
@@ -59,7 +58,6 @@ export interface Invoice {
   sentAt?:          Date;
   invoiceDetails?:  string;
   customerDetails?: string;
-  customer?:        Customer;
 
   invoiceItems: InoviceItem[];
 }

@@ -21,11 +21,10 @@ const localeForCurrency = (isoCode: string): string | undefined => {
   }
 };
 
-const formatMoney = (money?: Money, withCurrency: boolean = true): string | null => {
+const formatMoney = (money?: Money): string | null => {
   if (!money) { return null; }
 
   const float = Number(money.fractional) / money.currency.subunitToUnit;
-  if (!withCurrency) { return String(float); }
   return float.toLocaleString(
     localeForCurrency(money.currency.isoCode),
     {
