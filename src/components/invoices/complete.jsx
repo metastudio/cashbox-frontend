@@ -8,7 +8,6 @@ import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { selectInvoice } from 'selectors/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectCustomers } from 'selectors/customers.js';
 import { prepareSubmissionError } from 'utils/errors';
 import { moneyToString } from 'utils/money';
 import { createTransaction } from 'actions/transactions.js';
@@ -84,13 +83,11 @@ CompleteInvoiceButton.propTypes = {
   invoice:    PropTypes.object.isRequired,
   orgId:      PropTypes.number.isRequired,
   customer:   PropTypes.object,
-  customers:  PropTypes.array.isRequired,
 }
 
 const mapState = (state) => ({
   orgId:        getCurrentOrganizationId(state),
   invoice:      selectInvoice(state),
-  customers:    selectCustomers(state),
 });
 
 const mapDispatch = (dispatch) => ({
