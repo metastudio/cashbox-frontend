@@ -1,17 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-import { Transaction, TransactionParams } from 'model-types';
 import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { selectInvoice } from 'selectors/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectCustomerByName, selectCustomers } from 'selectors/customers.js';
+import { selectCustomers } from 'selectors/customers.js';
 import { prepareSubmissionError } from 'utils/errors';
-import { formatMoney } from 'utils/money';
+import { moneyToString } from 'utils/money';
 import { createTransaction } from 'actions/transactions.js';
 
 class CompleteInvoiceButton extends React.Component {
@@ -29,7 +28,6 @@ class CompleteInvoiceButton extends React.Component {
   }
 
   handleSubmit = (values) => {
-    console.log(parseFloat(values.amount));
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
       amount: values.amount,
@@ -52,14 +50,13 @@ class CompleteInvoiceButton extends React.Component {
 
   handleShow() {
     this.setState({ show: true });
-    console.log(this.props.invoice);
   }
 
   initialValues() {
     const { invoice } = this.props
     return({
-      amount: formatMoney(invoice.amount, false),
-      customer: invoice.customer ? invoice.customer.id : null
+      amount: moneyToString(invoice.amount),
+      customer: invoice.customerId
     })
   }
 
@@ -93,7 +90,6 @@ CompleteInvoiceButton.propTypes = {
 const mapState = (state) => ({
   orgId:        getCurrentOrganizationId(state),
   invoice:      selectInvoice(state),
-  customer:     selectCustomerByName(state),
   customers:    selectCustomers(state),
 });
 

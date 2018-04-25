@@ -36,4 +36,11 @@ const formatMoney = (money?: Money, withCurrency: boolean = true): string | null
   );
 };
 
-export { Money, formatMoney };
+const moneyToString = (money?: Money): string | null => {
+  if (!money) { return null; }
+
+  const float = Number(money.fractional) / money.currency.subunitToUnit;
+  return float.toString();
+};
+
+export { Money, formatMoney, moneyToString };

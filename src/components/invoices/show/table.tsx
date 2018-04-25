@@ -35,7 +35,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
             { invoice.invoiceDetails }
           </p>
           <br/>correspondent account<br/>
-          { invoice.customer ? invoice.customer.invoice_details : null }
+          { invoice.customerDetails }
           <br/>Currency: { invoice.currency }
         </td>
         <td/>
@@ -49,7 +49,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
           <div className="text-uppercase">
             Bill to:
           </div>
-          { invoice.customer ? invoice.customer.name : null }
+          { invoice.customerName }
         </td>
         <td/>
         <td className="text-right">
