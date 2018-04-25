@@ -10,6 +10,7 @@ import { selectTransactions, selectTransactionsStatus } from 'selectors/transact
 
 import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body';
+import EditTransaction from './../edit';
 
 interface StateProps {
   orgId:        number;
@@ -47,19 +48,22 @@ class Transactions extends React.Component<Props> {
       return <LoadingView status={ status } />;
     }
     return (
-      <Table striped responsive hover id="transactions">
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Account</th>
-            <th>Customer</th>
-            <th>Comment</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <TableBody transactions={ transactions } />
-      </Table>
+      <>
+        <Table striped responsive hover id="transactions">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Account</th>
+              <th>Customer</th>
+              <th>Comment</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <TableBody transactions={ transactions } />
+        </Table>
+        <EditTransaction />
+      </>
     );
   }
 }
