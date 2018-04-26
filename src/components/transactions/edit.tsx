@@ -3,6 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { Modal, Tabs, Tab } from 'react-bootstrap';
 import * as statuses from 'constants/statuses.js';
 import { Transaction } from 'model-types';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { loadTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectTransaction, selectTransactionStatus } from 'selectors/transactions.js';
@@ -24,7 +25,8 @@ interface DispatchProps {
   load: (orgId: number, transactionId: number) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type RouteProps = RouteComponentProps<{ id: string }>;
+type Props = RouteProps & StateProps & DispatchProps;
 
 class EditTransaction extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -40,17 +42,28 @@ class EditTransaction extends React.Component<Props, State> {
 
   handleClose() {
     this.setState({ show: false });
+    this.props.history.push('/transactions');
   }
 
   handleShow() {
     this.setState({ show: true });
   }
-  
-  componentWillReceiveProps(nextProps: Props) {
-    const { transaction } = nextProps;
-    this.setState({ show: !!transaction });
+
+  loadData(props: Props) {
+    const { orgId, load, match } = this.props;
+    load(orgId, Number(match.params.id));
   }
-  
+
+  componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  componentWillReceiveProps(props: Props) {
+    if (this.props.status === statuses.INVALID) {
+      this.loadData(this.props);
+    }
+  }
+
   renderTab(transaction: Transaction) {
     if (transaction.category && transaction.category.name === 'Transfer') {
       return (
@@ -106,4 +119,4 @@ const mapDispatch = (dispatch: Dispatch<{}>) => ({
   load: (orgId: number, transactionId: number) => dispatch(loadTransaction(orgId, transactionId)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditTransaction);
+export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditTransaction));

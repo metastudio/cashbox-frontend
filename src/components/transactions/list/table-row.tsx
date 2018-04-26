@@ -1,27 +1,15 @@
 import * as React from 'react';
 import * as Moment from 'moment';
-import { connect, Dispatch } from 'react-redux';
 import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { loadTransaction } from 'actions/transactions.js';
-import { selectTransactionStatus } from 'selectors/transactions.js';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
 
 interface OwnProps {
   transaction: Transaction;
 }
 
-interface StateProps {
-  orgId:  number;
-  status: string;
-}
-
-interface DispatchProps {
-  load: (orgId: number, transactionId: number) => void;
-}
-
-type Props = OwnProps & StateProps & DispatchProps;
+type Props =  RouteComponentProps<{ id: number }> & OwnProps;
 
 class TransactionsTableRow extends React.Component<Props> {
   getColorClass = (t: Transaction): string => {
@@ -33,8 +21,7 @@ class TransactionsTableRow extends React.Component<Props> {
   }
 
   handleClick = (transactionId: number) => {
-    const { orgId, load } = this.props;
-    load(orgId, transactionId);
+    this.props.history.push(`/transactions/${transactionId}/edit`);
   }
 
   render() {
@@ -55,13 +42,4 @@ class TransactionsTableRow extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId:       getCurrentOrganizationId(state),
-  status:      selectTransactionStatus(state),
-});
-
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number, transactionId: number) => dispatch(loadTransaction(orgId, transactionId)),
-});
-
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(TransactionsTableRow);
+export default withRouter(TransactionsTableRow);
