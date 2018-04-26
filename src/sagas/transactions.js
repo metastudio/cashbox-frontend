@@ -6,6 +6,7 @@ import {
   postOrganizationTransaction,
   postOrganizationTransfer,
   patchOrganizationTransaction,
+  deleteOrganizationTransaction,
 } from 'api/transactions.js';
 
 import {
@@ -14,6 +15,7 @@ import {
   createTransaction,
   createTransfer,
   updateTransaction,
+  destroyTransaction
 } from 'actions/transactions.js';
 
 function* handleLoadTransactions({ payload: { organizationId } }) {
@@ -72,10 +74,23 @@ function* handleUpdateTransaction({ payload: { organizationId, transactionId, da
   }
 }
 
+function* handleDestroyTransaction({ payload: { organizationId, transactionId }, meta: { resolve, reject } }) {
+  try {
+    yield put(destroyTransaction.request(organizationId));
+    const transaction = yield call(deleteOrganizationTransaction, organizationId, transactionId);
+    yield put(destroyTransaction.success(organizationId, transaction));
+    yield call(resolve, transaction);
+  } catch (error) {
+    yield put(destroyTransaction.failure(error));
+    yield call(reject);
+  }
+}
+
 export default function* () {
-  yield takeEvery(loadTransactions,  handleLoadTransactions);
-  yield takeEvery(loadTransaction,   handleLoadTransaction);
-  yield takeEvery(createTransaction, handleCreateTransaction);
-  yield takeEvery(createTransfer,    handleCreateTransfer);
-  yield takeEvery(updateTransaction, handleUpdateTransaction);
+  yield takeEvery(loadTransactions,   handleLoadTransactions);
+  yield takeEvery(loadTransaction,    handleLoadTransaction);
+  yield takeEvery(createTransaction,  handleCreateTransaction);
+  yield takeEvery(createTransfer,     handleCreateTransfer);
+  yield takeEvery(updateTransaction,  handleUpdateTransaction);
+  yield takeEvery(destroyTransaction, handleDestroyTransaction);
 }

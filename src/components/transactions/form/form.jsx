@@ -10,8 +10,9 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  HorizontalSubmitButton,
+  SubmitButton,
 } from 'components/utils/form-inputs';
+import DestroyButton from './destroy.tsx';
 
 const TransactionForm = ({ handleSubmit, type, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
@@ -22,7 +23,8 @@ const TransactionForm = ({ handleSubmit, type, submitting, error, action }) => (
     <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>{ action } Transaction</HorizontalSubmitButton>
+    <DestroyButton />
+    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
   </Form>
 );
 

@@ -8,8 +8,9 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  HorizontalSubmitButton,
+  SubmitButton,
 } from 'components/utils/form-inputs';
+import DestroyButton from './destroy';
 
 const TransferForm = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
@@ -23,7 +24,8 @@ const TransferForm = ({ handleSubmit, submitting, error, action }) => (
     { action === 'Create' && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>{ action } Transfer</HorizontalSubmitButton>
+    <DestroyButton />
+    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
   </Form>
 );
 
