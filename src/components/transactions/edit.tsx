@@ -33,7 +33,6 @@ class EditTransaction extends React.Component<Props> {
   }
 
   handleClose() {
-    this.setState({ show: false });
     this.props.history.push('/transactions');
   }
 
@@ -46,9 +45,11 @@ class EditTransaction extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (this.props.status === statuses.INVALID) {
-      this.loadData(this.props);
+  componentWillReceiveProps(nextProps: Props) {
+    const { status, match } = nextProps;
+    const { transaction } = this.props;
+    if (status === statuses.INVALID || !transaction || transaction.id !== Number(match.params.id)) {
+      this.loadData(nextProps);
     }
   }
 
