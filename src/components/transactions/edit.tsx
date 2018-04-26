@@ -78,10 +78,6 @@ class EditTransaction extends React.Component<Props> {
   render() {
     const { status, transaction } = this.props;
 
-    if (status !== statuses.SUCCESS || !transaction) {
-      return <LoadingView status={ status } />;
-    }
-
     return(
       <Modal show onHide={ this.handleClose }>
         <Modal.Header closeButton>
@@ -89,7 +85,8 @@ class EditTransaction extends React.Component<Props> {
         </Modal.Header>
         <Modal.Body>
           <Tabs defaultActiveKey={ 1 } id="transactionType">
-            { this.renderTab(transaction) }
+            <LoadingView status={ this.props.status } />
+            { status === statuses.SUCCESS && transaction && this.renderTab(transaction) }
           </Tabs>
         </Modal.Body>
       </Modal>
