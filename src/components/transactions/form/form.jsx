@@ -13,16 +13,16 @@ import {
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
-const TransactionForm = ({ handleSubmit, type, submitting, error }) => (
+const TransactionForm = ({ handleSubmit, type, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    <Field name="category" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
-    <Field name="customer" label="Customer name" component={ HorizontalCustomersSelect } />
-    <Field name="bankAccount" label="Bank account" component={ HorizontalBankAccountsSelect } />
+    <Field name="categoryId" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
+    <Field name="customerId" label="Customer name" component={ HorizontalCustomersSelect } />
+    <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>{ action } Transaction</HorizontalSubmitButton>
   </Form>
 );
 
@@ -31,6 +31,7 @@ TransactionForm.propTypes = {
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
   type:         PropTypes.string.isRequired,
+  action:       PropTypes.oneOf(['Create', 'Update']),
 };
 
 export default reduxForm({

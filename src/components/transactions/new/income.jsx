@@ -20,12 +20,12 @@ class NewIncomeTransaction extends React.Component {
   handleSubmit(values) {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
-      amount: values.amount,
-      categoryId: values.category,
-      customerId: values.customer,
-      bankAccountId: values.bankAccount,
-      comment: values.comment,
-      date: values.date,
+      amount:        values.amount,
+      categoryId:    values.categoryId,
+      customerId:    values.customerId,
+      bankAccountId: values.bankAccountId,
+      comment:       values.comment,
+      date:          values.date,
     }).catch(prepareSubmissionError);
   }
 
@@ -36,7 +36,7 @@ class NewIncomeTransaction extends React.Component {
 
   render() {
     return(
-      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" />
+      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" action="Create" />
     );
   }
 }

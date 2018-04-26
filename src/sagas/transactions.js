@@ -2,14 +2,18 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationTransactions,
+  getOrganizationTransaction,
   postOrganizationTransaction,
-  postOrganizationTransfer
+  postOrganizationTransfer,
+  patchOrganizationTransaction,
 } from 'api/transactions.js';
 
 import {
   loadTransactions,
+  loadTransaction,
   createTransaction,
-  createTransfer
+  createTransfer,
+  updateTransaction,
 } from 'actions/transactions.js';
 
 function* handleLoadTransactions({ payload: { organizationId } }) {
@@ -19,6 +23,16 @@ function* handleLoadTransactions({ payload: { organizationId } }) {
     yield put(loadTransactions.success(organizationId, transactions));
   } catch (error) {
     yield put(loadTransactions.failure(error));
+  }
+}
+
+function* handleLoadTransaction({ payload: { organizationId, transactionId } }) {
+  try {
+    yield put(loadTransaction.request(organizationId, transactionId));
+    const transaction = yield call(getOrganizationTransaction, organizationId, transactionId);
+    yield put(loadTransaction.success(organizationId, transaction));
+  } catch (error) {
+    yield put(loadTransaction.failure(error));
   }
 }
 
@@ -46,8 +60,22 @@ function* handleCreateTransfer({ payload: { organizationId, data }, meta: { reso
   }
 }
 
+function* handleUpdateTransaction({ payload: { organizationId, transactionId, data }, meta: { resolve, reject } }) {
+  try {
+    yield put(updateTransaction.request(organizationId));
+    const transaction = yield call(patchOrganizationTransaction, organizationId, transactionId, data);
+    yield put(updateTransaction.success(organizationId, transaction));
+    yield call(resolve, transaction);
+  } catch (error) {
+    yield put(updateTransaction.failure(error));
+    yield call(reject, error);
+  }
+}
+
 export default function* () {
-  yield takeEvery(loadTransactions.toString(),  handleLoadTransactions);
-  yield takeEvery(createTransaction.toString(), handleCreateTransaction);
-  yield takeEvery(createTransfer.toString(),    handleCreateTransfer);
+  yield takeEvery(loadTransactions,  handleLoadTransactions);
+  yield takeEvery(loadTransaction,   handleLoadTransaction);
+  yield takeEvery(createTransaction, handleCreateTransaction);
+  yield takeEvery(createTransfer,    handleCreateTransfer);
+  yield takeEvery(updateTransaction, handleUpdateTransaction);
 }
