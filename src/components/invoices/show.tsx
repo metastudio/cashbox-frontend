@@ -16,7 +16,7 @@ import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';
-import CompleteInvoiceButton from './complete.jsx';
+import CompleteInvoiceButton from './complete';
 import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
 
@@ -62,7 +62,7 @@ class ShowInvoice extends React.Component<Props> {
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            { !invoice.paidAt ? <CompleteInvoiceButton /> : null }
+            { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
             <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
           </ButtonGroup>
           <Header invoice={ invoice } />
