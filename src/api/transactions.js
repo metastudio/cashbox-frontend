@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, patchApi } from './_helpers';
+import { prepareURL, getApi, postApi, patchApi, deleteApi } from './_helpers';
 
 const transactionsURL = (orgId) => prepareURL(`/api/organizations/${orgId}/transactions`);
 const transferURL     = (orgId) => prepareURL(`/api/organizations/${orgId}/transactions/transfer`);
@@ -9,3 +9,4 @@ export const getOrganizationTransaction   = (orgId, transactionId) => getApi(tra
 export const postOrganizationTransaction  = (orgId, data) => postApi(transactionsURL(orgId), { transaction: data });
 export const postOrganizationTransfer     = (orgId, data) => postApi(transferURL(orgId), { transfer: data });
 export const patchOrganizationTransaction = (orgId, transactionId, data) => patchApi(transactionUrl(orgId, transactionId), { transaction: data });
+export const deleteTransaction            = (orgId, transactionId) => deleteApi(transactionUrl(orgId, transactionId));
