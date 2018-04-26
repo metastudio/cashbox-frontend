@@ -10,7 +10,6 @@ import { selectTransactions, selectTransactionsStatus } from 'selectors/transact
 
 import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body';
-import EditTransaction from './../edit';
 
 interface StateProps {
   orgId:        number;
@@ -62,7 +61,6 @@ class Transactions extends React.Component<Props> {
           </thead>
           <TableBody transactions={ transactions } />
         </Table>
-        <EditTransaction />
       </>
     );
   }
