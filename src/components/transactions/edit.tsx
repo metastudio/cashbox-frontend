@@ -7,13 +7,10 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { loadTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectTransaction, selectTransactionStatus } from 'selectors/transactions.js';
+import LoadingView from 'components/utils/loading-view';
 import EditIncomeTransaction from './edit/income.jsx';
 import EditExpenseTransaction from './edit/expense.jsx';
 import EditTransfer from './edit/transfer.jsx';
-
-interface State {
-  show: boolean;
-}
 
 interface StateProps {
   orgId:       number;
@@ -28,25 +25,16 @@ interface DispatchProps {
 type RouteProps = RouteComponentProps<{ id: string }>;
 type Props = RouteProps & StateProps & DispatchProps;
 
-class EditTransaction extends React.Component<Props, State> {
+class EditTransaction extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: true
-    };
   }
 
   handleClose() {
     this.setState({ show: false });
     this.props.history.push('/transactions');
-  }
-
-  handleShow() {
-    this.setState({ show: true });
   }
 
   loadData(props: Props) {
@@ -91,11 +79,11 @@ class EditTransaction extends React.Component<Props, State> {
     const { status, transaction } = this.props;
 
     if (status !== statuses.SUCCESS || !transaction) {
-      return null;
+      return <LoadingView status={ status } />;
     }
 
     return(
-      <Modal show={ this.state.show } onHide={ this.handleClose }>
+      <Modal show onHide={ this.handleClose }>
         <Modal.Header closeButton>
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
