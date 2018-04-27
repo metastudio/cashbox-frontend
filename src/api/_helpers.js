@@ -43,6 +43,20 @@ const fetchApi = (url, fullOptions = {}) => {
   });
 };
 
+export const getPDF = (url, query, fullOptions = {}) => {
+  return fetch(url, {
+    headers: headers({ 'Accept': 'text/pdf' }),
+    method: 'GET',
+    ...fullOptions
+  }).then(response => {
+    if (response.ok) {
+      return response.blob();
+    } else {
+      throw new HttpError(response);
+    }
+  });
+};
+
 export const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
   hostname: process.env.REACT_APP_BACKEND_HOSTNAME,

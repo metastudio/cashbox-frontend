@@ -33,7 +33,7 @@ destroyInvoice.request = createAction('DESTROY_INVOICE_REQUEST', (organizationId
 destroyInvoice.success = createAction('DESTROY_INVOICE_SUCCESS', (organizationId, invoice) => ({ organizationId, invoice }));
 destroyInvoice.failure = createAction('DESTROY_INVOICE_FAILURE');
 
-export const downloadInvoicePDF = createAction('DOWNLOAD_INVOICE_PDF', (organizationId, invoiceId) => ({ organizationId, invoiceId }));
+export const downloadInvoicePDF = createAction('DOWNLOAD_INVOICE_PDF', (organizationId, invoiceId) => ({ organizationId, invoiceId }), (_organizationId, _invoiceId, resolve = noop, reject = noop) => ({ resolve, reject }));
 downloadInvoicePDF.request = createAction('DOWNLOAD_INVOICE_PDF_REQUEST', (organizationId, invoiceId) => ({ organizationId, invoiceId }));
 downloadInvoicePDF.success = createAction('DOWNLOAD_INVOICE_PDF_SUCCESS', (organizationId, pdf) => ({ organizationId, pdf }));
 downloadInvoicePDF.failure = createAction('DOWNLOAD_INVOICE_PDF_FAILURE');
