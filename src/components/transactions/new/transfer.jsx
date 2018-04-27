@@ -22,9 +22,9 @@ class NewTransfer extends React.Component {
     return createTransfer(orgId, {
       bankAccountId: values.bankAccountId,
       referenceId:   values.referenceId,
-      amount:        values.amount,
+      amount:        values.amount && values.amount.replace(/,/g, ''),
       exchangeRate:  values.exchangeRate,
-      comission:     values.comission,
+      comission:     values.comission && values.comission.replace(/,/g, ''),
       comment:       values.comment,
       date:          values.date,
     }).catch(prepareSubmissionError);

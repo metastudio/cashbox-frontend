@@ -20,7 +20,7 @@ class NewIncomeTransaction extends React.Component {
   handleSubmit(values) {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
-      amount:        values.amount,
+      amount:        values.amount && values.amount.replace(/,/g, ''),
       categoryId:    values.categoryId,
       customerId:    values.customerId,
       bankAccountId: values.bankAccountId,
