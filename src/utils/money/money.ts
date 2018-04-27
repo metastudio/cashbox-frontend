@@ -21,8 +21,8 @@ const localeForCurrency = (isoCode: string): string | undefined => {
   }
 };
 
-const formatMoney = (money?: Money): string | null => {
-  if (!money) { return null; }
+const formatMoney = (money?: Money): string | undefined => {
+  if (!money) { return undefined; }
 
   const float = Number(money.fractional) / money.currency.subunitToUnit;
   return float.toLocaleString(
@@ -35,8 +35,14 @@ const formatMoney = (money?: Money): string | null => {
   );
 };
 
+<<<<<<< HEAD
 const moneyToString = (money?: Money): string | null => {
   if (!money) { return null; }
+=======
+const moneyToString = (money?: Money): string | undefined => {
+  if (!money) { return undefined; }
+  
+>>>>>>> master
   const float = Number(money.fractional) / money.currency.subunitToUnit;
   return float.toString();
 };

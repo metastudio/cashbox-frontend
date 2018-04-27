@@ -15,15 +15,15 @@ const TransferForm = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    { action === 'edit' && <Field name="categoryName" label="Category" component={ HorizontalFormInput } disabled /> }
-    { action === 'edit' && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
-    <Field name="bankAccountId" label="From" component={ HorizontalBankAccountsSelect } disabled={ action === 'edit' } />
-    <Field name="referenceId" label="To" component={ HorizontalBankAccountsSelect } disabled={ action === 'edit' } />
-    { action === 'new' && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
-    { action === 'new' && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
+    { action === 'Update' && <Field name="categoryName" label="Category" component={ HorizontalFormInput } disabled /> }
+    { action === 'Update' && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
+    <Field name="bankAccountId" label="From" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
+    <Field name="referenceId" label="To" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
+    { action === 'Create' && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
+    { action === 'Create' && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>Submit</HorizontalSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>{ action } Transfer</HorizontalSubmitButton>
   </Form>
 );
 
@@ -31,7 +31,7 @@ TransferForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
-  action:       PropTypes.oneOf(['new', 'edit']),
+  action:       PropTypes.oneOf(['Create', 'Update']),
 };
 
 export default reduxForm({

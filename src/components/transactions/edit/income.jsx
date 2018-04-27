@@ -62,6 +62,7 @@ class EditIncomeTransaction extends React.Component {
         orgId={ orgId }
         type="Income"
         initialValues={ this.initialPrepare(transaction) }
+        action="Update"
       />
     );
   }

@@ -59,7 +59,7 @@ class EditTransfer extends React.Component {
         onSubmitSuccess={ this.afterUpdate }
         orgId={ orgId }
         initialValues={ this.initialPrepare(transaction) }
-        action={ 'edit' }
+        action="Update"
       />
     );
   }

@@ -36,7 +36,7 @@ class NewIncomeTransaction extends React.Component {
 
   render() {
     return(
-      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" />
+      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" action="Create" />
     );
   }
 }

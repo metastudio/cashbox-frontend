@@ -13,7 +13,7 @@ const DashboardScene: React.SFC<{}> = () => (
     <RequireOrganization>
       <MainLayout>
         <Route exact path="/transactions" component={ List } />
-        <Route exact path="/transactions/:id" component={ Edit } />
+        <Route exact path="/transactions/:id/edit" component={ Edit } />
       </MainLayout>
     </RequireOrganization>
   </RequireLogin>
