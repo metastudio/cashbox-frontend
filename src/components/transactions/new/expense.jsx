@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { moneyStringWithoutCommas } from 'utils/money';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -20,12 +21,12 @@ class NewExpenseTransaction extends React.Component {
   handleSubmit(values) {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
-      amount: values.amount,
-      categoryId: values.category,
-      customerId: values.customer,
-      bankAccountId: values.bankAccount,
-      comment: values.comment,
-      date: values.date,
+      amount:        moneyStringWithoutCommas(values.amount),
+      categoryId:    values.categoryId,
+      customerId:    values.customerId,
+      bankAccountId: values.bankAccountId,
+      comment:       values.comment,
+      date:          values.date,
     }).catch(prepareSubmissionError);
   }
 
@@ -36,7 +37,7 @@ class NewExpenseTransaction extends React.Component {
 
   render() {
     return(
-      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Expense" />
+      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Expense" action="Create" />
     );
   }
 }

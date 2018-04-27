@@ -8,20 +8,24 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  HorizontalSubmitButton,
+  SubmitButton,
 } from 'components/utils/form-inputs';
+import DestroyButton from './../destroy';
 
-const TransferForm = ({ handleSubmit, submitting, error }) => (
+const TransferForm = ({ handleSubmit, submitting, error, action, transaction }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <Field name="fromBankAccount" label="From" component={ HorizontalBankAccountsSelect } />
-    <Field name="toBankAccount" label="To" component={ HorizontalBankAccountsSelect } />
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-    <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } />
-    <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } />
+    { action === 'Update' && <Field name="categoryName" label="Category" component={ HorizontalFormInput } disabled /> }
+    { action === 'Update' && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
+    <Field name="bankAccountId" label="From" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
+    <Field name="referenceId" label="To" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
+    { action === 'Create' && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
+    { action === 'Create' && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
+    { action === 'Update' && transaction && <DestroyButton transaction={ transaction } /> }
+    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
   </Form>
 );
 
@@ -29,6 +33,8 @@ TransferForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
+  action:       PropTypes.oneOf(['Create', 'Update']),
+  transaction:  PropTypes.object,
 };
 
 export default reduxForm({
