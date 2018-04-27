@@ -9,7 +9,7 @@ import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { formatMoney } from 'utils/money';
 
 import LoadingView from 'components/utils/loading-view';
-import BankAccountName from 'components/bank-accounts/bank-account-name';
+import formatBankAccountName from 'components/bank-accounts/bank-account-name';
 
 class BankAccounts extends React.Component {
 
@@ -23,7 +23,7 @@ class BankAccounts extends React.Component {
   render() {
     const bankAccounts = this.props.bankAccounts.map((bankAccount) => (
       <tr key={ bankAccount.id }>
-        <td><BankAccountName bankAccount={ bankAccount } /></td>
+        <td>{ formatBankAccountName(bankAccount) }</td>
         <td>{ formatMoney(bankAccount.balance) }</td>
       </tr>
     ));

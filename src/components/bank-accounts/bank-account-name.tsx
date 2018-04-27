@@ -1,15 +1,7 @@
-import * as React from 'react';
-
 import { BankAccount } from 'model-types';
 
-interface Props {
-  bankAccount: BankAccount;
-}
+const formatBankAccountName = (bankAccount: BankAccount): string => {
+  return `${bankAccount.name} (${bankAccount.currency})`;
+};
 
-const BankAccountName: React.SFC<Props> = ({ bankAccount }) => (
-  <>
-    { `${bankAccount.name} (${bankAccount.currency})` }
-  </>
-);
-
-export default BankAccountName;
+export default formatBankAccountName;
