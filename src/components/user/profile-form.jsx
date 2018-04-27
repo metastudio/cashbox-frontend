@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 
 import { Alert, Form } from 'react-bootstrap';
 
-import { VerticalFormInput, HorizontalSubmitButton } from 'components/utils/form-inputs';
+import { VerticalFormInput, VerticalSubmitButton } from 'components/utils/form-inputs';
 
 const ProfileForm = ({ handleSubmit, submitting, error }) => {
   return(
@@ -12,7 +12,7 @@ const ProfileForm = ({ handleSubmit, submitting, error }) => {
       { error && <Alert bsStyle="danger">{ error }</Alert> }
       <Field name="fullName" label="Full name *" placeholder="Enter full name" component={ VerticalFormInput } />
       <Field name="phoneNumber" label="Phone number" placeholder="Enter phone number" component={ VerticalFormInput } />
-      <HorizontalSubmitButton submitting={ submitting } bsStyle="primary pull-right" >Update profile</HorizontalSubmitButton>
+      <VerticalSubmitButton submitting={ submitting } >Update profile</VerticalSubmitButton>
     </Form>
   );
 };

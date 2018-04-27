@@ -13,7 +13,7 @@ class CancelAccount extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm('Are you sure?')) {
       const { userId, cancelAccount } = this.props;
       cancelAccount(userId).then(
         () => this.props.addFlashMessage('Account canceled successfull'),

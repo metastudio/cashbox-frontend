@@ -6,7 +6,7 @@ import RequireOrganization from 'components/require-organization';
 
 import AppLayout from 'components/layouts/app-layout';
 
-import Profile from './profile.jsx';
+import Profile from './profile';
 
 interface UserSceneType extends React.SFC<{}> {
   Profile?: React.ComponentType;
