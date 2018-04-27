@@ -60,6 +60,7 @@ class EditTransfer extends React.Component {
         orgId={ orgId }
         initialValues={ this.initialPrepare(transaction) }
         action="Update"
+        transaction={ transaction }
       />
     );
   }

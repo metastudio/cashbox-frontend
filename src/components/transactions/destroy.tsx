@@ -8,11 +8,13 @@ import { destroyTransaction } from 'actions/transactions.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectTransaction } from 'selectors/transactions.js';
+
+interface OwnProps {
+  transaction: Transaction;
+}
 
 interface StateProps {
-  orgId:       number;
-  transaction: Transaction | null;
+  orgId: number;
 }
 
 interface DispatchProps {
@@ -21,7 +23,7 @@ interface DispatchProps {
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & StateProps & DispatchProps;
+type Props = RouteProps & OwnProps & StateProps & DispatchProps;
 
 class DestroyButton extends React.Component<Props> {
   handleDestroy = () => {
@@ -44,8 +46,7 @@ class DestroyButton extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:       getCurrentOrganizationId(state),
-  transaction: selectTransaction(state),
+  orgId: getCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

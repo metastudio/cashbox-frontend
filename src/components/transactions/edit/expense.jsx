@@ -63,6 +63,7 @@ class EditExpenseTransaction extends React.Component {
         type="Expense"
         initialValues={ this.initialPrepare(transaction) }
         action="Update"
+        transaction={ transaction }
       />
     );
   }
