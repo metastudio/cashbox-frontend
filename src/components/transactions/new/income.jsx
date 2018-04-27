@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { moneyStringWithoutCommas } from 'utils/money';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -20,7 +21,7 @@ class NewIncomeTransaction extends React.Component {
   handleSubmit(values) {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
-      amount:        values.amount,
+      amount:        moneyStringWithoutCommas(values.amount),
       categoryId:    values.categoryId,
       customerId:    values.customerId,
       bankAccountId: values.bankAccountId,
