@@ -31,10 +31,10 @@ export interface Transaction {
   amount:      Money;
   category:    Category;
   bankAccount: BankAccount;
-  customer?:    Customer;
+  customer?:   Customer;
   date?:       Date;
   comment?:    string;
-  
+
   transfer_out?: TransferOut;
 }
 
