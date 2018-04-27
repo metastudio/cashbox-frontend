@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { moneyStringWithoutCommas } from 'utils/money';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { createTransfer } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -22,9 +23,9 @@ class NewTransfer extends React.Component {
     return createTransfer(orgId, {
       bankAccountId: values.bankAccountId,
       referenceId:   values.referenceId,
-      amount:        values.amount && values.amount.replace(/,/g, ''),
+      amount:        moneyStringWithoutCommas(values.amount),
       exchangeRate:  values.exchangeRate,
-      comission:     values.comission && values.comission.replace(/,/g, ''),
+      comission:     moneyStringWithoutCommas(values.comission),
       comment:       values.comment,
       date:          values.date,
     }).catch(prepareSubmissionError);
