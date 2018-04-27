@@ -16,6 +16,7 @@ import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';
+import CompleteInvoiceButton from './complete';
 import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
 
@@ -32,7 +33,7 @@ interface DispatchProps {
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
-type Props =  RouteProps & StateProps & DispatchProps;
+type Props = RouteProps & StateProps & DispatchProps;
 
 class ShowInvoice extends React.Component<Props> {
   componentDidMount() {
@@ -61,7 +62,7 @@ class ShowInvoice extends React.Component<Props> {
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            { !invoice.paidAt ? <Button bsStyle="primary">Complete Invoice</Button> : null }
+            { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
             <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
           </ButtonGroup>
           <Header invoice={ invoice } />

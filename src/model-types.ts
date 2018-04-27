@@ -1,8 +1,9 @@
 import { Money } from 'utils/money';
 
 export interface Customer {
-  id:       number;
-  name:     string;
+  id:               number;
+  name:             string;
+  invoiceDetails:   string;
 }
 
 export interface BankAccount {
@@ -37,6 +38,15 @@ export interface Transaction {
   transfer_out?: TransferOut;
 }
 
+export interface TransactionParams {
+  amount?:        Money;
+  categoryId?:    number;
+  customerId?:    number;
+  bankAccountId?: number;
+  date?:          Date;
+  comment?:       string;
+}
+
 export interface InoviceItem {
   id:           number;
   customerId:   number;
@@ -47,18 +57,19 @@ export interface InoviceItem {
 }
 
 export interface Invoice {
-  id:               number;
-  customerId:       number;
-  customerName:     string;
-  amount:           Money;
-  currency:         string;
-  number:           number;
-  endsAt:           Date;
-  paidAt?:          Date;
-  startsAt?:        Date;
-  sentAt?:          Date;
-  invoiceDetails?:  string;
-  customerDetails?: string;
+  id:                     number;
+  customerId:             number;
+  customerName:           string;
+  amount:                 Money;
+  currency:               string;
+  number:                 number;
+  endsAt:                 Date;
+  paidAt?:                Date;
+  startsAt?:              Date;
+  sentAt?:                Date;
+  invoiceDetails?:        string;
+  customerDetails?:       string;
+  hasIncomeTransaction?:  boolean;
 
   invoiceItems: InoviceItem[];
 }
