@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Panel, Row } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateProfile as updateProfileAction } from 'actions/users.js';

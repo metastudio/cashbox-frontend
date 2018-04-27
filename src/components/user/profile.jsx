@@ -8,7 +8,6 @@ import CancelAccount from './cancel-account.jsx';
 const Profile = () => {
   return (
     <div>
-
       <Col xs={ 12 }>
         <h1>Edit User</h1>
       </Col>

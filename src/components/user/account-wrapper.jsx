@@ -13,7 +13,6 @@ import {
 } from 'selectors/users.js';
 
 import AccountForm from './account-form.jsx';
-import { PanelBody } from 'react-bootstrap';
 
 class AccountWrapper extends React.Component {
   constructor(props) {
