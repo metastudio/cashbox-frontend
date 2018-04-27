@@ -52,8 +52,8 @@ class ShowInvoice extends React.Component<Props> {
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            <DownloadPDFButton invoice={ invoice }/>
             { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
+            <DownloadPDFButton invoice={ invoice }/>
           </ButtonGroup>
           <Header invoice={ invoice } />
         </div>
