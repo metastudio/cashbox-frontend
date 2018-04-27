@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import RequireLogin from 'components/utils/require-login';
 import RequireOrganization from 'components/require-organization';
 
-import MainLayout from 'components/layouts/main-layout';
+import AppLayout from 'components/layouts/app-layout';
 
 import Profile from './profile.jsx';
 
@@ -15,10 +15,10 @@ interface UserSceneType extends React.SFC<{}> {
 const UserScene: UserSceneType = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
-      <MainLayout>
+      <AppLayout>
         <Route exact path="/user" render={ () => <Redirect to="/user/profile" /> } />
         <Route path="/user/profile" component={ Profile } />
-      </MainLayout>
+      </AppLayout>
     </RequireOrganization>
   </RequireLogin>
 );

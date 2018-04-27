@@ -13,16 +13,18 @@ class CancelAccount extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const { userId, cancelAccount } = this.props;
-    cancelAccount(userId).then(
-      () => this.props.addFlashMessage('Account canceled successfull'),
-      error => this.props.addFlashMessage(error.message, { type: 'danger' })
-    );
+    if (window.confirm("Are you sure?")) {
+      const { userId, cancelAccount } = this.props;
+      cancelAccount(userId).then(
+        () => this.props.addFlashMessage('Account canceled successfull'),
+        error => this.props.addFlashMessage(error.message, { type: 'danger' })
+      );
+    }
   }
 
   render() {
     return(
-      <div>
+      <div style={{ 'margin-bottom': '20px' }}>
         <h3>Cancel my account</h3>
         <div>Unhappy?&nbsp;
           <a onClick={ this.handleClick } href="" >Cancel my account</a>

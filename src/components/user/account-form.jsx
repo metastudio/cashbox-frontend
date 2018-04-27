@@ -15,13 +15,13 @@ const validate = (values) => {
 };
 
 const AccountForm = ({ handleSubmit, submitting, error }) => {
-  return(<Form horizontal onSubmit={ handleSubmit }>
+  return(<Form onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="email" label="Email *" component={ VerticalFormInput } />
     <Field name="currentPassword" label="Current password *" type="password" help="we need your current password to confirm your changes" component={ VerticalFormInput } />
     <Field name="password" label="Password" type="password" help="leave it blank if you don't want to change it" component={ VerticalFormInput } />
     <Field name="passwordConfirmation" label="Password confirmation" type="password" component={ VerticalFormInput } />
-    <HorizontalSubmitButton submitting={ submitting }>Update account</HorizontalSubmitButton>
+    <HorizontalSubmitButton submitting={ submitting } bsStyle="primary pull-right" >Update account</HorizontalSubmitButton>
   </Form>);
 };
 

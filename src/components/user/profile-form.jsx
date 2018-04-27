@@ -8,11 +8,11 @@ import { VerticalFormInput, HorizontalSubmitButton } from 'components/utils/form
 
 const ProfileForm = ({ handleSubmit, submitting, error }) => {
   return(
-    <Form horizontal onSubmit={ handleSubmit }>
+    <Form onSubmit={ handleSubmit }>
       { error && <Alert bsStyle="danger">{ error }</Alert> }
       <Field name="fullName" label="Full name *" placeholder="Enter full name" component={ VerticalFormInput } />
       <Field name="phoneNumber" label="Phone number" placeholder="Enter phone number" component={ VerticalFormInput } />
-      <HorizontalSubmitButton submitting={ submitting }>Update profile</HorizontalSubmitButton>
+      <HorizontalSubmitButton submitting={ submitting } bsStyle="primary pull-right" >Update profile</HorizontalSubmitButton>
     </Form>
   );
 };

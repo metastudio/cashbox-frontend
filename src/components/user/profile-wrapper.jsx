@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Panel, Row } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateProfile as updateProfileAction } from 'actions/users.js';
@@ -37,10 +38,12 @@ class ProfileWrapper extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>Profile :</h2>
-        <ProfileForm onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate } initialValues={ this.props.initialValues } />
-      </div>
+      <Panel>
+        <Panel.Heading>Profile:</Panel.Heading>
+        <Panel.Body>
+          <ProfileForm onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate } initialValues={ this.props.initialValues } />
+        </Panel.Body>
+      </Panel>
     );
   }
 }
