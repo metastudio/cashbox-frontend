@@ -27,4 +27,9 @@ updateTransaction.request = createAction('UPDATE_TRANSACTION_REQUEST', (organiza
 updateTransaction.success = createAction('UPDATE_TRANSACTION_SUCCESS', (organizationId, transaction) => ({ organizationId, transaction }));
 updateTransaction.failure = createAction('UPDATE_TRANSACTION_FAILURE');
 
+export const destroyTransaction = createAction('DESTROY_TRANSACTION', (organizationId, transactionId) => ({ organizationId, transactionId }), (_organizationId, _transactionId, resolve = noop, reject = noop) => ({ resolve, reject }));
+destroyTransaction.request = createAction('DESTROY_TRANSACTION_REQUEST', (organizationId) => ({ organizationId }));
+destroyTransaction.success = createAction('DESTROY_TRANSACTION_SUCCESS', (organizationId, transaction) => ({ organizationId, transaction }));
+destroyTransaction.failure = createAction('DESTROY_TRANSACTION_FAILURE');
+
 export const clearTransaction = createAction('CLEAR_TRANSACTION');

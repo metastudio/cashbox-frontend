@@ -63,6 +63,7 @@ class EditIncomeTransaction extends React.Component {
         type="Income"
         initialValues={ this.initialPrepare(transaction) }
         action="Update"
+        transaction={ transaction }
       />
     );
   }

@@ -10,10 +10,11 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  HorizontalSubmitButton,
+  SubmitButton,
 } from 'components/utils/form-inputs';
+import DestroyButton from './../destroy.tsx';
 
-const TransactionForm = ({ handleSubmit, type, submitting, error, action }) => (
+const TransactionForm = ({ handleSubmit, type, submitting, error, action, transaction }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
@@ -22,7 +23,8 @@ const TransactionForm = ({ handleSubmit, type, submitting, error, action }) => (
     <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
-    <HorizontalSubmitButton submitting={ submitting }>{ action } Transaction</HorizontalSubmitButton>
+    { action === 'Update' && transaction && <DestroyButton transaction={ transaction } /> }
+    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
   </Form>
 );
 
@@ -32,6 +34,7 @@ TransactionForm.propTypes = {
   error:        PropTypes.string,
   type:         PropTypes.string.isRequired,
   action:       PropTypes.oneOf(['Create', 'Update']),
+  transaction:  PropTypes.object,
 };
 
 export default reduxForm({
