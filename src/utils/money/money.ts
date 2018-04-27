@@ -35,14 +35,9 @@ const formatMoney = (money?: Money): string | undefined => {
   );
 };
 
-<<<<<<< HEAD
-const moneyToString = (money?: Money): string | null => {
-  if (!money) { return null; }
-=======
 const moneyToString = (money?: Money): string | undefined => {
   if (!money) { return undefined; }
   
->>>>>>> master
   const float = Number(money.fractional) / money.currency.subunitToUnit;
   return float.toString();
 };
