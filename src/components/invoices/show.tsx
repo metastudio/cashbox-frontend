@@ -6,10 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice } from 'model-types';
 import * as statuses from 'constants/statuses.js';
-import {
-  loadInvoice,
-  downloadInvoicePDF,
-} from 'actions/invoices.js';
+import { loadInvoice } from 'actions/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUserFullName } from 'selectors/users.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
@@ -19,6 +16,7 @@ import InvoiceTable from './show/table';
 import CompleteInvoiceButton from './complete';
 import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
+import DownloadPDFButton from './download_pdf';
 
 interface StateProps {
   orgId:        number;
@@ -29,7 +27,6 @@ interface StateProps {
 
 interface DispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
-  downloadPDF:  (orgId: number, invoiceId: number) => void;
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
@@ -39,13 +36,6 @@ class ShowInvoice extends React.Component<Props> {
   componentDidMount() {
     const { orgId, load, match } = this.props;
     load(orgId, Number(match.params.id));
-  }
-
-  handleDownloadPDF = () => {
-    const { orgId, invoice, downloadPDF } = this.props;
-    if (!invoice) { return; }
-
-    downloadPDF(orgId, invoice.id);
   }
 
   render() {
@@ -63,7 +53,7 @@ class ShowInvoice extends React.Component<Props> {
               <Button>Edit</Button>
             </LinkContainer>
             { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
-            <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
+            <DownloadPDFButton invoice={ invoice }/>
           </ButtonGroup>
           <Header invoice={ invoice } />
         </div>
@@ -83,7 +73,6 @@ const mapState = (state: {}) => ({
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
   load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
-  downloadPDF:  (orgId: number, invoiceId: number | string) => dispatch(downloadInvoicePDF(orgId, invoiceId)),
 });
 
 export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(ShowInvoice));

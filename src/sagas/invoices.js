@@ -86,13 +86,15 @@ function* handleDestroyInvoice({ payload: { organizationId, invoiceId }, meta: {
   }
 }
 
-function* handleDownoadInvoicePDF({ payload: { organizationId, invoiceId } }) {
+function* handleDownoadInvoicePDF({ payload: { organizationId, invoiceId }, meta: { resolve, reject } }) {
   try {
-    yield put(loadInvoice.request(organizationId, invoiceId));
+    yield put(downloadInvoicePDF.request(organizationId, invoiceId));
     const invoice = yield call(getInvoicePDF, organizationId, invoiceId);
-    yield put(loadInvoice.success(organizationId, invoice));
+    yield put(downloadInvoicePDF.success(organizationId, invoice));
+    yield call(resolve, invoice);
   } catch (error) {
-    yield put(loadInvoice.failure(error));
+    yield put(downloadInvoicePDF.failure(error));
+    yield call(reject, error);
   }
 }
 

@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, deleteApi, patchApi } from './_helpers';
+import { prepareURL, getApi, postApi, deleteApi, patchApi, getPDF } from './_helpers';
 
 const invoicesUrl            = (orgId, params) => prepareURL(`/api/organizations/${orgId}/invoices`, params);
 const unpaidInvoicesUrl      = (orgId, params) => prepareURL(`/api/organizations/${orgId}/invoices/unpaid`, params);
@@ -12,6 +12,6 @@ export const getUnpaidInvoicesCount = (orgId)            => getApi(unpaidInvoice
 export const postInvoice            = (orgId, data)      => postApi(invoicesUrl(orgId), { invoice: data });
 export const getInvoice             = (orgId, invoiceId) => getApi(invoiceUrl(orgId, invoiceId));
 export const deleteInvoice          = (orgId, invoiceId) => deleteApi(invoiceUrl(orgId, invoiceId));
-export const getInvoicePDF          = (orgId, invoiceId) => getApi(invoicePDFUrl(orgId, invoiceId));
+export const getInvoicePDF          = (orgId, invoiceId) => getPDF(invoicePDFUrl(orgId, invoiceId));
 export const patchInvoice           = (orgId, invoiceId, data) => patchApi(invoiceUrl(orgId, invoiceId), { invoice: data });
 
