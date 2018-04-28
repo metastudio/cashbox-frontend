@@ -75,9 +75,9 @@ function* handleDeleteBankAccount({ payload: { organizationId, bankAccountId }, 
 }
 
 export default function* () {
-  yield takeEvery(loadBankAccounts.toString(), handleLoadBankAccounts);
-  yield takeEvery(loadBankAccount.toString(), handleLoadBankAccount);
-  yield takeEvery(createBankAccount.toString(), handleCreateBankAccount);
-  yield takeEvery(updateBankAccount.toString(), handleUpdateBankAccount);
-  yield takeEvery(deleteBankAccount.toString(), handleDeleteBankAccount);
+  yield takeEvery(loadBankAccounts,  handleLoadBankAccounts);
+  yield takeEvery(loadBankAccount,   handleLoadBankAccount);
+  yield takeEvery(createBankAccount, handleCreateBankAccount);
+  yield takeEvery(updateBankAccount, handleUpdateBankAccount);
+  yield takeEvery(deleteBankAccount, handleDeleteBankAccount);
 }

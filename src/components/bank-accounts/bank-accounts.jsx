@@ -5,6 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
+import { formatMoney } from 'utils/money';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { loadBankAccounts, deleteBankAccount } from 'actions/bank-accounts.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -38,7 +39,7 @@ class BankAccounts extends React.Component {
         <td>{ bankAccount.name }</td>
         <td>{ bankAccount.currency }</td>
         <td>{ bankAccount.description }</td>
-        <td>{ bankAccount.balance }</td>
+        <td>{ formatMoney(bankAccount.balance) }</td>
         <td>{ bankAccount.invoiceDetails }</td>
         <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` } className="btn btn-primary">Edit</Link></td>
         <td><Button bsStyle="danger" onClick={ () => this.handleDeleteBankAccountClick(bankAccount.id) }>Delete</Button></td>
