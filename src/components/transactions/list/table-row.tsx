@@ -4,6 +4,7 @@ import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
+import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   transaction: Transaction;
@@ -32,7 +33,7 @@ class TransactionsTableRow extends React.Component<Props> {
         <tr key={ transaction.id } onClick={ () => this.handleClick(transaction.id) }>
           <td className={ this.getColorClass(transaction) }>{ formatMoney(transaction.amount) }</td>
           <td>{ transaction.category.name }</td>
-          <td>{ transaction.bankAccount.name }</td>
+          <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
           <td>{ transaction.comment }</td>
           <td>{ Moment(transaction.date).format('L') }</td>

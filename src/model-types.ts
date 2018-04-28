@@ -9,6 +9,7 @@ export interface Customer {
 export interface BankAccount {
   id:       number;
   name:     string;
+  currency: string;
 }
 
 export interface Category {

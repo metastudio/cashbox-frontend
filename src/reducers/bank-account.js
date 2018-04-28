@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
-import { loadBankAccount, clearBankAccount } from 'actions/bank-accounts.js'
+import * as statuses from 'constants/statuses.js';
+import { loadBankAccount, clearBankAccount } from 'actions/bank-accounts.js';
 
 const defaultState = {
   data:   null,
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadBankAccount.request]: (state) => ({
@@ -34,4 +34,4 @@ export default handleActions({
     status: statuses.INVALID,
     error:  null
   }),
-}, defaultState)
+}, defaultState);
