@@ -11,6 +11,8 @@ import {
   logoutUser,
 } from 'actions/auth.js';
 
+import { clearCurrentOrganization } from 'actions/organizations.js';
+
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
@@ -40,6 +42,10 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     const token = yield call(postToken, email || '', password);
     setCookies({ token: token });
     const user = yield call(getCurrentUser);
+    if (user.id !== getCookies().userId) {
+      setCookies({ currentOrganizationId: undefined });
+      yield put(clearCurrentOrganization());
+    }
     yield put(loginUser.success(email, token, user));
     yield call(resolve, user);
   } catch (error) {
