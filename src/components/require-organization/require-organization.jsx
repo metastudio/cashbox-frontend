@@ -1,27 +1,23 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getHasCurrentOrganization } from 'selectors/organizations.js';
 
 class RequireOrganization extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
-    this.checkOrganization(this.props)
+    this.checkOrganization(this.props);
   }
 
   componentWillReceiveProps(props) {
-    this.checkOrganization(props)
+    this.checkOrganization(props);
   }
 
   checkOrganization(props){
     if (!props.hasOrganization) {
-      props.addFlashMessage('Please select or add organization.', { type: 'info' })
+      props.addFlashMessage('Please select or add organization.', { type: 'info' });
     }
   }
 
@@ -35,17 +31,17 @@ class RequireOrganization extends React.Component {
 }
 
 RequireOrganization.propTypes = {
-  hasOrganization: PropTypes.bool.isRequired,
-  addFlashMessage: PropTypes.func.isRequired,
-  children:        PropTypes.node,
-}
+  hasOrganization:          PropTypes.bool.isRequired,
+  addFlashMessage:          PropTypes.func.isRequired,
+  children:                 PropTypes.node,
+};
 
 const select = (state) => ({
   hasOrganization: getHasCurrentOrganization(state),
-})
+});
 
 const dispatches = (dispatch) => ({
-  addFlashMessage: (message, options = {}) => dispatch(addFlashMessage(message, options)),
-})
+  addFlashMessage:          (message, options = {}) => dispatch(addFlashMessage(message, options)),
+});
 
-export default connect(select, dispatches)(RequireOrganization)
+export default connect(select, dispatches)(RequireOrganization);

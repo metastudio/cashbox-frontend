@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getCookies, setCookies, clearCookies } from 'utils/cookies';
+import { getCookies, setCookies } from 'utils/cookies';
 import { postToken } from 'api/token.js';
 import { getCurrentUser } from 'api/users.js';
 import { getOrganization } from 'api/organizations.js';
@@ -11,7 +11,7 @@ import {
   logoutUser,
 } from 'actions/auth.js';
 
-import { SubmissionError } from 'redux-form';
+import { clearCurrentOrganization } from 'actions/organizations.js';
 
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
@@ -42,6 +42,10 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     const token = yield call(postToken, email || '', password);
     setCookies({ token: token });
     const user = yield call(getCurrentUser);
+    if (user.id !== getCookies().userId) {
+      setCookies({ currentOrganizationId: undefined });
+      yield put(clearCurrentOrganization());
+    }
     yield put(loginUser.success(email, token, user));
     yield call(resolve, user);
   } catch (error) {
@@ -51,13 +55,13 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
 }
 
 function* handleLogoutUser({ meta: { resolve } }) {
-  clearCookies();
+  setCookies({ token: undefined });
   yield put(logoutUser.success());
   yield call(resolve);
 }
 
 export default function* () {
-  yield takeEvery(restoreSession.toString(), handleRestoreSession);
-  yield takeEvery(loginUser.toString(),      handleLoginUser);
-  yield takeEvery(logoutUser.toString(),     handleLogoutUser);
+  yield takeEvery(restoreSession, handleRestoreSession);
+  yield takeEvery(loginUser,      handleLoginUser);
+  yield takeEvery(logoutUser,     handleLogoutUser);
 }
