@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Panel } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateAccount as updateAccountAction } from 'actions/users.js';
@@ -39,14 +40,16 @@ class AccountWrapper extends React.Component {
 
   render() {
     return(
-      <div className="col-xs-12">
-        <h2>Account Settings:</h2>
-        <AccountForm
-          onSubmit={this.handleSubmit}
-          onSubmitSuccess={ this.afterCreate }
-          initialValues={ this.props.initialValues }
-        />
-      </div>
+      <Panel>
+        <Panel.Heading>Account Settings:</Panel.Heading>
+        <Panel.Body>
+          <AccountForm
+            onSubmit={this.handleSubmit}
+            onSubmitSuccess={ this.afterCreate }
+            initialValues={ this.props.initialValues }
+          />
+        </Panel.Body>
+      </Panel>
     );
   }
 }
