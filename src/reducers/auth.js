@@ -1,4 +1,4 @@
-import { handleActions, combineActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions';
 
 import {
   restoreSession,
@@ -9,12 +9,12 @@ import {
   updateProfile,
   updateAccount,
   cancelAccount
-} from 'actions/users.js'
+} from 'actions/users.js';
 
 const defaultState = {
   token: null,
   user:  null,
-}
+};
 
 export default handleActions({
   [combineActions(restoreSession.request, loginUser.request)]: (state) => ({
@@ -42,4 +42,4 @@ export default handleActions({
     token: state.token,
     user:  payload.user
   })
-}, defaultState)
+}, defaultState);

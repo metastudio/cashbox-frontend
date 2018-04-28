@@ -11,8 +11,6 @@ import {
   logoutUser,
 } from 'actions/auth.js';
 
-import { SubmissionError } from 'redux-form';
-
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
@@ -22,6 +20,7 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
 
     let organization;
     const currentOrganizationId = getCookies().currentOrganizationId;
+    console.log("!!!!!!!", currentOrganizationId);
     try {
       organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
     } catch (error) {
