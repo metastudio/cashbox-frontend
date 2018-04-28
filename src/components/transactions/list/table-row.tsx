@@ -4,7 +4,7 @@ import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
-import formatBankAccountName from '../../bank-accounts/bank-account-name';
+import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   transaction: Transaction;

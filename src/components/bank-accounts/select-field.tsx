@@ -12,7 +12,7 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
-import formatBankAccountName from './bank-account-name';
+import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   emptyTitle?: string;
