@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getCookies, setCookies, clearCookies } from 'utils/cookies';
+import { getCookies, setCookies } from 'utils/cookies';
 import { postToken } from 'api/token.js';
 import { getCurrentUser } from 'api/users.js';
 import { getOrganization } from 'api/organizations.js';
@@ -20,7 +20,6 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
 
     let organization;
     const currentOrganizationId = getCookies().currentOrganizationId;
-    console.log("!!!!!!!", currentOrganizationId);
     try {
       organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
     } catch (error) {
@@ -50,13 +49,13 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
 }
 
 function* handleLogoutUser({ meta: { resolve } }) {
-  clearCookies();
+  setCookies({ token: undefined });
   yield put(logoutUser.success());
   yield call(resolve);
 }
 
 export default function* () {
-  yield takeEvery(restoreSession.toString(), handleRestoreSession);
-  yield takeEvery(loginUser.toString(),      handleLoginUser);
-  yield takeEvery(logoutUser.toString(),     handleLogoutUser);
+  yield takeEvery(restoreSession, handleRestoreSession);
+  yield takeEvery(loginUser,      handleLoginUser);
+  yield takeEvery(logoutUser,     handleLogoutUser);
 }

@@ -1,6 +1,6 @@
 import { handleActions, combineActions } from 'redux-actions';
 
-import { setCurrentOrganization } from 'actions/organizations.js';
+import { setCurrentOrganization, clearCurrentOrganization } from 'actions/organizations.js';
 import { restoreSession } from 'actions/auth.js';
 
 const defaultState = {
@@ -13,5 +13,10 @@ export default handleActions({
     ...state,
     id:   payload.organization && payload.organization.id,
     data: payload.organization,
+  }),
+  [clearCurrentOrganization]: (state) => ({
+    ...state,
+    id:   null,
+    data: null,
   }),
 }, defaultState);

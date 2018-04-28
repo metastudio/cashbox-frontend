@@ -13,3 +13,5 @@ createOrganization.failure = createAction('CREATE_ORGANIZATION_FAILURE');
 
 export const setCurrentOrganization = createAction('SET_CURRENT_ORGANIZATION', (organization) => ({ organization }), (_, resolve = noop, reject = noop) => ({ resolve, reject }));
 setCurrentOrganization.success = createAction('SET_CURRENT_ORGANIZATION_SUCCESS', (organization) => ({ organization }));
+
+export const clearCurrentOrganization = createAction('CLEAR_CURRENT_ORGANIZATION');
