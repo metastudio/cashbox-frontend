@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
-import { getHasCurrentOrganization } from 'selectors/organizations.js';
+import { getHasCurrentOrganization, getCurrentOrganizationId } from 'selectors/organizations.js';
+import { loadCurrentMember } from 'actions/members.js';
+import { getCurrentMember } from 'selectors/members.js';
 
 class RequireOrganization extends React.Component {
   componentDidMount() {
@@ -15,15 +17,19 @@ class RequireOrganization extends React.Component {
     this.checkOrganization(props);
   }
 
-  checkOrganization(props){
-    if (!props.hasOrganization) {
-      props.addFlashMessage('Please select or add organization.', { type: 'info' });
+  checkOrganization(props) {
+    const { orgId, addFlashMessage, loadMember, currentMember, hasOrganization } = props;
+    if (!hasOrganization) {
+      addFlashMessage('Please select or add organization.', { type: 'info' });
+    } else if (!currentMember) {
+      loadMember(orgId);
     }
   }
 
   render() {
-    if (this.props.hasOrganization) {
-      return this.props.children;
+    const { hasOrganization, currentMember, children } = this.props;
+    if (hasOrganization && currentMember) {
+      return children;
     } else {
       return <Redirect to="/organizations/select" />;
     }
@@ -33,15 +39,19 @@ class RequireOrganization extends React.Component {
 RequireOrganization.propTypes = {
   hasOrganization:          PropTypes.bool.isRequired,
   addFlashMessage:          PropTypes.func.isRequired,
+  loadMember:               PropTypes.func.isRequired,
   children:                 PropTypes.node,
 };
 
 const select = (state) => ({
   hasOrganization: getHasCurrentOrganization(state),
+  orgId:           getCurrentOrganizationId(state),
+  currentMember:   getCurrentMember(state),
 });
 
 const dispatches = (dispatch) => ({
-  addFlashMessage:          (message, options = {}) => dispatch(addFlashMessage(message, options)),
+  addFlashMessage: (message, options = {}) => dispatch(addFlashMessage(message, options)),
+  loadMember:      (orgId) => dispatch(loadCurrentMember(orgId)),
 });
 
 export default connect(select, dispatches)(RequireOrganization);

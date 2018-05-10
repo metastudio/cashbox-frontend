@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Alert, Form } from 'react-bootstrap';
+import { Alert, Form, ButtonGroup } from 'react-bootstrap';
 
 import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
@@ -24,7 +24,7 @@ const TransactionForm = ({ handleSubmit, type, submitting, error, action, transa
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
     { action === 'Update' && transaction && <DestroyButton transaction={ transaction } /> }
-    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
+    <SubmitButton bsStyle="primary pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
   </Form>
 );
 

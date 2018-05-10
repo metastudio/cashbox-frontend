@@ -4,6 +4,7 @@ import { getCookies, setCookies } from 'utils/cookies';
 import { postToken } from 'api/token.js';
 import { getCurrentUser } from 'api/users.js';
 import { getOrganization } from 'api/organizations.js';
+import { getCurrentMember } from 'api/members.js';
 
 import {
   restoreSession,
@@ -28,7 +29,14 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
       organization = null;
     }
 
-    yield put(restoreSession.success(token, user, organization));
+    let member;
+    try {
+      member = yield call(getCurrentMember, currentOrganizationId);
+    } catch (error) {
+      member = null;
+    }
+
+    yield put(restoreSession.success(token, user, organization, member));
     yield call(resolve, user);
   } catch (error) {
     yield put(restoreSession.failure(error));

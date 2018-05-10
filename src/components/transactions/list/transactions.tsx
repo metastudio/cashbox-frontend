@@ -2,23 +2,27 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import { Transaction } from 'model-types';
+import { Transaction, Member } from 'model-types';
 import * as statuses from 'constants/statuses.js';
 import { loadTransactions } from 'actions/transactions.js';
+import { updateMemberLastViewedAt } from 'actions/members.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { getCurrentMember } from 'selectors/members.js';
 import { selectTransactions, selectTransactionsStatus } from 'selectors/transactions.js';
 
 import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body';
 
 interface StateProps {
-  orgId:        number;
-  status:       string;
-  transactions: Transaction[] | null;
+  orgId:         number;
+  status:        string;
+  transactions:  Transaction[] | null;
+  currentMember: Member;
 }
 
 interface DispatchProps {
-  load: (orgId: number) => void;
+  load:   (orgId: number) => void;
+  update: (orgId: number, memberId: number) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -40,10 +44,15 @@ class Transactions extends React.Component<Props> {
     }
   }
 
-  render() {
-    const { status, transactions } = this.props;
+  componentDidUpdate(prevProps: Props) {
+    const { orgId, update, currentMember } = this.props;
+    update(orgId, currentMember.id);
+  }
 
-    if (status !== statuses.SUCCESS || !transactions) {
+  render() {
+    const { status, transactions, currentMember } = this.props;
+
+    if (status !== statuses.SUCCESS || !transactions || !currentMember) {
       return <LoadingView status={ status } />;
     }
     return (
@@ -59,7 +68,7 @@ class Transactions extends React.Component<Props> {
               <th>Date</th>
             </tr>
           </thead>
-          <TableBody transactions={ transactions } />
+          <TableBody transactions={ transactions } currentMember={ currentMember } />
         </Table>
       </>
     );
@@ -67,13 +76,15 @@ class Transactions extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
-  status:       selectTransactionsStatus(state),
-  transactions: selectTransactions(state),
+  orgId:         getCurrentOrganizationId(state),
+  currentMember: getCurrentMember(state),
+  status:        selectTransactionsStatus(state),
+  transactions:  selectTransactions(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadTransactions(orgId)),
+  load:         (orgId: number) => dispatch(loadTransactions(orgId)),
+  update:       (orgId: number, memberId: number) => dispatch(updateMemberLastViewedAt(orgId, memberId)),
 });
 
 export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(Transactions);

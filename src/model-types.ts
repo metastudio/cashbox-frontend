@@ -18,6 +18,11 @@ export interface Category {
   type:     string;
 }
 
+export interface Member {
+  id:            number;
+  lastVisitedAt: Date;
+}
+
 export interface TransferOut {
   id:          number;
   amount:      Money;
@@ -35,6 +40,7 @@ export interface Transaction {
   customer?:   Customer;
   date?:       Date;
   comment?:    string;
+  createdAt:   Date;
 
   transfer_out?: TransferOut;
 }

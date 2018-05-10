@@ -1,8 +1,8 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getOrganizationMembers } from 'api/members.js';
+import { getOrganizationMembers, getCurrentMember, putMemberLastViewedAt } from 'api/members.js';
 
-import { loadMembers } from 'actions/members.js';
+import { loadMembers, loadCurrentMember, updateMemberLastViewedAt } from 'actions/members.js';
 
 function* handleLoadMembers({ payload: { organizationId } }) {
   try {
@@ -14,6 +14,30 @@ function* handleLoadMembers({ payload: { organizationId } }) {
   }
 }
 
+function* handleGetCurrentMember({ payload: { organizationId } }) {
+  try {
+    yield put(loadCurrentMember.request(organizationId));
+    const member = yield call(getCurrentMember, organizationId);
+    yield put(loadCurrentMember.success(organizationId, member));
+  } catch (error) {
+    yield put(loadCurrentMember.failure(error));
+  }
+}
+
+function* handleUpdateMemberLastViewedAt({ payload: { organizationId, memberId }, meta: { resolve, reject } }) {
+  try {
+    yield put(updateMemberLastViewedAt.request(organizationId, memberId));
+    const member = yield call(putMemberLastViewedAt, organizationId, memberId);
+    yield put(updateMemberLastViewedAt.success(organizationId, memberId, member));
+    yield call(resolve, member);
+  } catch (error) {
+    yield put(updateMemberLastViewedAt.failure(error));
+    yield call(reject, error);
+  }
+}
+
 export default function* () {
-  yield takeEvery(loadMembers.toString(),  handleLoadMembers);
+  yield takeEvery(loadMembers,              handleLoadMembers);
+  yield takeEvery(loadCurrentMember,        handleGetCurrentMember);
+  yield takeEvery(updateMemberLastViewedAt, handleUpdateMemberLastViewedAt);
 }

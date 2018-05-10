@@ -25,7 +25,7 @@ const TransferForm = ({ handleSubmit, submitting, error, action, transaction }) 
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
     { action === 'Update' && transaction && <DestroyButton transaction={ transaction } /> }
-    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
+    <SubmitButton bsStyle="primary pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
   </Form>
 );
 
