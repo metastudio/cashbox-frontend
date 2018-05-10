@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Alert, Form, ButtonGroup } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 
 import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
