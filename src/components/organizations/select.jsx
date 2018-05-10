@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { Panel, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { Panel, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { loadOrganizations, setCurrentOrganization } from 'actions/organizations.js';
@@ -37,14 +37,14 @@ class SelectOrganization extends React.Component {
     return (
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <h2 className="text-center">Select organization</h2>
           <Panel>
-            <p className="text-center">
-              Select an organization or <Link to="/organizations/new">create a new one</Link>.
-            </p>
             <ListGroup id="organizations">
               { organizations }
             </ListGroup>
           </Panel>
+          <p className="text-center">or</p>
+          <p className="text-center"><Button bsStyle="primary" href="/organizations/new">Create a new Organization</Button></p>
         </Col>
       </Row>
     );
