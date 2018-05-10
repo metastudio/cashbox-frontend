@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { MenuItem } from 'react-bootstrap';
+import { Money, formatMoney } from 'utils/money';
 
 interface Balance {
-  total:     number;
-  exTotal?:  number;
+  total:     Money;
+  exTotal?:  Money;
   rate:      string;
   currency:  string;
   updatedAt: Date;
@@ -28,7 +29,7 @@ const MenuBalanceItem: React.SFC<Props> = ({ balance, defaultCurrency }) => {
 
   return (
     <MenuItem title={ balanceTitle() }>
-      { balance.total } { balance.exTotal ? '(' + balance.exTotal + ')' : '' }
+      { formatMoney(balance.total) } { balance.exTotal ? '(' + formatMoney(balance.exTotal) + ')' : '' }
     </MenuItem>
   );
 };
