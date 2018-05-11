@@ -41,34 +41,43 @@ class BankAccounts extends React.Component {
         <td>{ bankAccount.description }</td>
         <td>{ formatMoney(bankAccount.balance) }</td>
         <td>{ bankAccount.invoiceDetails }</td>
-        <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` } className="btn btn-primary">Edit</Link></td>
-        <td><Button bsStyle="danger" onClick={ () => this.handleDeleteBankAccountClick(bankAccount.id) }>Delete</Button></td>
+        <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` }><i className="fa fa-eye" /></Link></td>
+        <td>
+          <Link
+            to={ '/bank_accounts' }
+            onClick={ () => { if (window.confirm('Are you sure?')) this.handleDeleteBankAccountClick(bankAccount.id) } }>
+            <i className="fa fa-trash-o" />
+          </Link>
+        </td>
       </tr>
     )
     );
 
+    if (this.props.status !== statuses.SUCCESS || !bankAccounts) {
+      return <LoadingView status={ this.props.status } />;
+    }
+
     return (
-      <LoadingView status={ this.props.status }>
-        <Link to="/bank_accounts/new" className="btn btn-primary">Add...</Link>
-        { this.props.status === statuses.SUCCESS &&
-          <Table striped responsive hover id="bankAccounts">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Currency</th>
-                <th>Description</th>
-                <th>Balance</th>
-                <th>Invoice Details</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              { bankAccounts }
-            </tbody>
-          </Table>
-        }
-      </LoadingView>
+      <div>
+        <Button href="/bank_accounts/new" bsStyle="default" className="pull-right">New Bank Account</Button>
+        <h1>Bank Accounts</h1>
+        <Table striped responsive hover id="bankAccounts">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Currency</th>
+              <th>Description</th>
+              <th>Balance</th>
+              <th>Invoice Details</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            { bankAccounts }
+          </tbody>
+        </Table>
+      </div>
     );
   }
 }

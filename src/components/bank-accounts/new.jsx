@@ -41,9 +41,10 @@ class NewBankAccount extends React.Component {
     return(
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <h1>New Bank Account</h1>
           <Panel>
             <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create"/>
             </Panel.Body>
           </Panel>
         </Col>
