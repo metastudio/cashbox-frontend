@@ -18,8 +18,8 @@ const OrganizationForm = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
-    <Field name="defaultCurrency" label="Currency" component={ HorizontalAsyncSelect } loadOptions={ getOptions } />
-    <HorizontalSubmitButton submitting={ submitting }>Create</HorizontalSubmitButton>
+    <Field name="defaultCurrency" label="Currency" component={ HorizontalAsyncSelect } required loadOptions={ getOptions } />
+    <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>Create</HorizontalSubmitButton>
   </Form>
 );
 
