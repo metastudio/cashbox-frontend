@@ -27,23 +27,26 @@ class Members extends React.Component {
     )
     );
 
+    if (this.props.status !== statuses.SUCCESS || !members) {
+      return <LoadingView status={ this.props.status } />;
+    }
+
     return (
-      <LoadingView status={ this.props.status }>
-        { this.props.status === statuses.SUCCESS &&
-          <Table striped responsive hover id="members">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              { members }
-            </tbody>
-          </Table>
-        }
-      </LoadingView>
+      <div>
+        <h1>Members</h1>
+        <Table striped responsive hover id="members">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            { members }
+          </tbody>
+        </Table>
+      </div>
     );
   }
 }
