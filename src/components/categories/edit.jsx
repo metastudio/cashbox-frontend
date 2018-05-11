@@ -29,7 +29,7 @@ class EditCategory extends React.Component {
     const { orgId, category, updateCategory } = this.props;
     return updateCategory(orgId, category.id, {
       name: values.name,
-      type: values.categoryType,
+      type: values.type,
     }).catch(prepareSubmissionError);
   }
 

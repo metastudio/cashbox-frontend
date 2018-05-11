@@ -6,14 +6,14 @@ import { Alert, Form } from 'react-bootstrap';
 import { HorizontalFormInput, HorizontalSelect, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
 const getOptions = () => {
-  return [{ value: 'Income', label: 'Income' }, { value: 'Expense', label: 'Expense' }];
+  return [{ value: '', label: 'Select type...' }, { value: 'Income', label: 'Income' }, { value: 'Expense', label: 'Expense' }];
 };
 
 const CategoryForm = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
-    <Field name="categoryType" label="Type" component={ HorizontalSelect } collection={ getOptions() } />
+    <Field name="type" label="Type" component={ HorizontalSelect } collection={ getOptions() } />
     <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>{ action } Category</HorizontalSubmitButton>
   </Form>
 );

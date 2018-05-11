@@ -26,7 +26,7 @@ class NewCategory extends React.Component {
     const { orgId, createCategory } = this.props;
     return createCategory(orgId, {
       name: values.name,
-      type: values.categoryType,
+      type: values.type,
     }).catch(prepareSubmissionError);
   }
 
@@ -42,7 +42,7 @@ class NewCategory extends React.Component {
           <h1>New Category</h1>
           <Panel>
             <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create"/>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create" />
             </Panel.Body>
           </Panel>
         </Col>
