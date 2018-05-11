@@ -38,31 +38,40 @@ class Categories extends React.Component {
       <tr key={ category.id }>
         <td>{ category.name }</td>
         <td>{ category.type }</td>
-        <td><Link to={ `/categories/${category.id}/edit` } className="btn btn-primary">Edit</Link></td>
-        <td><Button bsStyle="danger" onClick={ () => this.handleDeleteCategoryClick(category.id) }>Delete</Button></td>
+        <td><Link to={ `/categories/${category.id}/edit` }><i className="fa fa-edit" /></Link></td>
+        <td>
+          <Link
+            to={ '/categories' }
+            onClick={ () => { if (window.confirm('Are you sure?')) this.handleDeleteCategoryClick(category.id) } }>
+            <i className="fa fa-trash-o" />
+          </Link>
+        </td>
       </tr>
     )
     );
 
+    if (this.props.status !== statuses.SUCCESS || !categories) {
+      return <LoadingView status={ this.props.status } />;
+    }
+
     return (
-      <LoadingView status={ this.props.status }>
-        <Link to="/categories/new" className="btn btn-primary">Add...</Link>
-        { this.props.status === statuses.SUCCESS &&
-          <Table striped responsive hover id="categories">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              { categories }
-            </tbody>
-          </Table>
-        }
-      </LoadingView>
+      <div>
+        <Link to="/categories/new" className="btn btn-default pull-right">New Category</Link>
+        <h1>Categories</h1>
+        <Table striped responsive hover id="categories">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            { categories }
+          </tbody>
+        </Table>
+      </div>
     );
   }
 }
