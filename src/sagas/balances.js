@@ -15,5 +15,5 @@ function* handleLoadOrganizationBalances({ payload: { organizationId } }) {
 }
 
 export default function* () {
-  yield takeEvery(loadOrganizationBalances.toString(), handleLoadOrganizationBalances);
+  yield takeEvery(loadOrganizationBalances, handleLoadOrganizationBalances);
 }
