@@ -1,10 +1,10 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
+import * as statuses from 'constants/statuses.js';
 
 import {
   loadOrganizationBalances,
-} from 'actions/balances.js'
+} from 'actions/balances.js';
 
 const defaultState = {
   totalAmount: null,
@@ -12,7 +12,7 @@ const defaultState = {
   totals: [],
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadOrganizationBalances.request]: (state) => ({
@@ -39,4 +39,4 @@ export default handleActions({
     status:          statuses.FAILURE,
     error:           payload
   }),
-}, defaultState)
+}, defaultState);
