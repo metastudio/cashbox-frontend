@@ -6,18 +6,17 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice } from 'model-types';
 import * as statuses from 'constants/statuses.js';
-import {
-  loadInvoice,
-  destroyInvoice,
-  downloadInvoicePDF,
-} from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { loadInvoice } from 'actions/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUserFullName } from 'selectors/users.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
-import { Header, InvoiceTable } from './show_components';
+import Header from './show/header';
+import InvoiceTable from './show/table';
+import CompleteInvoiceButton from './complete';
+import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
+import DownloadPDFButton from './download_pdf';
 
 interface StateProps {
   orgId:        number;
@@ -28,37 +27,15 @@ interface StateProps {
 
 interface DispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
-  destroy:      (orgId: number, invoiceId: number) => Promise<{}>;
-  downloadPDF:  (orgId: number, invoiceId: number) => void;
-  flashMessage: (message: string) => void;
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
-type Props =  RouteProps & StateProps & DispatchProps;
+type Props = RouteProps & StateProps & DispatchProps;
 
 class ShowInvoice extends React.Component<Props> {
   componentDidMount() {
     const { orgId, load, match } = this.props;
     load(orgId, Number(match.params.id));
-  }
-
-  handleDestroy = () => {
-    const { orgId, invoice, destroy } = this.props;
-    if (!invoice) { return; }
-
-    destroy(orgId, invoice.id).then(() => {
-      const { flashMessage, history } = this.props;
-
-      flashMessage('Invoice successfully destroyed');
-      history.push('/invoices');
-    });
-  }
-
-  handleDownloadPDF = () => {
-    const { orgId, invoice, downloadPDF } = this.props;
-    if (!invoice) { return; }
-
-    downloadPDF(orgId, invoice.id);
   }
 
   render() {
@@ -67,19 +44,16 @@ class ShowInvoice extends React.Component<Props> {
     }
 
     const { invoice, userFullName } = this.props;
-
-    const completeInvoiceButton = invoice.paidAt ? <Button bsStyle="primary">Complete Invoice</Button> : null;
-
     return (
       <>
         <div className="page-header">
           <ButtonGroup className="pull-right">
-            <Button bsStyle="danger" onClick={ this.handleDestroy }>Destroy</Button>
+            <DestroyButton />
             <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
               <Button>Edit</Button>
             </LinkContainer>
-            { completeInvoiceButton }
-            <Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>
+            { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
+            <DownloadPDFButton invoice={ invoice }/>
           </ButtonGroup>
           <Header invoice={ invoice } />
         </div>
@@ -99,11 +73,6 @@ const mapState = (state: {}) => ({
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
   load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
-  destroy:      (orgId: number, invoiceId: number) => new Promise((res, rej) => {
-    dispatch(destroyInvoice(orgId, invoiceId, res, rej));
-  }),
-  downloadPDF:  (orgId: number, invoiceId: number | string) => dispatch(downloadInvoicePDF(orgId, invoiceId)),
-  flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(ShowInvoice));

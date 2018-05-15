@@ -1,14 +1,14 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
+import * as statuses from 'constants/statuses.js';
 
-import { loadOrganizations } from 'actions/organizations.js'
+import { loadOrganizations } from 'actions/organizations.js';
 
 const defaultState = {
   items:  [],
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadOrganizations.request]: (state) => ({
@@ -29,4 +29,4 @@ export default handleActions({
     status: statuses.FAILURE,
     error:  payload
   }),
-}, defaultState)
+}, defaultState);

@@ -4,6 +4,7 @@ interface Money {
   currency: {
     isoCode: string;
     subunitToUnit: number;
+    symbol: string;
   };
 }
 
@@ -35,4 +36,16 @@ const formatMoney = (money?: Money): string | undefined => {
   return formatter.format(float);
 };
 
-export { Money, formatMoney };
+const moneyToString = (money?: Money): string | undefined => {
+  if (!money) { return undefined; }
+
+  const float = Number(money.fractional) / money.currency.subunitToUnit;
+  return float.toString();
+};
+
+const moneyStringWithoutCommas = (money?: string): string | undefined => {
+  if (!money) { return undefined; }
+  return money.replace(/,/g, '');
+};
+
+export { Money, formatMoney, moneyToString, moneyStringWithoutCommas };

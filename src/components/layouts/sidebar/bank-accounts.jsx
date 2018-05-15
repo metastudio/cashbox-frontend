@@ -6,8 +6,11 @@ import { Table } from 'react-bootstrap';
 import * as statuses from 'constants/statuses.js';
 import { loadBankAccounts } from 'actions/bank-accounts.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { formatMoney } from 'utils/money';
+import 'components/transactions/css/default.css';
 
 import LoadingView from 'components/utils/loading-view';
+import { formatBankAccountName } from 'utils/bank-account';
 
 class BankAccounts extends React.Component {
 
@@ -18,11 +21,15 @@ class BankAccounts extends React.Component {
     }
   }
 
+  getColorClass = (bankAccount) => {
+    return Number(bankAccount.balance.fractional) > 0 ? 'positive' : 'negative';
+  }
+
   render() {
     const bankAccounts = this.props.bankAccounts.map((bankAccount) => (
       <tr key={ bankAccount.id }>
-        <td>{ bankAccount.name } ({ bankAccount.currency })</td>
-        <td>{ bankAccount.balance }</td>
+        <td>{ formatBankAccountName(bankAccount) }</td>
+        <td className={ this.getColorClass(bankAccount) }>{ formatMoney(bankAccount.balance) }</td>
       </tr>
     ));
 

@@ -12,6 +12,7 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
+import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   emptyTitle?: string;
@@ -31,7 +32,7 @@ const BankAccountsSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, 
   const loadOptions = () => (
     load(orgId).then((bankAccounts) => ({
       options: (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-        .concat(bankAccounts.map(ba => ({ value: String(ba.id), label: ba.name })))
+    .concat(bankAccounts.map(ba => ({ value: String(ba.id), label: formatBankAccountName(ba) })))
     }))
   );
 

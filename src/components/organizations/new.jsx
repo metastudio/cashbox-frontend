@@ -34,6 +34,7 @@ class NewOrganization extends React.Component {
     return(
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <h2 className="text-center">New Organization</h2>
           <Panel>
             <Panel.Body>
               <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />

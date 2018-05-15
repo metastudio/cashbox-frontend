@@ -1,15 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import * as React from 'react';
 import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
 
 import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
 import NewTransfer from './new/transfer.jsx';
 
-class NewTransaction extends React.Component {
-  constructor(props) {
-    super(props)
+interface State {
+  show: boolean;
+}
+
+class NewTransaction extends React.Component<{}, State> {
+  constructor(props: {}) {
+    super(props);
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -50,7 +52,7 @@ class NewTransaction extends React.Component {
           </Modal.Body>
         </Modal>
       </div>
-    )
+    );
   }
 }
 
