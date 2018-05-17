@@ -19,7 +19,7 @@ class DestroyCategory extends React.Component {
 
     confirm('Are you sure?').then( () => {
       deleteCategory(orgId, category.id).then(category => {
-        this.props.addFlashMessage('Category ' + category.name + ' successfully deleted.');
+        this.props.addFlashMessage(`Category ${category.name} successfully deleted.`);
         this.props.history.push('/categories');
       }).catch(error => {
         this.props.addFlashMessage(`Unable to delete category: ${error.message}`, { type: 'danger' });
@@ -30,8 +30,9 @@ class DestroyCategory extends React.Component {
   render() {
     return (
       <Link
+        title="Delete"
         to={ '/categories' }
-        onClick={ () => this.handleDeleteCategoryClick() }>
+        onClick={ this.handleDeleteCategoryClick }>
         <i className="fa fa-trash-o" />
       </Link>
     );

@@ -8,7 +8,7 @@ class CategoriesTableRow extends React.Component {
     const { category } = this.props;
 
     return(
-      <tr key={ category.id }>
+      <tr>
         <td>{ category.name }</td>
         <td>{ category.type }</td>
         <td><Link to={ `/categories/${category.id}/edit` }><i className="fa fa-edit" /></Link></td>
