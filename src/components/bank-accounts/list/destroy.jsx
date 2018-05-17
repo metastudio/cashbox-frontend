@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { withRouter, Link } from 'react-router-dom';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { deleteBankAccount } from 'actions/bank-accounts.js';
@@ -30,7 +29,11 @@ class DestroyBankAccount extends React.Component {
 
   render() {
     return (
-      <Button bsStyle="danger" onClick={ () => this.handleDeleteBankAccountClick() }>Delete</Button>
+      <Link
+        to={ '/bank_accounts' }
+        onClick={ () => this.handleDeleteBankAccountClick() }>
+        <i className="fa fa-trash-o" />
+      </Link>
     );
   }
 }
