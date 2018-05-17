@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { deleteBankAccount } from 'actions/bank-accounts.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { confirm } from 'components/utils/confirm';
 
 class DestroyBankAccount extends React.Component {
   constructor(props) {
@@ -16,17 +17,20 @@ class DestroyBankAccount extends React.Component {
 
   handleDeleteBankAccountClick() {
     const { orgId, bankAccount, deleteBankAccount } = this.props;
-    deleteBankAccount(orgId, bankAccount.id).then(bankAccount => {
-      this.props.addFlashMessage('Bank account ' + bankAccount.name + ' successfully deleted.');
-      this.props.history.push('/bank_accounts');
-    }).catch(error => {
-      this.props.addFlashMessage(`Unable to delete bank account: ${error.message}`, { type: 'danger' });
+
+    confirm('Are you sure?').then( () => {
+      deleteBankAccount(orgId, bankAccount.id).then(bankAccount => {
+        this.props.addFlashMessage('Bank account ' + bankAccount.name + ' successfully deleted.');
+        this.props.history.push('/bank_accounts');
+      }).catch(error => {
+        this.props.addFlashMessage(`Unable to delete bank account: ${error.message}`, { type: 'danger' });
+      });
     });
   }
 
   render() {
     return (
-      <Button bsStyle="danger" onClick={ this.handleDeleteBankAccountClick() }>Delete</Button>
+      <Button bsStyle="danger" onClick={ () => this.handleDeleteBankAccountClick() }>Delete</Button>
     );
   }
 }

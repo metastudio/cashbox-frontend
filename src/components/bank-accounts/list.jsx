@@ -6,9 +6,9 @@ class BankAccountsList extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/bank-accounts/new" className="btn btn-default pull-right">New Bank Account</Link>
+        <Link to="/bank_accounts/new" className="btn btn-default pull-right">New Bank Account</Link>
         <h1>Bank Accounts</h1>
-        
+        <BankAccounts />
       </div>
     );
   }
