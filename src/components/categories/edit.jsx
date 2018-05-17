@@ -39,20 +39,22 @@ class EditCategory extends React.Component {
   }
 
   render() {
+    const { status, category } = this.props;
+    if (status !== statuses.SUCCESS || !category) {
+      return <LoadingView status={ status } />;
+    }
+
     return(
-      <LoadingView status={ this.props.status }>
-        { this.props.status === statuses.SUCCESS &&
-          <Row>
-            <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
-              <Panel>
-                <Panel.Body>
-                  <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.category } />
-                </Panel.Body>
-              </Panel>
-            </Col>
-          </Row>
-        }
-      </LoadingView>
+      <Row>
+        <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <h1>Edit Category</h1>
+          <Panel>
+            <Panel.Body>
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ category } action="Update"/>
+            </Panel.Body>
+          </Panel>
+        </Col>
+      </Row>
     );
   }
 }

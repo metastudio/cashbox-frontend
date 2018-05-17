@@ -3,6 +3,7 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import * as moment from 'moment';
 import { NavDropdown } from 'react-bootstrap';
+import { Money, formatMoney } from 'utils/money';
 
 import { loadOrganizationBalances } from 'actions/balances.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -16,7 +17,7 @@ import BalanceItem, { Balance } from './balance-item';
 
 interface StateProps {
   organizationId?:  number;
-  totalAmount?:     string;
+  totalAmount?:     Money;
   defaultCurrency?: string;
   balances:         Balance[];
 }
@@ -51,7 +52,7 @@ class Balances extends React.Component<StateProps & DispatchProps> {
     if (!organizationId || !totalAmount) { return null; }
 
     return (
-      <NavDropdown title={ 'Total: ' + totalAmount } id="balances-nav-dropdown">
+      <NavDropdown title={ 'Total: ' + formatMoney(totalAmount) } id="balances-nav-dropdown">
         { balances.map((b, i) => <BalanceItem key={ i } balance={ b } defaultCurrency={ defaultCurrency } />) }
       </NavDropdown>
     );

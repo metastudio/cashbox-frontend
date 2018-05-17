@@ -46,9 +46,10 @@ class EditBankAccount extends React.Component {
         { this.props.status === statuses.SUCCESS &&
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+              <h1>Edit Bank Account</h1>
               <Panel>
                 <Panel.Body>
-                  <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.bankAccount } />
+                  <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.bankAccount } action="Update"/>
                 </Panel.Body>
               </Panel>
             </Col>
