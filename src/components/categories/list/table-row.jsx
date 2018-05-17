@@ -11,7 +11,7 @@ class CategoriesTableRow extends React.Component {
       <tr>
         <td>{ category.name }</td>
         <td>{ category.type }</td>
-        <td><Link to={ `/categories/${category.id}/edit` }><i className="fa fa-edit" /></Link></td>
+        <td><Link to={ `/categories/${category.id}/edit` } title="Edit"><i className="fa fa-edit" /></Link></td>
         <td><DestroyButton category={ category } /></td>
       </tr>
     );
