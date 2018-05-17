@@ -30,8 +30,9 @@ class DestroyBankAccount extends React.Component {
   render() {
     return (
       <Link
+        title="Delete"
         to={ '/bank_accounts' }
-        onClick={ () => this.handleDeleteBankAccountClick() }>
+        onClick={ this.handleDeleteBankAccountClick }>
         <i className="fa fa-trash-o" />
       </Link>
     );

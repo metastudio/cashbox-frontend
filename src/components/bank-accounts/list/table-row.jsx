@@ -15,7 +15,7 @@ class BankAccountsTableRow extends React.Component {
         <td>{ bankAccount.description }</td>
         <td>{ formatMoney(bankAccount.balance) }</td>
         <td>{ bankAccount.invoiceDetails }</td>
-        <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` }><i className="fa fa-edit" /></Link></td>
+        <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` } title="Edit"><i className="fa fa-edit" /></Link></td>
         <td><DestroyButton bankAccount={ bankAccount } /></td>
       </tr>
     );
