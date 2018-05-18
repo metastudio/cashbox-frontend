@@ -13,3 +13,7 @@
 .new-transaction {
   font-weight: 600;
 }
+
+.nav.nav-tabs {
+  margin-bottom: 10px;
+}
