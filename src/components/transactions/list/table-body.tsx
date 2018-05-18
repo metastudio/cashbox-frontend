@@ -1,17 +1,16 @@
 import * as React from 'react';
 
-import { Transaction, Member } from 'model-types';
+import { Transaction } from 'model-types';
 
 import Row from './table-row';
 
 interface Props {
   transactions: Transaction[];
-  currentMember: Member;
 }
 
-const TransactionsTableBody: React.SFC<Props> = ({ transactions, currentMember }) => (
+const TransactionsTableBody: React.SFC<Props> = ({ transactions }) => (
   <tbody>
-    { transactions.map((t) => <Row transaction={ t } key={ t.id } currentMember={ currentMember } />) }
+    { transactions.map((t) => <Row transaction={ t } key={ t.id } />) }
   </tbody>
 );
 

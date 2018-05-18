@@ -5,7 +5,6 @@ export { default as invoice }              from './invoice';
 export { default as invoices }             from './invoices';
 export { default as organizations }        from './organizations';
 export { default as currentOrganization }  from './current-organization';
-export { default as currentMember }        from './current-member';
 export { default as transaction }          from './transaction';
 export { default as transactions }         from './transactions';
 export { default as members }              from './members';

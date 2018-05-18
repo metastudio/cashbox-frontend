@@ -1,14 +1,13 @@
 import * as React from 'react';
 import * as Moment from 'moment';
-import { Transaction, Member } from 'model-types';
+import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
 import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
-  transaction:   Transaction;
-  currentMember: Member;
+  transaction: Transaction;
 }
 
 type Props =  RouteComponentProps<{ id: number }> & OwnProps;
@@ -22,12 +21,8 @@ class TransactionsTableRow extends React.Component<Props> {
     }
   }
 
-  getNewTransactionClass = (transaction: Transaction, currentMember: Member): string => {
-    if (transaction.createdAt > currentMember.lastVisitedAt) {
-      return 'new-transaction';
-    } else {
-      return '';
-    }
+  getNewTransactionClass = (transaction: Transaction): string => {
+    return !transaction.isViewed ? 'new-transaction' : '';
   }
 
   handleClick = (transactionId: number) => {
@@ -35,13 +30,13 @@ class TransactionsTableRow extends React.Component<Props> {
   }
 
   render() {
-    const { transaction, currentMember } = this.props;
+    const { transaction } = this.props;
     
     return(
       <>
         <tr
           key={ transaction.id }
-          className={ this.getNewTransactionClass(transaction, currentMember) }
+          className={ this.getNewTransactionClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
           <td className={ this.getColorClass(transaction) }>{ formatMoney(transaction.amount) }</td>
