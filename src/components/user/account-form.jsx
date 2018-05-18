@@ -21,7 +21,7 @@ const AccountForm = ({ handleSubmit, submitting, error }) => {
     <Field name="currentPassword" label="Current password *" type="password" help="we need your current password to confirm your changes" component={ VerticalFormInput } />
     <Field name="password" label="Password" type="password" help="leave it blank if you don't want to change it" component={ VerticalFormInput } />
     <Field name="passwordConfirmation" label="Password confirmation" type="password" component={ VerticalFormInput } />
-    <VerticalSubmitButton submitting={ submitting } >Update account</VerticalSubmitButton>
+    <VerticalSubmitButton bsStyle="primary" className="pull-right" submitting={ submitting } >Update account</VerticalSubmitButton>
   </Form>);
 };
 

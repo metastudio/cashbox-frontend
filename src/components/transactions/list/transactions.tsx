@@ -5,7 +5,6 @@ import { Table } from 'react-bootstrap';
 import { Transaction, Member } from 'model-types';
 import * as statuses from 'constants/statuses.js';
 import { loadTransactions } from 'actions/transactions.js';
-import { updateMemberLastViewedAt } from 'actions/members.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { getCurrentMember } from 'selectors/members.js';
 import { selectTransactions, selectTransactionsStatus } from 'selectors/transactions.js';
@@ -21,8 +20,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  load:   (orgId: number) => void;
-  update: (orgId: number, memberId: number) => void;
+  load: (orgId: number) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -42,11 +40,6 @@ class Transactions extends React.Component<Props> {
     if (this.props.status === statuses.INVALID) {
       this.loadData(this.props);
     }
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const { orgId, update, currentMember } = this.props;
-    update(orgId, currentMember.id);
   }
 
   render() {
@@ -83,8 +76,7 @@ const mapState = (state: {}) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load:         (orgId: number) => dispatch(loadTransactions(orgId)),
-  update:       (orgId: number, memberId: number) => dispatch(updateMemberLastViewedAt(orgId, memberId)),
+  load: (orgId: number) => dispatch(loadTransactions(orgId)),
 });
 
 export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(Transactions);

@@ -60,7 +60,7 @@ const HorizontalSubmitButton: React.SFC<Props> = (props) => (
 const VerticalSubmitButton: React.SFC<Props> = (props) => (
   <Row>
     <Col sm={ 12 }>
-      <SubmitButton { ...props } bsStyle="primary pull-right" />
+      <SubmitButton { ...props } />
     </Col>
   </Row>
 );

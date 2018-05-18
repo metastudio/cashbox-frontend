@@ -12,7 +12,7 @@ const ProfileForm = ({ handleSubmit, submitting, error }) => {
       { error && <Alert bsStyle="danger">{ error }</Alert> }
       <Field name="fullName" label="Full name *" placeholder="Enter full name" component={ VerticalFormInput } />
       <Field name="phoneNumber" label="Phone number" placeholder="Enter phone number" component={ VerticalFormInput } />
-      <VerticalSubmitButton submitting={ submitting } >Update profile</VerticalSubmitButton>
+      <VerticalSubmitButton bsStyle="primary" className="pull-right" submitting={ submitting } >Update profile</VerticalSubmitButton>
     </Form>
   );
 };
