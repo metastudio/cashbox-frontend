@@ -21,7 +21,7 @@ class TransactionsTableRow extends React.Component<Props> {
     }
   }
 
-  getNewTransactionClass = (transaction: Transaction): string => {
+  rowClass = (transaction: Transaction): string => {
     return !transaction.isViewed ? 'new-transaction' : '';
   }
 
@@ -35,8 +35,7 @@ class TransactionsTableRow extends React.Component<Props> {
     return(
       <>
         <tr
-          key={ transaction.id }
-          className={ this.getNewTransactionClass(transaction) }
+          className={ this.rowClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
           <td className={ this.getColorClass(transaction) }>{ formatMoney(transaction.amount) }</td>

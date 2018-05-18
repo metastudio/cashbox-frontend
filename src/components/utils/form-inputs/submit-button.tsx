@@ -7,6 +7,7 @@ interface Props {
   submitFailed?:    boolean;
   submitSucceeded?: boolean;
   bsStyle?:         string;
+  className?:       string;
 }
 
 const SubmitButton: React.SFC<Props> = (props) => {
@@ -60,7 +61,7 @@ const HorizontalSubmitButton: React.SFC<Props> = (props) => (
 const VerticalSubmitButton: React.SFC<Props> = (props) => (
   <Row>
     <Col sm={ 12 }>
-      <SubmitButton { ...props } />
+      <SubmitButton { ...props } bsStyle="primary" className="pull-right" />
     </Col>
   </Row>
 );
