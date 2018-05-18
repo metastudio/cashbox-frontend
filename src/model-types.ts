@@ -40,7 +40,6 @@ export interface Transaction {
   customer?:   Customer;
   date?:       Date;
   comment?:    string;
-  createdAt:   Date;
   isViewed:    boolean;
 
   transfer_out?: TransferOut;

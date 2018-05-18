@@ -12,9 +12,9 @@ import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body';
 
 interface StateProps {
-  orgId:         number;
-  status:        string;
-  transactions:  Transaction[] | null;
+  orgId:        number;
+  status:       string;
+  transactions: Transaction[] | null;
 }
 
 interface DispatchProps {
