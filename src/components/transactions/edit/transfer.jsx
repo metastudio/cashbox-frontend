@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { moneyToString } from 'utils/money';
+import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { updateTransaction, clearTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
@@ -21,8 +21,8 @@ class EditTransfer extends React.Component {
 
   initialPrepare = (transaction) => {
     return ({
-      amount:        moneyToString(transaction.amount),
-      fromAmount:    transaction.transferOut && moneyToString(transaction.transferOut.amount),
+      amount:        formatMoneyValue(transaction.amount),
+      fromAmount:    transaction.transferOut && formatMoneyValue(transaction.transferOut.amount),
       categoryName:  transaction.category && transaction.category.name,
       referenceId:   transaction.bankAccount && transaction.bankAccount.id,
       bankAccountId: transaction.transferOut && transaction.transferOut.bankAccount.id,
@@ -34,7 +34,7 @@ class EditTransfer extends React.Component {
   handleSubmit(values) {
     const { orgId, transaction, updateTransaction } = this.props;
     return updateTransaction(orgId, transaction.id, {
-      amount:  values.amount,
+      amount:  formatMoneyParam(values.amount),
       comment: values.comment,
       date:    values.date,
     }).catch(prepareSubmissionError);
