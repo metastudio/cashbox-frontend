@@ -16,7 +16,7 @@ const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
 
   return (
     <Nav>
-      <NavDropdown title={ organization.name } id="organizations-nav-dropdown">
+      <NavDropdown title={ `${organization.name.substr(0, 35)}...` } id="organizations-nav-dropdown">
         <LinkContainer to="/customers">
           <NavItem>Customers</NavItem>
         </LinkContainer>
