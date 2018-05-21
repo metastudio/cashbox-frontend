@@ -40,7 +40,7 @@ export interface Transaction {
 }
 
 export interface TransactionParams {
-  amount?:        Money;
+  amount?:        string;
   categoryId?:    number;
   customerId?:    number;
   bankAccountId?: number;
