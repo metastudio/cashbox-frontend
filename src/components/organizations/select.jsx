@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { loadOrganizations } from 'actions/organizations.js';
-import { getOrganizationsItems, selectOrganizationsStatus } from 'selectors/organizations.js';
+import { selectOrganizations, selectOrganizationsStatus } from 'selectors/organizations.js';
 import LoadingView from 'components/utils/loading-view';
 import OrganizationsList from './list/organizations.jsx';
 
@@ -42,7 +41,7 @@ SelectOrganization.propTypes = {
 };
 
 const select = (state) => ({
-  organizations: getOrganizationsItems(state),
+  organizations: selectOrganizations(state),
   status:        selectOrganizationsStatus(state),
 });
 
@@ -50,4 +49,4 @@ const dispatcher = (dispatch) => ({
   loadOrganizations: () => dispatch(loadOrganizations()),
 });
 
-export default withRouter(connect(select, dispatcher)(SelectOrganization));
+export default connect(select, dispatcher)(SelectOrganization);
