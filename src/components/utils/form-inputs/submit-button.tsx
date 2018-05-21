@@ -7,6 +7,7 @@ interface Props {
   submitFailed?:    boolean;
   submitSucceeded?: boolean;
   bsStyle?:         string;
+  className?:       string;
 }
 
 const SubmitButton: React.SFC<Props> = (props) => {
@@ -20,7 +21,7 @@ const SubmitButton: React.SFC<Props> = (props) => {
   } = props;
 
   let icon: React.ReactNode = '';
-  let bsStyle = props.bsStyle || 'default';
+  let bsStyle = props.bsStyle || 'primary';
 
   if (submitting) {
     icon = <i className="fa fa-spinner fa-spin" aria-hidden="true" />;
@@ -60,7 +61,7 @@ const HorizontalSubmitButton: React.SFC<Props> = (props) => (
 const VerticalSubmitButton: React.SFC<Props> = (props) => (
   <Row>
     <Col sm={ 12 }>
-      <SubmitButton { ...props } />
+      <SubmitButton className="pull-right" { ...props } />
     </Col>
   </Row>
 );
