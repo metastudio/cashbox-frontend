@@ -24,7 +24,7 @@ const TransactionForm = ({ handleSubmit, type, submitting, error, action, transa
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
     { action === 'Update' && transaction && <DestroyButton transaction={ transaction } /> }
-    <SubmitButton bsStyle="primary" className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
+    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
   </Form>
 );
 
