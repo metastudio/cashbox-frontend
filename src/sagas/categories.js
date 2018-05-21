@@ -75,9 +75,9 @@ function* handleDeleteCategory({ payload: { organizationId, categoryId }, meta: 
 }
 
 export default function* () {
-  yield takeEvery(loadCategories.toString(), handleLoadCategories);
-  yield takeEvery(loadCategory.toString(), handleLoadCategory);
-  yield takeEvery(createCategory.toString(), handleCreateCategory);
-  yield takeEvery(updateCategory.toString(), handleUpdateCategory);
-  yield takeEvery(deleteCategory.toString(), handleDeleteCategory);
+  yield takeEvery(loadCategories, handleLoadCategories);
+  yield takeEvery(loadCategory,   handleLoadCategory);
+  yield takeEvery(createCategory, handleCreateCategory);
+  yield takeEvery(updateCategory, handleUpdateCategory);
+  yield takeEvery(deleteCategory, handleDeleteCategory);
 }

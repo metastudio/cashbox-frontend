@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
-import { loadCategories, deleteCategory } from 'actions/categories.js'
+import * as statuses from 'constants/statuses.js';
+import { loadCategories, deleteCategory } from 'actions/categories.js';
 
 const defaultState = {
   items:  [],
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadCategories.request]: (state) => ({
@@ -30,8 +30,8 @@ export default handleActions({
   }),
   [deleteCategory.success]: (state, { payload }) => ({
     ...state,
-    items:  state.items.filter((item) => item.id != payload.category.id),
+    items:  state.items.filter((item) => item.id !== payload.category.id),
     status: statuses.SUCCESS,
     error:  null
   }),
-}, defaultState)
+}, defaultState);
