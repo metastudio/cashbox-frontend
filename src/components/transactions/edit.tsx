@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { Modal, Tabs, Tab } from 'react-bootstrap';
+import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import * as statuses from 'constants/statuses.js';
 import { Transaction } from 'model-types';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -85,10 +85,14 @@ class EditTransaction extends React.Component<Props> {
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs defaultActiveKey={ 1 } id="transactionType">
-            <LoadingView status={ this.props.status } />
-            { status === statuses.SUCCESS && transaction && this.renderTab(transaction) }
-          </Tabs>
+          <Row>
+            <Col xs={ 12 }>
+              <Tabs defaultActiveKey={ 1 } id="transactionType">
+                <LoadingView status={ this.props.status } />
+                { status === statuses.SUCCESS && transaction && this.renderTab(transaction) }
+              </Tabs>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
     );
