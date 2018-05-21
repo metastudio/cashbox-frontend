@@ -8,7 +8,7 @@ import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
-import { moneyToString } from 'utils/money';
+import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { createTransaction as createTransactionAction } from 'actions/transactions.js';
 
 interface StateProps {
@@ -44,12 +44,12 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
   handleSubmit = (values: TransactionParams) => {
     const { orgId, createTransaction } = this.props;
     return createTransaction(orgId, {
-      amount: values.amount,
-      categoryId: values.categoryId,
-      customerId: values.customerId,
+      amount:        formatMoneyParam(values.amount),
+      categoryId:    values.categoryId,
+      customerId:    values.customerId,
       bankAccountId: values.bankAccountId,
-      comment: values.comment,
-      date: values.date,
+      comment:       values.comment,
+      date:          values.date,
     }).catch(prepareSubmissionError);
   }
 
@@ -69,7 +69,7 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
   initialValues() {
     const { invoice } = this.props;
     return({
-      amount: moneyToString(invoice.amount),
+      amount: formatMoneyValue(invoice.amount),
       customerId: invoice.customerId
     });
   }

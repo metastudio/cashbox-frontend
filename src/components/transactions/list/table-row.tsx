@@ -13,12 +13,14 @@ interface OwnProps {
 type Props =  RouteComponentProps<{ id: number }> & OwnProps;
 
 class TransactionsTableRow extends React.Component<Props> {
-  getColorClass = (t: Transaction): string => {
+  amountClass = (t: Transaction): string => {
+    let className = '';
     if (t.category && t.category.name === 'Transfer') {
-      return 'transfer';
+      className = 'transfer';
     } else {
-      return Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
+      className = Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
     }
+    return className + ' text-right';
   }
 
   rowClass = (transaction: Transaction): string => {
@@ -31,14 +33,14 @@ class TransactionsTableRow extends React.Component<Props> {
 
   render() {
     const { transaction } = this.props;
-    
+
     return(
       <>
         <tr
           className={ this.rowClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
-          <td className={ this.getColorClass(transaction) }>{ formatMoney(transaction.amount) }</td>
+          <td className={ this.amountClass(transaction) }>{ formatMoney(transaction.amount) }</td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>

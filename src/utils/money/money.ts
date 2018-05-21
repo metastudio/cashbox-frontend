@@ -1,50 +1,73 @@
+import * as accounting from 'accounting';
+
+import Locales, { MoneyLocale } from './locales';
+
 interface Money {
   fractional: string;
-
-  currency: {
+  currency:   {
     isoCode: string;
+    name:          string;
+    symbol:        string;
     subunitToUnit: number;
-    symbol: string;
+    htmlEntity:    string;
   };
 }
 
-// I found that money format looks better if you use native locale for currency
-const localeForCurrency = (isoCode: string): string | undefined => {
-  switch (isoCode) {
-    case 'USD':
-    case 'EUR':
-      return 'en-US';
-    case 'RUB':
-      return 'ru-RU';
-    default:
-      return undefined;
-  }
-};
+const defaultMoneyLocale: MoneyLocale = Locales.ru_RU;
 
-const formatMoney = (money?: Money): string | undefined => {
+/**
+ * Format money value with default locale
+ * @param {Money} money - money value to format
+ * @param {MoneyLocale} locale - locale in which format money value
+ */
+const formatMoney = (money?: Money, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
   if (!money) { return undefined; }
 
-  const float = Number(money.fractional) / money.currency.subunitToUnit;
-  return float.toLocaleString(
-    localeForCurrency(money.currency.isoCode),
+  const amount = Number(money.fractional) / money.currency.subunitToUnit;
+
+  return accounting.formatMoney(amount, {
+    symbol:    money.currency.symbol,
+    format:    locale.symbolFirst ? '%s %v' : '%v %s',
+    decimal:   locale.decimalMark,
+    thousand:  locale.thousandsSeparator,
+    precision: Math.log10(money.currency.subunitToUnit),
+  });
+};
+
+/**
+ * Format money value to show in input
+ * @param {Money} money - money value to format
+ * @param {MoneyLocale} locale - locale in which format money value
+ */
+const formatMoneyValue = (money?: Money, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
+  if (!money) { return undefined; }
+
+  const amount = Number(money.fractional) / money.currency.subunitToUnit;
+
+  return accounting.formatMoney(amount, {
+    format:    '%v',
+    decimal:   locale.decimalMark,
+    thousand:  locale.thousandsSeparator,
+    precision: Math.log10(money.currency.subunitToUnit),
+  });
+};
+
+/**
+ * Reformat money string to format accepted by API
+ * @param {string} str - string representation of money
+ * @param {MoneyLocale} locale - locale in which money is formatted
+ */
+const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
+  if (!str) { return undefined; }
+
+  return accounting.formatNumber(
+    accounting.unformat(str, locale.decimalMark),
     {
-      style: 'currency',
-      currency: money.currency.isoCode,
-      currencyDisplay: 'symbol',
+      precision: 2,
+      thousand:  '',
+      decimal:   '.',
     }
   );
 };
 
-const moneyToString = (money?: Money): string | undefined => {
-  if (!money) { return undefined; }
-
-  const float = Number(money.fractional) / money.currency.subunitToUnit;
-  return float.toString();
-};
-
-const moneyStringWithoutCommas = (money?: string): string | undefined => {
-  if (!money) { return undefined; }
-  return money.replace(/,/g, '');
-};
-
-export { Money, formatMoney, moneyToString, moneyStringWithoutCommas };
+export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };
