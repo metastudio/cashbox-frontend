@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import { restoreSession } from 'actions/auth.js';
 
 import Spinner from 'components/utils/spinner';
 
 import LoginScene         from 'components/login';
-import DashboardScene     from 'components/dashboard';
 import TransactionsScene  from 'components/transactions';
 import OrganizationsScene from 'components/organizations';
 import MembersScene       from 'components/members';
@@ -30,16 +29,18 @@ class App extends React.Component {
       return (
         <BrowserRouter>
           <div>
-            <Route exact path="/" component={ DashboardScene } />
-            <Route path="/transactions" component={ TransactionsScene } />
-            <Route path="/login" component={ LoginScene } />
-            <Route path="/organizations" component={ OrganizationsScene } />
-            <Route path="/customers" component={ CustomersScene } />
-            <Route path="/categories" component={ CategoriesScene } />
-            <Route path="/bank_accounts" component={BankAccountsScene} />
-            <Route path="/members" component={ MembersScene } />
-            <Route path="/user" component={ UserScene }/>
-            <Route path='/invoices' component={ InvoicesScene }/>
+            <Switch>
+              <Route exact path="/" component={ TransactionsScene } />
+              <Route path="/transactions" component={ TransactionsScene } />
+              <Route path="/login" component={ LoginScene } />
+              <Route path="/organizations" component={ OrganizationsScene } />
+              <Route path="/customers" component={ CustomersScene } />
+              <Route path="/categories" component={ CategoriesScene } />
+              <Route path="/bank_accounts" component={BankAccountsScene} />
+              <Route path="/members" component={ MembersScene } />
+              <Route path="/user" component={ UserScene }/>
+              <Route path="/invoices" component={ InvoicesScene }/>
+            </Switch>
           </div>
         </BrowserRouter>
       );
