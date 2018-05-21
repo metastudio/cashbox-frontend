@@ -2,47 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Panel, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { loadOrganizations, setCurrentOrganization } from 'actions/organizations.js';
-import { getOrganizationsItems } from 'selectors/organizations.js';
+import * as statuses from 'constants/statuses.js';
+import { loadOrganizations } from 'actions/organizations.js';
+import { getOrganizationsItems, selectOrganizationsStatus } from 'selectors/organizations.js';
+import LoadingView from 'components/utils/loading-view';
+import OrganizationsList from './list/organizations.jsx';
 
 class SelectOrganization extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleOrganizationClick = this.handleOrganizationClick.bind(this);
-  }
-
   componentDidMount() {
     this.props.loadOrganizations();
   }
 
-  handleOrganizationClick(organization) {
-    this.props.setOrganization(organization).then(organization => {
-      this.props.addFlashMessage('Organization ' + organization.name + ' selected.');
-      this.props.history.push('/');
-    }).catch(error => {
-      this.props.addFlashMessage(`Unable to select organization: ${error.message}`, { type: 'danger' });
-    });
-  }
-
   render() {
-    const organizations = this.props.organizations.map((organization) => (
-      <ListGroupItem key={ organization.id } onClick={ () => this.handleOrganizationClick(organization) }>
-        { organization.name } - { organization.defaultCurrency }
-      </ListGroupItem>
-    ));
+    const { status, organizations } = this.props;
+
+    if (status !== statuses.SUCCESS || !organizations) {
+      return <LoadingView status={ status } />;
+    }
 
     return (
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <h2 className="text-center">Select organization</h2>
-          <Panel>
-            <ListGroup id="organizations">
-              { organizations }
-            </ListGroup>
-          </Panel>
+          <OrganizationsList organizations={ organizations } />
           <p className="text-center">or</p>
           <p className="text-center"><Button bsStyle="primary" href="/organizations/new">Create a new Organization</Button></p>
         </Col>
@@ -52,21 +36,18 @@ class SelectOrganization extends React.Component {
 }
 
 SelectOrganization.propTypes = {
-  setOrganization:   PropTypes.func.isRequired,
-  addFlashMessage:   PropTypes.func.isRequired,
   loadOrganizations: PropTypes.func.isRequired,
+  status:            PropTypes.string.isRequired,
   organizations:     PropTypes.arrayOf(PropTypes.object).isRequired,
-  history:           PropTypes.object.isRequired,
 };
 
 const select = (state) => ({
   organizations: getOrganizationsItems(state),
+  status:        selectOrganizationsStatus(state),
 });
 
 const dispatcher = (dispatch) => ({
-  loadOrganizations:  () => dispatch(loadOrganizations()),
-  setOrganization:    (orgId) => new Promise((res, rej) => dispatch(setCurrentOrganization(orgId, res, rej))),
-  addFlashMessage:    (message, type = null) => dispatch(addFlashMessage(message, type)),
+  loadOrganizations: () => dispatch(loadOrganizations()),
 });
 
 export default withRouter(connect(select, dispatcher)(SelectOrganization));
