@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Transaction } from 'model-types';
 import { destroyTransaction } from 'actions/transactions.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
-
+import { confirm } from 'components/utils/confirm';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 interface OwnProps {
@@ -30,11 +30,13 @@ class DestroyButton extends React.Component<Props> {
     const { orgId, transaction, destroy } = this.props;
     if (!transaction) { return; }
 
-    destroy(orgId, transaction.id).then(() => {
-      const { flashMessage, history } = this.props;
+    confirm('Are you sure?').then( () => {
+      destroy(orgId, transaction.id).then(() => {
+        const { flashMessage, history } = this.props;
 
-      flashMessage('Transaction successfully removed');
-      history.push('/transactions');
+        flashMessage('Transaction successfully removed');
+        history.push('/transactions');
+      });
     });
   }
 
