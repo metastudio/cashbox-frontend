@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Modal, Button, Tabs, Tab, Row, Col } from 'react-bootstrap';
+import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
@@ -9,31 +10,23 @@ interface State {
   show: boolean;
 }
 
-class NewTransaction extends React.Component<{}, State> {
-  constructor(props: {}) {
+type Props = RouteComponentProps<{ id: string }>;
+
+class NewTransaction extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
-    this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false
-    };
   }
 
   handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
+    this.props.history.push('/transactions');
   }
 
   render() {
     return(
       <div>
-        <Button bsStyle="primary" onClick={ this.handleShow } >Add...</Button>
-        <Modal show={ this.state.show } onHide={ this.handleClose }>
+        <Modal show onHide={ this.handleClose }>
           <Modal.Header closeButton>
             <Modal.Title>New Transaction</Modal.Title>
           </Modal.Header>
@@ -60,4 +53,4 @@ class NewTransaction extends React.Component<{}, State> {
   }
 }
 
-export default NewTransaction;
+export default withRouter(NewTransaction);

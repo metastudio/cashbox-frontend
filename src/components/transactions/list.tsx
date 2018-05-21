@@ -1,12 +1,12 @@
 import * as React from 'react';
-
-import NewTransaction from './new';
+import { Link } from 'react-router-dom';
 import Transactions from './list/transactions';
 
 const TransactionsList: React.SFC<{}> = () => {
   return(
     <>
-      <NewTransaction />
+      <Link to="/transactions/new" className="btn btn-default pull-right">New Transaction</Link>
+      <h1>Transactions</h1>
       <Transactions />
     </>
   );
