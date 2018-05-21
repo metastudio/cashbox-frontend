@@ -21,6 +21,10 @@ class TransactionsTableRow extends React.Component<Props> {
     }
   }
 
+  rowClass = (transaction: Transaction): string => {
+    return !transaction.isViewed ? 'new-transaction' : '';
+  }
+
   handleClick = (transactionId: number) => {
     this.props.history.push(`/transactions/${transactionId}/edit`);
   }
@@ -30,7 +34,10 @@ class TransactionsTableRow extends React.Component<Props> {
     
     return(
       <>
-        <tr key={ transaction.id } onClick={ () => this.handleClick(transaction.id) }>
+        <tr
+          className={ this.rowClass(transaction) }
+          onClick={ () => this.handleClick(transaction.id) }
+        >
           <td className={ this.getColorClass(transaction) }>{ formatMoney(transaction.amount) }</td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>

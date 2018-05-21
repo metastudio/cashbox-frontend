@@ -15,15 +15,17 @@ class RequireOrganization extends React.Component {
     this.checkOrganization(props);
   }
 
-  checkOrganization(props){
-    if (!props.hasOrganization) {
-      props.addFlashMessage('Please select or add organization.', { type: 'info' });
+  checkOrganization(props) {
+    const { addFlashMessage, hasOrganization } = props;
+    if (!hasOrganization) {
+      addFlashMessage('Please select or add organization.', { type: 'info' });
     }
   }
 
   render() {
-    if (this.props.hasOrganization) {
-      return this.props.children;
+    const { hasOrganization, children } = this.props;
+    if (hasOrganization) {
+      return children;
     } else {
       return <Redirect to="/organizations/select" />;
     }
@@ -31,9 +33,9 @@ class RequireOrganization extends React.Component {
 }
 
 RequireOrganization.propTypes = {
-  hasOrganization:          PropTypes.bool.isRequired,
-  addFlashMessage:          PropTypes.func.isRequired,
-  children:                 PropTypes.node,
+  hasOrganization: PropTypes.bool.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  children:        PropTypes.node,
 };
 
 const select = (state) => ({
@@ -41,7 +43,7 @@ const select = (state) => ({
 });
 
 const dispatches = (dispatch) => ({
-  addFlashMessage:          (message, options = {}) => dispatch(addFlashMessage(message, options)),
+  addFlashMessage: (message, options = {}) => dispatch(addFlashMessage(message, options)),
 });
 
 export default connect(select, dispatches)(RequireOrganization);

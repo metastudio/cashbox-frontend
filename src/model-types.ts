@@ -35,6 +35,7 @@ export interface Transaction {
   customer?:   Customer;
   date?:       Date;
   comment?:    string;
+  isViewed:    boolean;
 
   transfer_out?: TransferOut;
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Button, Tabs, Tab } from 'react-bootstrap';
+import { Modal, Button, Tabs, Tab, Row, Col } from 'react-bootstrap';
 
 import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
@@ -38,17 +38,21 @@ class NewTransaction extends React.Component<{}, State> {
             <Modal.Title>New Transaction</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Tabs defaultActiveKey={ 1 } id="transactionType">
-              <Tab eventKey={ 1 } title="Income">
-                <NewIncomeTransaction />
-              </Tab>
-              <Tab eventKey={ 2 } title="Expense">
-                <NewExpenseTransaction />
-              </Tab>
-              <Tab eventKey={ 3 } title="Transfer">
-                <NewTransfer />
-              </Tab>
-            </Tabs>
+            <Row>
+              <Col xs={ 12 }>
+                <Tabs defaultActiveKey={ 1 } id="transactionType">
+                  <Tab eventKey={ 1 } title="Income">
+                    <NewIncomeTransaction />
+                  </Tab>
+                  <Tab eventKey={ 2 } title="Expense">
+                    <NewExpenseTransaction />
+                  </Tab>
+                  <Tab eventKey={ 3 } title="Transfer">
+                    <NewTransfer />
+                  </Tab>
+                </Tabs>
+              </Col>
+            </Row>
           </Modal.Body>
         </Modal>
       </div>
