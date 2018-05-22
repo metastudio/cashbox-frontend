@@ -4,6 +4,7 @@ import * as statuses from 'constants/statuses.js';
 import {
   loadTransactions,
   createTransaction,
+  createTransfer,
   updateTransaction,
   destroyTransaction,
 } from 'actions/transactions.js';
@@ -33,7 +34,12 @@ export default handleActions({
     status: statuses.FAILURE,
     error:  payload
   }),
-  [combineActions(createTransaction.success, updateTransaction.success, destroyTransaction.success)]: (state) => ({
+  [combineActions(
+    createTransaction.success,
+    createTransfer.success,
+    updateTransaction.success,
+    destroyTransaction.success,
+  )]: (state) => ({
     ...state,
     status: statuses.INVALID,
   })
