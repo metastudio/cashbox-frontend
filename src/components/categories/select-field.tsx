@@ -15,14 +15,14 @@ import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
 
 interface OwnProps {
-  status:      Status;
   emptyTitle?: string;
   type:        string;
-  categories?: Category[];
 }
 
 interface StateProps {
-  orgId: number;
+  orgId:       number;
+  status:      Status;
+  categories?: Category[];
 }
 
 interface DispatchProps {

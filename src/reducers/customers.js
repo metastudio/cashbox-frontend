@@ -1,13 +1,18 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
-import { loadCustomers, deleteCustomer } from 'actions/customers.js'
+import * as statuses from 'constants/statuses.js';
+import {
+  loadCustomers,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer,
+} from 'actions/customers.js';
 
 const defaultState = {
   items:  [],
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadCustomers.request]: (state) => ({
@@ -28,10 +33,16 @@ export default handleActions({
     status: statuses.FAILURE,
     error:  payload
   }),
+  [createCustomer.success]: (state) => ({
+    ...state,
+    status: statuses.INVALID,
+  }),
+  [updateCustomer.success]: (state, { payload }) => ({
+    ...state,
+    items:  state.items.map(c => c.id === payload.customer.id ? payload.customer : c),
+  }),
   [deleteCustomer.success]: (state, { payload }) => ({
     ...state,
-    items:  state.items.filter((item) => item.id != payload.customer.id),
-    status: statuses.SUCCESS,
-    error:  null
+    items:  state.items.filter(c => c.id !== payload.customer.id),
   }),
-}, defaultState)
+}, defaultState);

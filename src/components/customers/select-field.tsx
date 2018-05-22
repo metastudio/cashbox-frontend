@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { Async, Option } from 'react-select';
+import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
-import { Customer } from 'model-types';
+import { Status, Customer } from 'model-types';
 import { loadCustomers } from 'actions/customers.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCustomers, selectCustomersStatus } from 'selectors/customers.js';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -18,44 +19,65 @@ interface OwnProps {
 }
 
 interface StateProps {
-  orgId: number;
+  orgId:       number;
+  status:      Status;
+  customers?:  Customer[];
 }
 
 interface DispatchProps {
-  load: (orgId: number) => Promise<Customer[]>;
+  load: (orgId: number) => void;
 }
 
 type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
 
-const CustomersSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, ...inputProps }) => {
-  const loadOptions = () => (
-    load(orgId).then((customers) => ({
-      options: (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-        .concat(customers.map(c => ({ value: String(c.id), label: c.name })))
-    }))
-  );
+class CustomersSelect extends React.Component<Props> {
+  loadData = (props: Props) => {
+    if (props.status === Status.Invalid) {
+      props.load(props.orgId);
+    }
+  }
 
-  delete inputProps.meta;
+  componentDidMount() {
+    this.loadData(this.props);
+  }
 
-  const handleChange = (value: Option<string>) => {
-    input.onChange(value && value.value);
-  };
+  componentWillReceiveProps(props: Props) {
+    this.loadData(props);
+  }
 
-  return (
-    <Async
-      { ...inputProps }
-      name={ input.name }
-      value={ String(input.value) }
-      onChange={ handleChange }
-      onBlur={ () => input.onBlur(input.value) }
-      cache={ {} }
-      loadOptions={ loadOptions }
-    />
-  );
-};
+  handleChange = (value: Option<string>) => {
+    this.props.input.onChange(value && value.value);
+  }
+
+  options = (): Option[] => {
+    const { status, customers, emptyTitle } = this.props;
+    if (status !== Status.Success || !customers) { return []; }
+
+    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
+      .concat(customers.map(c => ({ value: String(c.id), label: c.name })));
+  }
+
+  render() {
+    const { orgId, status, input, meta, ...inputProps } = this.props;
+
+    return (
+      <Select
+        { ...inputProps }
+        name={ input.name }
+        value={ String(input.value) }
+        onChange={ this.handleChange }
+        onBlur={ () => input.onBlur(input.value) }
+        isLoading={ status !== Status.Success }
+        options={ this.options() }
+      />
+    );
+  }
+}
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId:     getCurrentOrganizationId(state),
+  status:    selectCustomersStatus(state),
+  customers: selectCustomers(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
