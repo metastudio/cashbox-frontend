@@ -32,7 +32,7 @@ class NewTransaction extends React.Component<Props, State> {
         <Modal.Body>
           <Row>
             <Col xs={ 12 }>
-              <Tabs defaultActiveKey={ 1 } id="transactionType">
+              <Tabs defaultActiveKey={ 1 } mountOnEnter id="transactionType">
                 <Tab eventKey={ 1 } title="Income">
                   <NewIncomeTransaction />
                 </Tab>
