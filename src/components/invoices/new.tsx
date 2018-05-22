@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { formatMoneyParam } from 'utils/money';
 
 import { Invoice, InvoiceParams } from 'model-types';
 import { createInvoice } from 'actions/invoices.js';
@@ -26,7 +27,7 @@ class NewInvoice extends React.Component<Props> {
       orgId,
       {
         currency:     values.currency,
-        amount:       values.amount && values.amount.toString(),
+        amount:       formatMoneyParam(values.amount),
         number:       Number(values.number),
         customerId:   values.customerId,
         startsAt:     values.startsAt,
@@ -38,7 +39,7 @@ class NewInvoice extends React.Component<Props> {
           date:         item.date,
           hours:        Number(item.hours),
           description:  item.description,
-          amount:       item.amount && item.amount.toString(),
+          amount:       formatMoneyParam(item.amount),
         })),
       }
     );
