@@ -1,7 +1,12 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadCategories, deleteCategory } from 'actions/categories.js';
+import {
+  loadCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from 'actions/categories.js';
 
 const defaultState = {
   items:  [],
@@ -28,10 +33,16 @@ export default handleActions({
     status: statuses.FAILURE,
     error:  payload
   }),
+  [createCategory.success]: (state) => ({
+    ...state,
+    status: statuses.INVALID,
+  }),
+  [updateCategory.success]: (state, { payload }) => ({
+    ...state,
+    items:  state.items.map((c) => c.id === payload.category.id ? payload.category : c),
+  }),
   [deleteCategory.success]: (state, { payload }) => ({
     ...state,
-    items:  state.items.filter((item) => item.id !== payload.category.id),
-    status: statuses.SUCCESS,
-    error:  null
+    items:  state.items.filter((c) => c.id !== payload.category.id),
   }),
 }, defaultState);

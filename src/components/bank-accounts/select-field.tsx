@@ -3,8 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
-import * as statuses from 'constants/statuses.js';
-import { BankAccount } from 'model-types';
+import { Status, BankAccount } from 'model-types';
 import { loadBankAccounts } from 'actions/bank-accounts.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectBankAccountsStatus, selectBankAccounts } from 'selectors/bank-accounts.js';
@@ -34,7 +33,7 @@ type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
 
 class BankAccountsSelect extends React.Component<Props> {
   loadData = (props: Props) => {
-    if (props.status === statuses.INVALID) {
+    if (props.status === Status.Invalid) {
       props.load(props.orgId);
     }
   }
@@ -53,7 +52,7 @@ class BankAccountsSelect extends React.Component<Props> {
 
   options = (): Option[] => {
     const { status, bankAccounts, emptyTitle } = this.props;
-    if (status !== statuses.SUCCESS || !bankAccounts) {
+    if (status !== Status.Success || !bankAccounts) {
       return [];
     }
     return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
@@ -70,7 +69,7 @@ class BankAccountsSelect extends React.Component<Props> {
         value={ String(input.value) }
         onChange={ this.handleChange }
         onBlur={ () => input.onBlur(input.value) }
-        isLoading={ status !== statuses.SUCCESS }
+        isLoading={ status !== Status.Success }
         options={ this.options() }
       />
     );
