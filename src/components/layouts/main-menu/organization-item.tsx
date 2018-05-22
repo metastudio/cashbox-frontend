@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, NavItem, NavDropdown } from 'react-bootstrap';
 
 import { getCurrentOrganization } from 'selectors/organizations.js';
+import 'components/app/css/default.css';
 
 interface StatePropTypes {
   organization?: {
@@ -14,9 +15,27 @@ interface StatePropTypes {
 const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
   if (!organization) { return null; }
 
+  const renderTitle = (title: string): object => {
+    return (
+      <>
+        <span className="truncated">
+          { title }
+        </span>
+        <div className="inline-caret">
+          <span className="caret"/>
+        </div>
+      </>
+    );
+  };
+
   return (
     <Nav>
-      <NavDropdown title={ organization.name } id="organizations-nav-dropdown">
+      <NavDropdown
+        // @ts-ignore
+        title={ renderTitle(organization.name) }
+        noCaret="true"
+        id="organizations-nav-dropdown"
+      >
         <LinkContainer to="/customers">
           <NavItem>Customers</NavItem>
         </LinkContainer>

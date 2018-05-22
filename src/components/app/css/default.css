@@ -1,0 +1,12 @@
+.truncated {
+  display: inline-block;
+  max-width: 20em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.inline-caret {
+  display: inline-block;
+  overflow: hidden;
+}
