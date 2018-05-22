@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
+import { Table, PageHeader } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { loadBankAccounts } from 'actions/bank-accounts.js';
@@ -13,7 +13,6 @@ import LoadingView from 'components/utils/loading-view';
 import { formatBankAccountName } from 'utils/bank-account';
 
 class BankAccounts extends React.Component {
-
   componentDidMount() {
     const { orgId, loadBankAccounts } = this.props;
     if (orgId) {
@@ -38,7 +37,7 @@ class BankAccounts extends React.Component {
         <LoadingView status={ this.props.status }>
           { this.props.status === statuses.SUCCESS &&
             <div>
-              <h2>Accounts</h2>
+              <PageHeader>Accounts</PageHeader>
               <Table striped responsive id="bankAccounts">
                 <tbody>
                   { bankAccounts }
