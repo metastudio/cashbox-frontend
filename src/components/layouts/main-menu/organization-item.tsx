@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, NavItem, NavDropdown } from 'react-bootstrap';
 
 import { getCurrentOrganization } from 'selectors/organizations.js';
+import { truncate } from 'utils/truncate';
 
 interface StatePropTypes {
   organization?: {
@@ -16,7 +17,7 @@ const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
 
   return (
     <Nav>
-      <NavDropdown title={ `${organization.name.substr(0, 35)}...` } id="organizations-nav-dropdown">
+      <NavDropdown title={ truncate(organization.name, 35) } id="organizations-nav-dropdown">
         <LinkContainer to="/customers">
           <NavItem>Customers</NavItem>
         </LinkContainer>
