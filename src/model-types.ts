@@ -1,5 +1,12 @@
 import { Money } from 'utils/money';
 
+export enum Status {
+  Invalid = 'INVALID',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Failure = 'FAILURE',
+}
+
 export interface Customer {
   id:               number;
   name:             string;
@@ -10,6 +17,7 @@ export interface BankAccount {
   id:       number;
   name:     string;
   currency: string;
+  balance:  Money;
 }
 
 export interface Category {
