@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { Async, Option } from 'react-select';
+import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
-import { Category } from 'model-types';
+import { Status, Category } from 'model-types';
 import { loadCategories } from 'actions/categories.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCategories, selectCategoriesStatus } from 'selectors/categories.js';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -15,52 +16,76 @@ import 'components/utils/form-inputs/async-select-fix.css';
 
 interface OwnProps {
   emptyTitle?: string;
-  type: string;
+  type:        string;
 }
 
 interface StateProps {
-  orgId: number;
+  orgId:       number;
+  status:      Status;
+  categories?: Category[];
 }
 
 interface DispatchProps {
-  load: (orgId: number) => Promise<Category[]>;
+  load: (orgId: number) => void;
 }
 
 type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
 
-const CategoriesSelect: React.SFC<Props> = ({ orgId, input, load, emptyTitle, type, ...inputProps }) => {
-  const loadOptions = () => (
-    load(orgId).then((categories) => ({
-      options: (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-        .concat(categories.filter((item) => item.type === type).map(c => ({ value: String(c.id), label: c.name })))
-    }))
-  );
+class CategoriesSelect extends React.Component<Props> {
+  loadData = (props: Props) => {
+    if (props.status === Status.Invalid) {
+      props.load(props.orgId);
+    }
+  }
 
-  delete inputProps.meta;
+  componentDidMount() {
+    this.loadData(this.props);
+  }
 
-  const handleChange = (value: Option<string>) => {
-    input.onChange(value && value.value);
-  };
+  componentWillReceiveProps(props: Props) {
+    this.loadData(props);
+  }
 
-  return (
-    <Async
-      { ...inputProps }
-      name={ input.name }
-      value={ String(input.value) }
-      onChange={ handleChange }
-      onBlur={ () => input.onBlur(input.value) }
-      cache={ {} }
-      loadOptions={ loadOptions }
-    />
-  );
-};
+  handleChange = (value: Option<string>) => {
+    this.props.input.onChange(value && value.value);
+  }
+
+  options = (): Option[] => {
+    const { status, categories, emptyTitle, type } = this.props;
+
+    if (status !== Status.Success || !categories) { return []; }
+
+    const typedCategories = categories.filter((item) => item.type === type);
+
+    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
+      .concat(typedCategories.map(c => ({ value: String(c.id), label: c.name })));
+  }
+
+  render() {
+    const { orgId, status, input, meta, ...inputProps } = this.props;
+
+    return (
+      <Select
+        { ...inputProps }
+        name={ input.name }
+        value={ String(input.value) }
+        onChange={ this.handleChange }
+        onBlur={ () => input.onBlur(input.value) }
+        isLoading={ status !== Status.Success }
+        options={ this.options() }
+      />
+    );
+  }
+}
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId:      getCurrentOrganizationId(state),
+  status:     selectCategoriesStatus(state),
+  categories: selectCategories(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => new Promise<Category[]>((res, rej) => dispatch(loadCategories(orgId, res, rej))),
+  load: (orgId: number) => dispatch(loadCategories(orgId)),
 });
 
 const CategoriesSelectContainer =

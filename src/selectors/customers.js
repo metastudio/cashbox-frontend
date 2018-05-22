@@ -1,3 +1,4 @@
-const selectCustomers = (state) => state.customers.items;
+const selectCustomers       = (state) => state.customers.items;
+const selectCustomersStatus = (state) => state.customers.status;
 
-export { selectCustomers };
+export { selectCustomers, selectCustomersStatus };

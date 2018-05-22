@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationCategories,
@@ -75,8 +75,8 @@ function* handleDeleteCategory({ payload: { organizationId, categoryId }, meta: 
 }
 
 export default function* () {
-  yield takeEvery(loadCategories, handleLoadCategories);
-  yield takeEvery(loadCategory,   handleLoadCategory);
+  yield takeLatest(loadCategories, handleLoadCategories);
+  yield takeLatest(loadCategory,   handleLoadCategory);
   yield takeEvery(createCategory, handleCreateCategory);
   yield takeEvery(updateCategory, handleUpdateCategory);
   yield takeEvery(deleteCategory, handleDeleteCategory);

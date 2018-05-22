@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationCustomers,
@@ -75,8 +75,8 @@ function* handleDeleteCustomer({ payload: { organizationId, customerId }, meta: 
 }
 
 export default function* () {
-  yield takeEvery(loadCustomers.toString(), handleLoadCustomers);
-  yield takeEvery(loadCustomer.toString(), handleLoadCustomer);
+  yield takeLatest(loadCustomers.toString(), handleLoadCustomers);
+  yield takeLatest(loadCustomer.toString(), handleLoadCustomer);
   yield takeEvery(createCustomer.toString(), handleCreateCustomer);
   yield takeEvery(updateCustomer.toString(), handleUpdateCustomer);
   yield takeEvery(deleteCustomer.toString(), handleDeleteCustomer);
