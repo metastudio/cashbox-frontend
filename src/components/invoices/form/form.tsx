@@ -2,7 +2,6 @@ import * as React from 'react';
 import { reduxForm, InjectedFormProps } from 'redux-form';
 import { Form, Alert } from 'react-bootstrap';
 
-import { Money } from 'utils/money';
 import { SubmitButton } from 'components/utils/form-inputs';
 
 import MainFields from './main-fields';
@@ -18,7 +17,7 @@ export interface InvoiceFormData {
   customerId?:  number;
   startsAt?:    Date;
   endsAt?:      Date;
-  amount?:      Money;
+  amount?:      string;
   sentAt?:      Date;
   paidAt?:      Date;
   invoiceItems: InvoiceItemFormData[];

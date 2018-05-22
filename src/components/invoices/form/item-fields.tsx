@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 
-import { Money } from 'utils/money';
 import {
   VerticalFormInput,
   VerticalDatePicker,
@@ -11,7 +10,7 @@ import { VerticalCustomersSelect } from 'components/customers/select-field';
 
 interface InvoiceItemFormData {
   customerId?:  number;
-  amount?:      Money;
+  amount?:      string;
   date?:        Date;
   hours?:       number;
   description?: string;

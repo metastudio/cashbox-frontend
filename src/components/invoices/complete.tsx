@@ -69,7 +69,7 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
   initialValues() {
     const { invoice } = this.props;
     return({
-      amount: formatMoneyValue(invoice.amount),
+      amount:     formatMoneyValue(invoice.amount),
       customerId: invoice.customerId
     });
   }

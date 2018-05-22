@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Col, PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import * as statuses from 'constants/statuses.js';
 import { Invoice, InvoiceParams } from 'model-types';
@@ -36,7 +37,7 @@ class EditInvoice extends React.Component<Props> {
       invoice.id,
       {
         currency:     values.currency,
-        amount:       values.amount && values.amount.toString(),
+        amount:       formatMoneyParam(values.amount),
         number:       Number(values.number),
         customerId:   values.customerId,
         startsAt:     values.startsAt,
@@ -48,7 +49,7 @@ class EditInvoice extends React.Component<Props> {
           date:         item.date,
           hours:        Number(item.hours),
           description:  item.description,
-          amount:       item.amount && item.amount.toString(),
+          amount:       formatMoneyParam(item.amount),
         }))
       }
     );
@@ -56,7 +57,7 @@ class EditInvoice extends React.Component<Props> {
 
   initialPrepare = (invoice: Invoice): InvoiceFormData => {
     return ({
-      amount:     invoice.amount,
+      amount:     formatMoneyValue(invoice.amount),
       currency:   invoice.currency,
       customerId: invoice.customerId,
       endsAt:     invoice.endsAt,
@@ -67,7 +68,7 @@ class EditInvoice extends React.Component<Props> {
       invoiceItems: invoice.invoiceItems.map((item) => ({
         id:          item.id,
         customerId:  item.customerId,
-        amount:      item.amount,
+        amount:      formatMoneyValue(item.amount),
         date:        item.date,
         hours:       item.hours,
         description: item.description,
@@ -96,7 +97,7 @@ class EditInvoice extends React.Component<Props> {
 
     return(
       <Col sm={ 6 } smOffset={ 3 }>
-        <PageHeader><h1>Edit Invoice</h1></PageHeader>
+        <PageHeader>Edit Invoice</PageHeader>
         <Form
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterUpdate }
