@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationBankAccounts,
@@ -75,8 +75,8 @@ function* handleDeleteBankAccount({ payload: { organizationId, bankAccountId }, 
 }
 
 export default function* () {
-  yield takeEvery(loadBankAccounts,  handleLoadBankAccounts);
-  yield takeEvery(loadBankAccount,   handleLoadBankAccount);
+  yield takeLatest(loadBankAccounts,  handleLoadBankAccounts);
+  yield takeLatest(loadBankAccount,   handleLoadBankAccount);
   yield takeEvery(createBankAccount, handleCreateBankAccount);
   yield takeEvery(updateBankAccount, handleUpdateBankAccount);
   yield takeEvery(deleteBankAccount, handleDeleteBankAccount);
