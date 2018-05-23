@@ -26,6 +26,11 @@ export interface Category {
   type:     string;
 }
 
+export interface CategoryParams {
+  name?: string;
+  type?: string;
+}
+
 export interface TransferOut {
   id:          number;
   amount:      Money;

@@ -6,14 +6,14 @@ import AppLayout from 'components/layouts/app-layout';
 
 import List from './list';
 import New  from './new.jsx';
-import Edit from './edit.jsx';
+import Edit from './edit';
 
 const CategoriesScene: React.SFC<{}> = () => (
   <RequireLogin>
     <AppLayout>
       <Route exact path="/categories" component={ List } />
       <Route path="/categories/new" component={ New } />
-      <Route path="/categories/:categoryId/edit" component={ Edit } />
+      <Route path="/categories/:id/edit" component={ Edit } />
     </AppLayout>
   </RequireLogin>
 );
