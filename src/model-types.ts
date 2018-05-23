@@ -104,3 +104,8 @@ export interface InvoiceParams {
 
   invoiceItemsAttributes: InvoiceItemParams[];
 }
+
+export interface FalshMessageOptions {
+  type:       'success' | 'danger';
+  autoClose?: boolean;
+}
