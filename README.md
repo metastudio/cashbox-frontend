@@ -57,3 +57,24 @@ Heroku is used for deployment. `rscashbox` - is application for staging.
    ```sh
    $ git push heroku master
    ```
+
+# Generate GraphQL types
+
+## Download schema
+
+Run:
+```sh
+REACT_APP_GRAPHQL_URI=http://api.cashbox.test/graphql yarn run schema
+```
+
+`REACT_APP_GRAPHQL_URI` is same in `.env.local` file.
+
+# Generate types
+
+Make sure that `src/queries/***/*.ts` files include all graphql queries and
+mutations and run next command to generate types:
+```sh
+yarn run types
+```
+
+Types will be generated in `src/graphql-types.ts` file.
