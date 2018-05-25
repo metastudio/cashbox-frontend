@@ -28,7 +28,7 @@ class DestroyCategory extends React.Component<Props> {
     const { orgId, category, destroy, message, history } = this.props;
 
     confirm('Are you sure?').then(() => {
-      destroy(orgId, category.id).then(() => {
+      destroy(orgId, Number(category.id)).then(() => {
         message(`Category ${category.name} successfully deleted.`);
         history.push('/categories');
       }).catch(error => {

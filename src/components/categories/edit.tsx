@@ -1,52 +1,25 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
 import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Alert, Panel, Row, Col, PageHeader } from 'react-bootstrap';
-import { Query } from 'react-apollo';
+import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
 
-import { CategoryParams } from 'model-types';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { updateCategory } from 'actions/categories.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { prepareSubmissionError } from 'utils/errors';
+import { addFlashMessage } from 'actions/flash-messages.js';
 
-import Spinner from 'components/utils/spinner';
-import Form from './form.jsx';
-
-const categoryQuery = gql`
-  query category($orgId: ID!, $categoryId: ID!) {
-    organization(id: $orgId) {
-      category(id:$categoryId) {
-        id
-        name
-        type
-      }
-    }
-  }
-`;
+import Load from './edit/load';
+import Update from './edit/update';
 
 interface StateProps {
   orgId: number;
 }
 
 interface DispatchProps {
-  update:  (orgId: number, id: number, data: CategoryParams) => Promise<{}>;
   message: (msg: string) => void;
 }
 
 type Props = RouteComponentProps<{ id: string }> & StateProps & DispatchProps;
 
 class EditCategory extends React.Component<Props> {
-  // TODO: `values` should have `CategoryFormData` type defined via form component
-  handleSubmit = (values: CategoryParams) => {
-    const { orgId, match, update } = this.props;
-    return update(orgId, Number(match.params.id), {
-      name: values.name,
-      type: values.type,
-    }).catch(prepareSubmissionError);
-  }
-
   afterUpdate = () => {
     const { message, history } = this.props;
 
@@ -61,27 +34,20 @@ class EditCategory extends React.Component<Props> {
       <Row>
         <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
           <PageHeader>Edit Category</PageHeader>
-          <Query query={ categoryQuery } variables={ { orgId, categoryId: match.params.id } }>
+          <Load orgId={ String(orgId) } categoryId={ match.params.id }>
             {
-              ({ loading, error, data }) => {
-                if (loading) { return <Spinner />; }
-                if (error) { return <Alert bsStyle="danger">{ error }</Alert>; }
-
-                return (
-                  <Panel>
-                    <Panel.Body>
-                      <Form
-                        onSubmit={ this.handleSubmit }
-                        onSubmitSuccess={ this.afterUpdate }
-                        initialValues={ data.organization.category }
-                        action="Update"
-                      />
-                    </Panel.Body>
-                  </Panel>
-                );
-              }
+              (category) => (
+                <Panel>
+                  <Panel.Body>
+                    <Update
+                      category={ category }
+                      afterUpdate={ this.afterUpdate }
+                    />
+                  </Panel.Body>
+                </Panel>
+              )
             }
-          </Query>
+          </Load>
         </Col>
       </Row>
     );
@@ -93,8 +59,6 @@ const mapState = (state: {}) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  update: (orgId: number, categoryId: number, data: CategoryParams) =>
-    new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej))),
   message: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
