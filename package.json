@@ -54,6 +54,7 @@
     "@types/react-select": "^1.2.6",
     "@types/redux-form": "^7.2.2",
     "@types/redux-logger": "^2.3",
+    "apollo-codegen": "^0.19.1",
     "typescript": "^2.7.2"
   }
 }
