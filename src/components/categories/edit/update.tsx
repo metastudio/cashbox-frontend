@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Mutation, MutationFn } from 'react-apollo';
 
-import { Category, CategoryParams } from 'model-types';
+import { CategoryFragment, CategoryInput } from 'graphql-types';
 import { prepareSubmissionError } from 'utils/errors';
 import { UpdateCategoryMutation, UpdateCategoryMutationVariables } from 'graphql-types';
 
@@ -14,13 +14,13 @@ class UpdateMutation extends Mutation<UpdateCategoryMutation, UpdateCategoryMuta
 type UpdateFn = MutationFn<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
 
 interface Props {
-  category: Category;
+  category: CategoryFragment;
   afterUpdate: () => void;
 }
 
 class UpdateCategory extends React.Component<Props> {
   // TODO: `values` should have `CategoryFormData` type defined via form component
-  handleSubmit = (update: UpdateFn, values: CategoryParams) => {
+  handleSubmit = (update: UpdateFn, values: CategoryInput) => {
     const { category } = this.props;
     return update({
       variables: {
@@ -41,7 +41,7 @@ class UpdateCategory extends React.Component<Props> {
         {
           (updateCategory) => (
             <Form
-              onSubmit={ (values: CategoryParams) => this.handleSubmit(updateCategory, values) }
+              onSubmit={ (values: CategoryInput) => this.handleSubmit(updateCategory, values) }
               onSubmitSuccess={ afterUpdate }
               initialValues={ category }
               action="Update"

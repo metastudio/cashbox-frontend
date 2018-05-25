@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Category } from 'model-types';
+import { CategoryFragment } from 'graphql-types';
 
 import DestroyButton from '../destroy';
 
 interface Props {
-  category: Category;
+  category: CategoryFragment;
 }
 
 const CategoriesTableRow: React.SFC<Props> = ({ category }) => (

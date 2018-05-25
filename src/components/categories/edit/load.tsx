@@ -3,9 +3,8 @@ import { Alert } from 'react-bootstrap';
 import { Query } from 'react-apollo';
 
 import Spinner from 'components/utils/spinner';
-import { Category } from 'model-types';
+import { CategoryFragment } from 'graphql-types';
 import { GetCategoryQuery, GetCategoryQueryVariables } from 'graphql-types';
-
 import { GetCategory } from 'queries/categories';
 
 class CategoryQuery extends Query<GetCategoryQuery, GetCategoryQueryVariables> {}
@@ -13,7 +12,7 @@ class CategoryQuery extends Query<GetCategoryQuery, GetCategoryQueryVariables> {
 interface Props {
   orgId:      string;
   categoryId: string;
-  children:   (category: Category) => React.ReactNode;
+  children:   (category: CategoryFragment) => React.ReactNode;
 }
 
 class LoadEditCategory extends React.Component<Props> {

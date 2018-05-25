@@ -6,6 +6,23 @@ export interface CategoryInput {
   name: string,
 };
 
+export interface GetOrganizationCategoriesQueryVariables {
+  orgId: string,
+};
+
+export interface GetOrganizationCategoriesQuery {
+  // Find an Organization by ID
+  organization:  {
+    __typename: "Organization",
+    categories:  Array< {
+      __typename: "Category",
+      id: string,
+      name: string,
+      type: string,
+    } | null >,
+  } | null,
+};
+
 export interface GetCategoryQueryVariables {
   orgId: string,
   categoryId: string,
@@ -35,7 +52,14 @@ export interface UpdateCategoryMutation {
   updateCategory:  {
     __typename: "Category",
     id: string,
-    type: string,
     name: string,
+    type: string,
   } | null,
+};
+
+export interface CategoryFragment {
+  __typename: "Category",
+  id: string,
+  name: string,
+  type: string,
 };
