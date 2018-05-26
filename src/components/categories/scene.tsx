@@ -5,7 +5,7 @@ import RequireLogin from 'components/utils/require-login';
 import AppLayout from 'components/layouts/app-layout';
 
 import List from './list';
-import New  from './new.jsx';
+import New  from './new';
 import Edit from './edit';
 
 const CategoriesScene: React.SFC<{}> = () => (

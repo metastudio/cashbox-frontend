@@ -33,6 +33,7 @@ class CategoriesList extends React.Component<Props> {
         <OrganizationCategoriesQuery
           query={ GetOrganizationCategories }
           variables={ { orgId: String(orgId) } }
+          fetchPolicy="cache-and-network"
         >
           {
             ({ loading, error, data }) => {

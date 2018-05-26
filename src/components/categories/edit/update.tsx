@@ -4,7 +4,6 @@ import { Mutation, MutationFn } from 'react-apollo';
 import { CategoryFragment, CategoryInput } from 'graphql-types';
 import { appollorErrorToSubmission } from 'utils/errors';
 import { UpdateCategoryMutation, UpdateCategoryMutationVariables } from 'graphql-types';
-
 import { UpdateCategory as UpdateCategoryQuery } from 'queries/categories';
 
 import Form from '../form.jsx';
@@ -30,11 +29,7 @@ class UpdateCategory extends React.Component<Props> {
           type: values.type,
         }
       }
-    }).catch((e) => {
-      // tslint:disable-next-line
-      console.log('Error: ', e.graphQLErrors);
-      return appollorErrorToSubmission(e);
-    });
+    }).catch(appollorErrorToSubmission);
   }
 
   render() {

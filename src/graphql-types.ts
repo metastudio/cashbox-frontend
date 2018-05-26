@@ -2,8 +2,8 @@
 //  This file was automatically generated and should not be edited.
 
 export interface CategoryInput {
-  type: string,
-  name: string,
+  type?: string | null,
+  name?: string | null,
 };
 
 export interface GetOrganizationCategoriesQueryVariables {
@@ -42,6 +42,21 @@ export interface GetCategoryQuery {
   } | null,
 };
 
+export interface CreateCategoryMutationVariables {
+  orgId: string,
+  category: CategoryInput,
+};
+
+export interface CreateCategoryMutation {
+  // Create category
+  createCategory:  {
+    __typename: "Category",
+    id: string,
+    name: string,
+    type: string,
+  } | null,
+};
+
 export interface UpdateCategoryMutationVariables {
   categoryId: string,
   category: CategoryInput,
@@ -50,6 +65,20 @@ export interface UpdateCategoryMutationVariables {
 export interface UpdateCategoryMutation {
   // Update category
   updateCategory:  {
+    __typename: "Category",
+    id: string,
+    name: string,
+    type: string,
+  } | null,
+};
+
+export interface DeleteCategoryMutationVariables {
+  categoryId: string,
+};
+
+export interface DeleteCategoryMutation {
+  // Delete category
+  deleteCategory:  {
     __typename: "Category",
     id: string,
     name: string,
