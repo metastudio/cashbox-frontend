@@ -17,6 +17,7 @@ export interface GetOrganizationCategoriesQuery {
     categories:  Array< {
       __typename: "Category",
       id: string,
+      organizationId: string | null,
       name: string,
       type: string,
     } | null >,
@@ -36,6 +37,7 @@ export interface GetCategoryQuery {
     category:  {
       __typename: "Category",
       id: string,
+      organizationId: string | null,
       name: string,
       type: string,
     } | null,
@@ -52,6 +54,7 @@ export interface CreateCategoryMutation {
   createCategory:  {
     __typename: "Category",
     id: string,
+    organizationId: string | null,
     name: string,
     type: string,
   } | null,
@@ -67,6 +70,7 @@ export interface UpdateCategoryMutation {
   updateCategory:  {
     __typename: "Category",
     id: string,
+    organizationId: string | null,
     name: string,
     type: string,
   } | null,
@@ -81,6 +85,7 @@ export interface DeleteCategoryMutation {
   deleteCategory:  {
     __typename: "Category",
     id: string,
+    organizationId: string | null,
     name: string,
     type: string,
   } | null,
@@ -89,6 +94,7 @@ export interface DeleteCategoryMutation {
 export interface CategoryFragment {
   __typename: "Category",
   id: string,
+  organizationId: string | null,
   name: string,
   type: string,
 };

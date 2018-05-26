@@ -4,6 +4,7 @@ const fragments = {
   category: gql`
     fragment Category on Category {
       id
+      organizationId
       name
       type
     }

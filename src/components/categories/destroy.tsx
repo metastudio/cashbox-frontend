@@ -1,34 +1,37 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Mutation, MutationFn } from 'react-apollo';
 
-import { Category, FalshMessageOptions } from 'model-types';
+import { FalshMessageOptions } from 'model-types';
+import { CategoryFragment } from 'graphql-types';
 import { addFlashMessage } from 'actions/flash-messages.js';
-import { deleteCategory } from 'actions/categories.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { confirm } from 'components/utils/confirm';
+import { DeleteCategoryMutation, DeleteCategoryMutationVariables } from 'graphql-types';
+import { DeleteCategory, GetOrganizationCategories } from 'queries/categories';
+
+class DeleteMutation extends Mutation<DeleteCategoryMutation, DeleteCategoryMutationVariables> {}
+type DeleteFn = MutationFn<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
 
 interface OwnProps {
-  category: Category;
+  category: CategoryFragment;
 }
 
 interface StateProps {
-  orgId: number;
 }
 
 interface DispatchProps {
-  destroy: (orgId: number, categoryId: number) => Promise<{}>;
   message: (msg: string, type?: FalshMessageOptions) => void;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & RouteComponentProps<{}>;
+type Props = OwnProps & DispatchProps & RouteComponentProps<{}>;
 
 class DestroyCategory extends React.Component<Props> {
-  handleDeleteCategoryClick = () => {
-    const { orgId, category, destroy, message, history } = this.props;
+  handleDeleteCategoryClick = (deletCategory: DeleteFn) => {
+    const { category, message, history } = this.props;
 
     confirm('Are you sure?').then(() => {
-      destroy(orgId, Number(category.id)).then(() => {
+      deletCategory({ variables: { categoryId: category.id } }).then(() => {
         message(`Category ${category.name} successfully deleted.`);
         history.push('/categories');
       }).catch(error => {
@@ -38,26 +41,37 @@ class DestroyCategory extends React.Component<Props> {
   }
 
   render() {
+    const { category } = this.props;
     return (
-      <Link
-        title="Delete"
-        to={ '/categories' }
-        onClick={ this.handleDeleteCategoryClick }
+      <DeleteMutation
+        mutation={ DeleteCategory }
+        refetchQueries={ [
+          { query: GetOrganizationCategories, variables: { orgId: category.organizationId } }
+        ] }
       >
-        <i className="fa fa-trash-o" />
-      </Link>
+        {
+          (deleteCategory) => (
+            <a
+              title="Delete"
+              href={ `/categories/${category.id}` }
+              onClick={
+                (e) => {
+                  e.preventDefault();
+                  this.handleDeleteCategoryClick(deleteCategory);
+                }
+              }
+            >
+              <i className="fa fa-trash-o" />
+            </a>
+          )
+        }
+      </DeleteMutation>
     );
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
-});
-
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  destroy:  (orgId: number, categoryId: number) =>
-    new Promise((res, rej) => dispatch(deleteCategory(orgId, categoryId, res, rej))),
   message: (msg: string, type?: FalshMessageOptions) => dispatch(addFlashMessage(msg, type)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(DestroyCategory));
+export default withRouter(connect<StateProps, DispatchProps, OwnProps>(undefined, mapDispatch)(DestroyCategory));
