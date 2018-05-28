@@ -6,11 +6,12 @@ import { Query } from 'react-apollo';
 
 import {
   CategoryFragment,
-  GetOrganizationCategoriesQuery,
-  GetOrganizationCategoriesQueryVariables,
+  CategoryType,
+  GetOrganizationTypedCategoriesQuery,
+  GetOrganizationTypedCategoriesQueryVariables,
 } from 'graphql-types';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { GetOrganizationCategories } from 'queries/categories';
+import { GetOrganizationTypedCategories } from 'queries/categories';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -18,12 +19,12 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
 
-class OrganizationCategoriesQuery extends
-  Query<GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables> {}
+class CategoriesQuery extends
+  Query<GetOrganizationTypedCategoriesQuery, GetOrganizationTypedCategoriesQueryVariables> {}
 
 interface OwnProps {
+  type:        CategoryType;
   emptyTitle?: string;
-  type:        string;
 }
 
 interface StateProps {
@@ -38,23 +39,21 @@ class CategoriesSelect extends React.Component<Props> {
   }
 
   options = (categories?: CategoryFragment[] | null): Option[] => {
-    const { emptyTitle, type } = this.props;
+    const { emptyTitle } = this.props;
 
     if (!categories) { return []; }
 
-    const typedCategories = categories.filter((item) => item.type === type);
-
     return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(typedCategories.map(c => ({ value: String(c.id), label: c.name })));
+      .concat(categories.map(c => ({ value: String(c.id), label: c.name })));
   }
 
   render() {
-    const { orgId, input, meta, ...inputProps } = this.props;
+    const { orgId, type, input, meta, ...inputProps } = this.props;
 
     return (
-      <OrganizationCategoriesQuery
-        query={ GetOrganizationCategories }
-        variables={ { orgId: String(orgId) } }
+      <CategoriesQuery
+        query={ GetOrganizationTypedCategories }
+        variables={ { orgId: String(orgId), type } }
         fetchPolicy="cache-and-network"
       >
         {
@@ -70,7 +69,7 @@ class CategoriesSelect extends React.Component<Props> {
             />
           )
         }
-      </OrganizationCategoriesQuery>
+      </CategoriesQuery>
     );
   }
 }
