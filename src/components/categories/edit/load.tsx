@@ -10,26 +10,25 @@ import { GetCategory } from 'queries/categories';
 class CategoryQuery extends Query<GetCategoryQuery, GetCategoryQueryVariables> {}
 
 interface Props {
-  orgId:      string;
   categoryId: string;
   children:   (category: CategoryFragment) => React.ReactNode;
 }
 
 class LoadEditCategory extends React.Component<Props> {
   render() {
-    const { orgId, categoryId, children } = this.props;
+    const { categoryId, children } = this.props;
 
     return(
-      <CategoryQuery query={ GetCategory } variables={ { orgId, categoryId } }>
+      <CategoryQuery query={ GetCategory } variables={ { categoryId } }>
         {
           ({ loading, error, data }) => {
             if (loading) { return <Spinner />; }
             if (error) { return <Alert bsStyle="danger">{ error }</Alert>; }
-            if (!data || !data.organization || !data.organization.category) {
+            if (!data || !data.category) {
               return <Alert bsStyle="danger">No data</Alert>;
             }
 
-            return children(data.organization.category);
+            return children(data.category);
           }
         }
       </CategoryQuery>

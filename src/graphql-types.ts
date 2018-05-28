@@ -1,8 +1,14 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
+export enum CategoryType {
+  Expense = "Expense", // Expense category
+  Income = "Income", // Income category
+}
+
+
 export interface CategoryInput {
-  type?: string | null,
+  type?: CategoryType | null,
   name?: string | null,
 };
 
@@ -11,37 +17,45 @@ export interface GetOrganizationCategoriesQueryVariables {
 };
 
 export interface GetOrganizationCategoriesQuery {
-  // Find an Organization by ID
-  organization:  {
-    __typename: "Organization",
-    categories:  Array< {
-      __typename: "Category",
-      id: string,
-      organizationId: string | null,
-      name: string,
-      type: string,
-    } | null >,
-  } | null,
+  // Categories for given organization
+  categories:  Array< {
+    __typename: "Category",
+    id: string,
+    organizationId: string,
+    name: string,
+    type: CategoryType,
+  } >,
+};
+
+export interface GetOrganizationTypedCategoriesQueryVariables {
+  orgId: string,
+  type: CategoryType,
+};
+
+export interface GetOrganizationTypedCategoriesQuery {
+  // Categories for given organization
+  categories:  Array< {
+    __typename: "Category",
+    id: string,
+    organizationId: string,
+    name: string,
+    type: CategoryType,
+  } >,
 };
 
 export interface GetCategoryQueryVariables {
-  orgId: string,
   categoryId: string,
 };
 
 export interface GetCategoryQuery {
-  // Find an Organization by ID
-  organization:  {
-    __typename: "Organization",
-    // Find a Category by ID within organization
-    category:  {
-      __typename: "Category",
-      id: string,
-      organizationId: string | null,
-      name: string,
-      type: string,
-    } | null,
-  } | null,
+  // Find a Category by ID
+  category:  {
+    __typename: "Category",
+    id: string,
+    organizationId: string,
+    name: string,
+    type: CategoryType,
+  },
 };
 
 export interface CreateCategoryMutationVariables {
@@ -50,13 +64,17 @@ export interface CreateCategoryMutationVariables {
 };
 
 export interface CreateCategoryMutation {
-  // Create category
+  // Create a category
   createCategory:  {
-    __typename: "Category",
-    id: string,
-    organizationId: string | null,
-    name: string,
-    type: string,
+    __typename: "CreateCategoryPayload",
+    // Created category
+    category:  {
+      __typename: "Category",
+      id: string,
+      organizationId: string,
+      name: string,
+      type: CategoryType,
+    },
   } | null,
 };
 
@@ -66,13 +84,17 @@ export interface UpdateCategoryMutationVariables {
 };
 
 export interface UpdateCategoryMutation {
-  // Update category
+  // Update a category
   updateCategory:  {
-    __typename: "Category",
-    id: string,
-    organizationId: string | null,
-    name: string,
-    type: string,
+    __typename: "UpdateCategoryPayload",
+    // Updated category
+    category:  {
+      __typename: "Category",
+      id: string,
+      organizationId: string,
+      name: string,
+      type: CategoryType,
+    },
   } | null,
 };
 
@@ -81,20 +103,24 @@ export interface DeleteCategoryMutationVariables {
 };
 
 export interface DeleteCategoryMutation {
-  // Delete category
+  // Delete a category
   deleteCategory:  {
-    __typename: "Category",
-    id: string,
-    organizationId: string | null,
-    name: string,
-    type: string,
+    __typename: "DeleteCategoryPayload",
+    // Deleted category
+    category:  {
+      __typename: "Category",
+      id: string,
+      organizationId: string,
+      name: string,
+      type: CategoryType,
+    },
   } | null,
 };
 
 export interface CategoryFragment {
   __typename: "Category",
   id: string,
-  organizationId: string | null,
+  organizationId: string,
   name: string,
-  type: string,
+  type: CategoryType,
 };

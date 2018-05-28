@@ -32,7 +32,7 @@ class DestroyCategory extends React.Component<Props> {
 
     confirm('Are you sure?').then(() => {
       deletCategory({ variables: { categoryId: category.id } }).then(() => {
-        message(`Category ${category.name} successfully deleted.`);
+        message(`Category "${category.name}" successfully deleted.`);
         history.push('/categories');
       }).catch(error => {
         message(`Unable to delete category: ${error.message}`, { type: 'danger' });

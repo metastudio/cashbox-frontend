@@ -13,21 +13,26 @@ const fragments = {
 
 const GetOrganizationCategories = gql`
   query GetOrganizationCategories($orgId: ID!) {
-    organization(id: $orgId) {
-      categories {
-        ...Category
-      }
+    categories(orgId: $orgId) {
+      ...Category
+    }
+  }
+  ${fragments.category}
+`;
+
+const GetOrganizationTypedCategories = gql`
+  query GetOrganizationTypedCategories($orgId: ID!, $type: CategoryType!) {
+    categories(orgId: $orgId, type: $type) {
+      ...Category
     }
   }
   ${fragments.category}
 `;
 
 const GetCategory = gql`
-  query GetCategory($orgId: ID!, $categoryId: ID!) {
-    organization(id: $orgId) {
-      category(id:$categoryId) {
-        ...Category
-      }
+  query GetCategory($categoryId: ID!) {
+    category(id:$categoryId) {
+      ...Category
     }
   }
   ${fragments.category}
@@ -36,7 +41,9 @@ const GetCategory = gql`
 const CreateCategory = gql`
   mutation CreateCategory($orgId: ID!, $category: CategoryInput!) {
     createCategory(orgId: $orgId, category: $category) {
-      ...Category
+      category {
+        ...Category
+      }
     }
   }
   ${fragments.category}
@@ -45,7 +52,9 @@ const CreateCategory = gql`
 const UpdateCategory = gql`
   mutation UpdateCategory($categoryId: ID!, $category: CategoryInput!) {
     updateCategory(id: $categoryId, category: $category) {
-      ...Category
+      category {
+        ...Category
+      }
     }
   }
   ${fragments.category}
@@ -54,7 +63,9 @@ const UpdateCategory = gql`
 const DeleteCategory = gql`
   mutation DeleteCategory($categoryId: ID!) {
     deleteCategory(id: $categoryId) {
-      ...Category
+      category {
+        ...Category
+      }
     }
   }
   ${fragments.category}
@@ -62,6 +73,8 @@ const DeleteCategory = gql`
 
 export {
   GetOrganizationCategories,
+  GetOrganizationTypedCategories,
+
   GetCategory,
   CreateCategory,
   UpdateCategory,

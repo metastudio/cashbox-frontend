@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
+import { Query } from 'react-apollo';
 
-import { Status, Category } from 'model-types';
-import { loadCategories } from 'actions/categories.js';
+import {
+  CategoryFragment,
+  GetOrganizationCategoriesQuery,
+  GetOrganizationCategoriesQueryVariables,
+} from 'graphql-types';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectCategories, selectCategoriesStatus } from 'selectors/categories.js';
+import { GetOrganizationCategories } from 'queries/categories';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -14,46 +18,29 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
 
+class OrganizationCategoriesQuery extends
+  Query<GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables> {}
+
 interface OwnProps {
   emptyTitle?: string;
   type:        string;
 }
 
 interface StateProps {
-  orgId:       number;
-  status:      Status;
-  categories?: Category[];
+  orgId: number;
 }
 
-interface DispatchProps {
-  load: (orgId: number) => void;
-}
-
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type Props = OwnProps & WrappedFieldProps & StateProps;
 
 class CategoriesSelect extends React.Component<Props> {
-  loadData = (props: Props) => {
-    if (props.status === Status.Invalid) {
-      props.load(props.orgId);
-    }
-  }
-
-  componentDidMount() {
-    this.loadData(this.props);
-  }
-
-  componentWillReceiveProps(props: Props) {
-    this.loadData(props);
-  }
-
   handleChange = (value: Option<string>) => {
     this.props.input.onChange(value && value.value);
   }
 
-  options = (): Option[] => {
-    const { status, categories, emptyTitle, type } = this.props;
+  options = (categories?: CategoryFragment[] | null): Option[] => {
+    const { emptyTitle, type } = this.props;
 
-    if (status !== Status.Success || !categories) { return []; }
+    if (!categories) { return []; }
 
     const typedCategories = categories.filter((item) => item.type === type);
 
@@ -62,34 +49,38 @@ class CategoriesSelect extends React.Component<Props> {
   }
 
   render() {
-    const { orgId, status, input, meta, ...inputProps } = this.props;
+    const { orgId, input, meta, ...inputProps } = this.props;
 
     return (
-      <Select
-        { ...inputProps }
-        name={ input.name }
-        value={ String(input.value) }
-        onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
-        isLoading={ status !== Status.Success }
-        options={ this.options() }
-      />
+      <OrganizationCategoriesQuery
+        query={ GetOrganizationCategories }
+        variables={ { orgId: String(orgId) } }
+        fetchPolicy="cache-and-network"
+      >
+        {
+          ({ loading, error, data }) => (
+            <Select
+              { ...inputProps }
+              name={ input.name }
+              value={ String(input.value) }
+              onChange={ this.handleChange }
+              onBlur={ () => input.onBlur(input.value) }
+              isLoading={ loading }
+              options={ this.options(data && data.categories) }
+            />
+          )
+        }
+      </OrganizationCategoriesQuery>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:      getCurrentOrganizationId(state),
-  status:     selectCategoriesStatus(state),
-  categories: selectCategories(state),
-});
-
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadCategories(orgId)),
+  orgId: getCurrentOrganizationId(state),
 });
 
 const CategoriesSelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(CategoriesSelect);
+  connect<StateProps, {}, OwnProps>(mapState)(CategoriesSelect);
 
 const HorizontalCategoriesSelect = wrapHorizontalFormGroup(CategoriesSelectContainer);
 const VerticalCategoriesSelect   = wrapVerticalFormGroup(CategoriesSelectContainer);

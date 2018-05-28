@@ -39,11 +39,11 @@ class CategoriesList extends React.Component<Props> {
             ({ loading, error, data }) => {
               if (loading) { return <Spinner />; }
               if (error) { return <Alert bsStyle="danger">{ error }</Alert>; }
-              if (!data || !data.organization || !data.organization.categories) {
+              if (!data || !data.categories) {
                 return <Alert bsStyle="danger">No data</Alert>;
               }
 
-              return <Table categories={ data.organization.categories } />;
+              return <Table categories={ data.categories } />;
             }
           }
         </OrganizationCategoriesQuery>

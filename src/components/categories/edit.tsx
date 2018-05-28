@@ -3,21 +3,16 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
 
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 
 import Load from './edit/load';
 import Update from './edit/update';
 
-interface StateProps {
-  orgId: number;
-}
-
 interface DispatchProps {
   message: (msg: string) => void;
 }
 
-type Props = RouteComponentProps<{ id: string }> & StateProps & DispatchProps;
+type Props = RouteComponentProps<{ id: string }> & DispatchProps;
 
 class EditCategory extends React.Component<Props> {
   afterUpdate = () => {
@@ -28,13 +23,13 @@ class EditCategory extends React.Component<Props> {
   }
 
   render() {
-    const { orgId, match } = this.props;
+    const { match } = this.props;
 
     return(
       <Row>
         <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
           <PageHeader>Edit Category</PageHeader>
-          <Load orgId={ String(orgId) } categoryId={ match.params.id }>
+          <Load categoryId={ match.params.id }>
             {
               (category) => (
                 <Panel>
@@ -54,12 +49,8 @@ class EditCategory extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId:    getCurrentOrganizationId(state),
-});
-
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
   message: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditCategory));
+export default withRouter(connect<{}, DispatchProps>(undefined, mapDispatch)(EditCategory));
