@@ -8,6 +8,7 @@ import { Invoice, InvoiceParams } from 'model-types';
 import { createInvoice } from 'actions/invoices.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
 
@@ -34,7 +35,7 @@ class NewInvoice extends React.Component<Props> {
         endsAt:       values.endsAt,
         sentAt:       values.sentAt,
         paidAt:       values.paidAt,
-        invoiceItemsAttributes: values.invoiceItems.map((item) => ({
+        invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map((item) => ({
           customerId:   item.customerId,
           date:         item.date,
           hours:        Number(item.hours),
@@ -42,7 +43,7 @@ class NewInvoice extends React.Component<Props> {
           amount:       formatMoneyParam(item.amount),
         })),
       }
-    );
+    ).catch(prepareSubmissionError);
   }
 
   afterCreate = () => {

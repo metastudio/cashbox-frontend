@@ -33,7 +33,7 @@ const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
       <NavDropdown
         // @ts-ignore
         title={ renderTitle(organization.name) }
-        noCaret="true"
+        noCaret
         id="organizations-nav-dropdown"
       >
         <LinkContainer to="/customers">
