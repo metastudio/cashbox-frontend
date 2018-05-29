@@ -12,7 +12,7 @@ interface OwnProps {
   action: string;
 }
 export interface InvoiceFormData {
-  currency?:    string;
+  currency:     string;
   number?:      number;
   customerId?:  number;
   startsAt?:    Date;

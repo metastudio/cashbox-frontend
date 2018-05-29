@@ -5,7 +5,7 @@ import { WrappedFieldProps } from 'redux-form';
 import { wrapVerticalFormGroup } from './vertical-form-group';
 import { wrapHorizontalFormGroup } from './horizontal-form-group';
 
-const CURRENCIES = ['', 'USD', 'RUB', 'EUR'];
+const CURRENCIES = ['USD', 'RUB', 'EUR'];
 
 const CurrencySelect: React.SFC<WrappedFieldProps> = ({ input, ...inputProps }) => (
   <FormControl { ...inputProps } { ...input } componentClass="select">
