@@ -21,9 +21,14 @@ export interface BankAccount {
 }
 
 export interface Category {
-  id:       number;
+  id:       string;
   name:     string;
   type:     string;
+}
+
+export interface CategoryParams {
+  name: string;
+  type: string;
 }
 
 export interface TransferOut {
@@ -103,4 +108,9 @@ export interface InvoiceParams {
   paidAt?:      Date;
 
   invoiceItemsAttributes: InvoiceItemParams[];
+}
+
+export interface FalshMessageOptions {
+  type:       'success' | 'danger';
+  autoClose?: boolean;
 }

@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Ignore config files
 /config/*.yml
+
+# Ignore download graphql schema
+/schema.json
