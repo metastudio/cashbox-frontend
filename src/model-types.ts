@@ -72,19 +72,20 @@ export interface InoviceItem {
 }
 
 export interface Invoice {
-  id:                     number;
-  customerId:             number;
-  customerName:           string;
-  amount:                 Money;
-  currency:               string;
-  number:                 number;
-  endsAt:                 Date;
-  paidAt?:                Date;
-  startsAt?:              Date;
-  sentAt?:                Date;
-  invoiceDetails?:        string;
-  customerDetails?:       string;
-  hasIncomeTransaction?:  boolean;
+  id:                    number;
+  customerId:            number;
+  customerName:          string;
+  amount:                Money;
+  currency:              string;
+  bankAccountId?:        number;
+  number:                number;
+  endsAt:                Date;
+  paidAt?:               Date;
+  startsAt?:             Date;
+  sentAt?:               Date;
+  invoiceDetails?:       string;
+  customerDetails?:      string;
+  hasIncomeTransaction?: boolean;
 
   invoiceItems: InoviceItem[];
 }
@@ -98,14 +99,15 @@ export interface InvoiceItemParams {
 }
 
 export interface InvoiceParams {
-  currency?:    string;
-  amount?:      string;
-  number?:      number;
-  customerId?:  number;
-  endsAt?:      Date;
-  startsAt?:    Date;
-  sentAt?:      Date;
-  paidAt?:      Date;
+  currency?:      string;
+  amount?:        string;
+  number?:        number;
+  bankAccountId?: number;
+  customerId?:    number;
+  endsAt?:        Date;
+  startsAt?:      Date;
+  sentAt?:        Date;
+  paidAt?:        Date;
 
   invoiceItemsAttributes: InvoiceItemParams[];
 }

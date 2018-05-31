@@ -27,14 +27,15 @@ class NewInvoice extends React.Component<Props> {
     return create(
       orgId,
       {
-        currency:     values.currency,
-        amount:       formatMoneyParam(values.amount),
-        number:       Number(values.number),
-        customerId:   values.customerId,
-        startsAt:     values.startsAt,
-        endsAt:       values.endsAt,
-        sentAt:       values.sentAt,
-        paidAt:       values.paidAt,
+        currency:      values.currency,
+        bankAccountId: values.bankAccountId,
+        amount:        formatMoneyParam(values.amount),
+        number:        Number(values.number),
+        customerId:    values.customerId,
+        startsAt:      values.startsAt,
+        endsAt:        values.endsAt,
+        sentAt:        values.sentAt,
+        paidAt:        values.paidAt,
         invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map((item) => ({
           customerId:   item.customerId,
           date:         item.date,
