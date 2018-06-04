@@ -9,6 +9,7 @@ import {
 import { VerticalCustomersSelect } from 'components/customers/select-field';
 
 interface InvoiceItemFormData {
+  id?:          number;
   customerId?:  number;
   amount?:      string;
   date?:        Date;
