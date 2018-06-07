@@ -26,7 +26,7 @@ interface InvoiceItemFieldsProps {
 const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
   <>
     <h4>Item { idx + 1 }</h4>
-    <Field name={ `${name}._destroy` } component={ VerticalFormInput } className="hidden" />
+    <Field name={ `${name}._destroy` } component={ VerticalFormInput } type="hidden" />
     <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
     <Field name={ `${name}.amount` } component={ VerticalCurrencyInput } label="Amount *" />
     <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />

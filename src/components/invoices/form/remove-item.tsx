@@ -6,6 +6,7 @@ import { FieldsProps } from 'redux-form';
 import { InvoiceItemFormData } from './item-fields';
 
 interface OwnProps {
+  name:   string;
   idx:    number;
   fields: FieldsProps<InvoiceItemFormData>;
   invoiceItem: InvoiceItemFormData;
@@ -18,25 +19,19 @@ interface DispatchProps {
 type Props = OwnProps & DispatchProps;
 
 class RemoveItemButton extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  handleRemove = (idx: number) => {
-    const { invoiceItem, changeField, fields } = this.props;
+  handleRemove = () => {
+    const { name, idx, invoiceItem, changeField, fields } = this.props;
 
     if (invoiceItem.id) {
-      changeField('invoiceForm', `invoiceItems[${idx}]._destroy`, 'true');
+      changeField('invoiceForm', `${name}._destroy`, 'true');
     } else {
       fields.remove(idx);
     }
   }
 
   render() {
-    const { idx } = this.props;
-
     return(
-      <Button bsStyle="danger" onClick={ () => this.handleRemove(idx) }>Remove Item</Button>
+      <Button bsStyle="danger" onClick={ this.handleRemove }>Remove Item</Button>
     );
   }
 }

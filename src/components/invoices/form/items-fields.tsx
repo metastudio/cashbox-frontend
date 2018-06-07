@@ -19,7 +19,7 @@ const ItemsFields: React.SFC<WrappedFieldArrayProps<InvoiceItemFormData>> = ({ f
           return(
             <Row key={ idx }>
               <Col xs={ 12 }>
-                <RemoveItemButton idx={ idx } fields={ fields } invoiceItem={ invoiceItem } />
+                <RemoveItemButton name={ name } idx={ idx } fields={ fields } invoiceItem={ invoiceItem } />
                 <InvoiceItemFields name={ name } idx={ idx } />
               </Col>
             </Row>
