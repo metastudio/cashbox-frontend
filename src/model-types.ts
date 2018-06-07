@@ -62,7 +62,7 @@ export interface TransactionParams {
   comment?:       string;
 }
 
-export interface InoviceItem {
+export interface InvoiceItem {
   id:           number;
   customerId:   number;
   amount:       Money;
@@ -86,7 +86,7 @@ export interface Invoice {
   customerDetails?:       string;
   hasIncomeTransaction?:  boolean;
 
-  invoiceItems: InoviceItem[];
+  invoiceItems: InvoiceItem[];
 }
 
 export interface InvoiceItemParams {

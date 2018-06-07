@@ -46,6 +46,7 @@ class EditInvoice extends React.Component<Props> {
         sentAt:       values.sentAt,
         paidAt:       values.paidAt,
         invoiceItemsAttributes: values.invoiceItems.map((item) => ({
+          _destroy:     item._destroy,
           id:           item.id,
           customerId:   item.customerId,
           date:         item.date,
