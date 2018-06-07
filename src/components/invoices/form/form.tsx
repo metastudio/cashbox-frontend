@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { reduxForm, InjectedFormProps } from 'redux-form';
 import { Form, Alert } from 'react-bootstrap';
-
 import { SubmitButton } from 'components/utils/form-inputs';
 
 import MainFields from './main-fields';
@@ -12,15 +11,16 @@ interface OwnProps {
   action: string;
 }
 export interface InvoiceFormData {
-  currency:     string;
-  number?:      number;
-  customerId?:  number;
-  startsAt?:    Date;
-  endsAt?:      Date;
-  amount?:      string;
-  sentAt?:      Date;
-  paidAt?:      Date;
-  invoiceItems: InvoiceItemFormData[];
+  currency:       string;
+  bankAccountId?: number;
+  number?:        number;
+  customerId?:    number;
+  startsAt?:      Date;
+  endsAt?:        Date;
+  amount?:        string;
+  sentAt?:        Date;
+  paidAt?:        Date;
+  invoiceItems:   InvoiceItemFormData[];
 }
 
 type Props = OwnProps & InjectedFormProps<InvoiceFormData, OwnProps>;

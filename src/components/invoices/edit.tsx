@@ -10,6 +10,7 @@ import { loadInvoice, updateInvoice } from 'actions/invoices.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
 import LoadingView from '../utils/loading-view';
@@ -36,15 +37,18 @@ class EditInvoice extends React.Component<Props> {
       orgId,
       invoice.id,
       {
-        currency:     values.currency,
-        amount:       formatMoneyParam(values.amount),
-        number:       Number(values.number),
-        customerId:   values.customerId,
-        startsAt:     values.startsAt,
-        endsAt:       values.endsAt,
-        sentAt:       values.sentAt,
-        paidAt:       values.paidAt,
+        currency:      values.currency,
+        bankAccountId: values.bankAccountId,
+        amount:        formatMoneyParam(values.amount),
+        number:        Number(values.number),
+        customerId:    values.customerId,
+        startsAt:      values.startsAt,
+        endsAt:        values.endsAt,
+        sentAt:        values.sentAt,
+        paidAt:        values.paidAt,
         invoiceItemsAttributes: values.invoiceItems.map((item) => ({
+          _destroy:     item._destroy,
+          id:           item.id,
           customerId:   item.customerId,
           date:         item.date,
           hours:        Number(item.hours),
@@ -52,19 +56,20 @@ class EditInvoice extends React.Component<Props> {
           amount:       formatMoneyParam(item.amount),
         }))
       }
-    );
+    ).catch(prepareSubmissionError);
   }
 
   initialPrepare = (invoice: Invoice): InvoiceFormData => {
     return ({
-      amount:     formatMoneyValue(invoice.amount),
-      currency:   invoice.currency,
-      customerId: invoice.customerId,
-      endsAt:     invoice.endsAt,
-      number:     invoice.number,
-      startsAt:   invoice.startsAt,
-      sentAt:     invoice.sentAt,
-      paidAt:     invoice.paidAt,
+      amount:        formatMoneyValue(invoice.amount),
+      currency:      invoice.currency,
+      bankAccountId: invoice.bankAccountId,
+      customerId:    invoice.customerId,
+      endsAt:        invoice.endsAt,
+      number:        invoice.number,
+      startsAt:      invoice.startsAt,
+      sentAt:        invoice.sentAt,
+      paidAt:        invoice.paidAt,
       invoiceItems: invoice.invoiceItems.map((item) => ({
         id:          item.id,
         customerId:  item.customerId,

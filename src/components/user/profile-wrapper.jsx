@@ -27,7 +27,7 @@ class ProfileWrapper extends React.Component {
       userId,
       {
         fullName: values.fullName,
-        profileAttributes: { phoneNumber: values.phoneNumber }
+        profileAttributes: { phoneNumber: values.profile && values.profile.phoneNumber }
       }
     ).catch(prepareSubmissionError);
   }
