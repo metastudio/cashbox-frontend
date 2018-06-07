@@ -9,6 +9,8 @@ import {
 import { VerticalCustomersSelect } from 'components/customers/select-field';
 
 interface InvoiceItemFormData {
+  _destroy?:    boolean;
+  id?:          number;
   customerId?:  number;
   amount?:      string;
   date?:        Date;
@@ -24,6 +26,7 @@ interface InvoiceItemFieldsProps {
 const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
   <>
     <h4>Item { idx + 1 }</h4>
+    <Field name={ `${name}._destroy` } component={ VerticalFormInput } type="hidden" />
     <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
     <Field name={ `${name}.amount` } component={ VerticalCurrencyInput } label="Amount *" />
     <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />

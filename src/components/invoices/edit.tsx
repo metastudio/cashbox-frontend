@@ -10,6 +10,7 @@ import { loadInvoice, updateInvoice } from 'actions/invoices.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
 import LoadingView from '../utils/loading-view';
@@ -45,6 +46,8 @@ class EditInvoice extends React.Component<Props> {
         sentAt:       values.sentAt,
         paidAt:       values.paidAt,
         invoiceItemsAttributes: values.invoiceItems.map((item) => ({
+          _destroy:     item._destroy,
+          id:           item.id,
           customerId:   item.customerId,
           date:         item.date,
           hours:        Number(item.hours),
@@ -52,7 +55,7 @@ class EditInvoice extends React.Component<Props> {
           amount:       formatMoneyParam(item.amount),
         }))
       }
-    );
+    ).catch(prepareSubmissionError);
   }
 
   initialPrepare = (invoice: Invoice): InvoiceFormData => {
