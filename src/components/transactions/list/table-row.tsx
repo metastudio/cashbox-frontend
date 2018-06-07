@@ -45,7 +45,7 @@ class TransactionsTableRow extends React.Component<Props> {
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
           <td>{ transaction.comment }</td>
-          <td>{ Moment(transaction.date).format('L') }</td>
+          <td>{ Moment(transaction.date).format('DD/MM/YYYY') }</td>
         </tr>
       </>
     );
