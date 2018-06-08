@@ -75,9 +75,9 @@ function* handleDeleteCustomer({ payload: { organizationId, customerId }, meta: 
 }
 
 export default function* () {
-  yield takeLatest(loadCustomers.toString(), handleLoadCustomers);
-  yield takeLatest(loadCustomer.toString(), handleLoadCustomer);
-  yield takeEvery(createCustomer.toString(), handleCreateCustomer);
-  yield takeEvery(updateCustomer.toString(), handleUpdateCustomer);
-  yield takeEvery(deleteCustomer.toString(), handleDeleteCustomer);
+  yield takeLatest(loadCustomers, handleLoadCustomers);
+  yield takeLatest(loadCustomer, handleLoadCustomer);
+  yield takeEvery(createCustomer, handleCreateCustomer);
+  yield takeEvery(updateCustomer, handleUpdateCustomer);
+  yield takeEvery(deleteCustomer, handleDeleteCustomer);
 }
