@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Invoice } from 'model-types';
 import { formatMoney } from 'utils/money';
+import { formatDate } from 'utils/date';
 
 interface Props {
   invoice: Invoice;
@@ -13,7 +14,7 @@ const Items: React.SFC<Props> = ({ invoice: { invoiceItems, currency }}) => {
   const items = invoiceItems.map((item, index) => (
     <tr key={ index } >
       <td>{ item.description }</td>
-      <td>{ item.date }</td>
+      <td>{ formatDate(item.date) }</td>
       <td className="text-right">{ item.hours }</td>
       <td className="text-right">{ formatMoney(item.amount) }</td>
     </tr>

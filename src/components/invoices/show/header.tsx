@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Invoice } from 'model-types';
+import { invoiceDateRange } from 'utils/invoice';
 
 export interface Props {
   invoice: Invoice;
 }
 
 const Header: React.SFC<Props> = ({ invoice }) => {
-  const invoiceDateRange = [invoice.startsAt, invoice.endsAt].filter(x => !!x).join(' - ');
   return (
     <h2>
       <Link to="/invoices">Invoices</Link>
