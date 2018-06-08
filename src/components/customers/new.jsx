@@ -41,7 +41,7 @@ class NewCustomer extends React.Component {
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
           <Panel>
             <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create" />
             </Panel.Body>
           </Panel>
         </Col>

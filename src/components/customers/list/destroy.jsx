@@ -19,7 +19,7 @@ class DestroyCustomer extends React.Component {
 
     confirm('Are you sure?').then( () => {
       deleteCustomer(orgId, customer.id).then(customer => {
-        this.props.addFlashMessage('Customer ' + customer.name + ' successfully deleted.');
+        this.props.addFlashMessage(`Customer ${customer.name} successfully deleted.`);
         this.props.history.push('/customers');
       }).catch(error => {
         this.props.addFlashMessage(`Unable to delete customer: ${error.message}`, { type: 'danger' });
