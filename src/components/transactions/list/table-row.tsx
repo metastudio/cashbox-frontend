@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as Moment from 'moment';
 import { Transaction } from 'model-types';
 import { formatMoney } from 'utils/money';
+import { formatDate } from 'utils/date';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
 import { formatBankAccountName } from 'utils/bank-account';
@@ -45,7 +45,7 @@ class TransactionsTableRow extends React.Component<Props> {
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
           <td>{ transaction.comment }</td>
-          <td>{ Moment(transaction.date).format('L') }</td>
+          <td>{ formatDate(transaction.date) }</td>
         </tr>
       </>
     );

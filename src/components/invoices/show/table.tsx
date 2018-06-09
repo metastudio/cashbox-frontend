@@ -3,6 +3,7 @@ import { Table as BsTable } from 'react-bootstrap';
 
 import { Invoice } from 'model-types';
 import { formatMoney } from 'utils/money';
+import { formatDate } from 'utils/date';
 import Items from './items';
 
 interface Props {
@@ -40,7 +41,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
         </td>
         <td/>
         <td className="text-right">
-          <strong className="text-uppercase">Date: { invoice.endsAt }</strong>
+          <strong className="text-uppercase">Date: { formatDate(invoice.endsAt) }</strong>
           { invoice.number ? <p><strong>Invoice #{ invoice.number }</strong></p> : null }
         </td>
       </tr>
