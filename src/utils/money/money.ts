@@ -1,16 +1,19 @@
 import * as accounting from 'accounting';
 
 import Locales, { MoneyLocale } from './locales';
+import { Rate } from 'model-types';
 
 interface Money {
   fractional: string;
-  currency:   {
-    isoCode: string;
-    name:          string;
-    symbol:        string;
-    subunitToUnit: number;
-    htmlEntity:    string;
-  };
+  currency: Currency;
+}
+
+interface Currency {
+  isoCode:       string;
+  name:          string;
+  symbol:        string;
+  subunitToUnit: number;
+  htmlEntity:    string;
 }
 
 const defaultMoneyLocale: MoneyLocale = Locales.ru_RU;
@@ -70,4 +73,11 @@ const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale
   );
 };
 
-export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };
+const convertMoney = (money: Money, to: string, rate: Rate) => {
+  return {
+    fractional: (Number.parseInt(money.fractional) * rate.value).toString(),
+    currency: rate.to
+  };
+};
+
+export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, convertMoney, Currency };

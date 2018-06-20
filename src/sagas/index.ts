@@ -10,6 +10,8 @@ import categoriesSaga    from './categories';
 import membersSaga       from './members';
 import usersSaga         from './users';
 import invoicesSaga      from './invoices';
+import currenciesSaga    from './currencies';
+import debtorsSaga       from './debtors';
 
 function* rootSaga() {
   yield all([
@@ -22,7 +24,9 @@ function* rootSaga() {
     fork(categoriesSaga),
     fork(membersSaga),
     fork(usersSaga),
-    fork(invoicesSaga)
+    fork(invoicesSaga),
+    fork(currenciesSaga),
+    fork(debtorsSaga)
   ]);
 }
 
