@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import { noop } from 'lodash';
 
-export const loadTransactions = createAction('LOAD_TRANSACTIONS', (organizationId) => ({ organizationId }));
+export const loadTransactions = createAction('LOAD_TRANSACTIONS', (organizationId, params) => ({ organizationId, params }));
 loadTransactions.request = createAction('LOAD_TRANSACTIONS_REQUEST', (organizationId) => ({ organizationId }));
 loadTransactions.success = createAction('LOAD_TRANSACTIONS_SUCCESS', (organizationId, transactions) => ({ organizationId, transactions }));
 loadTransactions.failure = createAction('LOAD_TRANSACTIONS_FAILURE');

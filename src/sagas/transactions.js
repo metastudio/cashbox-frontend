@@ -20,10 +20,10 @@ import {
 } from 'actions/transactions.js';
 import { updateMemberLastVisit } from 'actions/members.js';
 
-function* handleLoadTransactions({ payload: { organizationId } }) {
+function* handleLoadTransactions({ payload: { organizationId, params } }) {
   try {
     yield put(loadTransactions.request(organizationId));
-    const transactions = yield call(getOrganizationTransactions, organizationId);
+    const transactions = yield call(getOrganizationTransactions, organizationId, params);
     yield put(loadTransactions.success(organizationId, transactions));
     yield put(updateMemberLastVisit.request(organizationId));
     const member = yield call(putMemberLastVisit, organizationId);
