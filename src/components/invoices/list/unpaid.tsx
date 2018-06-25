@@ -4,20 +4,26 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Invoice } from 'model-types';
+import { Invoice, Pagination as PaginationInterface } from 'model-types';
 import * as statuses from 'constants/statuses.js';
 import { loadUnpaidInvoices } from 'actions/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectUnpaidInvoices, selectUnpaidInvoicesStatus } from 'selectors/invoices.js';
+import {
+  selectUnpaidInvoices,
+  selectUnpaidInvoicesStatus,
+  selectUnpaidInvoicesPagination
+} from 'selectors/invoices.js';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
+import Pagination from 'components/pagination';
 
 interface StateProps {
   orgId:    number;
   status:   string;
   invoices: Invoice[] | null;
+  pagination: PaginationInterface;
 }
 
 interface DispatchProps {
@@ -53,10 +59,13 @@ class UnpaidInvoices extends React.Component<Props> {
     }
 
     return(
-      <Table hover striped responsive>
-        <TableHeader />
-        <TableBody invoices={ invoices } />
-      </Table>
+      <>
+        <Table hover striped responsive>
+          <TableHeader />
+          <TableBody invoices={ invoices } />
+        </Table>
+        <Pagination data={ this.props.pagination } />
+      </>
     );
   }
 }
@@ -65,6 +74,7 @@ const mapState = (state: {}) => ({
   orgId:    getCurrentOrganizationId(state),
   status:   selectUnpaidInvoicesStatus(state),
   invoices: selectUnpaidInvoices(state),
+  pagination: selectUnpaidInvoicesPagination(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
