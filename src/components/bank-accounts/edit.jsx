@@ -6,7 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'actions/flash-messages.js';
-import { loadBankAccount, updateBankAccount } from 'actions/bank-accounts.js';
+import { loadBankAccount, updateBankAccount } from 'services/bank-accounts';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 

@@ -3,17 +3,21 @@ import { connect, Dispatch } from 'react-redux';
 import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
-import { Status, BankAccount } from 'model-types';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
+import { Status } from 'model-types';
+import {
+  BankAccount,
+  loadBankAccounts,
+  selectBankAccountsStatus,
+  selectBankAccounts,
+  formatBankAccountName,
+} from 'services/bank-accounts';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectBankAccountsStatus, selectBankAccounts } from 'selectors/bank-accounts.js';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
 import 'react-select/dist/react-select.css';
 import 'components/utils/form-inputs/async-select-fix.css';
-import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   emptyTitle?: string;

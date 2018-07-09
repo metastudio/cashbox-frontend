@@ -2,10 +2,14 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 
-import { Status, BankAccount } from 'model-types';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
+import { Status } from 'model-types';
+import {
+  BankAccount,
+  loadBankAccounts,
+  selectBankAccounts,
+  selectBankAccountsStatus
+} from 'services/bank-accounts';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectBankAccounts, selectBankAccountsStatus } from 'selectors/bank-accounts.js';
 
 import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';

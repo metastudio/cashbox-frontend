@@ -6,7 +6,7 @@ import {
   postOrganizationBankAccount,
   putOrganizationBankAccount,
   deleteOrganizationBankAccount,
-} from 'api/bank-accounts.js';
+} from './api.js';
 
 import {
   loadBankAccounts,
@@ -14,7 +14,7 @@ import {
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
-} from 'actions/bank-accounts.js';
+} from './actions.js';
 
 function* handleLoadBankAccounts({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {

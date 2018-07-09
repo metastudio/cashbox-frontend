@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'actions/flash-messages.js';
-import { createBankAccount, clearBankAccount } from 'actions/bank-accounts.js';
+import { createBankAccount, clearBankAccount } from 'services/bank-accounts';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 

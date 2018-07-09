@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, putApi, deleteApi } from './_helpers';
+import { prepareURL, getApi, postApi, putApi, deleteApi } from 'api/_helpers.js';
 
 const bankAccountsURL = (orgId) => prepareURL(`/api/organizations/${orgId}/bank_accounts`);
 const bankAccountURL  = (orgId, bankAccountId) => prepareURL(`/api/organizations/${orgId}/bank_accounts/${bankAccountId}`);

@@ -4,7 +4,7 @@ import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import './../css/default.css';
-import { formatBankAccountName } from 'utils/bank-account';
+import { formatBankAccountName } from 'services/bank-accounts';
 
 interface OwnProps {
   transaction: Transaction;

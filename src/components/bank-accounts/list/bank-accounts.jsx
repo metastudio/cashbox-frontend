@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
+import { loadBankAccounts } from 'services/bank-accounts';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view';

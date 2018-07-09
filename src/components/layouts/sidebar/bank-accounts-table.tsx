@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { BankAccount } from 'model-types';
-import { formatBankAccountName } from 'utils/bank-account';
+import { BankAccount, formatBankAccountName } from 'services/bank-accounts';
 import { formatMoney } from 'utils/money';
 
 import 'components/transactions/css/default.css';

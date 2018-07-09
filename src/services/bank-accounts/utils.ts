@@ -1,4 +1,4 @@
-import { BankAccount } from 'model-types';
+import { BankAccount } from './types';
 
 const formatBankAccountName = (bankAccount: BankAccount): string => {
   return `${bankAccount.name} (${bankAccount.currency})`;

@@ -1,7 +1,7 @@
 import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadBankAccounts, deleteBankAccount } from 'actions/bank-accounts.js';
+import { loadBankAccounts, deleteBankAccount } from './actions.js';
 import {
   createTransaction,
   createTransfer,

@@ -1,4 +1,5 @@
 import { Money } from 'utils/money';
+import { BankAccount } from 'services/bank-accounts/types';
 
 export enum Status {
   Invalid = 'INVALID',
@@ -11,13 +12,6 @@ export interface Customer {
   id:               number;
   name:             string;
   invoiceDetails:   string;
-}
-
-export interface BankAccount {
-  id:       number;
-  name:     string;
-  currency: string;
-  balance:  Money;
 }
 
 export interface Category {
