@@ -11,7 +11,7 @@ import {
   GetOrganizationTypedCategoriesQueryVariables,
 } from 'graphql-types';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { GetOrganizationTypedCategories } from 'queries/categories';
+import { GetOrganizationTypedCategories } from 'services/categories/queries';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';

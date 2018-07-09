@@ -6,7 +6,7 @@ import bankAccountsSaga  from 'services/bank-accounts/saga.js';
 import organizationsSaga from './organizations';
 import transactionsSaga  from './transactions';
 import customersSaga     from 'services/customers/saga.js';
-import categoriesSaga    from './categories';
+import categoriesSaga    from 'services/categories/saga.js';
 import membersSaga       from './members';
 import usersSaga         from './users';
 import invoicesSaga      from 'services/invoices/saga.js';

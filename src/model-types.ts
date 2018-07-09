@@ -1,6 +1,7 @@
 import { Money } from 'utils/money';
 import { BankAccount } from 'services/bank-accounts/types';
 import { Customer } from 'services/customers/types';
+import { Category } from 'services/categories/types';
 
 export enum Status {
   Invalid = 'INVALID',
@@ -9,22 +10,11 @@ export enum Status {
   Failure = 'FAILURE',
 }
 
-export interface Category {
-  id:       string;
-  name:     string;
-  type:     string;
-}
-
 export interface Pagination {
   current: number;
   previous?: number;
   pages: number;
   next?: number;
-}
-
-export interface CategoryParams {
-  name: string;
-  type: string;
 }
 
 export interface TransferOut {

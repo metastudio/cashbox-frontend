@@ -6,7 +6,7 @@ import { Query } from 'react-apollo';
 
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables } from 'graphql-types';
-import { GetOrganizationCategories } from 'queries/categories';
+import { GetOrganizationCategories } from 'services/categories/queries';
 
 import Spinner from 'components/utils/spinner';
 import Table from './list/table';

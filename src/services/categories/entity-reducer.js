@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 import * as statuses from 'constants/statuses.js'
-import { loadCategory, clearCategory } from 'actions/categories.js'
+import { loadCategory, clearCategory } from './actions.js'
 
 const defaultState = {
   data:   null,

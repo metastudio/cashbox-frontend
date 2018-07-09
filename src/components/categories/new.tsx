@@ -9,7 +9,7 @@ import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { appollorErrorToSubmission } from 'utils/errors';
 import { CreateCategoryMutation, CreateCategoryMutationVariables } from 'graphql-types';
-import { CreateCategory as CreateCategoryQuery, GetOrganizationCategories } from 'queries/categories';
+import { CreateCategory as CreateCategoryQuery, GetOrganizationCategories } from 'services/categories/queries';
 
 import Form from './form.jsx';
 

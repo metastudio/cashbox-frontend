@@ -7,7 +7,7 @@ import { CategoryFragment } from 'graphql-types';
 import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
 import { confirm } from 'components/utils/confirm';
 import { DeleteCategoryMutation, DeleteCategoryMutationVariables } from 'graphql-types';
-import { DeleteCategory, GetOrganizationCategories } from 'queries/categories';
+import { DeleteCategory, GetOrganizationCategories } from 'services/categories/queries';
 
 class DeleteMutation extends Mutation<DeleteCategoryMutation, DeleteCategoryMutationVariables> {}
 type DeleteFn = MutationFn<DeleteCategoryMutation, DeleteCategoryMutationVariables>;

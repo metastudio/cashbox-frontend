@@ -6,7 +6,7 @@ import {
   postOrganizationCategory,
   putOrganizationCategory,
   deleteOrganizationCategory,
-} from 'api/categories.js';
+} from './api.js';
 
 import {
   loadCategories,
@@ -14,7 +14,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
-} from 'actions/categories.js';
+} from './actions.js';
 
 function* handleLoadCategories({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {
