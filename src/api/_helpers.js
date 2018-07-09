@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import humps from 'humps';
 import Url   from 'url';
 import { getCookies } from 'utils/cookies';
-import { HttpError, ValidationError } from './errors';
+import { HttpError, ValidationError } from 'utils/errors';
 
 const headers = (headers = {}) => {
   const token = getCookies().token;

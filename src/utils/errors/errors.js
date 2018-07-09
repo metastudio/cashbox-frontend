@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form';
-import { ValidationError } from 'api/errors.js';
+import ValidationError from './validation-error.js';
 import { ApolloError } from 'apollo-client';
 
 const prepareSubmissionError = (error) => {
