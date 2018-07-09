@@ -1,8 +1,8 @@
 import { fork, all } from 'redux-saga/effects';
 
-import authSaga          from './auth';
+import authSaga          from 'services/auth/saga.js';
 import balancesSaga      from './balances';
-import bankAccountsSaga  from 'services/bank-accounts/sagas.js';
+import bankAccountsSaga  from 'services/bank-accounts/saga.js';
 import organizationsSaga from './organizations';
 import transactionsSaga  from './transactions';
 import customersSaga     from './customers';

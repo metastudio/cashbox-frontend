@@ -1,5 +1,5 @@
 export { default as app }                  from './app';
-export { default as auth }                 from './auth';
+export { default as auth }                 from 'services/auth/reducer.js';
 export { default as flashMessages }        from './flash-messages';
 export { default as invoice }              from './invoice';
 export { default as invoices }             from './invoices';

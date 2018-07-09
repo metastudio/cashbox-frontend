@@ -9,7 +9,7 @@ import {
   restoreSession,
   loginUser,
   logoutUser,
-} from 'actions/auth.js';
+} from './actions.js';
 
 import { clearCurrentOrganization } from 'actions/organizations.js';
 

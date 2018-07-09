@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { FlashMessageOptions } from 'model-types';
 import { addFlashMessage } from 'actions/flash-messages.js';
-import { selectIsAuthorized } from 'selectors/auth.js';
+import { selectIsAuthorized } from 'services/auth';
 
 interface StateProps {
   isAuthorized: boolean;

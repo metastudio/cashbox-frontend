@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import { restoreSession } from 'actions/auth.js';
+import { restoreSession } from 'services/auth';
 
 import Spinner from 'components/utils/spinner';
 
