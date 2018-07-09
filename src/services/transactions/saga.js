@@ -7,7 +7,7 @@ import {
   postOrganizationTransfer,
   patchOrganizationTransaction,
   deleteOrganizationTransaction,
-} from 'api/transactions.js';
+} from './api.js';
 import { putMemberLastVisit } from 'api/members.js';
 
 import {
@@ -17,7 +17,7 @@ import {
   createTransfer,
   updateTransaction,
   destroyTransaction
-} from 'actions/transactions.js';
+} from './actions.js';
 import { updateMemberLastVisit } from 'actions/members.js';
 
 function* handleLoadTransactions({ payload: { organizationId, params } }) {

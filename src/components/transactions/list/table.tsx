@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { Transaction } from 'model-types';
+import { Transaction } from 'services/transactions';
 
 import Row from './table-row';
 

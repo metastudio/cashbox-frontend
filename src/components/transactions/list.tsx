@@ -3,14 +3,13 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 
-import { Status, Transaction, Pagination as PaginationInterface } from 'model-types';
-import { loadTransactions } from 'actions/transactions.js';
-import { selectCurrentOrganizationId } from 'services/organizations';
+import { Status, Pagination as PaginationInterface } from 'model-types';
 import {
-  selectTransactions,
-  selectTransactionsStatus,
-  selectTransactionsPagination
-} from 'selectors/transactions.js';
+  Transaction,
+  loadTransactions,
+  selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
+} from 'services/transactions';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';

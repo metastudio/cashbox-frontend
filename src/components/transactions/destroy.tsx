@@ -3,11 +3,11 @@ import { connect, Dispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Transaction } from 'model-types';
-import { destroyTransaction } from 'actions/transactions.js';
+import { Transaction, destroyTransaction } from 'services/transactions';
 import { addFlashMessage } from 'services/flash-messages';
-import { confirm } from 'components/utils/confirm';
 import { selectCurrentOrganizationId } from 'services/organizations';
+
+import { confirm } from 'components/utils/confirm';
 
 interface OwnProps {
   transaction: Transaction;

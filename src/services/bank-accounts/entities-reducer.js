@@ -7,7 +7,7 @@ import {
   createTransfer,
   updateTransaction,
   destroyTransaction,
-} from 'actions/transactions.js';
+} from 'services/transactions';
 
 const defaultState = {
   items:  [],

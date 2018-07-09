@@ -7,8 +7,8 @@ export { default as unpaidInvoices }       from 'services/invoices/unpaid-reduce
 export { default as unpaidInvoicesCount }  from 'services/invoices/unpaid-count-reducer.js';
 export { default as organizations }        from 'services/organizations/entities-reducer.js';
 export { default as currentOrganization }  from 'services/organizations/current-reducer.js';
-export { default as transaction }          from './transaction';
-export { default as transactions }         from './transactions';
+export { default as transaction }          from 'services/transactions/entity-reducer.js';
+export { default as transactions }         from 'services/transactions/entities-reducer.js';
 export { default as members }              from './members';
 export { default as bankAccounts }         from 'services/bank-accounts/entities-reducer.js';
 export { default as bankAccount }          from 'services/bank-accounts/entity-reducer.js';

@@ -3,10 +3,13 @@ import { connect, Dispatch } from 'react-redux';
 import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Status, Transaction } from 'model-types';
-import { loadTransaction } from 'actions/transactions.js';
+import { Status,  } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { selectTransaction, selectTransactionStatus } from 'selectors/transactions.js';
+import {
+  Transaction,
+  loadTransaction,
+  selectTransaction, selectTransactionStatus,
+} from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';
 import EditIncomeTransaction from './edit/income.jsx';

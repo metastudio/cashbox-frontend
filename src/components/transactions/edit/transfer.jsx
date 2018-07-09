@@ -5,9 +5,11 @@ import { withRouter } from 'react-router-dom';
 
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'services/flash-messages';
-import { updateTransaction, clearTransaction } from 'actions/transactions.js';
+import {
+  updateTransaction, clearTransaction,
+  selectTransaction,
+} from 'services/transactions';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { selectTransaction } from 'selectors/transactions.js';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm from './../form/transfer-form.jsx';

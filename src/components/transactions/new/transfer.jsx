@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import { formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'services/flash-messages';
-import { createTransfer } from 'actions/transactions.js';
+import { createTransfer } from 'services/transactions';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 

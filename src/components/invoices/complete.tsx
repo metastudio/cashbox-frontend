@@ -3,14 +3,14 @@ import { connect, Dispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { TransactionParams } from 'model-types';
 import { Invoice } from 'services/invoices';
-import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
+import { TransactionParams, createTransaction } from 'services/transactions';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
-import { createTransaction as createTransactionAction } from 'actions/transactions.js';
+
+import Form from 'components/transactions/form/form.jsx';
 
 interface StateProps {
   invoice: Invoice;
@@ -22,8 +22,8 @@ interface CompleteState {
 }
 
 interface DispatchProps {
-  createTransaction: (orgId: number, data: TransactionParams) => Promise<{}>;
-  flashMessage:      (msg: string) => void;
+  create:       (orgId: number, data: TransactionParams) => Promise<{}>;
+  flashMessage: (msg: string) => void;
 }
 
 type Props = RouteComponentProps<{}> & DispatchProps & StateProps;
@@ -43,8 +43,8 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
   }
 
   handleSubmit = (values: TransactionParams) => {
-    const { orgId, createTransaction } = this.props;
-    return createTransaction(orgId, {
+    const { orgId, create } = this.props;
+    return create(orgId, {
       amount:        formatMoneyParam(values.amount),
       categoryId:    values.categoryId,
       customerId:    values.customerId,
@@ -109,8 +109,8 @@ const mapState = (state: { show: boolean; }) => ({
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
-  createTransaction: (orgId: number, data: TransactionParams) => (
-    new Promise((res, rej) => dispatch(createTransactionAction(orgId, data, res, rej)))
+  create: (orgId: number, data: TransactionParams) => (
+    new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej)))
   ),
 });
 
