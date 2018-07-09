@@ -34,9 +34,10 @@ class BankAccounts extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (props.status === Status.Invalid || props.orgId !== this.props.orgId) {
-      this.loadData(props);
+  componentDidUpdate(prevProps: Props) {
+    const { status, orgId } = this.props;
+    if (status === Status.Invalid || orgId !== prevProps.orgId) {
+      this.loadData(this.props);
     }
   }
 
@@ -44,13 +45,14 @@ class BankAccounts extends React.Component<Props> {
     const { orgId, status, bankAccounts } = this.props;
 
     if (!orgId) { return null; }
+    if (status !== Status.Success || !bankAccounts) {
+      return <LoadingView status={ status } />;
+    }
 
     return (
       <>
         <PageHeader>Accounts</PageHeader>
-        <LoadingView status={ status }>
-          { status === Status.Success && bankAccounts && <BankAccountsTable bankAccounts={ bankAccounts } /> }
-        </LoadingView>
+        <BankAccountsTable bankAccounts={ bankAccounts } />
       </>
     );
   }

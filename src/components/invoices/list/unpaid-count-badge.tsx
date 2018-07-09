@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Badge } from 'react-bootstrap';
 
-import * as statuses from 'constants/statuses.js';
+import { Status } from 'model-types';
 import { loadUnpaidInvoicesCount } from 'actions/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount } from 'selectors/invoices.js';
@@ -30,14 +30,16 @@ class UnpaidInvoicesCountBadge extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (this.props.status === statuses.INVALID) {
+  componentDidUpdate() {
+    if (this.props.status === Status.Invalid) {
       this.loadData(this.props);
     }
   }
 
   render() {
-    if (this.props.count === null) { return null; }
+    if (this.props.status !== Status.Success || this.props.count === null) {
+      return null;
+    }
 
     return <Badge>{ this.props.count }</Badge>;
   }

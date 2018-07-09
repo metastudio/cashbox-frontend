@@ -1,1 +1,1 @@
-export { default } from './require-login.jsx';
+export { default } from './require-login';

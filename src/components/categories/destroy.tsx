@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Mutation, MutationFn } from 'react-apollo';
 
-import { FalshMessageOptions } from 'model-types';
+import { FlashMessageOptions } from 'model-types';
 import { CategoryFragment } from 'graphql-types';
 import { addFlashMessage } from 'actions/flash-messages.js';
 import { confirm } from 'components/utils/confirm';
@@ -21,7 +21,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  message: (msg: string, type?: FalshMessageOptions) => void;
+  message: (msg: string, type?: FlashMessageOptions) => void;
 }
 
 type Props = OwnProps & DispatchProps & RouteComponentProps<{}>;
@@ -71,7 +71,7 @@ class DestroyCategory extends React.Component<Props> {
 }
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  message: (msg: string, type?: FalshMessageOptions) => dispatch(addFlashMessage(msg, type)),
+  message: (msg: string, type?: FlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
 });
 
 export default withRouter(connect<StateProps, DispatchProps, OwnProps>(undefined, mapDispatch)(DestroyCategory));
