@@ -9,7 +9,7 @@ export { default as organizations }        from 'services/organizations/entities
 export { default as currentOrganization }  from 'services/organizations/current-reducer.js';
 export { default as transaction }          from 'services/transactions/entity-reducer.js';
 export { default as transactions }         from 'services/transactions/entities-reducer.js';
-export { default as members }              from './members';
+export { default as members }              from 'services/members/reducer.js';
 export { default as bankAccounts }         from 'services/bank-accounts/entities-reducer.js';
 export { default as bankAccount }          from 'services/bank-accounts/entity-reducer.js';
 export { default as categories }           from 'services/categories/entities-reducer.js';

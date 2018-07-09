@@ -7,7 +7,7 @@ import organizationsSaga from 'services/organizations/saga.js';
 import transactionsSaga  from 'services/transactions/saga.js';
 import customersSaga     from 'services/customers/saga.js';
 import categoriesSaga    from 'services/categories/saga.js';
-import membersSaga       from './members';
+import membersSaga       from 'services/members/saga.js';
 import usersSaga         from './users';
 import invoicesSaga      from 'services/invoices/saga.js';
 

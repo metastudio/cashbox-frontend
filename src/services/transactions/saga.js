@@ -8,7 +8,6 @@ import {
   patchOrganizationTransaction,
   deleteOrganizationTransaction,
 } from './api.js';
-import { putMemberLastVisit } from 'api/members.js';
 
 import {
   loadTransactions,
@@ -18,16 +17,14 @@ import {
   updateTransaction,
   destroyTransaction
 } from './actions.js';
-import { updateMemberLastVisit } from 'actions/members.js';
+import { updateMemberLastVisit } from 'services/members';
 
 function* handleLoadTransactions({ payload: { organizationId, params } }) {
   try {
     yield put(loadTransactions.request(organizationId));
     const { transactions, pagination } = yield call(getOrganizationTransactions, organizationId, params);
     yield put(loadTransactions.success(organizationId, transactions, pagination));
-    yield put(updateMemberLastVisit.request(organizationId));
-    const member = yield call(putMemberLastVisit, organizationId);
-    yield put(updateMemberLastVisit.success(organizationId, member));
+    yield put(updateMemberLastVisit(organizationId));
   } catch (error) {
     yield put(loadTransactions.failure(error));
   }

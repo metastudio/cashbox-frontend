@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'services/flash-messages';
-import { loadMembers } from 'actions/members.js';
+import { loadMembers, selectMembersStatus, selectMembers } from 'services/members';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -61,8 +61,8 @@ Members.propTypes = {
 
 const select = (state) => ({
   orgId:   selectCurrentOrganizationId(state),
-  members: state.members.items,
-  status:  state.members.status,
+  status:  selectMembersStatus(state),
+  members: selectMembers(state),
 });
 
 const dispatcher = (dispatch) => ({
