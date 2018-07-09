@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, putApi, deleteApi } from 'api/_helpers.js';
+import { prepareURL, getApi, postApi, putApi, deleteApi } from 'utils/api-helpers';
 
 const categoriesURL = (orgId) => prepareURL(`/api/organizations/${orgId}/categories`);
 const categoryURL = (orgId, categoryId) => prepareURL(`/api/organizations/${orgId}/categories/${categoryId}`);

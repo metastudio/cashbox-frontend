@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, patchApi, deleteApi } from 'api/_helpers.js';
+import { prepareURL, getApi, postApi, patchApi, deleteApi } from 'utils/api-helpers';
 
 const transactionsURL = (orgId, params) => prepareURL(`/api/organizations/${orgId}/transactions`, params);
 const transferURL     = (orgId) => prepareURL(`/api/organizations/${orgId}/transactions/transfer`);

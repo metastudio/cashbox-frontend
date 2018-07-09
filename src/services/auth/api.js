@@ -1,6 +1,6 @@
 import { property } from 'lodash';
 
-import { prepareURL, postApi } from './_helpers';
+import { prepareURL, postApi } from 'utils/api-helpers';
 
 const tokenURL = () => prepareURL('/api/auth_token');
 

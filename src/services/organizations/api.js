@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi } from 'api/_helpers.js';
+import { prepareURL, getApi, postApi } from 'utils/api-helpers';
 
 const organizationsURL = ()   => prepareURL('/api/organizations');
 const organizationURL  = (id) => prepareURL(`/api/organizations/${id}`);

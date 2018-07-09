@@ -1,4 +1,4 @@
-import { prepareURL, getApi } from 'api/_helpers.js';
+import { prepareURL, getApi } from 'utils/api-helpers';
 
 const balancesURL = (orgId) => prepareURL(`/api/organizations/${orgId}/total_balances`);
 
