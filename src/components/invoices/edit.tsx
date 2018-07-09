@@ -7,7 +7,7 @@ import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import * as statuses from 'constants/statuses.js';
 import { Invoice, InvoiceParams } from 'model-types';
 import { loadInvoice, updateInvoice } from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 import { prepareSubmissionError } from 'utils/errors';

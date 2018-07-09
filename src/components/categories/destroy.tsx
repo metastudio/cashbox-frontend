@@ -3,9 +3,8 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Mutation, MutationFn } from 'react-apollo';
 
-import { FlashMessageOptions } from 'model-types';
 import { CategoryFragment } from 'graphql-types';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
 import { confirm } from 'components/utils/confirm';
 import { DeleteCategoryMutation, DeleteCategoryMutationVariables } from 'graphql-types';
 import { DeleteCategory, GetOrganizationCategories } from 'queries/categories';

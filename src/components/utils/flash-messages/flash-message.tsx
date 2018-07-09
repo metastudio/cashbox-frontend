@@ -1,16 +1,11 @@
 import * as React from 'react';
 import { Alert, Collapse } from 'react-bootstrap';
 
-interface Message {
-  uid:        string;
-  type:       string;
-  text:       string;
-  autoClose?: boolean;
-}
+import { FlashMessage as FlashMessageType } from 'services/flash-messages';
 
 interface Props {
-  message:       Message;
-  handleClose:   (m: Message) => void;
+  message:       FlashMessageType;
+  handleClose:   (m: FlashMessageType) => void;
   autoClose?:    boolean;
   closeTimeout?: number;
 }
@@ -74,4 +69,4 @@ class FlashMessage extends React.Component<Props, State> {
   }
 }
 
-export { FlashMessage as default, Message };
+export { FlashMessage as default };

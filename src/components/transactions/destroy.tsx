@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 
 import { Transaction } from 'model-types';
 import { destroyTransaction } from 'actions/transactions.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { confirm } from 'components/utils/confirm';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 

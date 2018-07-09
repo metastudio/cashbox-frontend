@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { loadCustomer, updateCustomer } from 'actions/customers.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';

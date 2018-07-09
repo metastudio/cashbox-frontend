@@ -3,8 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { FlashMessageOptions } from 'model-types';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
 import { selectHasCurrentOrganization } from 'selectors/organizations.js';
 
 interface StateProps {

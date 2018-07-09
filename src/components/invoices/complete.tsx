@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Invoice, TransactionParams } from 'model-types';
 import Form from 'components/transactions/form/form.jsx';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';

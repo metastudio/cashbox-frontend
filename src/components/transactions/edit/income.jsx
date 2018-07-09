@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { updateTransaction, clearTransaction } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectTransaction } from 'selectors/transactions.js';

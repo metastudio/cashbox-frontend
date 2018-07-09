@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 
 import { Invoice } from 'model-types';
 import { destroyInvoice } from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectInvoice } from 'selectors/invoices.js';

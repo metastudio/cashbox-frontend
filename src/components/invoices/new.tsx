@@ -6,7 +6,7 @@ import { formatMoneyParam } from 'utils/money';
 
 import { Invoice, InvoiceParams } from 'model-types';
 import { createInvoice } from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 

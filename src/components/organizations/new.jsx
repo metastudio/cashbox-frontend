@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { createOrganization } from 'actions/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 

@@ -5,7 +5,7 @@ import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 import { Mutation, MutationFn } from 'react-apollo';
 
 import { CategoryInput } from 'graphql-types';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { appollorErrorToSubmission } from 'utils/errors';
 import { CreateCategoryMutation, CreateCategoryMutationVariables } from 'graphql-types';

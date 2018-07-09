@@ -5,7 +5,7 @@ import * as FileSaver from 'file-saver';
 
 import { Invoice } from 'model-types';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { downloadInvoicePDF } from 'actions/invoices.js';
 
 interface StateProps {

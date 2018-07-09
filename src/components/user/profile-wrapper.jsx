@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { updateProfile as updateProfileAction } from 'actions/users.js';
 import { prepareSubmissionError } from 'utils/errors';
 

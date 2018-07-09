@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { loadMembers } from 'actions/members.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 

@@ -112,8 +112,3 @@ export interface InvoiceParams {
 
   invoiceItemsAttributes: InvoiceItemParams[];
 }
-
-export interface FlashMessageOptions {
-  type:       'success' | 'danger' | 'info';
-  autoClose?: boolean;
-}

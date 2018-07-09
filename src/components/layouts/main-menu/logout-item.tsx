@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { MenuItem } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 import { logoutUser, selectIsAuthorized } from 'services/auth';
 
 interface StateProps {
