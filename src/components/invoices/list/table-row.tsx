@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Invoice } from 'model-types';
+import { Invoice } from 'services/invoices';
 import { formatDateRange } from 'utils/date';
 import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';

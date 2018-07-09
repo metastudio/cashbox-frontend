@@ -4,8 +4,7 @@ import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
 
-import { Invoice, InvoiceParams } from 'model-types';
-import { createInvoice } from 'actions/invoices.js';
+import { Invoice, InvoiceParams, createInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';

@@ -5,11 +5,13 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import * as statuses from 'constants/statuses.js';
-import { Invoice, InvoiceParams } from 'model-types';
-import { loadInvoice, updateInvoice } from 'actions/invoices.js';
+import {
+  Invoice, InvoiceParams,
+  loadInvoice, updateInvoice,
+  selectInvoice, selectInvoiceStatus,
+} from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';

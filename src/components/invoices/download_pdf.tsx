@@ -3,10 +3,9 @@ import { connect, Dispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import * as FileSaver from 'file-saver';
 
-import { Invoice } from 'model-types';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { addFlashMessage } from 'services/flash-messages';
-import { downloadInvoicePDF } from 'actions/invoices.js';
+import { Invoice, downloadInvoicePDF } from 'services/invoices';
 
 interface StateProps {
   orgId: number;

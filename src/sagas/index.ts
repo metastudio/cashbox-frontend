@@ -9,7 +9,7 @@ import customersSaga     from 'services/customers/saga.js';
 import categoriesSaga    from './categories';
 import membersSaga       from './members';
 import usersSaga         from './users';
-import invoicesSaga      from './invoices';
+import invoicesSaga      from 'services/invoices/saga.js';
 
 function* rootSaga() {
   yield all([

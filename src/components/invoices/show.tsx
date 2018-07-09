@@ -4,12 +4,15 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Invoice } from 'model-types';
+import {  } from 'model-types';
 import * as statuses from 'constants/statuses.js';
-import { loadInvoice } from 'actions/invoices.js';
+import {
+  Invoice,
+  loadInvoice,
+  selectInvoice, selectInvoiceStatus,
+} from 'services/invoices';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { selectUserFullName } from 'selectors/users.js';
-import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';

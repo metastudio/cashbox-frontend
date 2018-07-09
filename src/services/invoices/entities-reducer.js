@@ -6,7 +6,7 @@ import {
   createInvoice,
   updateInvoice,
   destroyInvoice,
-} from 'actions/invoices.js';
+} from './actions.js';
 
 const defaultState = {
   items:      [],

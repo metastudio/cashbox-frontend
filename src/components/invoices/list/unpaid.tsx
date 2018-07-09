@@ -4,14 +4,13 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Status, Invoice, Pagination as PaginationInterface } from 'model-types';
-import { loadUnpaidInvoices } from 'actions/invoices.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { Status, Pagination as PaginationInterface } from 'model-types';
 import {
-  selectUnpaidInvoices,
-  selectUnpaidInvoicesStatus,
-  selectUnpaidInvoicesPagination
-} from 'selectors/invoices.js';
+  Invoice,
+  loadUnpaidInvoices,
+  selectUnpaidInvoices, selectUnpaidInvoicesStatus, selectUnpaidInvoicesPagination,
+} from 'services/invoices';
+import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';

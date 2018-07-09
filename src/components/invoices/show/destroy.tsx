@@ -3,12 +3,9 @@ import { connect, Dispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Invoice } from 'model-types';
-import { destroyInvoice } from 'actions/invoices.js';
+import { Invoice, destroyInvoice, selectInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
-
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectInvoice } from 'selectors/invoices.js';
 
 interface StateProps {
   orgId:        number;

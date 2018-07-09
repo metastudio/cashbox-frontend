@@ -1,4 +1,4 @@
-import { prepareURL, getApi, postApi, deleteApi, patchApi, getPDF } from './_helpers';
+import { prepareURL, getApi, postApi, deleteApi, patchApi, getPDF } from 'api/_helpers.js';
 
 const invoicesUrl            = (orgId, params) => prepareURL(`/api/organizations/${orgId}/invoices`, params);
 const unpaidInvoicesUrl      = (orgId, params) => prepareURL(`/api/organizations/${orgId}/invoices/unpaid`, params);

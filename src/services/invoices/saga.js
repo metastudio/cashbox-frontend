@@ -9,7 +9,7 @@ import {
   deleteInvoice,
   patchInvoice,
   getInvoicePDF
-} from 'api/invoices.js';
+} from './api.js';
 
 import {
   loadInvoices,
@@ -20,7 +20,7 @@ import {
   destroyInvoice,
   downloadInvoicePDF,
   updateInvoice
-} from 'actions/invoices.js';
+} from './actions.js';
 
 function* handleLoadInvoices({ payload: { organizationId, params } }) {
   try {

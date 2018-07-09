@@ -3,7 +3,8 @@ import { connect, Dispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Invoice, TransactionParams } from 'model-types';
+import { TransactionParams } from 'model-types';
+import { Invoice } from 'services/invoices';
 import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'services/flash-messages';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';

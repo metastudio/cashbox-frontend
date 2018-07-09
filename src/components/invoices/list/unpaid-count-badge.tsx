@@ -3,9 +3,11 @@ import { connect, Dispatch } from 'react-redux';
 import { Badge } from 'react-bootstrap';
 
 import { Status } from 'model-types';
-import { loadUnpaidInvoicesCount } from 'actions/invoices.js';
+import {
+  loadUnpaidInvoicesCount,
+  selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount,
+} from 'services/invoices';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount } from 'selectors/invoices.js';
 
 interface StateProps {
   orgId:  number;
