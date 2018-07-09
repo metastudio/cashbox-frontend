@@ -26,6 +26,13 @@ export interface Category {
   type:     string;
 }
 
+export interface Pagination {
+  current: number;
+  previous?: number;
+  pages: number;
+  next?: number;
+}
+
 export interface CategoryParams {
   name: string;
   type: string;

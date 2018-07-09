@@ -1,10 +1,10 @@
 const selectInvoices            = (state) => state.invoices.items;
 const selectInvoicesStatus      = (state) => state.invoices.status;
-const selectInvoicesPagination  = (state) => state.invoices.paginationSelector;
+const selectInvoicesPagination  = (state) => state.invoices.pagination;
 
 const selectUnpaidInvoices           = (state) => state.unpaidInvoices.items;
 const selectUnpaidInvoicesStatus     = (state) => state.unpaidInvoices.status;
-const selectUnpaidInvoicesPagination = (state) => state.unpaidInvoices.paginationSelector;
+const selectUnpaidInvoicesPagination = (state) => state.unpaidInvoices.pagination;
 
 const selectUnpaidInvoicesCount        = (state) => state.unpaidInvoicesCount.count;
 const selectUnpaidInvoicesCountsStatus = (state) => state.unpaidInvoicesCount.status;
