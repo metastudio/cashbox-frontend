@@ -1,4 +1,4 @@
-import { prepareURL, getApi } from './_helpers';
+import { prepareURL, getApi } from 'api/_helpers.js';
 
 const currenciesURL = () => prepareURL('/api/currencies');
 
