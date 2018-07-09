@@ -4,7 +4,7 @@ import { NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import LogoutItem from './logout-item';
-import { selectUserFullName } from 'selectors/users.js';
+import { selectUserFullName } from 'services/users';
 
 interface StatePropTypes {
   userFullName: string;

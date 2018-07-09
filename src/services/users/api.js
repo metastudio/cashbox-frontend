@@ -1,4 +1,4 @@
-import { prepareURL, getApi, putApi, deleteApi } from './_helpers';
+import { prepareURL, getApi, putApi, deleteApi } from 'api/_helpers.js';
 
 const currentUserURL = () => prepareURL('/api/user_info');
 const updateProfileUrl = (userId) => prepareURL(`/api/users/${userId}/update_profile`);

@@ -4,13 +4,13 @@ import {
   updateProfile as updateProfileApi,
   updateAccount as updateAccountApi,
   cancelAccount as cancelAccountApi,
-} from 'api/users.js';
+} from './api.js';
 
 import {
   updateProfile,
   updateAccount,
   cancelAccount
-} from 'actions/users.js';
+} from './actions.js';
 
 export function* handleUpdateProfile({ payload: { userId, data }, meta: { resolve, reject } }) {
   try {

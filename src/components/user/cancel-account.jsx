@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { cancelAccount as cancelAccountAction } from 'actions/users.js';
+import { cancelAccount as cancelAccountAction } from 'services/users';
 
 class CancelAccount extends React.Component {
   constructor(props) {

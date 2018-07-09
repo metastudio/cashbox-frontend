@@ -9,7 +9,7 @@ import {
   updateProfile,
   updateAccount,
   cancelAccount
-} from 'actions/users.js';
+} from 'services/users';
 
 const defaultState = {
   token: null,

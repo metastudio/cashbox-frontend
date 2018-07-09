@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { updateProfile as updateProfileAction } from 'actions/users.js';
-import { prepareSubmissionError } from 'utils/errors';
-
 import {
-  selectUserInitialValues,
-  selectUserId
-} from 'selectors/users.js';
+  updateProfile as updateProfileAction,
+  selectUserInitialValues, selectUserId,
+} from 'services/users';
+import { prepareSubmissionError } from 'utils/errors';
 
 import ProfileForm from './profile-form.jsx';
 

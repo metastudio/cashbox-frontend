@@ -8,7 +8,7 @@ import transactionsSaga  from 'services/transactions/saga.js';
 import customersSaga     from 'services/customers/saga.js';
 import categoriesSaga    from 'services/categories/saga.js';
 import membersSaga       from 'services/members/saga.js';
-import usersSaga         from './users';
+import usersSaga         from 'services/users/saga.js';
 import invoicesSaga      from 'services/invoices/saga.js';
 
 function* rootSaga() {

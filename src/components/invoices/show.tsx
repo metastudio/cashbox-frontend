@@ -12,7 +12,7 @@ import {
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { selectUserFullName } from 'selectors/users.js';
+import { selectUserFullName } from 'services/users';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';

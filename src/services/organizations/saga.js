@@ -1,9 +1,9 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import { setCookies } from 'utils/cookies';
 
 import { getOrganizations, postOrganization } from './api.js';
-import { getCurrentUser } from 'api/users.js';
+import { selectUserId } from 'services/users';
 
 import {
   loadOrganizations,
@@ -34,8 +34,10 @@ function* handleCreateOrganization({ payload: { data }, meta: { resolve, reject 
 }
 
 function* handleSetCurrentOrganization({ payload: { organization }, meta: { resolve } }) {
-  const user = yield call(getCurrentUser);
-  setCookies({ userId: user.id, currentOrganizationId: organization.id });
+  const userId = yield select(selectUserId);
+  if (userId) {
+    setCookies({ userId: userId, currentOrganizationId: organization.id });
+  }
   yield put(setCurrentOrganization.success(organization));
   yield call(resolve, organization);
 }
