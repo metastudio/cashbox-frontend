@@ -5,13 +5,11 @@ import * as moment from 'moment';
 import { NavDropdown } from 'react-bootstrap';
 import { Money, formatMoney } from 'utils/money';
 
-import { loadOrganizationBalances } from 'actions/balances.js';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
-  selectBalancesTotalAmount,
-  selectBalancesDefaultCurrency,
-  selectBalancesTotals
-} from 'selectors/balances.js';
+  loadOrganizationBalances,
+  selectBalancesTotalAmount, selectBalancesDefaultCurrency, selectBalancesTotals,
+} from 'services/balances';
 
 import BalanceItem, { Balance } from './balance-item';
 

@@ -16,4 +16,4 @@ export { default as categories }           from 'services/categories/entities-re
 export { default as category }             from 'services/categories/entity-reducer.js';
 export { default as customers }            from 'services/customers/entities-reducer.js';
 export { default as customer }             from 'services/customers/entity-reducer.js';
-export { default as balances }             from './balances';
+export { default as balances }             from 'services/balances/reducer.js';

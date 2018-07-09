@@ -1,8 +1,8 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getOrganizationBalances } from 'api/balances.js';
+import { getOrganizationBalances } from './api.js';
 
-import { loadOrganizationBalances } from 'actions/balances.js';
+import { loadOrganizationBalances } from './actions.js';
 
 function* handleLoadOrganizationBalances({ payload: { organizationId } }) {
   try {
