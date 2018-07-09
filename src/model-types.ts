@@ -1,17 +1,12 @@
 import { Money } from 'utils/money';
 import { BankAccount } from 'services/bank-accounts/types';
+import { Customer } from 'services/customers/types';
 
 export enum Status {
   Invalid = 'INVALID',
   Pending = 'PENDING',
   Success = 'SUCCESS',
   Failure = 'FAILURE',
-}
-
-export interface Customer {
-  id:               number;
-  name:             string;
-  invoiceDetails:   string;
 }
 
 export interface Category {

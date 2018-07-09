@@ -6,7 +6,7 @@ import {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} from 'actions/customers.js';
+} from './actions.js';
 
 const defaultState = {
   items:  [],

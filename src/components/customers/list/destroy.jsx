@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { deleteCustomer } from 'actions/customers.js';
+import { deleteCustomer } from 'services/customers';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
+
 import { confirm } from 'components/utils/confirm';
 
 class DestroyCustomer extends React.Component {

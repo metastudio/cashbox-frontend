@@ -3,10 +3,9 @@ import { connect, Dispatch } from 'react-redux';
 import Select, { Option } from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
-import { Status, Customer } from 'model-types';
-import { loadCustomers } from 'actions/customers.js';
+import { Status } from 'model-types';
+import { Customer, loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectCustomers, selectCustomersStatus } from 'selectors/customers.js';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';

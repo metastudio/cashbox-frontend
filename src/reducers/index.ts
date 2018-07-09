@@ -12,8 +12,8 @@ export { default as bankAccounts }         from 'services/bank-accounts/entities
 export { default as bankAccount }          from 'services/bank-accounts/entity-reducer.js';
 export { default as categories }           from './categories';
 export { default as category }             from './category';
-export { default as customers }            from './customers';
-export { default as customer }             from './customer';
+export { default as customers }            from 'services/customers/entities-reducer.js';
+export { default as customer }             from 'services/customers/entity-reducer.js';
 export { default as balances }             from './balances';
 export { default as unpaidInvoices }       from './unpaid-invoices';
 export { default as unpaidInvoicesCount }  from './unpaid-invoices-count';

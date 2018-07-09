@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { createCustomer, clearCustomer } from 'actions/customers.js';
+import { createCustomer, clearCustomer } from 'services/customers';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { prepareSubmissionError } from 'utils/errors';
 

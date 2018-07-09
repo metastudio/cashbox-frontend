@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { loadCustomers } from 'actions/customers.js';
+import { loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 import LoadingView from 'components/utils/loading-view';
@@ -48,8 +48,8 @@ Customers.propTypes = {
 
 const select = (state) => ({
   orgId:     getCurrentOrganizationId(state),
-  customers: state.customers.items,
-  status:    state.customers.status,
+  customers: selectCustomers(state),
+  status:    selectCustomersStatus(state),
 });
 
 const dispatcher = (dispatch) => ({

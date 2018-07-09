@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 import * as statuses from 'constants/statuses.js'
-import { loadCustomer, clearCustomer } from 'actions/customers.js'
+import { loadCustomer, clearCustomer } from './actions.js'
 
 const defaultState = {
   data:   null,

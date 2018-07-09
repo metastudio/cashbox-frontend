@@ -6,7 +6,7 @@ import {
   postOrganizationCustomer,
   putOrganizationCustomer,
   deleteOrganizationCustomer,
-} from 'api/customers.js';
+} from './api.js';
 
 import {
   loadCustomers,
@@ -14,7 +14,7 @@ import {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} from 'actions/customers.js';
+} from './actions.js';
 
 function* handleLoadCustomers({ payload: { organizationId }, meta: { resolve, reject } }) {
   try {
