@@ -10,29 +10,33 @@ import {
 } from 'actions/transactions.js';
 
 const defaultState = {
-  items:  [],
-  status: statuses.INVALID,
-  error:  null,
+  items:      [],
+  status:     statuses.INVALID,
+  error:      null,
+  pagination: null,
 };
 
 export default handleActions({
   [loadTransactions.request]: (state) => ({
     ...state,
-    items:  [],
-    status: statuses.PENDING,
-    error:  null,
+    items:      [],
+    status:     statuses.PENDING,
+    error:      null,
+    pagination: null,
   }),
   [loadTransactions.success]: (state, { payload }) => ({
     ...state,
-    items:  payload.transactions,
-    status: statuses.SUCCESS,
-    error:  null,
+    items:      payload.transactions,
+    status:     statuses.SUCCESS,
+    error:      null,
+    pagination: payload.pagination
   }),
   [loadTransactions.failure]: (state, { payload }) => ({
     ...state,
-    items:  [],
-    status: statuses.FAILURE,
-    error:  payload
+    items:      [],
+    status:     statuses.FAILURE,
+    error:      payload,
+    pagination: null
   }),
   [combineActions(
     createTransaction.success,

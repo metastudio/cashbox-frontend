@@ -6,7 +6,8 @@ import * as QS from 'query-string';
 import { Pagination as PaginationInterface } from 'model-types';
 
 interface OwnProps {
-  data: PaginationInterface;
+  data:         PaginationInterface;
+  newPathname?: string;
 }
 
 type Redirect = (page: number) => void;
@@ -49,14 +50,16 @@ const last = (redirect: Redirect, current: number, pages: number) => {
   );
 };
 
-const PaginationRender: React.SFC<Props> = ({ data, history, location: { pathname, search } }) => {
+const PaginationRender: React.SFC<Props> = ({ data, history, location: { pathname, search }, newPathname }) => {
+  const path = newPathname ? newPathname : pathname;
+
   const { current, previous, pages, next } = data;
 
   if (pages === 1) { return null; }
 
   const redirect = (page: number) => {
     const query = QS.parse(search);
-    const url = `${pathname}?${QS.stringify({ ...query, page: page })}`;
+    const url = `${path}?${QS.stringify({ ...query, page: page })}`;
     history.push(url);
   };
 
