@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { CategoryFragment } from 'graphql-types';
+import { Category } from 'services/categories';
 
 import Row from './table-row';
 
 interface Props {
-  categories: (CategoryFragment | null)[];
+  categories: Category[];
 }
 
 const CategoriesTable: React.SFC<Props> = ({ categories }) => (
