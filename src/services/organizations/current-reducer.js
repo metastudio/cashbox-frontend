@@ -1,6 +1,6 @@
 import { handleActions, combineActions } from 'redux-actions';
 
-import { setCurrentOrganization, clearCurrentOrganization } from 'actions/organizations.js';
+import { setCurrentOrganization, clearCurrentOrganization } from './actions.js';
 import { restoreSession } from 'services/auth';
 
 const defaultState = {

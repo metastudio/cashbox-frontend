@@ -11,7 +11,7 @@ import {
   loadInvoice,
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectUserFullName } from 'selectors/users.js';
 
 import Header from './show/header';
@@ -68,7 +68,7 @@ class ShowInvoice extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   status:       selectInvoiceStatus(state),
   invoice:      selectInvoice(state),
   userFullName: selectUserFullName(state),

@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body.jsx';
@@ -47,7 +47,7 @@ Customers.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:     getCurrentOrganizationId(state),
+  orgId:     selectCurrentOrganizationId(state),
   customers: selectCustomers(state),
   status:    selectCustomersStatus(state),
 });

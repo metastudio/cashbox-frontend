@@ -10,7 +10,7 @@ import {
   loadUnpaidInvoices,
   selectUnpaidInvoices, selectUnpaidInvoicesStatus, selectUnpaidInvoicesPagination,
 } from 'services/invoices';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
@@ -69,7 +69,7 @@ class UnpaidInvoices extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:    getCurrentOrganizationId(state),
+  orgId:    selectCurrentOrganizationId(state),
   status:   selectUnpaidInvoicesStatus(state),
   invoices: selectUnpaidInvoices(state),
   pagination: selectUnpaidInvoicesPagination(state)

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
-import { selectHasCurrentOrganization } from 'selectors/organizations.js';
+import { selectHasCurrentOrganization } from 'services/organizations';
 
 interface StateProps {
   hasOrganization: boolean;

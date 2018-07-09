@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import * as FileSaver from 'file-saver';
 
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { addFlashMessage } from 'services/flash-messages';
 import { Invoice, downloadInvoicePDF } from 'services/invoices';
 
@@ -39,7 +39,7 @@ class DownloadPDFButton extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

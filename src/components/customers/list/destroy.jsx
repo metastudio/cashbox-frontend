@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { deleteCustomer } from 'services/customers';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
 
@@ -49,7 +49,7 @@ DestroyCustomer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

@@ -9,7 +9,7 @@ import {
   selectBankAccounts,
   selectBankAccountsStatus
 } from 'services/bank-accounts';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';
@@ -63,7 +63,7 @@ class BankAccounts extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   bankAccounts: selectBankAccounts(state),
   status:       selectBankAccountsStatus(state),
 });

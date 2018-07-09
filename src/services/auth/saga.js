@@ -3,7 +3,7 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import { getCookies, setCookies } from 'utils/cookies';
 import { postToken } from 'api/token.js';
 import { getCurrentUser } from 'api/users.js';
-import { getOrganization } from 'api/organizations.js';
+import { getOrganization } from 'services/organizations/api.js';
 
 import {
   restoreSession,
@@ -11,7 +11,7 @@ import {
   logoutUser,
 } from './actions.js';
 
-import { clearCurrentOrganization } from 'actions/organizations.js';
+import { clearCurrentOrganization } from 'services/organizations';
 
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {

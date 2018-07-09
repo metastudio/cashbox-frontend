@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Alert, PageHeader } from 'react-bootstrap';
 import { Query } from 'react-apollo';
 
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables } from 'graphql-types';
 import { GetOrganizationCategories } from 'services/categories/queries';
 
@@ -53,7 +53,7 @@ class CategoriesList extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 export default connect<StateProps>(mapState)(CategoriesList);

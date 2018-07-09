@@ -11,7 +11,7 @@ import {
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
@@ -117,7 +117,7 @@ class EditInvoice extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:   getCurrentOrganizationId(state),
+  orgId:   selectCurrentOrganizationId(state),
   status:  selectInvoiceStatus(state),
   invoice: selectInvoice(state),
 });

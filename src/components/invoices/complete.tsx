@@ -7,7 +7,7 @@ import { TransactionParams } from 'model-types';
 import { Invoice } from 'services/invoices';
 import Form from 'components/transactions/form/form.jsx';
 import { addFlashMessage } from 'services/flash-messages';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { createTransaction as createTransactionAction } from 'actions/transactions.js';
@@ -104,7 +104,7 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
 }
 
 const mapState = (state: { show: boolean; }) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

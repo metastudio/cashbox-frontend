@@ -7,7 +7,7 @@ import {
   loadUnpaidInvoicesCount,
   selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount,
 } from 'services/invoices';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface StateProps {
   orgId:  number;
@@ -48,7 +48,7 @@ class UnpaidInvoicesCountBadge extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:  getCurrentOrganizationId(state),
+  orgId:  selectCurrentOrganizationId(state),
   status: selectUnpaidInvoicesCountsStatus(state),
   count:  selectUnpaidInvoicesCount(state),
 });

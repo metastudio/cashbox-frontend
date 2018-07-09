@@ -7,7 +7,7 @@ import { Transaction } from 'model-types';
 import { destroyTransaction } from 'actions/transactions.js';
 import { addFlashMessage } from 'services/flash-messages';
 import { confirm } from 'components/utils/confirm';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface OwnProps {
   transaction: Transaction;
@@ -48,7 +48,7 @@ class DestroyButton extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

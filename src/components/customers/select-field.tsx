@@ -5,7 +5,7 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import { Customer, loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -74,7 +74,7 @@ class CustomersSelect extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:     getCurrentOrganizationId(state),
+  orgId:     selectCurrentOrganizationId(state),
   status:    selectCustomersStatus(state),
   customers: selectCustomers(state),
 });

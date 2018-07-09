@@ -2,14 +2,14 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { setCookies } from 'utils/cookies';
 
-import { getOrganizations, postOrganization } from 'api/organizations.js';
+import { getOrganizations, postOrganization } from './api.js';
 import { getCurrentUser } from 'api/users.js';
 
 import {
   loadOrganizations,
   createOrganization,
   setCurrentOrganization,
-} from 'actions/organizations.js';
+} from './actions.js';
 
 function* handleLoadOrganizations() {
   try {

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { ListGroupItem } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { setCurrentOrganization } from 'actions/organizations.js';
+import { setCurrentOrganization } from 'services/organizations';
 
 class OrganizationsListItem extends React.Component {
   constructor(props) {

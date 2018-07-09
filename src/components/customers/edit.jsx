@@ -7,7 +7,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'services/flash-messages';
 import { loadCustomer, updateCustomer, selectCustomerStatus, selectCustomer } from 'services/customers';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
@@ -74,7 +74,7 @@ EditCustomer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:    getCurrentOrganizationId(state),
+  orgId:    selectCurrentOrganizationId(state),
   customer: selectCustomer(state),
   status:   selectCustomerStatus(state),
 });

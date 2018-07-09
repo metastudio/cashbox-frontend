@@ -10,7 +10,7 @@ import {
   GetOrganizationTypedCategoriesQuery,
   GetOrganizationTypedCategoriesQueryVariables,
 } from 'graphql-types';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { GetOrganizationTypedCategories } from 'services/categories/queries';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
@@ -75,7 +75,7 @@ class CategoriesSelect extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const CategoriesSelectContainer =

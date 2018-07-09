@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'services/flash-messages';
 import { createTransaction } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './../form/form.jsx';
@@ -50,7 +50,7 @@ NewIncomeTransaction.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

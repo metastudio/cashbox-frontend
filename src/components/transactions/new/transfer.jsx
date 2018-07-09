@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'services/flash-messages';
 import { createTransfer } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm from './../form/transfer-form.jsx';
@@ -51,7 +51,7 @@ NewTransfer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

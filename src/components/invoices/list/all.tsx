@@ -10,7 +10,7 @@ import {
   loadInvoices,
   selectInvoices, selectInvoicesStatus, selectInvoicesPagination,
 } from 'services/invoices';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
@@ -70,7 +70,7 @@ class AllInvoices extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:      getCurrentOrganizationId(state),
+  orgId:      selectCurrentOrganizationId(state),
   status:     selectInvoicesStatus(state),
   invoices:   selectInvoices(state),
   pagination: selectInvoicesPagination(state)

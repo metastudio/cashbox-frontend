@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Status, Transaction } from 'model-types';
 import { loadTransaction } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectTransaction, selectTransactionStatus } from 'selectors/transactions.js';
 
 import LoadingView from 'components/utils/loading-view';
@@ -96,7 +96,7 @@ class EditTransaction extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:       getCurrentOrganizationId(state),
+  orgId:       selectCurrentOrganizationId(state),
   status:      selectTransactionStatus(state),
   transaction: selectTransaction(state),
 });

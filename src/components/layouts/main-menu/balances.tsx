@@ -6,7 +6,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { Money, formatMoney } from 'utils/money';
 
 import { loadOrganizationBalances } from 'actions/balances.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   selectBalancesTotalAmount,
   selectBalancesDefaultCurrency,
@@ -60,7 +60,7 @@ class Balances extends React.Component<StateProps & DispatchProps> {
 }
 
 const mapState = (state: object) => ({
-  organizationId:  getCurrentOrganizationId(state),
+  organizationId:  selectCurrentOrganizationId(state),
   totalAmount:     selectBalancesTotalAmount(state),
   defaultCurrency: selectBalancesDefaultCurrency(state),
   balances:        selectBalancesTotals(state),

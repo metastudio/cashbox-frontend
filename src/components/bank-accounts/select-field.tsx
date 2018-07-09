@@ -11,7 +11,7 @@ import {
   selectBankAccounts,
   formatBankAccountName,
 } from 'services/bank-accounts';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -81,7 +81,7 @@ class BankAccountsSelect extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   status:       selectBankAccountsStatus(state),
   bankAccounts: selectBankAccounts(state),
 });

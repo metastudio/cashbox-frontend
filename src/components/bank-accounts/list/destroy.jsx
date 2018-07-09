@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { deleteBankAccount } from 'services/bank-accounts';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { confirm } from 'components/utils/confirm';
 
 class DestroyBankAccount extends React.Component {
@@ -48,7 +48,7 @@ DestroyBankAccount.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

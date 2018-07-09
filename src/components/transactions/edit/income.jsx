@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { addFlashMessage } from 'services/flash-messages';
 import { updateTransaction, clearTransaction } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectTransaction } from 'selectors/transactions.js';
 import { prepareSubmissionError } from 'utils/errors';
 
@@ -78,7 +78,7 @@ EditIncomeTransaction.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
   transaction: selectTransaction(state),
 });
 

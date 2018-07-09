@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
-import { createOrganization } from 'actions/organizations.js';
+import { createOrganization } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';

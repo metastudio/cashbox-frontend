@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 
 import { Invoice, destroyInvoice, selectInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface StateProps {
   orgId:        number;
@@ -41,7 +41,7 @@ class DestroyButton extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   invoice:      selectInvoice(state),
 });
 

@@ -5,7 +5,7 @@ import * as QS from 'query-string';
 
 import { Status, Transaction, Pagination as PaginationInterface } from 'model-types';
 import { loadTransactions } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   selectTransactions,
   selectTransactionsStatus,
@@ -64,7 +64,7 @@ class TransactionsList extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),

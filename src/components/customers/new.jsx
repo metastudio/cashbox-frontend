@@ -6,7 +6,7 @@ import { Panel, Row, Col } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { createCustomer, clearCustomer } from 'services/customers';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
@@ -59,7 +59,7 @@ NewCustomer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({
