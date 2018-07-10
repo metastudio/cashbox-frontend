@@ -5,7 +5,7 @@ import { Query } from 'react-apollo';
 import Spinner from 'components/utils/spinner';
 import { CategoryFragment } from 'graphql-types';
 import { GetCategoryQuery, GetCategoryQueryVariables } from 'graphql-types';
-import { GetCategory } from 'queries/categories';
+import { GetCategory } from 'services/categories/queries';
 
 class CategoryQuery extends Query<GetCategoryQuery, GetCategoryQueryVariables> {}
 

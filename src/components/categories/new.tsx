@@ -5,11 +5,11 @@ import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 import { Mutation, MutationFn } from 'react-apollo';
 
 import { CategoryInput } from 'graphql-types';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { appollorErrorToSubmission } from 'utils/errors';
 import { CreateCategoryMutation, CreateCategoryMutationVariables } from 'graphql-types';
-import { CreateCategory as CreateCategoryQuery, GetOrganizationCategories } from 'queries/categories';
+import { CreateCategory as CreateCategoryQuery, GetOrganizationCategories } from 'services/categories/queries';
 
 import Form from './form.jsx';
 
@@ -79,7 +79,7 @@ class NewCategory extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

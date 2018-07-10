@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { addFlashMessage } from 'services/flash-messages';
 
 import Load from './edit/load';
 import Update from './edit/update';

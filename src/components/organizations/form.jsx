@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Alert, Form } from 'react-bootstrap';
 
-import { getCurrencies } from 'api/currencies.js';
+import { getCurrencies } from 'services/currencies';
 
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalSubmitButton } from 'components/utils/form-inputs';
 

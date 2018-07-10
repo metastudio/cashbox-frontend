@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { loadBankAccounts } from 'services/bank-accounts';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableBody from './table-body.jsx';
@@ -50,7 +50,7 @@ BankAccounts.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   bankAccounts: state.bankAccounts.items,
   status:       state.bankAccounts.status,
 });

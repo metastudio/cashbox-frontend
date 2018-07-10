@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, NavItem, NavDropdown } from 'react-bootstrap';
 
-import { getCurrentOrganization } from 'selectors/organizations.js';
+import { selectCurrentOrganization } from 'services/organizations';
 import 'components/app/css/default.css';
 
 interface StatePropTypes {
@@ -54,7 +54,7 @@ const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
 };
 
 const mapState = (state: object) => ({
-  organization: getCurrentOrganization(state),
+  organization: selectCurrentOrganization(state),
 });
 
 export default connect<StatePropTypes>(mapState)(MenuOrganizationItem);

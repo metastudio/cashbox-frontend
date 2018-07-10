@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Transaction } from 'model-types';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import { formatBankAccountName } from 'services/bank-accounts';
+import { Transaction } from 'services/transactions';
 import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import './../css/default.css';
-import { formatBankAccountName } from 'utils/bank-account';
 
 interface OwnProps {
   transaction: Transaction;

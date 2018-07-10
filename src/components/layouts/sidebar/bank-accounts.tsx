@@ -2,10 +2,14 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 
-import { Status, BankAccount } from 'model-types';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectBankAccounts, selectBankAccountsStatus } from 'selectors/bank-accounts.js';
+import { Status } from 'model-types';
+import {
+  BankAccount,
+  loadBankAccounts,
+  selectBankAccounts,
+  selectBankAccountsStatus
+} from 'services/bank-accounts';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';
@@ -59,7 +63,7 @@ class BankAccounts extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   bankAccounts: selectBankAccounts(state),
   status:       selectBankAccountsStatus(state),
 });

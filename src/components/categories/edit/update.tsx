@@ -4,7 +4,7 @@ import { Mutation, MutationFn } from 'react-apollo';
 import { CategoryFragment, CategoryInput } from 'graphql-types';
 import { appollorErrorToSubmission } from 'utils/errors';
 import { UpdateCategoryMutation, UpdateCategoryMutationVariables } from 'graphql-types';
-import { UpdateCategory as UpdateCategoryQuery } from 'queries/categories';
+import { UpdateCategory as UpdateCategoryQuery } from 'services/categories/queries';
 
 import Form from '../form.jsx';
 

@@ -4,12 +4,15 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Invoice } from 'model-types';
+import {  } from 'model-types';
 import * as statuses from 'constants/statuses.js';
-import { loadInvoice } from 'actions/invoices.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectUserFullName } from 'selectors/users.js';
-import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
+import {
+  Invoice,
+  loadInvoice,
+  selectInvoice, selectInvoiceStatus,
+} from 'services/invoices';
+import { selectCurrentOrganizationId } from 'services/organizations';
+import { selectUserFullName } from 'services/users';
 
 import Header from './show/header';
 import InvoiceTable from './show/table';
@@ -65,7 +68,7 @@ class ShowInvoice extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   status:       selectInvoiceStatus(state),
   invoice:      selectInvoice(state),
   userFullName: selectUserFullName(state),

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { createCustomer, clearCustomer } from 'actions/customers.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { createCustomer, clearCustomer } from 'services/customers';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
@@ -59,7 +59,7 @@ NewCustomer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

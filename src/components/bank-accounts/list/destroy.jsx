@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { deleteBankAccount } from 'actions/bank-accounts.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { deleteBankAccount } from 'services/bank-accounts';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { confirm } from 'components/utils/confirm';
 
 class DestroyBankAccount extends React.Component {
@@ -48,7 +48,7 @@ DestroyBankAccount.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const dispatcher = (dispatch) => ({

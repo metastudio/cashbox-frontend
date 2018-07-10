@@ -4,10 +4,13 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Status, Invoice, Pagination as PaginationInterface } from 'model-types';
-import { loadInvoices } from 'actions/invoices.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectInvoices, selectInvoicesStatus, selectInvoicesPagination } from 'selectors/invoices.js';
+import { Status, Pagination as PaginationInterface } from 'model-types';
+import {
+  Invoice,
+  loadInvoices,
+  selectInvoices, selectInvoicesStatus, selectInvoicesPagination,
+} from 'services/invoices';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
@@ -67,7 +70,7 @@ class AllInvoices extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:      getCurrentOrganizationId(state),
+  orgId:      selectCurrentOrganizationId(state),
   status:     selectInvoicesStatus(state),
   invoices:   selectInvoices(state),
   pagination: selectInvoicesPagination(state)
