@@ -5,6 +5,7 @@ export { default as bankAccounts }         from './bank-accounts/entities-reduce
 export { default as bankAccount }          from './bank-accounts/entity-reducer.js';
 export { default as categories }           from './categories/entities-reducer.js';
 export { default as category }             from './categories/entity-reducer.js';
+export { default as currencies }           from './currencies/reducer.js';
 export { default as currentOrganization }  from './organizations/current-reducer.js';
 export { default as customers }            from './customers/entities-reducer.js';
 export { default as customer }             from './customers/entity-reducer.js';
