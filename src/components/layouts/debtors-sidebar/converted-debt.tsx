@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Money, formatMoney, convertMoney } from 'utils/money';
-import { Rate } from 'model-types';
-import { findRate } from 'utils/rates';
+import { formatMoney } from 'utils/money';
+import { Debtor } from 'model-types';
 
 interface Props {
-  debt:   Money;
-  rates:  Rate[];
-  to:     string;
-  by:     string;
+  debtor: Debtor;
 }
 
 const tooltip = (message: string) => {
@@ -20,17 +16,16 @@ const tooltip = (message: string) => {
   );
 };
 
-const ConvertedDebt: React.SFC<Props> = ({debt, rates, to, by}) => {
-  const from = debt.currency.isoCode;
-  const rate = findRate(rates, from, to);
-  const message = `${from}/${to}, rate: ${rate.value}, by ${by}`;
+const ConvertedDebt: React.SFC<Props> = ({ debtor }) => {
+  let message = `${formatMoney(debtor.amount.amount)}`;
+  message += ` ${debtor.amount.oldAmount.currency.isoCode}/`;
+  if (debtor.amount.amount) { message += `${debtor.amount.amount.currency.isoCode}`; }
+  message += ` rate: ${debtor.amount.rate}`;
+  message += ` by: ${debtor.amount.updatedAt}`;
 
   return(
-    <>
-      { ' ' }
-      { formatMoney(debt) }
-      { ' (' }
-      { formatMoney(convertMoney(debt, to, rate)) }
+    <td className="text-right">
+      { formatMoney(debtor.amount.oldAmount) }
       { ' ' }
       <OverlayTrigger
         overlay={ tooltip(message) }
@@ -40,8 +35,7 @@ const ConvertedDebt: React.SFC<Props> = ({debt, rates, to, by}) => {
           className="glyphicon glyphicon-question-sign"
         />
       </OverlayTrigger>
-      { ') ' }
-    </>
+    </td>
   );
 };
 

@@ -1,7 +1,6 @@
 import * as accounting from 'accounting';
 
 import Locales, { MoneyLocale } from './locales';
-import { Rate } from 'model-types';
 
 interface Money {
   fractional: string;
@@ -73,11 +72,17 @@ const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale
   );
 };
 
-const convertMoney = (money: Money, to: string, rate: Rate) => {
+const sumMoney = (firstMoney: Money | 0, secondMoney: Money) => {
+  if (firstMoney === 0) { return(secondMoney); }
+  if (firstMoney.currency.isoCode !== secondMoney.currency.isoCode) {
+    throw new Error('currencies must be the same');
+  }
+  const firstFractional = Number.parseInt(firstMoney.fractional);
+  const secondFractional = Number.parseInt(secondMoney.fractional);
   return {
-    fractional: (Number.parseInt(money.fractional) * rate.value).toString(),
-    currency: rate.to
+    fractional: (firstFractional + secondFractional).toString(),
+    currency: firstMoney.currency
   };
 };
 
-export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, convertMoney, Currency };
+export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, sumMoney, Currency };

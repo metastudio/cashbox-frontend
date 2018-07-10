@@ -1,21 +1,19 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { find } from 'lodash';
+import { Table } from 'react-bootstrap';
+import { groupBy, filter } from 'lodash';
 
-import ConvertedDebt from './converted-debt';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import { loadDebtors } from 'actions/debtors.js';
 import { loadCurrenciesRates } from 'actions/currencies.js';
-import { Debtor, Rate } from 'model-types';
-import { Money, formatMoney } from 'utils/money';
-import { selectRates, selectRatesUpdatedOn } from 'selectors/currencies.js';
+import { Debtor, ExchangedDebtor } from 'model-types';
 import { selectDebtors } from 'selectors/debtors.js';
+import { formatMoney, sumMoney, Money } from 'utils/money';
+import ConvertedDebt from './converted-debt';
 
 interface StateProps {
   orgId: number;
   debtors: Debtor[] | null;
-  rates: Rate[];
-  ratesUpdatedOn: string;
 }
 
 interface DispatchProps {
@@ -33,72 +31,105 @@ class DebtorSidebar extends React.Component<Props> {
   }
 
   render() {
-    if ( this.props.debtors === null || this.props.rates.length === 0 ) {
+    if ( this.props.debtors === null ) {
       return(<p>No debtors</p>);
     }
 
-    const notUsd = (debt: Money) => {
-      return debt.currency.isoCode !== 'USD';
+    const debtorRender = (debtor: Debtor) => {
+      if (debtor.amount.amount) {
+        return(<ConvertedDebt debtor={ debtor } />);
+      } else {
+        return(
+          <td className="text-right">
+            { formatMoney(debtor.amount.oldAmount) }
+          </td>
+        );
+      }
     };
 
-    const debtorSums = (indebtedness: Money[]) => {
-      return indebtedness.map((debt) => {
-        if (Number.parseInt(debt.fractional) === 0) {
-          return false;
-        }
-        if (notUsd(debt)) {
-          return(
-            <ConvertedDebt
-              debt={ debt }
-              rates={ this.props.rates }
-              to="USD"
-              by={ this.props.ratesUpdatedOn }
-              key={ debt.currency.isoCode }
-            />
-          );
-        }
-        return(<span key={ debt.currency.isoCode }>{ ' ' + formatMoney(debt) + ';' }</span>);
-      });
-    };
+    const debtors = this.props.debtors.map((debtor, index) => (
+      <tr key={ index }>
+        <td>{ debtor.name }</td>
+        { debtorRender(debtor) }
+      </tr>
+    ));
 
-    const debtors = this.props.debtors.map((debtor) =>
-      <p key={ debtor.id } >{ debtor.name }: { debtorSums(debtor.indebtedness) }</p>
+    const debtorsWithDefaultCurrencies = filter(this.props.debtors, (debtor) => !debtor.amount.amount );
+
+    const debtorsWithoutDefaultCurrencies = filter(this.props.debtors, (debtor) => debtor.amount.amount );
+
+    const reducer = (summ: Money | 0, debtor: Debtor) => (
+      sumMoney(summ, debtor.amount.oldAmount)
     );
 
-    const allDebtorsSums = () => {
-      let indebtedness: Money[] = [];
+    const totalReducer = (summ: Money | 0, debtor: Debtor) => (
+      sumMoney(summ, debtor.amount.total)
+    );
 
-      if (this.props.debtors === null ) {
-        return <p>no</p>;
-      }
-
-      this.props.debtors.forEach(debtor => {
-        debtor.indebtedness.forEach(debtorDebt => {
-          const sameMoney = find(indebtedness, (debt) => debt.currency.isoCode === debtorDebt.currency.isoCode);
-          if ( sameMoney ) {
-            sameMoney.fractional = (
-              Number.parseInt(sameMoney.fractional) + Number.parseInt(debtorDebt.fractional)
-            ).toString();
-          } else {
-            indebtedness.push(debtorDebt);
-          }
-        });
-      });
+    const allWithDefaultCurrencies = () => {
+      if (this.props.debtors === null) { return null; }
+      if (!debtorsWithDefaultCurrencies) { return null; }
+      const aa = debtorsWithDefaultCurrencies.reduce(reducer, 0);
       return(
-        <p>
-          All customers:
-          { ' ' }
-          { debtorSums(indebtedness) }
-        </p>
+        <tr>
+          <td>All customers</td>
+          <td className="text-right">{
+            aa ? formatMoney(aa) : 0
+          }</td>
+        </tr>
+      );
+    };
+
+    const allWithoutDefaultCurrencies = () => {
+      if (this.props.debtors === null) { return null; }
+      if (!debtorsWithoutDefaultCurrencies) { return null; }
+      const bb = groupBy(
+        debtorsWithoutDefaultCurrencies, (debtor: ExchangedDebtor) => debtor.amount.oldAmount.currency.isoCode );
+      return Object.keys(bb).map((currency: string) => {
+        const bbb = bb[currency].reduce(reducer, 0);
+        return(
+          <tr key={ currency } >
+            <td>All customers ( { currency } )</td>
+            <td className="text-right">{
+              bbb ? formatMoney(bbb) : 0
+            }</td>
+          </tr>
+        );
+      });
+    };
+
+    const total = () => {
+      if (this.props.debtors === null) { return null; }
+      const totalSum: Money | 0 = this.props.debtors.reduce(totalReducer, 0);
+      return(
+        <thead>
+          <tr>
+            <th>Total</th>
+            <th className="text-right">
+              { totalSum === 0 ? 0 : formatMoney(totalSum) }
+            </th>
+          </tr>
+        </thead>
       );
     };
 
     return(
       <>
         <h2>Debtor customers</h2>
-        { debtors }
-        <hr/>
-        { allDebtorsSums() }
+        <Table striped responsive bordered id="bankAccounts">
+          <thead>
+            <tr>
+              <th>Debtor</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            { debtors }
+            { allWithDefaultCurrencies() }
+            { allWithoutDefaultCurrencies() }
+          </tbody>
+          { total() }
+        </Table>
       </>
     );
   }
@@ -108,8 +139,6 @@ const mapState = (state: {}) => {
   return({
     orgId: getCurrentOrganizationId(state),
     debtors: selectDebtors(state),
-    rates: selectRates(state),
-    ratesUpdatedOn: selectRatesUpdatedOn(state),
   });
 };
 

@@ -16,7 +16,23 @@ export interface Customer {
 export interface Debtor {
   id: number;
   name: string;
-  indebtedness: Money[];
+  amount: {
+    amount?: Money;
+    oldAmount: Money;
+    updatedAt?: string;
+    rate: number;
+    total: Money;
+  };
+}
+
+export interface ExchangedDebtor extends Debtor {
+  amount: {
+    amount: Money;
+    oldAmount: Money;
+    updatedAt: string;
+    rate: number;
+    total: Money;
+  };
 }
 
 export interface Rate {
