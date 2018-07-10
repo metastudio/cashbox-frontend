@@ -3,8 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 
-import { Transaction, Pagination as PaginationInterface } from 'model-types';
-import * as statuses from 'constants/statuses.js';
+import { Status, Transaction, Pagination as PaginationInterface } from 'model-types';
 import { loadTransactions } from 'actions/transactions.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import {
@@ -40,19 +39,19 @@ class TransactionsList extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { status, location: { search: nextSearch } } = nextProps;
-    const { location: { search: oldSearch } } = this.props;
+  componentDidUpdate(prevProps: Props) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { status, location: { search } } = this.props;
 
-    if (status === statuses.INVALID  || oldSearch !== nextSearch) {
-      this.loadData(nextProps);
+    if (status === Status.Invalid || search !== prevSearch) {
+      this.loadData(this.props);
     }
   }
 
   render() {
     const { status, transactions } = this.props;
 
-    if (status !== statuses.SUCCESS || !transactions) {
+    if (status !== Status.Success || !transactions) {
       return <LoadingView status={ status } />;
     }
     return (

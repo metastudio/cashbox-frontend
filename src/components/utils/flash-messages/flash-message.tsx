@@ -46,8 +46,8 @@ class FlashMessage extends React.Component<Props, State> {
     this.setAutoClose(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    this.setAutoClose(nextProps);
+  componentDidUpdate() {
+    this.setAutoClose(this.props);
   }
 
   componentWillUnmount() {

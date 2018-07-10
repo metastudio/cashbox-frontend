@@ -4,8 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Invoice, Pagination as PaginationInterface } from 'model-types';
-import * as statuses from 'constants/statuses.js';
+import { Status, Invoice, Pagination as PaginationInterface } from 'model-types';
 import { loadUnpaidInvoices } from 'actions/invoices.js';
 import { getCurrentOrganizationId } from 'selectors/organizations.js';
 import {
@@ -42,19 +41,19 @@ class UnpaidInvoices extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { status, location: { search: nextSearch } } = nextProps;
-    const { location: { search: oldSearch } } = this.props;
+  componentDidUpdate(prevProps: Props) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { status, location: { search } } = this.props;
 
-    if (status === statuses.INVALID || oldSearch !== nextSearch) {
-      this.loadData(nextProps);
+    if (status === Status.Invalid || search !== prevSearch) {
+      this.loadData(this.props);
     }
   }
 
   render() {
     const { status, invoices } = this.props;
 
-    if (status !== statuses.SUCCESS || !invoices) {
+    if (status !== Status.Success || !invoices) {
       return <LoadingView status={ this.props.status } />;
     }
 

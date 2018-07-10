@@ -42,8 +42,8 @@ class BankAccountsSelect extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    this.loadData(props);
+  componentDidUpdate() {
+    this.loadData(this.props);
   }
 
   handleChange = (value: Option<string>) => {
