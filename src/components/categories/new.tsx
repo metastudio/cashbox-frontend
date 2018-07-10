@@ -2,74 +2,56 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
-import { Mutation, MutationFn } from 'react-apollo';
 
-import { CategoryInput } from 'graphql-types';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { appollorErrorToSubmission } from 'utils/errors';
-import { CreateCategoryMutation, CreateCategoryMutationVariables } from 'graphql-types';
-import { CreateCategory as CreateCategoryQuery, GetOrganizationCategories } from 'services/categories/queries';
+import { CategoryParams, createCategory } from 'services/categories';
+
+import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
 
-class CreateMutation extends Mutation<CreateCategoryMutation, CreateCategoryMutationVariables> {}
-
-type UpdateFn = MutationFn<CreateCategoryMutation, CreateCategoryMutationVariables>;
-
 interface StateProps {
-  orgId: string;
+  orgId: number;
 }
 
 interface DispatchProps {
+  create:  (orgId: number, data: CategoryParams) => Promise<{}>;
   message: (msg: string) => void;
 }
 
 type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
 
 class NewCategory extends React.Component<Props> {
-  handleSubmit = (create: UpdateFn, values: CategoryInput) => {
-    const { orgId } = this.props;
-    return create({
-      variables: {
-        orgId,
-        category: {
-          name: values.name,
-          type: values.type,
-        }
+  handleSubmit = (values: CategoryParams) => {
+    const { create, orgId } = this.props;
+    return create(
+      orgId,
+      {
+        name: values.name,
+        type: values.type,
       }
-    }).catch(appollorErrorToSubmission);
+    ).catch(prepareSubmissionError);
   }
 
   afterCreate = () => {
     const { message, history } = this.props;
-    message('Category successfully created.');
+    message('Category has been created.');
     history.push('/categories');
   }
 
   render() {
-    const { orgId } = this.props;
-
     return(
       <Row>
         <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
           <PageHeader>New Category</PageHeader>
           <Panel>
             <Panel.Body>
-              <CreateMutation
-                mutation={ CreateCategoryQuery }
-                refetchQueries={ [ { query: GetOrganizationCategories, variables: { orgId } } ] }
-              >
-                {
-                  (createCategory) => (
-                    <Form
-                      onSubmit={ (values: CategoryInput) => this.handleSubmit(createCategory, values) }
-                      onSubmitSuccess={ this.afterCreate }
-                      action="Create"
-                    />
-                  )
-                }
-              </CreateMutation>
+              <Form
+                onSubmit={ this.handleSubmit }
+                onSubmitSuccess={ this.afterCreate }
+                action="Create"
+              />
             </Panel.Body>
           </Panel>
         </Col>
@@ -83,6 +65,9 @@ const mapState = (state: {}) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
+  create: (orgId: number, data: CategoryParams) => (
+    new Promise((res, rej) => dispatch(createCategory(orgId, data, res, rej)))
+  ),
   message: (msg: String) => dispatch(addFlashMessage(msg)),
 });
 

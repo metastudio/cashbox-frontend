@@ -1,10 +1,15 @@
+export enum CategoryType {
+  Income  = 'Income',
+  Expense = 'Expense',
+}
+
 export interface Category {
-  id:       string;
+  id:       number;
   name:     string;
-  type:     string;
+  type:     CategoryType;
 }
 
 export interface CategoryParams {
-  name: string;
-  type: string;
+  name?: string | null;
+  type?: string | null;
 }
