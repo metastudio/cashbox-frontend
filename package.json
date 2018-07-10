@@ -31,7 +31,7 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
+    "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
     "@types/accounting": "^0.4.1",
