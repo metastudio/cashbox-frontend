@@ -4,10 +4,9 @@ import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
 
-import { Invoice, InvoiceParams } from 'model-types';
-import { createInvoice } from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { Invoice, InvoiceParams, createInvoice } from 'services/invoices';
+import { addFlashMessage } from 'services/flash-messages';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
@@ -68,7 +67,7 @@ class NewInvoice extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

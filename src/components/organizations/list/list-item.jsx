@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ListGroupItem } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { setCurrentOrganization } from 'actions/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { setCurrentOrganization } from 'services/organizations';
 
 class OrganizationsListItem extends React.Component {
   constructor(props) {

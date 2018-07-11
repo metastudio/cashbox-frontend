@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 
-import { removeFlashMessage } from 'actions/flash-messages.js';
-import { selectFlashMessages } from 'selectors/flash-messages.js';
+import { removeFlashMessage, selectFlashMessages, FlashMessage as FlashMessageType } from 'services/flash-messages';
 
-import FlashMessage, { Message } from './flash-message';
+import FlashMessage from './flash-message';
 
 interface StateProps {
-  messages: Message[];
+  messages: FlashMessageType[];
 }
 
 interface DispatchProps {
@@ -21,7 +20,7 @@ const FlashMessages: React.SFC<StateProps & DispatchProps> = ({ messages, remove
         <FlashMessage
           key={ message.uid }
           message={ message }
-          handleClose={ (m: Message) => removeMessage(m.uid) }
+          handleClose={ (m: FlashMessageType) => removeMessage(m.uid) }
           autoClose={ message.autoClose }
         />
       ))

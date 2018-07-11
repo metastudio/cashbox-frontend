@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import { Row, Col, Button } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { loadOrganizations } from 'actions/organizations.js';
-import { selectOrganizations, selectOrganizationsStatus } from 'selectors/organizations.js';
+import {
+  loadOrganizations,
+  selectOrganizations,
+  selectOrganizationsStatus,
+} from 'services/organizations';
+
 import LoadingView from 'components/utils/loading-view';
 import OrganizationsList from './list/organizations.jsx';
 

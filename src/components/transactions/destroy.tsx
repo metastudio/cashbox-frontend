@@ -3,11 +3,11 @@ import { connect, Dispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Transaction } from 'model-types';
-import { destroyTransaction } from 'actions/transactions.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
+import { Transaction, destroyTransaction } from 'services/transactions';
+import { addFlashMessage } from 'services/flash-messages';
+import { selectCurrentOrganizationId } from 'services/organizations';
+
 import { confirm } from 'components/utils/confirm';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
 
 interface OwnProps {
   transaction: Transaction;
@@ -48,7 +48,7 @@ class DestroyButton extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

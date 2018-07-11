@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { Panel } from 'react-bootstrap'
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { loginUser } from 'actions/auth.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { loginUser } from 'services/auth';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx'

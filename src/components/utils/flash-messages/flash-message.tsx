@@ -1,16 +1,11 @@
 import * as React from 'react';
 import { Alert, Collapse } from 'react-bootstrap';
 
-interface Message {
-  uid:        string;
-  type:       string;
-  text:       string;
-  autoClose?: boolean;
-}
+import { FlashMessage as FlashMessageType } from 'services/flash-messages';
 
 interface Props {
-  message:       Message;
-  handleClose:   (m: Message) => void;
+  message:       FlashMessageType;
+  handleClose:   (m: FlashMessageType) => void;
   autoClose?:    boolean;
   closeTimeout?: number;
 }
@@ -46,8 +41,10 @@ class FlashMessage extends React.Component<Props, State> {
     this.setAutoClose(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    this.setAutoClose(nextProps);
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.autoClose !== prevProps.autoClose) {
+      this.setAutoClose(this.props);
+    }
   }
 
   componentWillUnmount() {
@@ -72,4 +69,4 @@ class FlashMessage extends React.Component<Props, State> {
   }
 }
 
-export { FlashMessage as default, Message };
+export { FlashMessage as default };

@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { updateAccount as updateAccountAction } from 'actions/users.js';
-import { prepareSubmissionError } from 'utils/errors';
-
+import { addFlashMessage } from 'services/flash-messages';
 import {
-  selectUserInitialValues,
-  selectUserId
-} from 'selectors/users.js';
+  updateAccount as updateAccountAction,
+  selectUserInitialValues, selectUserId,
+} from 'services/users';
+import { prepareSubmissionError } from 'utils/errors';
 
 import AccountForm from './account-form.jsx';
 

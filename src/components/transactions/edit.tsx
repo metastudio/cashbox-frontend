@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
-import * as statuses from 'constants/statuses.js';
-import { Transaction } from 'model-types';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { loadTransaction } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectTransaction, selectTransactionStatus } from 'selectors/transactions.js';
+
+import { Status,  } from 'model-types';
+import { selectCurrentOrganizationId } from 'services/organizations';
+import {
+  Transaction,
+  loadTransaction,
+  selectTransaction, selectTransactionStatus,
+} from 'services/transactions';
+
 import LoadingView from 'components/utils/loading-view';
 import EditIncomeTransaction from './edit/income.jsx';
 import EditExpenseTransaction from './edit/expense.jsx';
@@ -26,18 +30,12 @@ type RouteProps = RouteComponentProps<{ id: string }>;
 type Props = RouteProps & StateProps & DispatchProps;
 
 class EditTransaction extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-
-    this.handleClose = this.handleClose.bind(this);
-  }
-
-  handleClose() {
+  handleClose = () => {
     this.props.history.push('/transactions');
   }
 
   loadData(props: Props) {
-    const { orgId, load, match } = this.props;
+    const { orgId, load, match } = props;
     load(orgId, Number(match.params.id));
   }
 
@@ -45,18 +43,18 @@ class EditTransaction extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { status, match } = nextProps;
-    const { transaction } = this.props;
-    if (status === statuses.INVALID || !transaction || transaction.id !== Number(match.params.id)) {
-      this.loadData(nextProps);
+  componentDidUpdate(prevProps: Props) {
+    const { match } = prevProps;
+    const { status, transaction } = this.props;
+    if (status === Status.Invalid || (transaction && transaction.id !== Number(match.params.id))) {
+      this.loadData(this.props);
     }
   }
 
   renderTab(transaction: Transaction) {
     if (transaction.category && transaction.category.name === 'Transfer') {
       return (
-        <Tab eventKey={ 1 } title="Transfer"> 
+        <Tab eventKey={ 1 } title="Transfer">
           <EditTransfer />
         </Tab>
       );
@@ -75,7 +73,7 @@ class EditTransaction extends React.Component<Props> {
       );
     }
   }
-  
+
   render() {
     const { status, transaction } = this.props;
 
@@ -87,10 +85,11 @@ class EditTransaction extends React.Component<Props> {
         <Modal.Body>
           <Row>
             <Col xs={ 12 }>
-              <Tabs defaultActiveKey={ 1 } id="transactionType">
-                <LoadingView status={ this.props.status } />
-                { status === statuses.SUCCESS && transaction && this.renderTab(transaction) }
-              </Tabs>
+              <LoadingView status={ status }>
+                <Tabs defaultActiveKey={ 1 } id="transactionType">
+                  { status === Status.Success && transaction && this.renderTab(transaction) }
+                </Tabs>
+              </LoadingView>
             </Col>
           </Row>
         </Modal.Body>
@@ -100,7 +99,7 @@ class EditTransaction extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:       getCurrentOrganizationId(state),
+  orgId:       selectCurrentOrganizationId(state),
   status:      selectTransactionStatus(state),
   transaction: selectTransaction(state),
 });

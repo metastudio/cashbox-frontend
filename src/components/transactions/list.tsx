@@ -1,39 +1,48 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import * as QS from 'query-string';
 
-import { Transaction } from 'model-types';
-import * as statuses from 'constants/statuses.js';
-import { loadTransactions } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectTransactions, selectTransactionsStatus } from 'selectors/transactions.js';
+import { Status, Pagination as PaginationInterface } from 'model-types';
+import {
+  Transaction,
+  loadTransactions,
+  selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
+} from 'services/transactions';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';
+import Pagination from 'components/pagination';
 
 interface StateProps {
   orgId:        number;
   status:       string;
   transactions: Transaction[] | null;
+  pagination:   PaginationInterface;
 }
 
 interface DispatchProps {
-  load: (orgId: number) => void;
+  load: (orgId: number, params: object) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
 
 class TransactionsList extends React.Component<Props> {
   loadData = (props: Props) => {
-    const { orgId, load } = this.props;
-    load(orgId);
+    const { orgId, load, location: { search } } = props;
+    load(orgId, QS.parse(search));
   }
 
   componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (props.status === statuses.INVALID) {
+  componentDidUpdate(prevProps: Props) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { status, location: { search } } = this.props;
+
+    if (status === Status.Invalid || search !== prevSearch) {
       this.loadData(this.props);
     }
   }
@@ -41,23 +50,27 @@ class TransactionsList extends React.Component<Props> {
   render() {
     const { status, transactions } = this.props;
 
-    if (status !== statuses.SUCCESS || !transactions) {
+    if (status !== Status.Success || !transactions) {
       return <LoadingView status={ status } />;
     }
     return (
-      <Table transactions={ transactions } />
+      <>
+        <Table transactions={ transactions } />
+        <Pagination data={ this.props.pagination } newPathname={ '/transactions' } />
+      </>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
+  pagination:   selectTransactionsPagination(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadTransactions(orgId)),
+  load: (orgId: number, params: object) => dispatch(loadTransactions(orgId, params)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(TransactionsList);
+export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(TransactionsList));

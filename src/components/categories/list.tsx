@@ -1,28 +1,44 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Alert, PageHeader } from 'react-bootstrap';
-import { Query } from 'react-apollo';
+import { PageHeader } from 'react-bootstrap';
 
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables } from 'graphql-types';
-import { GetOrganizationCategories } from 'queries/categories';
+import { Status } from 'model-types';
+import { selectCurrentOrganizationId } from 'services/organizations';
+import { Category, selectCategories, selectCategoriesStatus, loadCategories } from 'services/categories';
 
-import Spinner from 'components/utils/spinner';
 import Table from './list/table';
-
-class OrganizationCategoriesQuery extends
-  Query<GetOrganizationCategoriesQuery, GetOrganizationCategoriesQueryVariables> {}
+import LoadingView from 'components/utils/loading-view';
 
 interface StateProps {
-  orgId: number;
+  orgId:      number;
+  status:     Status;
+  categories: Category[] | null;
 }
 
-type Props = StateProps;
+interface DispatchProps {
+  load: (orgId: number) => void;
+}
+
+type Props = StateProps & DispatchProps;
 
 class CategoriesList extends React.Component<Props> {
+  loadData = () => {
+    const { orgId, load } = this.props;
+
+    load(orgId);
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
   render() {
-    const { orgId } = this.props;
+    const { status, categories } = this.props;
+
+    if (status !== Status.Success || !categories) {
+      return <LoadingView status={ status } />;
+    }
 
     return (
       <>
@@ -30,30 +46,20 @@ class CategoriesList extends React.Component<Props> {
           <Link to="/categories/new" className="btn btn-default pull-right">New Category</Link>
           Categories
         </PageHeader>
-        <OrganizationCategoriesQuery
-          query={ GetOrganizationCategories }
-          variables={ { orgId: String(orgId) } }
-          fetchPolicy="cache-and-network"
-        >
-          {
-            ({ loading, error, data }) => {
-              if (loading) { return <Spinner />; }
-              if (error) { return <Alert bsStyle="danger">{ error }</Alert>; }
-              if (!data || !data.categories) {
-                return <Alert bsStyle="danger">No data</Alert>;
-              }
-
-              return <Table categories={ data.categories } />;
-            }
-          }
-        </OrganizationCategoriesQuery>
+        <Table categories={ categories } />
       </>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId:      selectCurrentOrganizationId(state),
+  status:     selectCategoriesStatus(state),
+  categories: selectCategories(state),
 });
 
-export default connect<StateProps>(mapState)(CategoriesList);
+const mapDispatch = (dispatch: Dispatch<{}>) => ({
+  load: (orgId: number) => dispatch(loadCategories(orgId)),
+});
+
+export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(CategoriesList);

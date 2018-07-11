@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { loadDebtors } from 'actions/debtors.js';
-import { Debtor } from 'model-types';
+import { selectCurrentOrganizationId } from 'services/organizations/selectors.js';
+import { loadDebtors } from 'services/debtors/actions.js';
+import { Debtor } from 'services/debtors/types';
 import {
   selectDebtors,
   selectTotal,
   selectSummByCurrencies,
-} from 'selectors/debtors.js';
+} from 'services/debtors/selectors.js';
 import { formatMoney, Money } from 'utils/money';
 import ConvertedDebt from './converted-debt';
 
@@ -108,7 +108,7 @@ class DebtorSidebar extends React.Component<Props> {
 
 const mapState = (state: {}) => {
   return({
-    orgId:            getCurrentOrganizationId(state),
+    orgId:            selectCurrentOrganizationId(state),
     debtors:          selectDebtors(state),
     total:            selectTotal(state),
     summByCurrencies: selectSummByCurrencies(state),

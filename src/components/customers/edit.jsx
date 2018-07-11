@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { loadCustomer, updateCustomer } from 'actions/customers.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { loadCustomer, updateCustomer, selectCustomerStatus, selectCustomer } from 'services/customers';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
@@ -74,9 +74,9 @@ EditCustomer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:    getCurrentOrganizationId(state),
-  customer: state.customer.data,
-  status:   state.customer.status,
+  orgId:    selectCurrentOrganizationId(state),
+  customer: selectCustomer(state),
+  status:   selectCustomerStatus(state),
 });
 
 const dispatcher = (dispatch) => ({

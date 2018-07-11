@@ -4,20 +4,24 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Invoice } from 'model-types';
-import * as statuses from 'constants/statuses.js';
-import { loadUnpaidInvoices } from 'actions/invoices.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectUnpaidInvoices, selectUnpaidInvoicesStatus } from 'selectors/invoices.js';
+import { Status, Pagination as PaginationInterface } from 'model-types';
+import {
+  Invoice,
+  loadUnpaidInvoices,
+  selectUnpaidInvoices, selectUnpaidInvoicesStatus, selectUnpaidInvoicesPagination,
+} from 'services/invoices';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
+import Pagination from 'components/pagination';
 
 interface StateProps {
   orgId:    number;
   status:   string;
   invoices: Invoice[] | null;
+  pagination: PaginationInterface;
 }
 
 interface DispatchProps {
@@ -36,35 +40,39 @@ class UnpaidInvoices extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { status, location: { search: nextSearch } } = nextProps;
-    const { location: { search: oldSearch } } = this.props;
+  componentDidUpdate(prevProps: Props) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { status, location: { search } } = this.props;
 
-    if (status === statuses.INVALID || oldSearch !== nextSearch) {
-      this.loadData(nextProps);
+    if (status === Status.Invalid || search !== prevSearch) {
+      this.loadData(this.props);
     }
   }
 
   render() {
     const { status, invoices } = this.props;
 
-    if (status !== statuses.SUCCESS || !invoices) {
+    if (status !== Status.Success || !invoices) {
       return <LoadingView status={ this.props.status } />;
     }
 
     return(
-      <Table hover striped responsive>
-        <TableHeader />
-        <TableBody invoices={ invoices } />
-      </Table>
+      <>
+        <Table hover striped responsive>
+          <TableHeader />
+          <TableBody invoices={ invoices } />
+        </Table>
+        <Pagination data={ this.props.pagination } />
+      </>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:    getCurrentOrganizationId(state),
+  orgId:    selectCurrentOrganizationId(state),
   status:   selectUnpaidInvoicesStatus(state),
   invoices: selectUnpaidInvoices(state),
+  pagination: selectUnpaidInvoicesPagination(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
