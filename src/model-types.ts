@@ -1,4 +1,4 @@
-import { Money, Currency } from 'utils/money';
+import { Money } from 'utils/money';
 
 export enum Status {
   Invalid = 'INVALID',
@@ -23,22 +23,6 @@ export interface Debtor {
     rate: number;
     total: Money;
   };
-}
-
-export interface ExchangedDebtor extends Debtor {
-  amount: {
-    amount: Money;
-    oldAmount: Money;
-    updatedAt: string;
-    rate: number;
-    total: Money;
-  };
-}
-
-export interface Rate {
-  from: Currency;
-  to: Currency;
-  value: number;
 }
 
 export interface BankAccount {

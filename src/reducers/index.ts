@@ -18,4 +18,3 @@ export { default as balances }             from './balances';
 export { default as unpaidInvoices }       from './unpaid-invoices';
 export { default as unpaidInvoicesCount }  from './unpaid-invoices-count';
 export { default as debtors }              from './debtors';
-export { default as currenciesRates }      from './currencies-rates';
