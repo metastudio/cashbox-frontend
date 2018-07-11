@@ -7,12 +7,12 @@ import Sidebar       from 'components/layouts/sidebar';
 import FlashMessages from 'components/utils/flash-messages';
 
 interface Props {
-  sidebar?: React.ReactNode;
+  sidebar?: () => React.ReactNode;
 }
 
 const MainLayout: React.SFC<Props> = ({ children, sidebar }) => {
   const renderSidebar = () => {
-    if (sidebar) { return sidebar; }
+    if (sidebar) { return sidebar(); }
     return <Sidebar />;
   };
 

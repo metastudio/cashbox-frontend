@@ -1,13 +1,7 @@
-import { Money } from 'utils/money';
+import { ConvertedAmount } from 'utils/money';
 
 export interface Debtor {
   id: number;
   name: string;
-  amount: {
-    amount?: Money;
-    oldAmount: Money;
-    updatedAt?: string;
-    rate: number;
-    total: Money;
-  };
+  amount: ConvertedAmount;
 }

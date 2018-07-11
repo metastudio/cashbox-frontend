@@ -8,7 +8,7 @@ import { Debtor } from 'services/debtors/types';
 import {
   selectDebtors,
   selectTotal,
-  selectSummByCurrencies,
+  selectTotalsByCurrency,
 } from 'services/debtors/selectors.js';
 import { formatMoney, Money } from 'utils/money';
 import ConvertedDebt from './converted-debt';
@@ -22,7 +22,7 @@ interface StateProps {
   orgId: number;
   debtors: Debtor[] | null;
   total: Money | null;
-  summByCurrencies: Summ[] | null;
+  totalsByCurrency: Summ[] | null;
 }
 
 interface DispatchProps {
@@ -38,7 +38,7 @@ class DebtorSidebar extends React.Component<Props> {
   }
 
   render() {
-    if ( !this.props.debtors || !this.props.summByCurrencies ) {
+    if ( !this.props.debtors || !this.props.totalsByCurrency ) {
       return(<p>No debtors</p>);
     }
 
@@ -61,7 +61,7 @@ class DebtorSidebar extends React.Component<Props> {
       </tr>
     ));
 
-    const renderSummByCurrencies = this.props.summByCurrencies.map((summ) => (
+    const renderTotalsByCurrency = this.props.totalsByCurrency.map((summ) => (
       <tr key={ summ.name }>
         <td>{ summ.name }</td>
         <td className="text-right">
@@ -97,7 +97,7 @@ class DebtorSidebar extends React.Component<Props> {
           </thead>
           <tbody>
             { debtors }
-            { renderSummByCurrencies }
+            { renderTotalsByCurrency }
           </tbody>
           { renderTotal() }
         </Table>
@@ -111,7 +111,7 @@ const mapState = (state: {}) => {
     orgId:            selectCurrentOrganizationId(state),
     debtors:          selectDebtors(state),
     total:            selectTotal(state),
-    summByCurrencies: selectSummByCurrencies(state),
+    totalsByCurrency: selectTotalsByCurrency(state),
   });
 };
 

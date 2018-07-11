@@ -15,6 +15,14 @@ interface Currency {
   htmlEntity:    string;
 }
 
+interface ConvertedAmount {
+  amount?: Money;
+  oldAmount: Money;
+  updatedAt?: string;
+  rate: number;
+  total: Money;
+}
+
 const defaultMoneyLocale: MoneyLocale = Locales.ru_RU;
 
 /**
@@ -72,4 +80,4 @@ const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale
   );
 };
 
-export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, Currency };
+export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, Currency, ConvertedAmount };

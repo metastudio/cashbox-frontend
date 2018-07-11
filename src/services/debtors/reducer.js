@@ -6,7 +6,7 @@ import { loadDebtors } from 'services/debtors/actions.js'
 const defaultState = {
   items:  [],
   total: 0,
-  summByCurrencies: [],
+  totalsByCurrency: [],
   status: statuses.INVALID,
   error:  null,
 }
@@ -16,7 +16,7 @@ export default handleActions({
     ...state,
     items:  [],
     total: 0,
-    summByCurrencies: [],
+    totalsByCurrency: [],
     status: statuses.PENDING,
     error:  null,
   }),
@@ -24,7 +24,7 @@ export default handleActions({
     ...state,
     items:  payload.debtors,
     total: payload.total,
-    summByCurrencies: payload.summByCurrencies,
+    totalsByCurrency: payload.totalsByCurrency,
     status: statuses.SUCCESS,
     error:  null,
   }),
@@ -32,7 +32,7 @@ export default handleActions({
     ...state,
     items:  [],
     total: 0,
-    summByCurrencies: [],
+    totalsByCurrency: [],
     status: statuses.FAILURE,
     error:  payload
   }),
