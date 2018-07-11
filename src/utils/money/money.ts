@@ -18,7 +18,7 @@ interface Currency {
 interface ConvertedAmount {
   amount?: Money;
   oldAmount: Money;
-  updatedAt?: string;
+  updatedAt?: Date;
   rate: number;
   total: Money;
 }
