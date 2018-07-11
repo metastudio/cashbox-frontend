@@ -11,8 +11,8 @@ import {
 function* handleLoadDebtors({ payload: { organizationId } }) {
   try {
     yield put(loadDebtors.request(organizationId));
-    const debtors = yield call(getDebtors, organizationId);
-    yield put(loadDebtors.success(organizationId, debtors));
+    const { debtors, total, summByCurrencies } = yield call(getDebtors, organizationId);
+    yield put(loadDebtors.success(organizationId, debtors, total, summByCurrencies));
   } catch (error) {
     yield put(loadDebtors.failure(error));
   }
