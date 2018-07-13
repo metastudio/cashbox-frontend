@@ -12,11 +12,6 @@ type RouteProps = RouteComponentProps<{ id: string }>;
 type Props = RouteProps & OwnProps;
 
 class TransactionsFilter extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   handleSubmit(values: object) {
     const { history, location: { pathname } } = this.props;
 
