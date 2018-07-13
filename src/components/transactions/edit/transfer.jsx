@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { updateTransaction, clearTransaction } from 'actions/transactions.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectTransaction } from 'selectors/transactions.js';
+import { addFlashMessage } from 'services/flash-messages';
+import {
+  updateTransaction, clearTransaction,
+  selectTransaction,
+} from 'services/transactions';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm from './../form/transfer-form.jsx';
@@ -76,7 +78,7 @@ EditTransfer.propTypes = {
 };
 
 const select = (state) => ({
-  orgId: getCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state),
   transaction: selectTransaction(state),
 });
 

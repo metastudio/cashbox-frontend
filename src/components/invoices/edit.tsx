@@ -5,11 +5,13 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import * as statuses from 'constants/statuses.js';
-import { Invoice, InvoiceParams } from 'model-types';
-import { loadInvoice, updateInvoice } from 'actions/invoices.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectInvoice, selectInvoiceStatus } from 'selectors/invoices.js';
+import {
+  Invoice, InvoiceParams,
+  loadInvoice, updateInvoice,
+  selectInvoice, selectInvoiceStatus,
+} from 'services/invoices';
+import { addFlashMessage } from 'services/flash-messages';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { InvoiceFormData } from './form';
@@ -115,7 +117,7 @@ class EditInvoice extends React.Component<Props> {
 }
 
 const mapState = (state: {}) => ({
-  orgId:   getCurrentOrganizationId(state),
+  orgId:   selectCurrentOrganizationId(state),
   status:  selectInvoiceStatus(state),
   invoice: selectInvoice(state),
 });

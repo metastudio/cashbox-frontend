@@ -2,10 +2,10 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Collapse, Row, Col } from 'react-bootstrap';
 import FilterForm from './form/filter-form.jsx';
-import * as QS from 'query-string';
+import * as QS from 'qs';
 
 interface OwnProps {
-  isFilterOpened: boolean | undefined;
+  isFilterOpened: boolean;
 }
 
 type RouteProps = RouteComponentProps<{ id: string }>;
@@ -15,14 +15,12 @@ class TransactionsFilter extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      open: false
-    };
   }
 
   handleSubmit(values: object) {
-    const { history } = this.props;
-    history.push(`/transactions/?q%5B${QS.stringify(values)}`);
+    const { history, location: { pathname } } = this.props;
+
+    history.push({ pathname: pathname, search: QS.stringify(values) });
   }
 
   render() {

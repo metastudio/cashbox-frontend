@@ -2,10 +2,12 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Badge } from 'react-bootstrap';
 
-import * as statuses from 'constants/statuses.js';
-import { loadUnpaidInvoicesCount } from 'actions/invoices.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount } from 'selectors/invoices.js';
+import { Status } from 'model-types';
+import {
+  loadUnpaidInvoicesCount,
+  selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount,
+} from 'services/invoices';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface StateProps {
   orgId:  number;
@@ -30,21 +32,23 @@ class UnpaidInvoicesCountBadge extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (this.props.status === statuses.INVALID) {
+  componentDidUpdate() {
+    if (this.props.status === Status.Invalid) {
       this.loadData(this.props);
     }
   }
 
   render() {
-    if (this.props.count === null) { return null; }
+    if (this.props.status !== Status.Success || this.props.count === null) {
+      return null;
+    }
 
     return <Badge>{ this.props.count }</Badge>;
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:  getCurrentOrganizationId(state),
+  orgId:  selectCurrentOrganizationId(state),
   status: selectUnpaidInvoicesCountsStatus(state),
   count:  selectUnpaidInvoicesCount(state),
 });

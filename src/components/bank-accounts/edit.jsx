@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { Panel, Row, Col } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { loadBankAccount, updateBankAccount } from 'actions/bank-accounts.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { loadBankAccount, updateBankAccount } from 'services/bank-accounts';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
@@ -72,7 +72,7 @@ EditBankAccount.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:         getCurrentOrganizationId(state),
+  orgId:         selectCurrentOrganizationId(state),
   bankAccount:   state.bankAccount.data,
   status:        state.bankAccount.status,
 });

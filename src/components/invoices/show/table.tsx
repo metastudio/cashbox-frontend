@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
 
-import { Invoice } from 'model-types';
+import { Invoice } from 'services/invoices';
 import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
 import Items from './items';

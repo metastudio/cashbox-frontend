@@ -5,9 +5,8 @@ import { Redirect } from 'react-router-dom';
 
 import { MenuItem } from 'react-bootstrap';
 
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { logoutUser } from 'actions/auth.js';
-import { selectIsAuthorized } from 'selectors/auth.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { logoutUser, selectIsAuthorized } from 'services/auth';
 
 interface StateProps {
   isAuthorized?: boolean;

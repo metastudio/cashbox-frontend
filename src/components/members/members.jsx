@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
-import { addFlashMessage } from 'actions/flash-messages.js';
-import { loadMembers } from 'actions/members.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
+import { addFlashMessage } from 'services/flash-messages';
+import { loadMembers, selectMembersStatus, selectMembers } from 'services/members';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 
@@ -60,9 +60,9 @@ Members.propTypes = {
 };
 
 const select = (state) => ({
-  orgId:   getCurrentOrganizationId(state),
-  members: state.members.items,
-  status:  state.members.status,
+  orgId:   selectCurrentOrganizationId(state),
+  status:  selectMembersStatus(state),
+  members: selectMembers(state),
 });
 
 const dispatcher = (dispatch) => ({

@@ -18,28 +18,24 @@ const FilterForm = ({ handleSubmit, submitting, error, reset }) => (
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <FormGroup>
       <Col sm={ 4 }>
-        <Field name="amount_eq" placeholder="Amount" decimalSeparator="." component={ CurrencyInput } />
+        <Field name="q[amount_eq]" placeholder="Amount" component={ CurrencyInput } />
       </Col>
       <Col sm={ 4 }>
-        <Field name="comment_cont" placeholder="Comment" component={ FormInput } />
+        <Field name="q[comment_cont]" placeholder="Comment" component={ FormInput } />
       </Col>
       <Col sm={ 4 }>
-        { /* TODO: need to implement multi select */ }
-        <Field name="category_id_eq" placeholder="Category" component={ CategoriesSelect } />
+        <Field name="q[category_id_eq]" placeholder="Category" component={ CategoriesSelect } />
       </Col>
     </FormGroup>
     <FormGroup>
       <Col sm={ 4 }>
-        { /* TODO: need to implement multi select */ }
-        <Field name="bankAccount_id_eq" placeholder="Bank Account" decimalSeparator="." component={ BankAccountsSelect } />
+        <Field name="q[bankAccount_id_eq]" placeholder="Bank Account" component={ BankAccountsSelect } />
       </Col>
       <Col sm={ 4 }>
-        { /* TODO: need to implement multi select */ }
-        <Field name="customer_id_eq" placeholder="Customer" component={ CustomersSelect } />
+        <Field name="q[customer_id_eq]" placeholder="Customer" component={ CustomersSelect } />
       </Col>
       <Col sm={ 4 }>
-        { /* TODO: need to implement periods */ }
-        <Field name="period" placeholder="Date" component={ DatePickerInput } />
+        <Field name="q[period]" placeholder="Date" component={ DatePickerInput } />
       </Col>
     </FormGroup>
     <ButtonGroup className="pull-right">
@@ -57,5 +53,5 @@ FilterForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transaction-form'
+  form: 'transactionFilterForm'
 })(FilterForm);

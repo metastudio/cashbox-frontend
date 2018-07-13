@@ -2,10 +2,14 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 
-import { Status, BankAccount } from 'model-types';
-import { loadBankAccounts } from 'actions/bank-accounts.js';
-import { getCurrentOrganizationId } from 'selectors/organizations.js';
-import { selectBankAccounts, selectBankAccountsStatus } from 'selectors/bank-accounts.js';
+import { Status } from 'model-types';
+import {
+  BankAccount,
+  loadBankAccounts,
+  selectBankAccounts,
+  selectBankAccountsStatus
+} from 'services/bank-accounts';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';
@@ -34,9 +38,10 @@ class BankAccounts extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (props.status === Status.Invalid || props.orgId !== this.props.orgId) {
-      this.loadData(props);
+  componentDidUpdate(prevProps: Props) {
+    const { status, orgId } = this.props;
+    if (status === Status.Invalid || orgId !== prevProps.orgId) {
+      this.loadData(this.props);
     }
   }
 
@@ -44,20 +49,21 @@ class BankAccounts extends React.Component<Props> {
     const { orgId, status, bankAccounts } = this.props;
 
     if (!orgId) { return null; }
+    if (status !== Status.Success || !bankAccounts) {
+      return <LoadingView status={ status } />;
+    }
 
     return (
       <>
         <PageHeader>Accounts</PageHeader>
-        <LoadingView status={ status }>
-          { status === Status.Success && bankAccounts && <BankAccountsTable bankAccounts={ bankAccounts } /> }
-        </LoadingView>
+        <BankAccountsTable bankAccounts={ bankAccounts } />
       </>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:        getCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state),
   bankAccounts: selectBankAccounts(state),
   status:       selectBankAccountsStatus(state),
 });

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Invoice } from 'model-types';
+import { Invoice } from 'services/invoices';
 
 import Row from './table-row';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-
-import { getCurrencies } from 'api/currencies.js';
-
 import { Alert, Form } from 'react-bootstrap';
+
+import { getCurrencies } from 'services/currencies';
+
 import { HorizontalFormInput, HorizontalAsyncSelect, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
 // TOOD: refactor to use actions and redux-saga

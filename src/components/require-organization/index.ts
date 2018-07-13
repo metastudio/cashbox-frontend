@@ -1,1 +1,1 @@
-export { default } from './require-organization.jsx';
+export { default } from './require-organization';
