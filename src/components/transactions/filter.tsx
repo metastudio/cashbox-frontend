@@ -12,7 +12,7 @@ type RouteProps = RouteComponentProps<{ id: string }>;
 type Props = RouteProps & OwnProps;
 
 class TransactionsFilter extends React.Component<Props> {
-  handleSubmit(values: object) {
+  handleSubmit = (values: object) => {
     const { history, location: { pathname } } = this.props;
 
     history.push({ pathname: pathname, search: QS.stringify(values) });
