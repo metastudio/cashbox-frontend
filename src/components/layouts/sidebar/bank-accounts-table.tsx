@@ -17,7 +17,7 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
 
     return (
       <tr key={ bankAccount.id }>
-        <td>{ formatBankAccountName(bankAccount) }</td>
+        <td className="text-right">{ formatBankAccountName(bankAccount) }</td>
         <td className={ colorClass }>{ formatMoney(bankAccount.balance) }</td>
       </tr>
     );
@@ -27,7 +27,7 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
     <Table striped responsive id="bankAccounts">
       <thead>
         <tr>
-          <th>Account</th>
+          <th className="text-right">Account</th>
           <th>Amount</th>
         </tr>
       </thead>
