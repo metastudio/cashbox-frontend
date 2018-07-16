@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 export const loginUser = createAction('LOGIN_USER',    (email, password) => ({ email, password }), (_email, _password, resolve = noop, reject = noop) => ({ resolve, reject }));
 loginUser.request = createAction('LOGIN_USER_REQUEST', (email) => ({ email }));
-loginUser.success = createAction('LOGIN_USER_SUCCESS', (email, token, user) => ({ email, token, user }));
+loginUser.success = createAction('LOGIN_USER_SUCCESS', (email, token, user, organization) => ({ email, token, user, organization }));
 loginUser.failure = createAction('LOGIN_USER_FAILURE');
 
 export const restoreSession  = createAction('RESTORE_SESSION', undefined, (resolve = noop, reject = noop) => ({ resolve, reject }));

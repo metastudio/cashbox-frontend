@@ -42,11 +42,21 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     const token = yield call(postToken, email || '', password);
     setCookies({ token: token });
     const user = yield call(getCurrentUser);
+
+    let organization;
     if (user.id !== getCookies().userId) {
       setCookies({ currentOrganizationId: undefined });
       yield put(clearCurrentOrganization());
+    } else {
+      const currentOrganizationId = getCookies().currentOrganizationId;
+      try {
+        organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
+      } catch (error) {
+        organization = null;
+      }
     }
-    yield put(loginUser.success(email, token, user));
+
+    yield put(loginUser.success(email, token, user, organization));
     yield call(resolve, user);
   } catch (error) {
     yield put(loginUser.failure(error));
