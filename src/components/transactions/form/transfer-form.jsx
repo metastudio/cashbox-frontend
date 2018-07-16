@@ -38,5 +38,5 @@ TransferForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transfer-form'
+  form: 'transferForm'
 })(TransferForm);
