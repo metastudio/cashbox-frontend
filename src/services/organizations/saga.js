@@ -36,8 +36,7 @@ function* handleCreateOrganization({ payload: { data }, meta: { resolve, reject 
 function* handleSetCurrentOrganization({ payload: { organization }, meta: { resolve } }) {
   const userId = yield select(selectUserId);
   if (userId) {
-    setCookies({ userId: userId });
-    localStorage.setItem('currentOrganizationId', organization.id);
+    setCookies({ userId: userId, currentOrganizationId: organization.id });
   }
   yield put(setCurrentOrganization.success(organization));
   yield call(resolve, organization);
