@@ -4,6 +4,7 @@ import authSaga          from './auth/saga.js';
 import balancesSaga      from './balances/saga.js';
 import bankAccountsSaga  from './bank-accounts/saga.js';
 import categoriesSaga    from './categories/saga.js';
+import currenciesSaga    from './currencies/saga.js';
 import customersSaga     from './customers/saga.js';
 import invoicesSaga      from './invoices/saga.js';
 import membersSaga       from './members/saga.js';
@@ -18,6 +19,7 @@ function* rootSaga() {
     fork(bankAccountsSaga),
     fork(organizationsSaga),
     fork(transactionsSaga),
+    fork(currenciesSaga),
     fork(customersSaga),
     fork(categoriesSaga),
     fork(membersSaga),
