@@ -46,7 +46,7 @@ class OrganizationsList extends React.Component<Props> {
     return (
       <>
         <PageHeader>
-          <Link to="/organizations/new" className="btn btn-default pull-right">New Organization</Link>
+          <Link to="/organizations/new" className="btn btn-default pull-right">Add Organization...</Link>
           Organizations
         </PageHeader>
         <Table organizations={ organizations } />
