@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Panel, Row, Col } from 'react-bootstrap';
+import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { createCustomer, clearCustomer } from 'services/customers';
@@ -39,6 +39,7 @@ class NewCustomer extends React.Component {
     return(
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+          <PageHeader>New Customer</PageHeader>
           <Panel>
             <Panel.Body>
               <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create" />
