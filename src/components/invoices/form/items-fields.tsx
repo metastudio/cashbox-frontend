@@ -27,7 +27,7 @@ const ItemsFields: React.SFC<WrappedFieldArrayProps<InvoiceItemFormData>> = ({ f
         })
       }
 
-      <Button onClick={ () => fields.push({}) }>Add Item</Button>
+      <Button onClick={ () => fields.push({}) }>Add Item...</Button>
     </>
   );
 };

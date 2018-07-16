@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Panel, Row, Col } from 'react-bootstrap';
+import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { createBankAccount, clearBankAccount } from 'services/bank-accounts';
@@ -41,7 +41,7 @@ class NewBankAccount extends React.Component {
     return(
       <Row>
         <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
-          <h1>New Bank Account</h1>
+          <PageHeader>New Bank Account</PageHeader>
           <Panel>
             <Panel.Body>
               <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } action="Create"/>

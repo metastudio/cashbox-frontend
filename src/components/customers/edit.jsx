@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Panel, Row, Col } from 'react-bootstrap';
+import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'services/flash-messages';
@@ -44,6 +44,7 @@ class EditCustomer extends React.Component {
         { this.props.status === statuses.SUCCESS &&
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
+              <PageHeader>Edit Customer</PageHeader>
               <Panel>
                 <Panel.Body>
                   <Form
