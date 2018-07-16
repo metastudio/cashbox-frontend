@@ -5,9 +5,9 @@ import { Alert, Form } from 'react-bootstrap';
 
 import {
   HorizontalFormInput,
-  HorizontalCurrencySelect,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
+import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 
 const BankAccountForm = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>

@@ -4,10 +4,10 @@ import { Row, Col } from 'react-bootstrap';
 
 import {
   VerticalFormInput,
-  VerticalCurrencySelect,
   VerticalDatePicker,
   VerticalCurrencyInput,
 } from 'components/utils/form-inputs';
+import { VerticalCurrencySelect } from 'components/currencies/select-field';
 import { VerticalCustomersSelect } from 'components/customers/select-field';
 import { VerticalBankAccountsSelect } from 'components/bank-accounts/select-field';
 

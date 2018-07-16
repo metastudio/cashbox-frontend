@@ -1,4 +1,3 @@
-export * from './currency-select';
 export * from './form-input.jsx';
 export * from './horizontal-checkbox.jsx';
 export * from './radio.jsx';
