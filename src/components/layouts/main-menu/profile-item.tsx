@@ -12,8 +12,11 @@ interface StatePropTypes {
 
 const ProfileItem: React.SFC<StatePropTypes> = ({ userFullName }) => (
   <NavDropdown title={ userFullName } id="user_links">
-    <LinkContainer to="/organizations/select">
+    <LinkContainer exact to="/organizations/select">
       <MenuItem>Change organization</MenuItem>
+    </LinkContainer>
+    <LinkContainer exact to="/organizations">
+      <MenuItem>Manage organizations</MenuItem>
     </LinkContainer>
     <LinkContainer to="/user/profile">
       <MenuItem>Edit profile</MenuItem>
