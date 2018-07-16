@@ -33,7 +33,8 @@ Should work out of the box.
 
 # Deployment
 
-Heroku is used for deployment. `rscashbox` - is application for staging.
+Heroku is used for deployment. `rscashbox` - is application for staging
+and `rcashbox` - for production.
 
 1. Install [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
 
@@ -41,40 +42,61 @@ Heroku is used for deployment. `rscashbox` - is application for staging.
    ```sh
    $ heroku login
    ```
-3. Add configured heroku application to your local:
+
+## Deploy to staging
+
+Use `master` branch to deploy to staging:
+
+1. Add configured heroku application:
    ```sh
-   $ heroku git:remote -a rscashbox
+   $ heroku git:remote -a rscashbox -r heroku-staging
    ```
-4. Make sure that environment variables are set:
-   ```
-   $ heroku config
-   ```
-   And set any new if required (see `.env.sample` for list of variables):
+2. Make sure that environment variables are set:
    ```sh
-   $ heroku config:set VARIABLE=value
+   $ heroku config -r heroku-staging
    ```
-5. Deploy:
+   Output should looks something like this:
+   ```
+   === rscashbox Config Vars
+   REACT_APP_BACKEND_HOSTNAME: staging.cashbox.metastudiohq.com
+   REACT_APP_BACKEND_PORT:     443
+   REACT_APP_BACKEND_PROTOCOL: https
+   REACT_APP_COOKIES_KEY:      cashbox_frontend_staging
+   ```
+   Set a new env variable if required (see `.env.sample` for list of used variables):
    ```sh
-   $ git push heroku master
+   $ heroku config:set -r heroku-staging VARIABLE=value
+   ```
+3. Deploy:
+   ```sh
+   $ git push heroku-staging master
    ```
 
-# Generate GraphQL types
+## Deploy on production:
 
-## Download schema
+Use `production` branch to deploy to production.
 
-Run:
-```sh
-REACT_APP_GRAPHQL_URI=http://api.cashbox.test/graphql yarn run schema
-```
-
-`REACT_APP_GRAPHQL_URI` is same in `.env.local` file.
-
-# Generate types
-
-Make sure that `src/queries/***/*.ts` files include all graphql queries and
-mutations and run next command to generate types:
-```sh
-yarn run types
-```
-
-Types will be generated in `src/graphql-types.ts` file.
+1. Add configured heroku application:
+   ```sh
+   $ heroku git:remote -a rcashbox -r heroku-production
+   ```
+2. Make sure that environment variables are set:
+   ```sh
+   $ heroku config -r heroku-production
+   ```
+   Output should looks something like this:
+   ```
+   === rcashbox Config Vars
+   REACT_APP_BACKEND_HOSTNAME: cashbox.metastudiohq.com
+   REACT_APP_BACKEND_PORT:     443
+   REACT_APP_BACKEND_PROTOCOL: https
+   REACT_APP_COOKIES_KEY:      cashbox_frontend
+   ```
+   Set a new env variable if required (see `.env.sample` for list of used variables):
+   ```sh
+   $ heroku config:set -r heroku-production VARIABLE=value
+   ```
+3. Deploy:
+   ```sh
+   $ git push heroku-production master
+   ```
