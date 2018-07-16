@@ -3,26 +3,29 @@ import { connect, Dispatch } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import { selectCurrentOrganizationId } from 'services/organizations/selectors.js';
-import { loadDebtors } from 'services/debtors/actions.js';
-import { Debtor } from 'services/debtors/types';
 import {
   selectDebtors,
   selectTotal,
   selectTotalsByCurrency,
-} from 'services/debtors/selectors.js';
-import { formatMoney, Money } from 'utils/money';
-import ConvertedDebt from './converted-debt';
+  selectDebtorsStatus,
+  Debtor,
+  TotalByCurrency,
+  loadDebtors,
+} from 'services/debtors';
+import { Status } from 'model-types';
+import { Money } from 'utils/money';
+import LoadingView from 'components/utils/loading-view';
 
-interface Summ {
-  name: string;
-  amount: Money;
-}
+import Debtors from './debtors';
+import Total from './total';
+import TotalsByCurrency from './totals_by_currency';
 
 interface StateProps {
   orgId: number;
   debtors: Debtor[] | null;
   total: Money | null;
-  totalsByCurrency: Summ[] | null;
+  totalsByCurrency: TotalByCurrency[] | null;
+  status: string;
 }
 
 interface DispatchProps {
@@ -38,52 +41,15 @@ class DebtorSidebar extends React.Component<Props> {
   }
 
   render() {
-    if ( !this.props.debtors || !this.props.totalsByCurrency ) {
-      return(<p>No debtors</p>);
+    const { status, debtors, totalsByCurrency, total } = this.props;
+
+    if (status !== Status.Success || !debtors) {
+      return <LoadingView status={ status } />;
     }
 
-    const debtorRender = (debtor: Debtor) => {
-      if (debtor.amount.amount) {
-        return(<ConvertedDebt debtor={ debtor } />);
-      } else {
-        return(
-          <td className="text-right">
-            { formatMoney(debtor.amount.oldAmount) }
-          </td>
-        );
-      }
-    };
-
-    const debtors = this.props.debtors.map((debtor, index) => (
-      <tr key={ index }>
-        <td>{ debtor.name }</td>
-        { debtorRender(debtor) }
-      </tr>
-    ));
-
-    const renderTotalsByCurrency = this.props.totalsByCurrency.map((summ) => (
-      <tr key={ summ.name }>
-        <td>{ summ.name }</td>
-        <td className="text-right">
-          { formatMoney(summ.amount) }
-        </td>
-      </tr>
-    ));
-
-    const renderTotal = () => {
-      const total = this.props.total;
-      if ( total === null) { return null; }
-      return(
-        <thead>
-          <tr>
-            <th>Total</th>
-            <th className="text-right">
-              { formatMoney(total) }
-            </th>
-          </tr>
-        </thead>
-      );
-    };
+    if (!debtors) {
+      return(<p>No debtors</p>);
+    }
 
     return(
       <>
@@ -96,10 +62,10 @@ class DebtorSidebar extends React.Component<Props> {
             </tr>
           </thead>
           <tbody>
-            { debtors }
-            { renderTotalsByCurrency }
+            <Debtors debtors={ debtors } />
+            <TotalsByCurrency totals={ totalsByCurrency } />
           </tbody>
-          { renderTotal() }
+          <Total total={ total } />
         </Table>
       </>
     );
@@ -112,6 +78,7 @@ const mapState = (state: {}) => {
     debtors:          selectDebtors(state),
     total:            selectTotal(state),
     totalsByCurrency: selectTotalsByCurrency(state),
+    status:           selectDebtorsStatus(state),
   });
 };
 

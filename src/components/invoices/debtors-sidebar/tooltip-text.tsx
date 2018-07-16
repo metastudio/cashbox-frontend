@@ -1,22 +1,24 @@
 import * as React from 'react';
 
-import { formatMoney } from 'utils/money';
-import { Debtor } from 'services/debtors/types';
+import { formatMoney, ConvertedAmount } from 'utils/money';
 import { formatDate } from 'utils/date';
 
 interface Props {
-  debtor: Debtor;
+  amount: ConvertedAmount;
 }
 
-const TooltipText: React.SFC<Props> = ({ debtor }) => {
-  if  (!debtor.amount.amount) { return null; }
+const TooltipText: React.SFC<Props> = ({ amount }) => {
+  if  (!amount.amount) { return null; }
   return(
-    <>
-      <p>{ formatMoney(debtor.amount.amount) }</p>
-      <p>{ debtor.amount.oldAmount.currency.isoCode }/{ debtor.amount.amount.currency.isoCode }</p>
-      <p>rate: { debtor.amount.rate }</p>
-      <p>by: { formatDate(debtor.amount.updatedAt) }</p>
-    </>
+    <span>
+      { formatMoney(amount.amount) }
+      <br />
+      { amount.oldAmount.currency.isoCode }/{ amount.amount.currency.isoCode }
+      <br />
+      rate: { amount.rate }
+      <br />
+      by: { formatDate(amount.updatedAt) }
+    </span>
   );
 };
 
