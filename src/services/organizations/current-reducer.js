@@ -1,22 +1,34 @@
 import { handleActions, combineActions } from 'redux-actions';
 
-import { setCurrentOrganization, clearCurrentOrganization } from './actions.js';
-import { restoreSession, loginUser } from 'services/auth';
+import { setCurrentOrganization, restoreOrganization, clearCurrentOrganization } from './actions.js';
 
 const defaultState = {
-  id:   null,
-  data: null,
+  id:                   null,
+  data:                 null,
+  isOrganizationLoaded: false
 };
 
 export default handleActions({
-  [combineActions(setCurrentOrganization.success, restoreSession.success, loginUser.success)]: (state, { payload }) => ({
+  [restoreOrganization.request]: (state) => ({
+    ...state,
+    id:   null,
+    data: null,
+    isOrganizationLoaded: false
+  }),
+  [combineActions(setCurrentOrganization.success, restoreOrganization.success)]: (state, { payload }) => ({
     ...state,
     id:   payload.organization && payload.organization.id,
     data: payload.organization,
+    isOrganizationLoaded: true
+  }),
+  [restoreOrganization.failure]: (state) => ({
+    ...state,
+    isOrganizationLoaded: true
   }),
   [clearCurrentOrganization]: (state) => ({
     ...state,
     id:   null,
     data: null,
+    isOrganizationLoaded: false
   }),
 }, defaultState);

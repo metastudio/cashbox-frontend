@@ -20,15 +20,7 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
     if (!token) throw new Error('Token not found');
     const user = yield call(getCurrentUser);
 
-    let organization;
-    const currentOrganizationId = getCookies().currentOrganizationId;
-    try {
-      organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
-    } catch (error) {
-      organization = null;
-    }
-
-    yield put(restoreSession.success(token, user, organization));
+    yield put(restoreSession.success(token, user));
     yield call(resolve, user);
   } catch (error) {
     yield put(restoreSession.failure(error));
@@ -43,20 +35,12 @@ function* handleLoginUser({ payload: { email, password }, meta: { resolve, rejec
     setCookies({ token: token });
     const user = yield call(getCurrentUser);
 
-    let organization;
     if (user.id !== getCookies().userId) {
       setCookies({ currentOrganizationId: undefined });
       yield put(clearCurrentOrganization());
-    } else {
-      const currentOrganizationId = getCookies().currentOrganizationId;
-      try {
-        organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
-      } catch (error) {
-        organization = null;
-      }
     }
 
-    yield put(loginUser.success(email, token, user, organization));
+    yield put(loginUser.success(email, token, user));
     yield call(resolve, user);
   } catch (error) {
     yield put(loginUser.failure(error));

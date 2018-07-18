@@ -4,21 +4,31 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
-import { selectHasCurrentOrganization } from 'services/organizations';
+import {
+  restoreOrganization,
+  selectIsOrganizationLoaded,
+  selectHasCurrentOrganization,
+} from 'services/organizations';
+import Spinner from 'components/utils/spinner';
 
 interface StateProps {
-  hasOrganization: boolean;
+  hasOrganization:      boolean;
+  isOrganizationLoaded: boolean;
 }
 
 interface DispatchProps {
-  flashMessage: (msg: string, opts?: FlashMessageOptions) => void;
+  restoreOrganization: () => void;
+  flashMessage:        (msg: string, opts?: FlashMessageOptions) => void;
 }
 
 type Props = StateProps & DispatchProps;
 
 class RequireOrganization extends React.Component<Props> {
   componentDidMount() {
-    this.checkOrganization(this.props);
+    if (!this.props.hasOrganization) {
+      this.props.restoreOrganization();
+      this.checkOrganization(this.props);
+    }
   }
 
   componentDidUpdate() {
@@ -33,7 +43,12 @@ class RequireOrganization extends React.Component<Props> {
   }
 
   render() {
-    const { hasOrganization, children } = this.props;
+    const { isOrganizationLoaded, hasOrganization, children } = this.props;
+
+    if (isOrganizationLoaded) {
+      return <Spinner />;
+    }
+
     if (hasOrganization) {
       return children;
     } else {
@@ -43,11 +58,13 @@ class RequireOrganization extends React.Component<Props> {
 }
 
 const mapState = (state: object) => ({
-  hasOrganization: selectHasCurrentOrganization(state),
+  isOrganizationLoaded: selectIsOrganizationLoaded(state),
+  hasOrganization:      selectHasCurrentOrganization(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  flashMessage: (msg: String, opts: FlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
+  restoreOrganization: () => dispatch(restoreOrganization()),
+  flashMessage:        (msg: String, opts: FlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
 });
 
 export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(RequireOrganization);
