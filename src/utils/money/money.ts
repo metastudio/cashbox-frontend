@@ -4,13 +4,23 @@ import Locales, { MoneyLocale } from './locales';
 
 interface Money {
   fractional: string;
-  currency:   {
-    isoCode: string;
-    name:          string;
-    symbol:        string;
-    subunitToUnit: number;
-    htmlEntity:    string;
-  };
+  currency: Currency;
+}
+
+interface Currency {
+  isoCode:       string;
+  name:          string;
+  symbol:        string;
+  subunitToUnit: number;
+  htmlEntity:    string;
+}
+
+interface ConvertedAmount {
+  amount?: Money;
+  oldAmount: Money;
+  updatedAt?: Date;
+  rate: number;
+  total: Money;
 }
 
 const defaultMoneyLocale: MoneyLocale = Locales.ru_RU;
@@ -70,4 +80,4 @@ const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale
   );
 };
 
-export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };
+export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale, Currency, ConvertedAmount };

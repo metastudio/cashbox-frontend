@@ -9,6 +9,7 @@ export { default as currencies }           from './currencies/reducer.js';
 export { default as currentOrganization }  from './organizations/current-reducer.js';
 export { default as customers }            from './customers/entities-reducer.js';
 export { default as customer }             from './customers/entity-reducer.js';
+export { default as debtors }              from './debtors/reducer.js';
 export { default as flashMessages }        from './flash-messages/reducer.js';
 export { default as invoice }              from './invoices/entity-reducer.js';
 export { default as invoices }             from './invoices/entities-reducer.js';
