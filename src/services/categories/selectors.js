@@ -2,7 +2,7 @@ const selectCategories       = (state) => state.categories.items;
 const selectCategoriesStatus = (state) => state.categories.status;
 
 const selectTypedCategories = (state, type) => (
-  state.categories.items && state.categories.items.filter(c => c.type === type)
+  type && state.categories.items.filter(c => c.type === type) || state.categories.items
 );
 
 const selectCategoryStatus = (state) => state.category.status;
