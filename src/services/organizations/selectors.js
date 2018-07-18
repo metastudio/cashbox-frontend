@@ -4,7 +4,7 @@ const selectCurrentOrganization   = state => state.currentOrganization.data;
 const selectCurrentOrganizationId = state => state.currentOrganization.id;
 
 const selectHasCurrentOrganization = createSelector(selectCurrentOrganization, org => !!org);
-const selectIsOrganizationLoaded   = state => state.isOrganizationLoaded;
+const selectIsOrganizationLoaded   = state => state.currentOrganization.isLoaded;
 
 const selectOrganizations       = state => state.organizations.items;
 const selectOrganizationsStatus = state => state.organizations.status;

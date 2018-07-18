@@ -12,8 +12,8 @@ import {
 import Spinner from 'components/utils/spinner';
 
 interface StateProps {
-  hasOrganization:      boolean;
-  isOrganizationLoaded: boolean;
+  hasOrganization: boolean;
+  isLoaded:        boolean;
 }
 
 interface DispatchProps {
@@ -25,8 +25,11 @@ type Props = StateProps & DispatchProps;
 
 class RequireOrganization extends React.Component<Props> {
   componentDidMount() {
-    if (!this.props.hasOrganization) {
+    const { isLoaded } = this.props;
+
+    if (!isLoaded) {
       this.props.restoreOrganization();
+    } else {
       this.checkOrganization(this.props);
     }
   }
@@ -43,9 +46,9 @@ class RequireOrganization extends React.Component<Props> {
   }
 
   render() {
-    const { isOrganizationLoaded, hasOrganization, children } = this.props;
+    const { isLoaded, hasOrganization, children } = this.props;
 
-    if (isOrganizationLoaded) {
+    if (!isLoaded) {
       return <Spinner />;
     }
 
@@ -58,8 +61,8 @@ class RequireOrganization extends React.Component<Props> {
 }
 
 const mapState = (state: object) => ({
-  isOrganizationLoaded: selectIsOrganizationLoaded(state),
-  hasOrganization:      selectHasCurrentOrganization(state),
+  isLoaded:        selectIsOrganizationLoaded(state),
+  hasOrganization: selectHasCurrentOrganization(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
