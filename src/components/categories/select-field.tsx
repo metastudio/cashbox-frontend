@@ -8,7 +8,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   Category, CategoryType,
   loadCategories,
-  selectCategoriesStatus, selectTypedCategories,
+  selectCategoriesStatus, selectCategories,
 } from 'services/categories';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
@@ -83,7 +83,7 @@ class CategoriesSelect extends React.Component<Props> {
 const mapState = (state: {}, props: OwnProps) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectCategoriesStatus(state),
-  categories: selectTypedCategories(state, props.type),
+  categories: selectCategories(state, props.type),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
