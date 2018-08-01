@@ -1,13 +1,24 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import { BankAccount, formatBankAccountName } from 'services/bank-accounts';
+import {
+  BankAccount,
+  formatBankAccountName,
+  selectVisibleBankAccountsWithCurrency
+} from 'services/bank-accounts';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
+interface OwnProps {
+  currency: string;
+}
+
+interface StateProps {
   bankAccounts: BankAccount[];
 }
+
+type Props = OwnProps & StateProps;
 
 const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
 
@@ -26,8 +37,8 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
     <Table striped responsive id="bankAccounts">
       <thead>
         <tr>
-          <th>Account</th>
-          <th>Amount</th>
+          <th className="col-xs-8">Account</th>
+          <th className="col-xs-4">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -37,4 +48,8 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
   );
 };
 
-export default SidebarBankAccountsTable;
+const mapState = (state: {}, props: OwnProps) => ({
+  bankAccounts: selectVisibleBankAccountsWithCurrency(state, props.currency),
+});
+
+export default connect<StateProps, {}, OwnProps>(mapState)(SidebarBankAccountsTable);

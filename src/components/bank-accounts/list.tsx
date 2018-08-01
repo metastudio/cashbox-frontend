@@ -5,15 +5,19 @@ import { PageHeader } from 'react-bootstrap';
 
 import { Status } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { BankAccount, selectBankAccounts, selectBankAccountsStatus, loadBankAccounts } from 'services/bank-accounts';
+import {
+  loadBankAccounts,
+  selectBankAccountsCurrencies,
+  selectBankAccountsStatus,
+} from 'services/bank-accounts';
 
 import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
 
 interface StateProps {
-  orgId:        number;
-  status:       Status;
-  bankAccounts: BankAccount[] | null;
+  orgId:      number;
+  status:     Status;
+  currencies: string[];
 }
 
 interface DispatchProps {
@@ -34,11 +38,7 @@ class BankAccountsList extends React.Component<Props> {
   }
 
   render() {
-    const { status, bankAccounts } = this.props;
-
-    if (status !== Status.Success || !bankAccounts) {
-      return <LoadingView status={ status } />;
-    }
+    const { status, currencies } = this.props;
 
     return (
       <>
@@ -46,16 +46,18 @@ class BankAccountsList extends React.Component<Props> {
           <Link to="/bank_accounts/new" className="btn btn-default pull-right">Add Bank Account</Link>
           Bank Accounts
         </PageHeader>
-        <Table bankAccounts={ bankAccounts } />
+        <LoadingView status={ status }>
+          { () => currencies.map(c => <Table key={ c } currency={ c } />) }
+        </LoadingView>
       </>
     );
   }
 }
 
 const mapState = (state: {}) => ({
-  orgId:        selectCurrentOrganizationId(state),
-  status:       selectBankAccountsStatus(state),
-  bankAccounts: selectBankAccounts(state),
+  orgId:      selectCurrentOrganizationId(state),
+  status:     selectBankAccountsStatus(state),
+  currencies: selectBankAccountsCurrencies(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({

@@ -23,7 +23,7 @@ interface OwnState {
 
 interface StateProps {
   orgId:        number;
-  status:       string;
+  status:       Status;
   transactions: Transaction[] | null;
   pagination:   PaginationInterface;
 }

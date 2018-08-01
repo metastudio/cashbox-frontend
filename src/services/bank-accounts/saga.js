@@ -2,6 +2,7 @@ import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationBankAccounts,
+  getOrganizationVisibleBankAccounts,
   getOrganizationBankAccount,
   postOrganizationBankAccount,
   putOrganizationBankAccount,
@@ -10,6 +11,7 @@ import {
 
 import {
   loadBankAccounts,
+  loadVisibleBankAccounts,
   loadBankAccount,
   createBankAccount,
   updateBankAccount,
@@ -24,6 +26,18 @@ function* handleLoadBankAccounts({ payload: { organizationId }, meta: { resolve,
     yield call(resolve, bankAccounts);
   } catch (error) {
     yield put(loadBankAccounts.failure(error));
+    yield call(reject, error);
+  }
+}
+
+function* handleLoadVisibleBankAccounts({ payload: { organizationId }, meta: { resolve, reject } }) {
+  try {
+    yield put(loadVisibleBankAccounts.request(organizationId));
+    const bankAccounts = yield call(getOrganizationVisibleBankAccounts, organizationId);
+    yield put(loadVisibleBankAccounts.success(organizationId, bankAccounts));
+    yield call(resolve, bankAccounts);
+  } catch (error) {
+    yield put(loadVisibleBankAccounts.failure(error));
     yield call(reject, error);
   }
 }
@@ -75,9 +89,10 @@ function* handleDeleteBankAccount({ payload: { organizationId, bankAccountId }, 
 }
 
 export default function* () {
-  yield takeLatest(loadBankAccounts,  handleLoadBankAccounts);
-  yield takeLatest(loadBankAccount,   handleLoadBankAccount);
-  yield takeEvery(createBankAccount, handleCreateBankAccount);
-  yield takeEvery(updateBankAccount, handleUpdateBankAccount);
-  yield takeEvery(deleteBankAccount, handleDeleteBankAccount);
+  yield takeLatest(loadBankAccounts,        handleLoadBankAccounts);
+  yield takeLatest(loadVisibleBankAccounts, handleLoadVisibleBankAccounts);
+  yield takeLatest(loadBankAccount,         handleLoadBankAccount);
+  yield takeEvery(createBankAccount,        handleCreateBankAccount);
+  yield takeEvery(updateBankAccount,        handleUpdateBankAccount);
+  yield takeEvery(deleteBankAccount,        handleDeleteBankAccount);
 }

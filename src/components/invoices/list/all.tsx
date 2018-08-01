@@ -19,7 +19,7 @@ import Pagination from 'components/pagination';
 
 interface StateProps {
   orgId:    number;
-  status:   string;
+  status:   Status;
   invoices: Invoice[] | null;
   pagination: PaginationInterface;
 }

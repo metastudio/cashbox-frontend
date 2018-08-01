@@ -28,10 +28,11 @@ class EditBankAccount extends React.Component {
   handleSubmit(values) {
     const { orgId, bankAccount, updateBankAccount } = this.props;
     return updateBankAccount(orgId, bankAccount.id, {
-      name: values.name,
-      description: values.description,
+      name:           values.name,
+      description:    values.description,
       invoiceDetails: values.invoiceDetails,
-      currency: values.currency,
+      currency:       values.currency,
+      visible:        values.visible,
     }).catch(prepareSubmissionError);
   }
 

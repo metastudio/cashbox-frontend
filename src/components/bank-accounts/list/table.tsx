@@ -1,24 +1,30 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import { BankAccount } from 'services/bank-accounts';
+import { BankAccount, selectBankAccountsWithCurrency } from 'services/bank-accounts';
 
 import Row from './table-row';
 
-interface Props {
+interface OwnProps {
+  currency: string;
+}
+
+interface StateProps {
   bankAccounts: BankAccount[];
 }
+
+type Props = OwnProps & StateProps;
 
 const BankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => (
   <Table striped responsive hover id="bankAccounts">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Currency</th>
-        <th>Description</th>
-        <th>Balance</th>
-        <th>Invoice Details</th>
-        <th colSpan={ 2 } />
+        <th className="col-xs-3">Name</th>
+        <th className="col-xs-1">Balance</th>
+        <th className="col-xs-4">Description</th>
+        <th className="col-xs-3">Invoice Details</th>
+        <th className="col-xs-1" colSpan={ 2 } />
       </tr>
     </thead>
     <tbody>
@@ -27,4 +33,8 @@ const BankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => (
   </Table>
 );
 
-export default BankAccountsTable;
+const mapState = (state: {}, props: OwnProps) => ({
+  bankAccounts: selectBankAccountsWithCurrency(state, props.currency),
+});
+
+export default connect<StateProps, {}, OwnProps>(mapState)(BankAccountsTable);
