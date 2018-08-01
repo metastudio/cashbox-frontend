@@ -2,6 +2,7 @@ export { default as app }                  from './app/reducer.js';
 export { default as auth }                 from './auth/reducer.js';
 export { default as balances }             from './balances/reducer.js';
 export { default as bankAccounts }         from './bank-accounts/entities-reducer.js';
+export { default as visibleBankAccounts }  from './bank-accounts/visible-entities-reducer.js';
 export { default as bankAccount }          from './bank-accounts/entity-reducer.js';
 export { default as categories }           from './categories/entities-reducer.js';
 export { default as category }             from './categories/entity-reducer.js';

@@ -7,4 +7,5 @@ export interface BankAccount {
   balance:        Money;
   description:    string;
   invoiceDetails: string;
+  visible:        boolean;
 }
