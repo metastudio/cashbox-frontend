@@ -37,8 +37,8 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
     <Table striped responsive id="bankAccounts">
       <thead>
         <tr>
-          <th>Account</th>
-          <th>Amount</th>
+          <th className="col-xs-8">Account</th>
+          <th className="col-xs-4">Amount</th>
         </tr>
       </thead>
       <tbody>
