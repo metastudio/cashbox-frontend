@@ -21,11 +21,11 @@ import Total from './total';
 import TotalsByCurrency from './totals_by_currency';
 
 interface StateProps {
-  orgId: number;
+  orgId:   number;
+  status:  Status;
   debtors: Debtor[] | null;
-  total: Money | null;
+  total:   Money | null;
   totalsByCurrency: TotalByCurrency[] | null;
-  status: string;
 }
 
 interface DispatchProps {
