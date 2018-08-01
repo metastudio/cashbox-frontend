@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
 import { BankAccount, formatBankAccountName } from 'services/bank-accounts';
-import { formatMoney } from 'utils/money';
 
-import 'components/transactions/css/default.css';
+import { MoneyAmount } from 'components/utils/money';
 
 interface Props {
   bankAccounts: BankAccount[];
@@ -13,12 +12,12 @@ interface Props {
 const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
 
   const accounts = bankAccounts.map((bankAccount) => {
-    const colorClass = Number(bankAccount.balance.fractional) > 0 ? 'positive' : 'negative';
-
     return (
       <tr key={ bankAccount.id }>
         <td>{ formatBankAccountName(bankAccount) }</td>
-        <td className={ `text-right ${colorClass}` }>{ formatMoney(bankAccount.balance) }</td>
+        <td className="text-right">
+          <MoneyAmount colorize="onlyNegative" amount={ bankAccount.balance } />
+        </td>
       </tr>
     );
   });
