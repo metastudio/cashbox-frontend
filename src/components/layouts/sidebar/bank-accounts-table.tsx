@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
 import { BankAccount, formatBankAccountName } from 'services/bank-accounts';
-import { formatMoney } from 'utils/money';
+
+import { MoneyAmount } from 'components/utils/money';
 
 import 'components/transactions/css/default.css';
 
@@ -18,7 +19,9 @@ const SidebarBankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => {
     return (
       <tr key={ bankAccount.id }>
         <td>{ formatBankAccountName(bankAccount) }</td>
-        <td className={ `text-right ${colorClass}` }>{ formatMoney(bankAccount.balance) }</td>
+        <td className={ `text-right ${colorClass}` }>
+          <MoneyAmount amount={ bankAccount.balance } />
+        </td>
       </tr>
     );
   });

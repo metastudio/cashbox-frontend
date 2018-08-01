@@ -3,8 +3,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
 import { Transaction } from 'services/transactions';
-import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
+
+import { MoneyAmount } from 'components/utils/money';
 
 import './../css/default.css';
 
@@ -42,7 +43,9 @@ class TransactionsTableRow extends React.Component<Props> {
           className={ this.rowClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
-          <td className={ this.amountClass(transaction) }>{ formatMoney(transaction.amount) }</td>
+          <td className={ this.amountClass(transaction) }>
+            <MoneyAmount amount={ transaction.amount } />
+          </td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
