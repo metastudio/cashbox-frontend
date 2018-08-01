@@ -6,9 +6,9 @@ import { WrappedFieldProps } from 'redux-form';
 import { Status } from 'model-types';
 import {
   BankAccount,
-  loadBankAccounts,
-  selectBankAccountsStatus,
-  selectBankAccounts,
+  loadVisibleBankAccounts,
+  selectVisibleBankAccountsStatus,
+  selectVisibleBankAccounts,
   formatBankAccountName,
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
@@ -82,12 +82,12 @@ class BankAccountsSelect extends React.Component<Props> {
 
 const mapState = (state: {}) => ({
   orgId:        selectCurrentOrganizationId(state),
-  status:       selectBankAccountsStatus(state),
-  bankAccounts: selectBankAccounts(state),
+  status:       selectVisibleBankAccountsStatus(state),
+  bankAccounts: selectVisibleBankAccounts(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
 const BankAccountsSelectContainer =

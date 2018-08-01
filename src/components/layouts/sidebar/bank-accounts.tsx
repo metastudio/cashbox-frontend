@@ -5,9 +5,9 @@ import { PageHeader } from 'react-bootstrap';
 import { Status } from 'model-types';
 import {
   BankAccount,
-  loadBankAccounts,
-  selectBankAccounts,
-  selectBankAccountsStatus
+  loadVisibleBankAccounts,
+  selectVisibleBankAccounts,
+  selectVisibleBankAccountsStatus
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -64,12 +64,12 @@ class BankAccounts extends React.Component<Props> {
 
 const mapState = (state: {}) => ({
   orgId:        selectCurrentOrganizationId(state),
-  bankAccounts: selectBankAccounts(state),
-  status:       selectBankAccountsStatus(state),
+  bankAccounts: selectVisibleBankAccounts(state),
+  status:       selectVisibleBankAccountsStatus(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
 export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccounts);

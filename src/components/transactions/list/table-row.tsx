@@ -29,9 +29,6 @@ class TransactionsTableRow extends React.Component<Props> {
 
     const isTransfer = transaction.category && transaction.category.name === 'Transfer';
 
-    // tslint:disable-next-line
-    console.log('isTransfer: ', isTransfer);
-
     return(
       <>
         <tr
