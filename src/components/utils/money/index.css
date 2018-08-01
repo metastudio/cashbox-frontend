@@ -1,3 +1,15 @@
 .money-amount {
   white-space: nowrap;
 }
+
+.money-amount-positive {
+  color: #006400;
+}
+
+.money-amount-negative {
+  color: #8B0000;
+}
+
+.money-amount-transfer {
+  color: #B8860B;
+}

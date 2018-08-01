@@ -6,13 +6,26 @@ import './index.css';
 
 interface Props {
   amount?: Money;
+  colorize?: boolean | 'onlyNegative';
+  transfer?: boolean;
 }
 
-const MoneyAmount: React.SFC<Props> = ({ amount }) => {
+const MoneyAmount: React.SFC<Props> = ({ amount, colorize, transfer }) => {
   if (!amount) { return null; }
 
+  const classNames = ['money-amount'];
+  if (colorize === true) {
+    if (transfer) {
+      classNames.push('money-amount-transfer');
+    } else {
+      classNames.push(Number(amount.fractional) >= 0 ? 'money-amount-positive' : 'money-amount-negative');
+    }
+  } else if (colorize === 'onlyNegative' && Number(amount.fractional) < 0) {
+    classNames.push('money-amount-negative');
+  }
+
   return (
-    <span className="money-amount">{ formatMoney(amount) }</span>
+    <span className={ classNames.join(' ') }>{ formatMoney(amount) }</span>
   );
 };
 

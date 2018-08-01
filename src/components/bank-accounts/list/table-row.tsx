@@ -15,7 +15,7 @@ const BankAccountsTableRow: React.SFC<Props> = ({ bankAccount }) => (
     <td>{ bankAccount.name }</td>
     <td>{ bankAccount.currency }</td>
     <td>{ bankAccount.description }</td>
-    <td><MoneyAmount amount={ bankAccount.balance } /></td>
+    <td><MoneyAmount colorize="onlyNegative" amount={ bankAccount.balance } /></td>
     <td>{ bankAccount.invoiceDetails }</td>
     <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` } title="Edit"><i className="fa fa-edit" /></Link></td>
     <td><DestroyButton bankAccount={ bankAccount } /></td>

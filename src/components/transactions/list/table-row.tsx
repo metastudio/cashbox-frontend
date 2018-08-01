@@ -16,16 +16,6 @@ interface OwnProps {
 type Props =  RouteComponentProps<{ id: number }> & OwnProps;
 
 class TransactionsTableRow extends React.Component<Props> {
-  amountClass = (t: Transaction): string => {
-    let className = '';
-    if (t.category && t.category.name === 'Transfer') {
-      className = 'transfer';
-    } else {
-      className = Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
-    }
-    return className + ' text-right';
-  }
-
   rowClass = (transaction: Transaction): string => {
     return !transaction.isViewed ? 'new-transaction' : '';
   }
@@ -37,14 +27,19 @@ class TransactionsTableRow extends React.Component<Props> {
   render() {
     const { transaction } = this.props;
 
+    const isTransfer = transaction.category && transaction.category.name === 'Transfer';
+
+    // tslint:disable-next-line
+    console.log('isTransfer: ', isTransfer);
+
     return(
       <>
         <tr
           className={ this.rowClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
-          <td className={ this.amountClass(transaction) }>
-            <MoneyAmount amount={ transaction.amount } />
+          <td className="text-right">
+            <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
           </td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
