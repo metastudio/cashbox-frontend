@@ -25,10 +25,11 @@ class NewBankAccount extends React.Component {
   handleSubmit(values) {
     const { orgId, createBankAccount } = this.props;
     return createBankAccount(orgId, {
-      name: values.name,
-      description: values.description,
+      name:           values.name,
+      description:    values.description,
       invoiceDetails: values.invoiceDetails,
-      currency: values.currency,
+      currency:       values.currency,
+      visible:        values.visible,
     }).catch(prepareSubmissionError);
   }
 

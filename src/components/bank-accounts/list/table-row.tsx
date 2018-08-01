@@ -11,7 +11,7 @@ interface Props {
 }
 
 const BankAccountsTableRow: React.SFC<Props> = ({ bankAccount }) => (
-  <tr>
+  <tr className={ bankAccount.visible ? '' : 'text-muted' }>
     <td>{ bankAccount.name }</td>
     <td>{ bankAccount.currency }</td>
     <td>{ bankAccount.description }</td>
