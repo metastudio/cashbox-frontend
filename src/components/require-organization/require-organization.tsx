@@ -24,7 +24,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 class RequireOrganization extends React.Component<Props> {
-  componentDidMount() {
+  checkOrganizationLoaded() {
     const { isLoaded } = this.props;
 
     if (!isLoaded) {
@@ -32,6 +32,14 @@ class RequireOrganization extends React.Component<Props> {
     } else {
       this.checkOrganization(this.props);
     }
+  }
+
+  componentDidMount() {
+    this.checkOrganizationLoaded();
+  }
+
+  componentDidUpdate() {
+    this.checkOrganizationLoaded();
   }
 
   checkOrganization(props: Props) {
