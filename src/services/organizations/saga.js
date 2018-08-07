@@ -43,7 +43,7 @@ function* handleSetCurrentOrganization({ payload: { organization }, meta: { reso
   yield call(resolve, organization);
 }
 
-function* handleRestoreOrganization({ meta: { resolve, reject } }) {
+function* handleRestoreOrganization() {
   try {
     yield put(restoreOrganization.request());
     let organization;
@@ -55,10 +55,8 @@ function* handleRestoreOrganization({ meta: { resolve, reject } }) {
     }
 
     yield put(restoreOrganization.success(organization));
-    yield call(resolve, organization);
   } catch (error) {
     yield put(restoreOrganization.failure(error));
-    yield call(reject, error);
   }
 }
 

@@ -34,10 +34,6 @@ class RequireOrganization extends React.Component<Props> {
     }
   }
 
-  componentDidUpdate() {
-    this.checkOrganization(this.props);
-  }
-
   checkOrganization(props: Props) {
     const { flashMessage, hasOrganization } = props;
     if (!hasOrganization) {
