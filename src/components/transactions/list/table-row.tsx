@@ -3,8 +3,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
 import { Transaction } from 'services/transactions';
-import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
+
+import { MoneyAmount } from 'components/utils/money';
 
 import './../css/default.css';
 
@@ -15,16 +16,6 @@ interface OwnProps {
 type Props =  RouteComponentProps<{ id: number }> & OwnProps;
 
 class TransactionsTableRow extends React.Component<Props> {
-  amountClass = (t: Transaction): string => {
-    let className = '';
-    if (t.category && t.category.name === 'Transfer') {
-      className = 'transfer';
-    } else {
-      className = Number(t.amount.fractional) > 0 ? 'positive' : 'negative';
-    }
-    return className + ' text-right';
-  }
-
   rowClass = (transaction: Transaction): string => {
     return !transaction.isViewed ? 'new-transaction' : '';
   }
@@ -36,13 +27,17 @@ class TransactionsTableRow extends React.Component<Props> {
   render() {
     const { transaction } = this.props;
 
+    const isTransfer = transaction.category && transaction.category.name === 'Transfer';
+
     return(
       <>
         <tr
           className={ this.rowClass(transaction) }
           onClick={ () => this.handleClick(transaction.id) }
         >
-          <td className={ this.amountClass(transaction) }>{ formatMoney(transaction.amount) }</td>
+          <td className="text-right">
+            <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
+          </td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>

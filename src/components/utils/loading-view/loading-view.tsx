@@ -1,21 +1,22 @@
 import * as React from 'react';
 import { Alert } from 'react-bootstrap';
 
-import * as statuses from 'constants/statuses.js';
+import { Status } from 'model-types';
 
 import Spinner from 'components/utils/spinner';
 
 interface Props {
-  status:      string;
+  status:      Status;
   error?:      string;
   onTryAgain?: () => void;
+  children?: React.ReactNode | ((status?: Status) => React.ReactNode);
 }
 
-const LoadingView: React.SFC<Props> = ({status, error, onTryAgain, children}) => {
+const LoadingView: React.SFC<Props> = ({ status, error, onTryAgain, children }) => {
   let body: React.ReactNode = null;
 
   switch (status) {
-    case statuses.FAILURE:
+    case Status.Failure:
       body = (
         <Alert bsStyle="danger">
           { error || 'Error on data loading.' }
@@ -24,8 +25,12 @@ const LoadingView: React.SFC<Props> = ({status, error, onTryAgain, children}) =>
         </Alert>
       );
       break;
-    case statuses.SUCCESS:
-      body = children;
+    case Status.Success:
+      if (typeof children === 'function') {
+        body = children(status);
+      } else {
+        body = children;
+      }
       break;
     default:
       body = <Spinner />;

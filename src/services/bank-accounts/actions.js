@@ -6,6 +6,11 @@ loadBankAccounts.request = createAction('LOAD_BANK_ACCOUNTS_REQUEST', (organizat
 loadBankAccounts.success = createAction('LOAD_BANK_ACCOUNTS_SUCCESS', (organizationId, bankAccounts) => ({ organizationId, bankAccounts }));
 loadBankAccounts.failure = createAction('LOAD_BANK_ACCOUNTS_FAILURE');
 
+export const loadVisibleBankAccounts = createAction('LOAD_VISIBLE_BANK_ACCOUNTS', (organizationId) => ({ organizationId }), (_orgId, resolve = noop, reject = noop) => ({ resolve, reject }));
+loadVisibleBankAccounts.request = createAction('LOAD_VISIBLE_BANK_ACCOUNTS_REQUEST', (organizationId) => ({ organizationId }));
+loadVisibleBankAccounts.success = createAction('LOAD_VISIBLE_BANK_ACCOUNTS_SUCCESS', (organizationId, bankAccounts) => ({ organizationId, bankAccounts }));
+loadVisibleBankAccounts.failure = createAction('LOAD_VISIBLE_BANK_ACCOUNTS_FAILURE');
+
 export const createBankAccount = createAction('CREATE_BANK_ACCOUNT', (organizationId, data) => ({ organizationId, data }), (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }));
 createBankAccount.request = createAction('CREATE_BANK_ACCOUNT_REQUEST', (organizationId) => ({ organizationId }));
 createBankAccount.success = createAction('CREATE_BANK_ACCOUNT_SUCCESS', (organizationId, bankAccount) => ({ organizationId, bankAccount }));

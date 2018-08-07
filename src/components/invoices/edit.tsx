@@ -4,7 +4,7 @@ import { Col, PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
-import * as statuses from 'constants/statuses.js';
+import { Status } from 'model-types';
 import {
   Invoice, InvoiceParams,
   loadInvoice, updateInvoice,
@@ -19,7 +19,7 @@ import LoadingView from '../utils/loading-view';
 
 interface StateProps {
   orgId:   number;
-  status:  string;
+  status:  Status;
   invoice: Invoice | null;
 }
 interface DispatchProps {
@@ -98,7 +98,7 @@ class EditInvoice extends React.Component<Props> {
   render() {
     const { status, invoice } = this.props;
 
-    if (status !== statuses.SUCCESS || !invoice) {
+    if (status !== Status.Success || !invoice) {
       return <LoadingView status={ status } />;
     }
 

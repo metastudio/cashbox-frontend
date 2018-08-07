@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Status,  } from 'model-types';
+import { Status } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   Transaction,
@@ -18,7 +18,7 @@ import EditTransfer from './edit/transfer.jsx';
 
 interface StateProps {
   orgId:       number;
-  status:      string;
+  status:      Status;
   transaction: Transaction | null;
 }
 

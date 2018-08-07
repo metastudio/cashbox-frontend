@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import RequireLogin from 'components/utils/require-login';
 import AppLayout from 'components/layouts/app-layout';
 
-import List from './list.jsx';
+import List from './list';
 import New  from './new.jsx';
 import Edit from './edit.jsx';
 

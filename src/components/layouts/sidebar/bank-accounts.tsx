@@ -4,10 +4,9 @@ import { PageHeader } from 'react-bootstrap';
 
 import { Status } from 'model-types';
 import {
-  BankAccount,
-  loadBankAccounts,
-  selectBankAccounts,
-  selectBankAccountsStatus
+  loadVisibleBankAccounts,
+  selectVisibleBankAccountsStatus,
+  selectVisibleBankAccountsCurrencies
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -15,9 +14,9 @@ import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';
 
 interface StateProps {
-  orgId?:        number;
-  status:        Status;
-  bankAccounts?: BankAccount[];
+  orgId?:     number;
+  status:     Status;
+  currencies: string[];
 }
 
 interface DispatchProps {
@@ -46,17 +45,16 @@ class BankAccounts extends React.Component<Props> {
   }
 
   render() {
-    const { orgId, status, bankAccounts } = this.props;
+    const { orgId, status, currencies } = this.props;
 
     if (!orgId) { return null; }
-    if (status !== Status.Success || !bankAccounts) {
-      return <LoadingView status={ status } />;
-    }
 
     return (
       <>
         <PageHeader>Accounts</PageHeader>
-        <BankAccountsTable bankAccounts={ bankAccounts } />
+        <LoadingView status={ status }>
+          { () => currencies.map((c) => <BankAccountsTable key={ c } currency={ c } />) }
+        </LoadingView>
       </>
     );
   }
@@ -64,12 +62,12 @@ class BankAccounts extends React.Component<Props> {
 
 const mapState = (state: {}) => ({
   orgId:        selectCurrentOrganizationId(state),
-  bankAccounts: selectBankAccounts(state),
-  status:       selectBankAccountsStatus(state),
+  status:       selectVisibleBankAccountsStatus(state),
+  currencies:   selectVisibleBankAccountsCurrencies(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
 export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccounts);

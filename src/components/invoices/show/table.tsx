@@ -2,9 +2,10 @@ import * as React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
 
 import { Invoice } from 'services/invoices';
-import { formatMoney } from 'utils/money';
 import { formatDate } from 'utils/date';
 import Items from './items';
+
+import { MoneyAmount } from 'components/utils/money';
 
 interface Props {
   invoice:      Invoice;
@@ -60,7 +61,7 @@ const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
         </td>
         <td>
           <h2 className="text-right">
-            { formatMoney(invoice.amount) }
+            <MoneyAmount amount={ invoice.amount } />
           </h2>
         </td>
       </tr>

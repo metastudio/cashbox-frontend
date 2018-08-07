@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Panel, Row, Col } from 'react-bootstrap';
+import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
 import * as statuses from 'constants/statuses.js';
 import { addFlashMessage } from 'services/flash-messages';
@@ -28,10 +28,11 @@ class EditBankAccount extends React.Component {
   handleSubmit(values) {
     const { orgId, bankAccount, updateBankAccount } = this.props;
     return updateBankAccount(orgId, bankAccount.id, {
-      name: values.name,
-      description: values.description,
+      name:           values.name,
+      description:    values.description,
       invoiceDetails: values.invoiceDetails,
-      currency: values.currency,
+      currency:       values.currency,
+      visible:        values.visible,
     }).catch(prepareSubmissionError);
   }
 
@@ -46,7 +47,7 @@ class EditBankAccount extends React.Component {
         { this.props.status === statuses.SUCCESS &&
           <Row>
             <Col xs={12} smOffset={2} sm={8} mdOffset={3} md={6} >
-              <h1>Edit Bank Account</h1>
+              <PageHeader>Edit Bank Account</PageHeader>
               <Panel>
                 <Panel.Body>
                   <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.bankAccount } action="Update"/>

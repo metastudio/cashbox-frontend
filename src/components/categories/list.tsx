@@ -43,7 +43,7 @@ class CategoriesList extends React.Component<Props> {
     return (
       <>
         <PageHeader>
-          <Link to="/categories/new" className="btn btn-default pull-right">New Category</Link>
+          <Link to="/categories/new" className="btn btn-default pull-right">Add Category...</Link>
           Categories
         </PageHeader>
         <Table categories={ categories } />

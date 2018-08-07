@@ -4,8 +4,7 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import {  } from 'model-types';
-import * as statuses from 'constants/statuses.js';
+import { Status } from 'model-types';
 import {
   Invoice,
   loadInvoice,
@@ -23,7 +22,7 @@ import DownloadPDFButton from './download_pdf';
 
 interface StateProps {
   orgId:        number;
-  status:       string;
+  status:       Status;
   invoice:      Invoice | null;
   userFullName: string;
 }
@@ -42,7 +41,7 @@ class ShowInvoice extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.status !== statuses.SUCCESS || !this.props.invoice) {
+    if (this.props.status !== Status.Success || !this.props.invoice) {
       return <LoadingView status={ this.props.status } />;
     }
 
