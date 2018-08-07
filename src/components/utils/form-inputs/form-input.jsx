@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormControl } from 'react-bootstrap';
 
 import { wrapInlineFormGroup }     from './inline-form-group.jsx';
-import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from './horizontal-form-group';
 import { wrapVerticalFormGroup }   from './vertical-form-group';
 
 class FormInput extends React.Component {

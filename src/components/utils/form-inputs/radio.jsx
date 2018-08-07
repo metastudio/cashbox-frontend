@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from 'react-bootstrap';
 
-import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from './horizontal-form-group';
 
 export const RadioInput = ({ input, collection, ...inputProps }) => {
   delete inputProps.meta;

@@ -4,7 +4,7 @@ import CurrencyFormInput from 'react-currency-input';
 
 import { defaultMoneyLocale } from 'utils/money';
 
-import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from './horizontal-form-group';
 import { wrapVerticalFormGroup } from './vertical-form-group';
 
 export const CurrencyInput = ({ input, locale, ...inputProps }) => {

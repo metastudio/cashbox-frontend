@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormControl } from 'react-bootstrap';
 
-import FormGroup from './horizontal-form-group.jsx';
+import FormGroup from './horizontal-form-group';
 
 export const HorizontalFileInput = ({ field, label, ...inputProps }) => {
   const handleChange = (e) => {

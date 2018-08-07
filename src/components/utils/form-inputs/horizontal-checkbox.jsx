@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'react-bootstrap';
 
-import FormGroup from './horizontal-form-group.jsx';
+import FormGroup from './horizontal-form-group';
 
 const HorizontalCheckbox = ({ input, meta, label, ...inputProps }) => (
   <FormGroup input={ input } meta={ meta }>
