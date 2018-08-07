@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
@@ -107,7 +108,7 @@ const mapState = (state: { show: boolean; }) => ({
   orgId:        selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
   create: (orgId: number, data: TransactionParams) => (
     new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej)))

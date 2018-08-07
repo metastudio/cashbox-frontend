@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
 import { removeFlashMessage, selectFlashMessages, FlashMessage as FlashMessageType } from 'services/flash-messages';
 
@@ -32,7 +33,7 @@ const mapState = (state: object) => ({
   messages: selectFlashMessages(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<void>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   removeMessage: (muid: string) => dispatch(removeFlashMessage(muid)),
 });
 

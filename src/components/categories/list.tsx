@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
 
@@ -58,7 +59,7 @@ const mapState = (state: {}) => ({
   categories: selectCategories(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => dispatch(loadCategories(orgId)),
 });
 

@@ -1,6 +1,6 @@
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import createLogger from 'redux-logger';
+import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
 import * as reducers from 'services/reducers.js';
@@ -13,7 +13,6 @@ function createAppStore() {
     form: formReducer,
   });
 
-  const logger = createLogger();
   const sagaMiddleware = createSagaMiddleware();
 
   const createStoreWithMiddleware = applyMiddleware(

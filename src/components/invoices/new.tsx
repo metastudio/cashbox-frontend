@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
@@ -70,7 +71,7 @@ const mapState = (state: {}) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   create: (orgId: number, data: InvoiceParams) => new Promise<Invoice>((res, rej) => {
     dispatch(createInvoice(orgId, data, res, rej));
   }),

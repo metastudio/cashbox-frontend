@@ -3,7 +3,8 @@ import { WrappedFieldProps } from 'redux-form';
 import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 interface OwnProps {
-  help?: string;
+  help?:  string;
+  label?: string;
 }
 
 type Props = WrappedFieldProps & OwnProps;

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Category, deleteCategory as deleteCategoryAction } from 'services/categories';
@@ -57,7 +58,7 @@ const mapState = (state: object) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   deleteCategory:
     (orgId: number, categoryId: number) => (
       new Promise((res, rej) => dispatch(deleteCategoryAction(orgId, categoryId, res, rej)))

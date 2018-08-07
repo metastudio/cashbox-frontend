@@ -45,7 +45,7 @@ const mapState = (state: object) => ({
   isAuthorized: selectIsAuthorized(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<void>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   logout:      () => new Promise((res, rej) => dispatch(logoutUser(res, rej))),
   showMessage: (message: string) => dispatch(addFlashMessage(message)),
 });

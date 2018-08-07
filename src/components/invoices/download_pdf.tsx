@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import * as FileSaver from 'file-saver';
 
@@ -42,7 +43,7 @@ const mapState = (state: {}) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   downloadPDF:  (orgId: number, invoiceId: number | string) => new Promise<Blob>((res, rej) => {
     dispatch(downloadInvoicePDF(orgId, invoiceId, res, rej));
   }),

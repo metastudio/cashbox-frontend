@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -73,7 +74,7 @@ const mapState = (state: {}) => ({
   userFullName: selectUserFullName(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
 });
 
