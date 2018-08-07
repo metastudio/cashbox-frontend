@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
@@ -10,14 +11,12 @@ import {
   selectCurrenciesStatus, selectCurrencies,
 } from 'services/currencies';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
-interface OwnProps {
-  emptyTitle?: string;
+interface CurrencyOption {
+  label: string;
+  value: Currency;
 }
 
 interface StateProps {
@@ -29,7 +28,7 @@ interface DispatchProps {
   load: () => void;
 }
 
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type Props = WrappedFieldProps & StateProps & DispatchProps;
 
 class CurrencySelect extends React.Component<Props> {
   loadData = (props: Props) => {
@@ -46,31 +45,47 @@ class CurrencySelect extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  handleChange = (value: Option<string>) => {
+  handleChange = (value: CurrencyOption) => {
     this.props.input.onChange(value && value.value);
   }
 
-  options = (): Option[] => {
-    const { status, currencies, emptyTitle } = this.props;
+  options = (): CurrencyOption[] => {
+    const { status, currencies } = this.props;
     if (status !== Status.Success || !currencies) {
       return [];
     }
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(currencies.map(c => ({ value: c, label: c })));
+
+    return currencies.map(c => ({ value: c, label: c }));
   }
 
+  styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    })
+  })
+
   render () {
-    const { status, input, meta, ...inputProps } = this.props;
+    const {
+      status,
+      input,
+      meta,
+      currencies,
+      load,
+      ...inputProps
+    } = this.props;
+
+    const selectedCurrency = input.value && { label: input.value, value: input.value };
 
     return (
-      <Select
+      <Select<CurrencyOption>
         { ...inputProps }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedCurrency }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
       />
     );
   }
@@ -81,12 +96,12 @@ const mapState = (state: {}) => ({
   currencies: selectCurrencies(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: () => dispatch(loadCurrencies()),
 });
 
 const CurrencySelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(CurrencySelect);
+  connect<StateProps, DispatchProps>(mapState, mapDispatch)(CurrencySelect);
 
 const HorizontalCurrencySelect = wrapHorizontalFormGroup(CurrencySelectContainer);
 const VerticalCurrencySelect   = wrapVerticalFormGroup(CurrencySelectContainer);
