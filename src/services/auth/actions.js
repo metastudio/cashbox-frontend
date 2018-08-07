@@ -8,7 +8,7 @@ loginUser.failure = createAction('LOGIN_USER_FAILURE');
 
 export const restoreSession  = createAction('RESTORE_SESSION', undefined, (resolve = noop, reject = noop) => ({ resolve, reject }));
 restoreSession.request = createAction('RESTORE_SESSION_REQUEST');
-restoreSession.success = createAction('RESTORE_SESSION_SUCCESS', (token, user, organization) => ({ token, user, organization }));
+restoreSession.success = createAction('RESTORE_SESSION_SUCCESS', (token, user) => ({ token, user }));
 restoreSession.failure = createAction('RESTORE_SESSION_FAILURE');
 
 export const logoutUser = createAction('LOGOUT_USER', undefined, (resolve = noop, reject = noop) => ({ resolve, reject }));
