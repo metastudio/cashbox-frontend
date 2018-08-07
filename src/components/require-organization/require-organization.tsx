@@ -69,7 +69,7 @@ const mapState = (state: object) => ({
   hasOrganization: selectHasCurrentOrganization(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   restoreOrganization: () => dispatch(restoreOrganization()),
   flashMessage:        (msg: String, opts: FlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
 });

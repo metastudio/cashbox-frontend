@@ -1,21 +1,15 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import { Customer, loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
-
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
-interface OwnProps {
-  emptyTitle?: string;
-}
 
 interface StateProps {
   orgId:       number;
@@ -27,7 +21,7 @@ interface DispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type Props = WrappedFieldProps & StateProps & DispatchProps;
 
 class CustomersSelect extends React.Component<Props> {
   loadData = (props: Props) => {
@@ -44,30 +38,43 @@ class CustomersSelect extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  handleChange = (value: Option<string>) => {
-    this.props.input.onChange(value && value.value);
+  handleChange = (customer: Customer) => {
+    this.props.input.onChange(customer && String(customer.id));
   }
 
-  options = (): Option[] => {
-    const { status, customers, emptyTitle } = this.props;
+  options = (): Customer[] => {
+    const { status, customers } = this.props;
     if (status !== Status.Success || !customers) { return []; }
 
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(customers.map(c => ({ value: String(c.id), label: c.name })));
+    return customers;
   }
 
+  styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    })
+  })
+
   render() {
-    const { orgId, status, input, meta, ...inputProps } = this.props;
+    const { orgId, status, input, meta, customers, ...inputProps } = this.props;
+
+    let selectedCustomer = undefined;
+    if (input.value && status === Status.Success && customers) {
+      selectedCustomer = customers.find((c) => String(c.id) === String(input.value));
+    }
 
     return (
-      <Select
+      <Select<Customer>
         { ...inputProps }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedCustomer }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
+        getOptionLabel={ (c) => c.name }
+        getOptionValue={ (c) => String(c.id) }
       />
     );
   }
@@ -79,12 +86,12 @@ const mapState = (state: {}) => ({
   customers: selectCustomers(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => new Promise<Customer[]>((res, rej) => dispatch(loadCustomers(orgId, res, rej))),
 });
 
 const CustomersSelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(CustomersSelect);
+  connect<StateProps, DispatchProps>(mapState, mapDispatch)(CustomersSelect);
 
 const HorizontalCustomersSelect = wrapHorizontalFormGroup(CustomersSelectContainer);
 const VerticalCustomersSelect   = wrapVerticalFormGroup(CustomersSelectContainer);

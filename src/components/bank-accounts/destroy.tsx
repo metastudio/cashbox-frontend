@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 
 import { BankAccount, deleteBankAccount as deleteBankAccountAction } from 'services/bank-accounts';
@@ -57,7 +58,7 @@ const mapState = (state: object) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   deleteBankAccount:
     (orgId: number, bankAccountId: number) => (
       new Promise((res, rej) => dispatch(deleteBankAccountAction(orgId, bankAccountId, res, rej)))

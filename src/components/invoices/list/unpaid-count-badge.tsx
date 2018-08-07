@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Badge } from 'react-bootstrap';
 
 import { Status } from 'model-types';
@@ -53,7 +54,7 @@ const mapState = (state: {}) => ({
   count:  selectUnpaidInvoicesCount(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => dispatch(loadUnpaidInvoicesCount(orgId)),
 });
 

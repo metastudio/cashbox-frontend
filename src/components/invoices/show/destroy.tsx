@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
@@ -45,7 +46,7 @@ const mapState = (state: {}) => ({
   invoice:      selectInvoice(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   destroy:      (orgId: number, invoiceId: number) => new Promise((res, rej) => {
     dispatch(destroyInvoice(orgId, invoiceId, res, rej));
   }),

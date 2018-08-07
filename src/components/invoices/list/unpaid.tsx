@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
@@ -75,7 +76,7 @@ const mapState = (state: {}) => ({
   pagination: selectUnpaidInvoicesPagination(state)
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, params: object) => dispatch(loadUnpaidInvoices(orgId, params)),
 });
 

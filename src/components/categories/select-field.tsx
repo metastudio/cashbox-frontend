@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
@@ -11,15 +12,11 @@ import {
   selectCategoriesStatus, selectCategories,
 } from 'services/categories';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
 interface OwnProps {
-  type:        CategoryType;
-  emptyTitle?: string;
+  type: CategoryType;
 }
 
 interface StateProps {
@@ -51,30 +48,43 @@ class CategoriesSelect extends React.Component<Props> {
     this.loadData();
   }
 
-  handleChange = (value: Option<string>) => {
-    this.props.input.onChange(value && value.value);
+  handleChange = (category: Category) => {
+    this.props.input.onChange(category && String(category.id));
   }
 
-  options = (): Option[] => {
-    const { status, categories, emptyTitle } = this.props;
+  options = (): Category[] => {
+    const { status, categories } = this.props;
     if (status !== Status.Success || !categories) { return []; }
 
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(categories.map(c => ({ value: String(c.id), label: c.name })));
+    return categories;
   }
 
+  styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    })
+  })
+
   render() {
-    const { orgId, type, input, meta, status, ...inputProps } = this.props;
+    const { orgId, type, input, meta, status, categories, ...inputProps } = this.props;
+
+    let selectedCategory = undefined;
+    if (input.value && status === Status.Success && categories) {
+      selectedCategory = categories.find((c) => String(c.id) === String(input.value));
+    }
 
     return (
-      <Select
+      <Select<Category>
         { ...inputProps }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedCategory }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
+        getOptionLabel={ (c) => c.name }
+        getOptionValue={ (c) => String(c.id) }
       />
     );
   }
@@ -86,7 +96,7 @@ const mapState = (state: {}, props: OwnProps) => ({
   categories: selectCategories(state, props.type),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => new Promise((res, rej) => dispatch(loadCategories(orgId, res, rej))),
 });
 

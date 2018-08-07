@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { change } from 'redux-form';
 import { Button } from 'react-bootstrap';
 import { FieldsProps } from 'redux-form';
@@ -36,7 +37,7 @@ class RemoveItemButton extends React.Component<Props> {
   }
 }
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   changeField: (formName: string, formField: string, value: string) => dispatch(change(formName, formField, value))
 });
 

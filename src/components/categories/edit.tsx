@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
 
@@ -101,7 +102,7 @@ const mapState = (state: object) => ({
   category: selectCategory(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load:    (orgId: number, categoyId: number) => dispatch(loadCategory(orgId, categoyId)),
   update:  (orgId: number, categoryId: number, data: CategoryParams) => (
     new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej)))

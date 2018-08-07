@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
 import * as QS from 'query-string';
@@ -87,7 +88,7 @@ const mapState = (state: {}) => ({
   pagination:   selectTransactionsPagination(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, params: object) => dispatch(loadTransactions(orgId, params)),
 });
 
