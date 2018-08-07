@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
@@ -13,15 +14,8 @@ import {
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
-
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
-interface OwnProps {
-  emptyTitle?: string;
-}
 
 interface StateProps {
   status:       string;
@@ -33,7 +27,7 @@ interface DispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type Props = WrappedFieldProps & StateProps & DispatchProps;
 
 class BankAccountsSelect extends React.Component<Props> {
   loadData = (props: Props) => {
@@ -50,31 +44,44 @@ class BankAccountsSelect extends React.Component<Props> {
     this.loadData(this.props);
   }
 
-  handleChange = (value: Option<string>) => {
-    this.props.input.onChange(value && value.value);
+  handleChange = (ba: BankAccount) => {
+    this.props.input.onChange(ba && String(ba.id));
   }
 
-  options = (): Option[] => {
-    const { status, bankAccounts, emptyTitle } = this.props;
+  options = (): BankAccount[] => {
+    const { status, bankAccounts } = this.props;
     if (status !== Status.Success || !bankAccounts) {
       return [];
     }
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(bankAccounts.map(ba => ({ value: String(ba.id), label: formatBankAccountName(ba) })));
+    return bankAccounts;
   }
 
+  styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    })
+  })
+
   render () {
-    const { status, orgId, input, meta, ...inputProps } = this.props;
+    const { status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+
+    let selectedBankAccount = undefined;
+    if (input.value && status === Status.Success && bankAccounts) {
+      selectedBankAccount = bankAccounts.find((ba) => String(ba.id) === String(input.value));
+    }
 
     return (
-      <Select
+      <Select<BankAccount>
         { ...inputProps }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedBankAccount }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
+        getOptionLabel={ formatBankAccountName }
+        getOptionValue={ (ba) => String(ba.id) }
       />
     );
   }
@@ -86,12 +93,12 @@ const mapState = (state: {}) => ({
   bankAccounts: selectVisibleBankAccounts(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
 const BankAccountsSelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(BankAccountsSelect);
+  connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccountsSelect);
 
 const HorizontalBankAccountsSelect = wrapHorizontalFormGroup(BankAccountsSelectContainer);
 const VerticalBankAccountsSelect   = wrapVerticalFormGroup(BankAccountsSelectContainer);
