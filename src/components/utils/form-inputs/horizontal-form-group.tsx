@@ -3,35 +3,78 @@ import { WrappedFieldProps } from 'redux-form';
 import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 interface OwnProps {
-  help?:  string;
-  label?: string;
+  help?:     string;
+  label?:    string;
+  required?: boolean;
 }
 
 type Props = WrappedFieldProps & OwnProps;
 
-const HorizontalFormGroup: React.SFC<Props> = ({ input, meta, label, help, children }) => {
-  const error = Array.isArray(meta.error) ? meta.error.join(', ') : meta.error;
+class HorizontalFormGroup extends React.Component<Props> {
+  labelBlock = () => {
+    const { label, required } = this.props;
 
-  return (
-    <FormGroup controlId={ input.name } validationState={ meta.invalid ? 'error' : null } >
-      { label && <Col componentClass={ ControlLabel } sm={ 3 }>{ label }</Col> }
-      <Col smOffset={ label ? undefined : 3 } sm={ 9 } >
-        { children }
-        { meta.invalid && <HelpBlock>{ error }</HelpBlock> }
+    if (!label) { return null; }
+
+    return (
+      <Col componentClass={ ControlLabel } sm={ 3 }>
+        { label }{ required && <span className="required">*</span> }
       </Col>
-    </FormGroup>
-  );
-};
+    );
+  }
+
+  errorBlock = () => {
+    const { meta: { invalid, error } } = this.props;
+
+    if (!invalid) { return null; }
+
+    return (
+      <HelpBlock>
+        { Array.isArray(error) ? error.join(', ') : error }
+      </HelpBlock>
+    );
+  }
+
+  helpBlock = () => {
+    const { help } = this.props;
+
+    if (!help) { return null; }
+
+    return <HelpBlock>{ help }</HelpBlock>;
+  }
+
+  render () {
+    const { input, meta, label, children } = this.props;
+
+    return (
+      <FormGroup controlId={ input.name } validationState={ meta.invalid ? 'error' : null } >
+        { this.labelBlock() }
+        <Col smOffset={ label ? undefined : 3 } sm={ 9 } >
+          { children }
+          { this.errorBlock() }
+          { this.helpBlock() }
+        </Col>
+      </FormGroup>
+    );
+  }
+}
 
 const wrapHorizontalFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
   class HorizontalFormGroupWrapper extends React.Component<Props> {
     static displayName = `HorizontalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
     render() {
-      const { input, meta, label, help, ...props } = this.props;
+      const { input, meta, label, required, help, ...props } = this.props;
 
       return (
-        <HorizontalFormGroup input={ input } meta={ meta } label={ label } help={ help } { ...groupProps } >
+        <HorizontalFormGroup
+          input={ input }
+          meta={ meta }
+          label={ label }
+          help={ help }
+          required={ required }
+          { ...groupProps }
+        >
           <Component input={ input } meta={ meta } { ...props } />
         </HorizontalFormGroup>
       );
