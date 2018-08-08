@@ -28,6 +28,24 @@ when you start development server or build bundle.
 
 To use TSLint for JavasSrript files set config `tslint.jsEnable` to `true`.
 
+Add next task to be able to run lint as task in VSCode:
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Lint",
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": {
+        "base": "$tslint5",
+        "fileLocation": "relative"
+      }
+    }
+  ]
+}
+```
+
 # Deployment
 
 Heroku is used for deployment. `rscashbox` - is application for staging
