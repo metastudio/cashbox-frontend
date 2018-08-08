@@ -48,7 +48,7 @@ loadCustomer.failure = createAction('LOAD_CUSTOMER_FAILURE');
 export const updateCustomer = createAction(
   'UPDATE_CUSTOMER',
   (organizationId, customerId, data) => ({ organizationId, customerId, data }),
-  (_organizationId, _data, resolve = noop, reject = noop) => ({ resolve, reject }),
+  (_organizationId, _customerId, _data, resolve = noop, reject = noop) => ({ resolve, reject }),
 );
 updateCustomer.request = createAction(
   'UPDATE_CUSTOMER_REQUEST',
@@ -74,5 +74,3 @@ deleteCustomer.success = createAction(
   (organizationId, customer) => ({ organizationId, customer }),
 );
 deleteCustomer.failure = createAction('DELETE_CUSTOMER_FAILURE');
-
-export const clearCustomer = createAction('CLEAR_CUSTOMER');

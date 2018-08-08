@@ -1,11 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
+import * as React from 'react';
+import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 
 import { Alert, Form } from 'react-bootstrap';
 import { HorizontalFormInput, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
-const CustomerForm = ({ handleSubmit, submitting, error, action }) => (
+interface IOwnProps {
+  action: string;
+}
+
+interface ICustomerFormData {
+  name?:           string;
+  invoiceDetails?: string;
+}
+
+type IProps = IOwnProps & InjectedFormProps<ICustomerFormData, IOwnProps>;
+
+const CustomerForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
@@ -20,13 +30,8 @@ const CustomerForm = ({ handleSubmit, submitting, error, action }) => (
   </Form>
 );
 
-CustomerForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting:   PropTypes.bool,
-  error:        PropTypes.string,
-  action:       PropTypes.string.isRequired,
-};
-
-export default reduxForm({
-  form: 'customer-form',
+const reduxCustomerForm = reduxForm<ICustomerFormData, IOwnProps>({
+  form: 'customerForm',
 })(CustomerForm);
+
+export { reduxCustomerForm as default, ICustomerFormData };
