@@ -6,8 +6,8 @@ import RequireOrganization from 'components/require-organization';
 import AppLayout from 'components/layouts/app-layout';
 
 import List from './list';
-import New  from './new.jsx';
-import Edit from './edit.jsx';
+import New  from './new';
+import Edit from './edit';
 
 const BankAccountsScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
@@ -15,7 +15,7 @@ const BankAccountsScene: React.SFC<{}> = ({ children }) => (
       <AppLayout>
         <Route exact path="/bank_accounts" component={ List } />
         <Route path="/bank_accounts/new" component={ New } />
-        <Route path="/bank_accounts/:bankAccountId/edit" component={ Edit } />
+        <Route path="/bank_accounts/:id/edit" component={ Edit } />
       </AppLayout>
     </RequireOrganization>
   </RequireLogin>

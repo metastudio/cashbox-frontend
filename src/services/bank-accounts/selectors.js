@@ -18,6 +18,9 @@ const selectVisibleBankAccountsWithCurrency = (state, currency) => (
   selectVisibleBankAccounts(state).filter(ba => ba.currency === currency)
 );
 
+const selectBankAccountStatus = state => state.bankAccount.status;
+const selectBankAccount       = state => state.bankAccount.data;
+
 export {
   selectBankAccountsStatus,
   selectBankAccounts,
@@ -28,4 +31,7 @@ export {
   selectVisibleBankAccounts,
   selectVisibleBankAccountsCurrencies,
   selectVisibleBankAccountsWithCurrency,
+
+  selectBankAccountStatus,
+  selectBankAccount,
 };

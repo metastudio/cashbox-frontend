@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
+import * as React from 'react';
+import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 import { Alert, Form } from 'react-bootstrap';
 
 import {
@@ -10,9 +9,24 @@ import {
 } from 'components/utils/form-inputs';
 import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 
-const BankAccountForm = ({ handleSubmit, submitting, error, action }) => (
+interface IOwnProps {
+  action: string;
+}
+
+interface IBankAccountFormData {
+  name?:           string;
+  currency?:       string;
+  visible?:        boolean;
+  description?:    string;
+  invoiceDetails?: string;
+}
+
+type IProps = IOwnProps & InjectedFormProps<IBankAccountFormData, IOwnProps>;
+
+const BankAccountForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
+
     <Field name="name" label="Name" component={ HorizontalFormInput } required />
     <Field name="currency" label="Currency" component={ HorizontalCurrencySelect } required />
     <Field name="visible" label="Visible" component={ HorizontalCheckbox } />
@@ -24,22 +38,14 @@ const BankAccountForm = ({ handleSubmit, submitting, error, action }) => (
       type="textarea"
       component={ HorizontalFormInput }
     />
-    <HorizontalSubmitButton
-      bsStyle="primary"
-      submitting={ submitting }
-    >
+    <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>
       { action } Bank Account
     </HorizontalSubmitButton>
   </Form>
 );
 
-BankAccountForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting:   PropTypes.bool,
-  error:        PropTypes.string,
-  action:       PropTypes.string.isRequired,
-};
-
-export default reduxForm({
+const ReduxBankAccountForm = reduxForm<IBankAccountFormData, IOwnProps>({
   form: 'transactionForm',
 })(BankAccountForm);
+
+export { ReduxBankAccountForm as default, IBankAccountFormData };

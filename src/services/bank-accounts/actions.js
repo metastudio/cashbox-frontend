@@ -87,5 +87,3 @@ deleteBankAccount.success = createAction(
   (organizationId, bankAccount) => ({ organizationId, bankAccount }),
 );
 deleteBankAccount.failure = createAction('DELETE_BANK_ACCOUNT_FAILURE');
-
-export const clearBankAccount = createAction('CLEAR_BANK_ACCOUNT');
