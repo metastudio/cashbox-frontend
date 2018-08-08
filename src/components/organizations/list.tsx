@@ -17,7 +17,7 @@ import LoadingView from 'components/utils/loading-view';
 
 interface IStateProps {
   status:        Status;
-  organizations: IOrganization[] | null;
+  organizations: IOrganization[];
 }
 
 interface IDispatchProps {
@@ -40,17 +40,15 @@ class OrganizationsList extends React.Component<IProps> {
   public render() {
     const { status, organizations } = this.props;
 
-    if (status !== Status.Success || !organizations) {
-      return <LoadingView status={ status } />;
-    }
-
     return (
       <>
         <PageHeader>
           <Link to="/organizations/new" className="btn btn-default pull-right">Add Organization...</Link>
           Organizations
         </PageHeader>
-        <Table organizations={ organizations } />
+        <LoadingView status={ status }>
+          { () => <Table organizations={ organizations } /> }
+        </LoadingView>
       </>
     );
   }
