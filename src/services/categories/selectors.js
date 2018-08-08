@@ -1,7 +1,7 @@
 const selectCategoriesStatus = (state) => state.categories.status;
 const selectCategories = (state, type) => {
-  if (!type) { return state.categories.items }
-  return state.categories.items && state.categories.items.filter(c => c.type === type)
+  if (!type) { return state.categories.items; }
+  return state.categories.items && state.categories.items.filter(c => c.type === type);
 };
 
 const selectCategoryStatus = (state) => state.category.status;

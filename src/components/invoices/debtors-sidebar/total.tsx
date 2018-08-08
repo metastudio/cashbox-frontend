@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { formatMoney, Money } from 'utils/money';
+import { formatMoney, IMoney } from 'utils/money';
 
-interface Props {
-  total: Money | null;
+interface IProps {
+  total: IMoney | null;
 }
 
-const Total: React.SFC<Props> = ({ total }) => {
-  if ( total === null) { return null; }
+const Total: React.SFC<IProps> = ({ total }) => {
+  if (total === null) { return null; }
+
   return(
     <thead>
       <tr>

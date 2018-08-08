@@ -5,7 +5,7 @@ export enum Status {
   Failure = 'FAILURE',
 }
 
-export interface Pagination {
+export interface IPagination {
   current: number;
   previous?: number;
   pages: number;

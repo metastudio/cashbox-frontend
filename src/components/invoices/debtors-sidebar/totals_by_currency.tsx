@@ -3,14 +3,14 @@ import * as React from 'react';
 import { TotalByCurrency } from 'services/debtors';
 import { formatMoney } from 'utils/money';
 
-interface Props {
+interface IProps {
   totals: TotalByCurrency[] | null;
 }
 
-const TotalsByCurrency: React.SFC<Props> = ({ totals }) => {
+const TotalsByCurrency: React.SFC<IProps> = ({ totals }) => {
   if (totals === null) { return null; }
 
-  const renderTotals = totals.map((summ) => (
+  const renderTotals = totals.map(summ => (
     <tr key={ summ.name }>
       <td>{ summ.name }</td>
       <td className="text-right">

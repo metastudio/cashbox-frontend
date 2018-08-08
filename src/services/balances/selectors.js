@@ -5,5 +5,5 @@ const selectBalancesTotals          = (state) => state.balances.totals;
 export {
   selectBalancesTotalAmount,
   selectBalancesDefaultCurrency,
-  selectBalancesTotals
+  selectBalancesTotals,
 };

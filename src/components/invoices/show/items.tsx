@@ -5,11 +5,11 @@ import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
+interface IProps {
   invoice: Invoice;
 }
 
-const Items: React.SFC<Props> = ({ invoice: { invoiceItems, currency }}) => {
+const Items: React.SFC<IProps> = ({ invoice: { invoiceItems, currency } }) => {
   if (invoiceItems.length <= 0) { return null; }
 
   const items = invoiceItems.map((item, index) => (

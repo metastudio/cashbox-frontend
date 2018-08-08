@@ -7,12 +7,12 @@ import Items from './items';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
+interface IProps {
   invoice:      Invoice;
   userFullName: string;
 }
 
-const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
+const Table: React.SFC<IProps> = ({ invoice, userFullName }) => (
   <BsTable bordered className="invoice">
     <tbody>
       <tr>

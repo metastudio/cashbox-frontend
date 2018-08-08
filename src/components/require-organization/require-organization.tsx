@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import {
   restoreOrganization,
   selectIsOrganizationLoaded,
@@ -11,20 +11,27 @@ import {
 } from 'services/organizations';
 import Spinner from 'components/utils/spinner';
 
-interface StateProps {
+interface IStateProps {
   hasOrganization: boolean;
   isLoaded:        boolean;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   restoreOrganization: () => void;
-  flashMessage:        (msg: string, opts?: FlashMessageOptions) => void;
+  flashMessage:        (msg: string, opts?: IFlashMessageOptions) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type IProps = IStateProps & IDispatchProps;
 
-class RequireOrganization extends React.Component<Props> {
-  checkOrganizationLoaded() {
+class RequireOrganization extends React.Component<IProps> {
+  private checkOrganization(props: IProps) {
+    const { flashMessage, hasOrganization } = props;
+    if (!hasOrganization) {
+      flashMessage('Please select or add organization.', { type: 'info' });
+    }
+  }
+
+  private checkOrganizationLoaded() {
     const { isLoaded } = this.props;
 
     if (!isLoaded) {
@@ -34,33 +41,21 @@ class RequireOrganization extends React.Component<Props> {
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.checkOrganizationLoaded();
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     this.checkOrganizationLoaded();
   }
 
-  checkOrganization(props: Props) {
-    const { flashMessage, hasOrganization } = props;
-    if (!hasOrganization) {
-      flashMessage('Please select or add organization.', { type: 'info' });
-    }
-  }
-
-  render() {
+  public render() {
     const { isLoaded, hasOrganization, children } = this.props;
 
-    if (!isLoaded) {
-      return <Spinner />;
-    }
+    if (!isLoaded) { return <Spinner />; }
+    if (!hasOrganization) { return <Redirect to="/organizations/select" />; }
 
-    if (hasOrganization) {
-      return children;
-    } else {
-      return <Redirect to="/organizations/select" />;
-    }
+    return children;
   }
 }
 
@@ -71,7 +66,7 @@ const mapState = (state: object) => ({
 
 const mapDispatch = (dispatch: Dispatch) => ({
   restoreOrganization: () => dispatch(restoreOrganization()),
-  flashMessage:        (msg: String, opts: FlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
+  flashMessage:        (msg: string, opts: IFlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(RequireOrganization);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(RequireOrganization);

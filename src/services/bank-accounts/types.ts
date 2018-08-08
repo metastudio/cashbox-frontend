@@ -1,10 +1,10 @@
-import { Money } from 'utils/money';
+import { IMoney } from 'utils/money/types';
 
-export interface BankAccount {
+export interface IBankAccount {
   id:             number;
   name:           string;
   currency:       string;
-  balance:        Money;
+  balance:        IMoney;
   description:    string;
   invoiceDetails: string;
   visible:        boolean;

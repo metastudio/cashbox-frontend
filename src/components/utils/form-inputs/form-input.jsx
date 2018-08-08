@@ -29,7 +29,7 @@ class FormInput extends React.Component {
     delete inputProps.focusOnMount;
 
     return (
-      <FormControl {...inputProps} {...input} inputRef={ (input) => { this.input = input; } } />
+      <FormControl {...inputProps} {...input} inputRef={ i => { this.input = i; } } />
     );
   }
 }
@@ -42,7 +42,7 @@ FormInput.propTypes = {
 };
 
 FormInput.defaultProps = {
-  type: 'text'
+  type: 'text',
 };
 
 const InlineFormInput     = wrapInlineFormGroup(FormInput);

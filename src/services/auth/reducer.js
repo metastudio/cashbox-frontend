@@ -8,7 +8,7 @@ import {
 import {
   updateProfile,
   updateAccount,
-  cancelAccount
+  cancelAccount,
 } from 'services/users';
 
 const defaultState = {
@@ -40,6 +40,6 @@ export default handleActions({
   [combineActions(updateProfile.success, updateAccount.success)]: (state, { payload }) => ({
     ...state,
     token: state.token,
-    user:  payload.user
-  })
+    user:  payload.user,
+  }),
 }, defaultState);

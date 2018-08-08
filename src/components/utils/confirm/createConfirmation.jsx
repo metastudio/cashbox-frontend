@@ -13,7 +13,7 @@ const createConfirmation = (Component) => {
           dispose={dispose}
           {...props}
         />,
-        wrapper
+        wrapper,
       );
     });
 

@@ -45,7 +45,7 @@ const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } 
     }
   };
 
-  const renderHeaders = headers.map((header) => (
+  const renderHeaders = headers.map(header => (
     <th key={ header.sort }>
       <Link to={ prepareLink(header.sort) } >
         { prepareTitle(header) }

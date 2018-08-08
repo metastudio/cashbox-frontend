@@ -12,7 +12,12 @@ export const DatePickerInput = ({ input, onValueChange, ...inputProps }) => {
   const dateFormat = Moment.localeData().longDateFormat('L');
 
   return (
-    <DatePicker value={ input.value } onChange={ onValueChange || input.onChange } dateFormat={ dateFormat } { ...inputProps } />
+    <DatePicker
+      value={ input.value }
+      onChange={ onValueChange || input.onChange }
+      dateFormat={ dateFormat }
+      { ...inputProps }
+    />
   );
 };
 

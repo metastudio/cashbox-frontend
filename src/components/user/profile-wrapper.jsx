@@ -25,8 +25,8 @@ class ProfileWrapper extends React.Component {
       userId,
       {
         fullName: values.fullName,
-        profileAttributes: { phoneNumber: values.profile && values.profile.phoneNumber }
-      }
+        profileAttributes: { phoneNumber: values.profile && values.profile.phoneNumber },
+      },
     ).catch(prepareSubmissionError);
   }
 
@@ -39,7 +39,10 @@ class ProfileWrapper extends React.Component {
       <Panel>
         <Panel.Heading>Profile:</Panel.Heading>
         <Panel.Body>
-          <ProfileForm onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate } initialValues={ this.props.initialValues } />
+          <ProfileForm
+            onSubmit={this.handleSubmit} onSubmitSuccess={ this.afterCreate }
+            initialValues={ this.props.initialValues }
+          />
         </Panel.Body>
       </Panel>
     );
@@ -50,7 +53,7 @@ ProfileWrapper.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   initialValues:   PropTypes.object,
   updateProfile:   PropTypes.func.isRequired,
-  userId:          PropTypes.number.isRequired
+  userId:          PropTypes.number.isRequired,
 };
 
 const select = (state) => ({
@@ -62,7 +65,7 @@ const dispatcher = (dispatch) => ({
   updateProfile: (userId, data) => new Promise((res, rej) => {
     dispatch(updateProfileAction(userId, data, res, rej));
   }),
-  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type))
+  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 });
 
 export default connect(select, dispatcher)(ProfileWrapper);

@@ -1,10 +1,12 @@
-export interface Organization {
+interface IOrganization {
   id:              number;
   name:            string;
   defaultCurrency: string;
 }
 
-export interface OrganizationParams {
+interface IOrganizationParams {
   name?:            string | null;
   defaultCurrency?: string | null;
 }
+
+export { IOrganization, IOrganizationParams };

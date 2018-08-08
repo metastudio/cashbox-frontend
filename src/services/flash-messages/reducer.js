@@ -1,10 +1,10 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import { addFlashMessage, removeFlashMessage } from 'services/flash-messages'
+import { addFlashMessage, removeFlashMessage } from 'services/flash-messages';
 
 const defaultState = {
-  messages: []
-}
+  messages: [],
+};
 
 export default handleActions({
   [addFlashMessage]: (state, { payload }) => ({
@@ -12,10 +12,10 @@ export default handleActions({
     messages: [
       payload.message,
       ...state.messages,
-    ]
+    ],
   }),
   [removeFlashMessage]: (state, { payload }) => ({
     ...state,
-    messages: state.messages.filter(m => m.uid != payload.messageUID)
+    messages: state.messages.filter(m => m.uid !== payload.messageUID),
   }),
-}, defaultState)
+}, defaultState);

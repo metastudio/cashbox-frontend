@@ -7,7 +7,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Status } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
-  Transaction,
+  ITransaction,
   loadTransaction,
   selectTransaction, selectTransactionStatus,
 } from 'services/transactions';
@@ -17,42 +17,29 @@ import EditIncomeTransaction from './edit/income.jsx';
 import EditExpenseTransaction from './edit/expense.jsx';
 import EditTransfer from './edit/transfer.jsx';
 
-interface StateProps {
+interface IStateProps {
   orgId:       number;
   status:      Status;
-  transaction: Transaction | null;
+  transaction: ITransaction | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number, transactionId: number) => void;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class EditTransaction extends React.Component<Props> {
-  handleClose = () => {
+class EditTransaction extends React.Component<IProps> {
+  private handleClose = () => {
     this.props.history.push('/transactions');
   }
 
-  loadData(props: Props) {
+  private loadData(props: IProps) {
     const { orgId, load, match } = props;
     load(orgId, Number(match.params.id));
   }
 
-  componentDidMount() {
-    this.loadData(this.props);
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const { match } = prevProps;
-    const { status, transaction } = this.props;
-    if (status === Status.Invalid || (transaction && transaction.id !== Number(match.params.id))) {
-      this.loadData(this.props);
-    }
-  }
-
-  renderTab(transaction: Transaction) {
+  private renderTab(transaction: ITransaction) {
     if (transaction.category && transaction.category.name === 'Transfer') {
       return (
         <Tab eventKey={ 1 } title="Transfer">
@@ -75,7 +62,19 @@ class EditTransaction extends React.Component<Props> {
     }
   }
 
-  render() {
+  public componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  public componentDidUpdate(prevProps: IProps) {
+    const { match } = prevProps;
+    const { status, transaction } = this.props;
+    if (status === Status.Invalid || (transaction && transaction.id !== Number(match.params.id))) {
+      this.loadData(this.props);
+    }
+  }
+
+  public render() {
     const { status, transaction } = this.props;
 
     return(
@@ -109,4 +108,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, transactionId: number) => dispatch(loadTransaction(orgId, transactionId)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditTransaction));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditTransaction));

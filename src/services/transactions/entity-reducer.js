@@ -26,12 +26,12 @@ export default handleActions({
   [loadTransaction.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [clearTransaction]: (state) => ({
     ...state,
     data:   null,
     status: statuses.INVALID,
-    error:  null
+    error:  null,
   }),
 }, defaultState);

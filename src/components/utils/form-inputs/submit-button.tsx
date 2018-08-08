@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 
-interface Props {
+interface IProps {
   submitting:       boolean;
   invalid?:         boolean;
   submitFailed?:    boolean;
@@ -10,7 +10,7 @@ interface Props {
   className?:       string;
 }
 
-const SubmitButton: React.SFC<Props> = (props) => {
+const SubmitButton: React.SFC<IProps> = (props) => {
   const {
     children,
     submitting,
@@ -50,7 +50,7 @@ SubmitButton.defaultProps = {
   submitSucceeded: false,
 };
 
-const HorizontalSubmitButton: React.SFC<Props> = (props) => (
+const HorizontalSubmitButton: React.SFC<IProps> = props => (
   <Row>
     <Col smOffset={ 3 } sm={ 9 }>
       <SubmitButton { ...props } />
@@ -58,7 +58,7 @@ const HorizontalSubmitButton: React.SFC<Props> = (props) => (
   </Row>
 );
 
-const VerticalSubmitButton: React.SFC<Props> = (props) => (
+const VerticalSubmitButton: React.SFC<IProps> = props => (
   <Row>
     <Col sm={ 12 }>
       <SubmitButton className="pull-right" { ...props } />

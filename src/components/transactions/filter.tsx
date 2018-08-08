@@ -4,21 +4,20 @@ import { Collapse, Row, Col } from 'react-bootstrap';
 import FilterForm from './form/filter-form.jsx';
 import * as QS from 'qs';
 
-interface OwnProps {
+interface IOwnProps {
   isFilterOpened: boolean;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & OwnProps;
+type IProps = RouteComponentProps<{ id: string }> & IOwnProps;
 
-class TransactionsFilter extends React.Component<Props> {
-  handleSubmit = (values: object) => {
+class TransactionsFilter extends React.Component<IProps> {
+  private handleSubmit = (values: object) => {
     const { history, location: { pathname } } = this.props;
 
-    history.push({ pathname: pathname, search: QS.stringify(values) });
+    history.push({ pathname, search: QS.stringify(values) });
   }
 
-  render() {
+  public render() {
     return(
       <Collapse in={ this.props.isFilterOpened }>
         <Row>

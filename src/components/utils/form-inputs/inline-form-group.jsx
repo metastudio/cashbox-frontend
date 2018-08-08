@@ -51,7 +51,8 @@ const wrapInlineFormGroup = (Component, groupProps = {}) => {
     labelProps: PropTypes.object,
   };
 
-  InlineFormGroupWrapper.displayName = `InlineFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
+  InlineFormGroupWrapper.displayName =
+    `InlineFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
   return InlineFormGroupWrapper;
 };

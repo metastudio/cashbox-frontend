@@ -23,7 +23,7 @@ const fetchApi = (url, fullOptions = {}) => {
 
   return fetch(url, {
     headers: headers(),
-    ...options
+    ...options,
   }).then(response => {
     if (response.status === 204) {
       // Empty body
@@ -47,7 +47,7 @@ export const getPDF = (url, query, fullOptions = {}) => {
   return fetch(url, {
     headers: headers({ 'Accept': 'text/pdf' }),
     method: 'GET',
-    ...fullOptions
+    ...fullOptions,
   }).then(response => {
     if (response.ok) {
       return response.blob();

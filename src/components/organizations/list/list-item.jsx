@@ -14,8 +14,8 @@ class OrganizationsListItem extends React.Component {
   }
 
   handleOrganizationClick(organization) {
-    this.props.setOrganization(organization).then(organization => {
-      this.props.addFlashMessage(`Organization ${organization.name} selected.`);
+    this.props.setOrganization(organization).then(org => {
+      this.props.addFlashMessage(`Organization ${org.name} selected.`);
       this.props.history.push('/');
     }).catch(error => {
       this.props.addFlashMessage(`Unable to select organization: ${error.message}`, { type: 'danger' });

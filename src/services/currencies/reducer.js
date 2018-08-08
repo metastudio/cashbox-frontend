@@ -25,6 +25,6 @@ export default handleActions({
   [loadCurrencies.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
 }, defaultState);

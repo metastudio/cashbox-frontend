@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormControl } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormControl } from 'react-bootstrap';
 
-import FormGroup from './vertical-form-group.jsx'
-import { domOnlyProps } from 'components/utils/form-inputs'
+import FormGroup from './vertical-form-group.jsx';
+import { domOnlyProps } from 'components/utils/form-inputs';
 
 export const VerticalSelect = ({ field, label, collection, help, ...inputProps }) => {
   return (
@@ -18,12 +18,12 @@ export const VerticalSelect = ({ field, label, collection, help, ...inputProps }
         }
       </FormControl>
     </FormGroup>
-  )
-}
+  );
+};
 
 VerticalSelect.propTypes = {
   field:      PropTypes.object.isRequired,
   label:      PropTypes.string.isRequired,
   collection: PropTypes.array.isRequired,
-  help:       PropTypes.string
-}
+  help:       PropTypes.string,
+};

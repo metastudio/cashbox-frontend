@@ -53,8 +53,10 @@ const select = (state) => ({
 });
 
 const dispatcher = (dispatch) => ({
-  deleteCustomer: (organizationId, customerId) => new Promise((res, rej) => dispatch(deleteCustomer(organizationId, customerId, res, rej))),
-  addFlashMessage:   (message, type = null) => dispatch(addFlashMessage(message, type)),
+  deleteCustomer: (organizationId, customerId) => (
+    new Promise((res, rej) => dispatch(deleteCustomer(organizationId, customerId, res, rej)))
+  ),
+  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 });
 
 export default withRouter(connect(select, dispatcher)(DestroyCustomer));

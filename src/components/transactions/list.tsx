@@ -5,9 +5,9 @@ import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
 import * as QS from 'query-string';
 
-import { Status, Pagination as PaginationInterface } from 'model-types';
+import { Status, IPagination } from 'model-types';
 import {
-  Transaction,
+  ITransaction,
   loadTransactions,
   selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
 } from 'services/transactions';
@@ -18,38 +18,38 @@ import Table from './list/table';
 import Pagination from 'components/pagination';
 import TransactionsFilter from './filter';
 
-interface OwnState {
+interface IOwnState {
   isFilterOpened: boolean;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId:        number;
   status:       Status;
-  transactions: Transaction[] | null;
-  pagination:   PaginationInterface;
+  transactions: ITransaction[] | null;
+  pagination:   IPagination;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number, params: object) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class TransactionsList extends React.Component<Props, OwnState> {
-  state: OwnState = {
+class TransactionsList extends React.Component<IProps, IOwnState> {
+  public state: IOwnState = {
     isFilterOpened: false,
   };
 
-  loadData = (props: Props) => {
+  private loadData = (props: IProps) => {
     const { orgId, load, location: { search } } = props;
     load(orgId, QS.parse(search));
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: IProps) {
     const { location: { search: prevSearch } } = prevProps;
     const { status, location: { search } } = this.props;
 
@@ -58,7 +58,7 @@ class TransactionsList extends React.Component<Props, OwnState> {
     }
   }
 
-  render() {
+  public render() {
     const { status, transactions } = this.props;
 
     if (status !== Status.Success || !transactions) {
@@ -92,4 +92,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, params: object) => dispatch(loadTransactions(orgId, params)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(TransactionsList));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList));

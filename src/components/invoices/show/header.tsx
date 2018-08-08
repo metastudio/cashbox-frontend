@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { Invoice } from 'services/invoices';
 import { formatDateRange } from 'utils/date';
 
-export interface Props {
+export interface IProps {
   invoice: Invoice;
 }
 
-const Header: React.SFC<Props> = ({ invoice }) => {
+const Header: React.SFC<IProps> = ({ invoice }) => {
   return (
     <h2>
       <Link to="/invoices">Invoices</Link>

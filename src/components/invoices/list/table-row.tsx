@@ -2,16 +2,15 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Invoice } from 'services/invoices';
-import { formatDateRange } from 'utils/date';
-import { formatDate } from 'utils/date';
+import { formatDate, formatDateRange } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
+interface IProps {
   invoice: Invoice;
 }
 
-const InvoiceRow: React.SFC<Props> = ({ invoice }) => (
+const InvoiceRow: React.SFC<IProps> = ({ invoice }) => (
   <tr className={ invoice.paidAt ? 'bg-success' : '' }>
     <td>{ invoice.customerName }</td>
     <td>{ formatDateRange(invoice.startsAt, invoice.endsAt) }</td>

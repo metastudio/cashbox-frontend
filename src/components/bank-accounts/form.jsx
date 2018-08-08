@@ -17,8 +17,19 @@ const BankAccountForm = ({ handleSubmit, submitting, error, action }) => (
     <Field name="currency" label="Currency" component={ HorizontalCurrencySelect } required />
     <Field name="visible" label="Visible" component={ HorizontalCheckbox } />
     <Field name="description" label="Description" component={ HorizontalFormInput } />
-    <Field name="invoiceDetails" label="Invoice Details" componentClass="textarea" type="textarea" component={ HorizontalFormInput } />
-    <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>{ action } Bank Account</HorizontalSubmitButton>
+    <Field
+      name="invoiceDetails"
+      label="Invoice Details"
+      componentClass="textarea"
+      type="textarea"
+      component={ HorizontalFormInput }
+    />
+    <HorizontalSubmitButton
+      bsStyle="primary"
+      submitting={ submitting }
+    >
+      { action } Bank Account
+    </HorizontalSubmitButton>
   </Form>
 );
 

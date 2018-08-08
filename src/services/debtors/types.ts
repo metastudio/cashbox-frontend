@@ -1,12 +1,12 @@
-import { ConvertedAmount, Money } from 'utils/money';
+import { IConvertedAmount, IMoney } from 'utils/money/types';
 
 export interface Debtor {
   id: number;
   name: string;
-  amounts: ConvertedAmount[];
+  amounts: IConvertedAmount[];
 }
 
 export interface TotalByCurrency {
   name: string;
-  amount: Money;
+  amount: IMoney;
 }

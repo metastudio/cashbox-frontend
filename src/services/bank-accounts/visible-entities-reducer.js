@@ -35,7 +35,7 @@ export default handleActions({
   [loadVisibleBankAccounts.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [deleteBankAccount.success]: (state, { payload }) => ({
     ...state,
@@ -51,5 +51,5 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
-  })
+  }),
 }, defaultState);

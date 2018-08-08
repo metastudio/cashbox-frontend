@@ -35,11 +35,11 @@ export default handleActions({
   [loadBankAccounts.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [updateBankAccount.success]: (state, { payload }) => ({
     ...state,
-    items: state.items.map((ba) => ba.id == payload.bankAccount.id ? payload.bankAccount.id : ba),
+    items: state.items.map((ba) => ba.id === payload.bankAccount.id ? payload.bankAccount.id : ba),
   }),
   [deleteBankAccount.success]: (state, { payload }) => ({
     ...state,
@@ -54,5 +54,5 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
-  })
+  }),
 }, defaultState);

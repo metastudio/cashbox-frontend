@@ -14,4 +14,3 @@ export const getInvoice             = (orgId, invoiceId) => getApi(invoiceUrl(or
 export const deleteInvoice          = (orgId, invoiceId) => deleteApi(invoiceUrl(orgId, invoiceId));
 export const getInvoicePDF          = (orgId, invoiceId) => getPDF(invoicePDFUrl(orgId, invoiceId));
 export const patchInvoice           = (orgId, invoiceId, data) => patchApi(invoiceUrl(orgId, invoiceId), { invoice: data });
-

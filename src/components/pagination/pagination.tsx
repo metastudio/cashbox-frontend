@@ -3,18 +3,18 @@ import { Pagination } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 
-import { Pagination as PaginationInterface } from 'model-types';
+import { IPagination } from 'model-types';
 
-interface OwnProps {
-  data:         PaginationInterface;
+interface IOwnProps {
+  data:         IPagination;
   newPathname?: string;
 }
 
-type Redirect = (page: number) => void;
+type IRedirect = (page: number) => void;
 
-type Props = OwnProps & RouteComponentProps<{}>;
+type IProps = IOwnProps & RouteComponentProps<{}>;
 
-const first = (redirect: Redirect, current: number) => {
+const first = (redirect: IRedirect, current: number) => {
   if (current <= 1) { return null; }
   return(
     <Pagination.First onClick={ () => redirect(1) }>
@@ -23,7 +23,7 @@ const first = (redirect: Redirect, current: number) => {
   );
 };
 
-const prev = (redirect: Redirect, previous?: number) => {
+const prev = (redirect: IRedirect, previous?: number) => {
   if (!previous) { return null; }
   return(
     <Pagination.Prev onClick={ () => redirect(previous) }>
@@ -32,7 +32,7 @@ const prev = (redirect: Redirect, previous?: number) => {
   );
 };
 
-const nextPage = ( redirect: Redirect, next?: number) => {
+const nextPage = (redirect: IRedirect, next?: number) => {
   if (!next) { return null; }
   return(
     <Pagination.Next onClick={ () => redirect(next) } >
@@ -41,7 +41,7 @@ const nextPage = ( redirect: Redirect, next?: number) => {
   );
 };
 
-const last = (redirect: Redirect, current: number, pages: number) => {
+const last = (redirect: IRedirect, current: number, pages: number) => {
   if (current === pages) { return null; }
   return(
     <Pagination.Last onClick={ () => redirect(pages) } >
@@ -50,7 +50,7 @@ const last = (redirect: Redirect, current: number, pages: number) => {
   );
 };
 
-const PaginationRender: React.SFC<Props> = ({ data, history, location: { pathname, search }, newPathname }) => {
+const PaginationRender: React.SFC<IProps> = ({ data, history, location: { pathname, search }, newPathname }) => {
   const path = newPathname ? newPathname : pathname;
 
   const { current, previous, pages, next } = data;
@@ -59,13 +59,13 @@ const PaginationRender: React.SFC<Props> = ({ data, history, location: { pathnam
 
   const redirect = (page: number) => {
     const query = QS.parse(search);
-    const url = `${path}?${QS.stringify({ ...query, page: page })}`;
+    const url = `${path}?${QS.stringify({ ...query, page })}`;
     history.push(url);
   };
 
   const all = Array.from(Array(pages).keys()).map((page: number) => {
     const pageElement = page + 1;
-    if (pageElement === current ) {
+    if (pageElement === current) {
       return(
         <Pagination.Item active key={ page } >
           { pageElement }

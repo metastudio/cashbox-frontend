@@ -8,7 +8,7 @@ import {
   getInvoice,
   deleteInvoice,
   patchInvoice,
-  getInvoicePDF
+  getInvoicePDF,
 } from './api.js';
 
 import {
@@ -19,7 +19,7 @@ import {
   loadInvoice,
   destroyInvoice,
   downloadInvoicePDF,
-  updateInvoice
+  updateInvoice,
 } from './actions.js';
 
 function* handleLoadInvoices({ payload: { organizationId, params } }) {
@@ -120,4 +120,3 @@ export default function* () {
   yield takeEvery(destroyInvoice,          handleDestroyInvoice);
   yield takeEvery(downloadInvoicePDF,      handleDownoadInvoicePDF);
 }
-

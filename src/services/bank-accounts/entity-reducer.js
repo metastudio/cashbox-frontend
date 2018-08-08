@@ -26,12 +26,12 @@ export default handleActions({
     ...state,
     data:   null,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [clearBankAccount]: (state) => ({
     ...state,
     data:   null,
     status: statuses.INVALID,
-    error:  null
+    error:  null,
   }),
 }, defaultState);

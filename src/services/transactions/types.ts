@@ -1,31 +1,31 @@
-import { Money } from 'utils/money';
-import { BankAccount } from 'services/bank-accounts/types';
-import { Customer } from 'services/customers/types';
-import { Category } from 'services/categories/types';
+import { IMoney } from 'utils/money/types';
+import { IBankAccount } from 'services/bank-accounts/types';
+import { ICustomer } from 'services/customers/types';
+import { ICategory } from 'services/categories/types';
 
-export interface TransferOut {
+export interface ITransferOut {
   id:          number;
-  amount:      Money;
-  category:    Category;
-  bankAccount: BankAccount;
+  amount:      IMoney;
+  category:    ICategory;
+  bankAccount: IBankAccount;
   date?:       Date;
   comment?:    string;
 }
 
-export interface Transaction {
+export interface ITransaction {
   id:          number;
-  amount:      Money;
-  category:    Category;
-  bankAccount: BankAccount;
-  customer?:   Customer;
+  amount:      IMoney;
+  category:    ICategory;
+  bankAccount: IBankAccount;
+  customer?:   ICustomer;
   date?:       Date;
   comment?:    string;
   isViewed:    boolean;
 
-  transfer_out?: TransferOut;
+  transfer_out?: ITransferOut;
 }
 
-export interface TransactionParams {
+export interface ITransactionParams {
   amount?:        string;
   categoryId?:    number;
   customerId?:    number;

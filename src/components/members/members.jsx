@@ -24,8 +24,7 @@ class Members extends React.Component {
         <td>{ member.user.email }</td>
         <td>{ member.role }</td>
       </tr>
-    )
-    );
+    ));
 
     if (this.props.status !== statuses.SUCCESS || !members) {
       return <LoadingView status={ this.props.status } />;

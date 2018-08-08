@@ -27,8 +27,8 @@ class AccountWrapper extends React.Component {
         email: values.email,
         currentPassword: values.currentPassword,
         password: values.password,
-        passwordConfirmation: values.passwordConfirmation
-      }
+        passwordConfirmation: values.passwordConfirmation,
+      },
     ).catch(prepareSubmissionError);
   }
 
@@ -56,7 +56,7 @@ AccountWrapper.propTypes = {
   updateAccount:      PropTypes.func.isRequired,
   addFlashMessage:    PropTypes.func.isRequired,
   initialValues:      PropTypes.object,
-  userId:             PropTypes.number.isRequired
+  userId:             PropTypes.number.isRequired,
 };
 
 const select = (state) => ({

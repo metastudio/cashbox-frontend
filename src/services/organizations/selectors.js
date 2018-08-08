@@ -16,4 +16,4 @@ export {
   selectIsOrganizationLoaded,
   selectOrganizations,
   selectOrganizationsStatus,
-}
+};

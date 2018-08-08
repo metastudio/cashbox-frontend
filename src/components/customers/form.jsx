@@ -9,7 +9,13 @@ const CustomerForm = ({ handleSubmit, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
-    <Field name="invoiceDetails" label="Invoice Details" componentClass="textarea" type="textarea" component={ HorizontalFormInput } />
+    <Field
+      name="invoiceDetails"
+      label="Invoice Details"
+      componentClass="textarea"
+      type="textarea"
+      component={ HorizontalFormInput }
+    />
     <HorizontalSubmitButton submitting={ submitting }>{ action } Customer</HorizontalSubmitButton>
   </Form>
 );

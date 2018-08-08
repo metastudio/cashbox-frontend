@@ -10,19 +10,19 @@ import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form, { InvoiceFormData } from './form';
+import Form, { IInvoiceFormData } from './form';
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
-interface DispatchProps {
-  create:       (orgId: Number, data: InvoiceParams) => Promise<Invoice>;
+interface IDispatchProps {
+  create:       (orgId: number, data: InvoiceParams) => Promise<Invoice>;
   flashMessage: (msg: string) => void;
 }
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
 class NewInvoice extends React.Component<Props> {
-  handleSubmit = (values: InvoiceFormData) => {
+  private handleSubmit = (values: IInvoiceFormData) => {
     const { orgId, create } = this.props;
     return create(
       orgId,
@@ -36,24 +36,24 @@ class NewInvoice extends React.Component<Props> {
         endsAt:        values.endsAt,
         sentAt:        values.sentAt,
         paidAt:        values.paidAt,
-        invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map((item) => ({
+        invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map(item => ({
           customerId:   item.customerId,
           date:         item.date,
           hours:        Number(item.hours),
           description:  item.description,
           amount:       formatMoneyParam(item.amount),
         })),
-      }
+      },
     ).catch(prepareSubmissionError);
   }
 
-  afterCreate = () => {
+  private afterCreate = () => {
     const { flashMessage, history } = this.props;
     flashMessage('Invoice was created successfully');
     history.push('/invoices');
   }
 
-  render() {
+  public render() {
     return(
       <>
         <PageHeader>New Invoice</PageHeader>
@@ -78,4 +78,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(NewInvoice));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewInvoice));

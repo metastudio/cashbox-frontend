@@ -53,5 +53,5 @@ FilterForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transactionFilterForm'
+  form: 'transactionFilterForm',
 })(FilterForm);

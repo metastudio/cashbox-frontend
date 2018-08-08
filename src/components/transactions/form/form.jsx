@@ -38,5 +38,5 @@ TransactionForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transactionForm'
+  form: 'transactionForm',
 })(TransactionForm);

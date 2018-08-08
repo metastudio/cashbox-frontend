@@ -5,14 +5,14 @@ import { Status } from 'model-types';
 
 import Spinner from 'components/utils/spinner';
 
-interface Props {
+interface IProps {
   status:      Status;
   error?:      string;
   onTryAgain?: () => void;
-  children?: React.ReactNode | ((status?: Status) => React.ReactNode);
+  children?:   React.ReactNode | ((status?: Status) => React.ReactNode);
 }
 
-const LoadingView: React.SFC<Props> = ({ status, error, onTryAgain, children }) => {
+const LoadingView: React.SFC<IProps> = ({ status, error, onTryAgain, children }) => {
   let body: React.ReactNode = null;
 
   switch (status) {
@@ -44,7 +44,7 @@ const LoadingView: React.SFC<Props> = ({ status, error, onTryAgain, children }) 
 };
 
 LoadingView.defaultProps = {
-  error: 'Error on data loading.'
+  error: 'Error on data loading.',
 };
 
 export default LoadingView;

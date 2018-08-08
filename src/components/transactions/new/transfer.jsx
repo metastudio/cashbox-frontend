@@ -38,7 +38,10 @@ class NewTransfer extends React.Component {
 
   render() {
     return(
-      <TransferForm onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } action="Create" />
+      <TransferForm
+        onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate }
+        action="Create"
+      />
     );
   }
 }
@@ -47,7 +50,7 @@ NewTransfer.propTypes = {
   orgId:              PropTypes.number.isRequired,
   createTransfer:     PropTypes.func.isRequired,
   addFlashMessage:    PropTypes.func.isRequired,
-  history:            PropTypes.object.isRequired
+  history:            PropTypes.object.isRequired,
 };
 
 const select = (state) => ({

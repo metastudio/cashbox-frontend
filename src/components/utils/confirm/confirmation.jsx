@@ -50,7 +50,13 @@ export default class Confirmation extends React.Component {
     }
     return (
       <div className="static-modal">
-        <Modal bsSize="small" show={ this.state.show } onHide={ this.handleDismiss } backdrop={ true } keyboard={ true }>
+        <Modal
+          bsSize="small"
+          show={ this.state.show }
+          onHide={ this.handleDismiss }
+          backdrop
+          keyboard
+        >
           { header }
           <Modal.Body>
             {this.props.confirmation}

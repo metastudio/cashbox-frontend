@@ -8,11 +8,7 @@ import AppLayout from 'components/layouts/app-layout';
 
 import Profile from './profile';
 
-interface UserSceneType extends React.SFC<{}> {
-  Profile?: React.ComponentType;
-}
-
-const UserScene: UserSceneType = ({ children }) => (
+const UserScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
@@ -22,7 +18,5 @@ const UserScene: UserSceneType = ({ children }) => (
     </RequireOrganization>
   </RequireLogin>
 );
-
-UserScene.Profile = Profile;
 
 export default UserScene;

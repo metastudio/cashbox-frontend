@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
-import { loadCategory, clearCategory } from './actions.js'
+import * as statuses from 'constants/statuses.js';
+import { loadCategory, clearCategory } from './actions.js';
 
 const defaultState = {
   data:   null,
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadCategory.request]: (state) => ({
@@ -26,12 +26,12 @@ export default handleActions({
     ...state,
     data:   null,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [clearCategory]: (state) => ({
     ...state,
     data:   null,
     status: statuses.INVALID,
-    error:  null
+    error:  null,
   }),
-}, defaultState)
+}, defaultState);

@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Status, Pagination as PaginationInterface } from 'model-types';
+import { Status, IPagination } from 'model-types';
 import {
   Invoice,
   loadInvoices,
@@ -18,30 +18,30 @@ import TableHeader from './table-header';
 import TableBody from './table-body';
 import Pagination from 'components/pagination';
 
-interface StateProps {
-  orgId:    number;
-  status:   Status;
-  invoices: Invoice[] | null;
-  pagination: PaginationInterface;
+interface IStateProps {
+  orgId:      number;
+  status:     Status;
+  invoices:   Invoice[] | null;
+  pagination: IPagination;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number, params: object) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
 class AllInvoices extends React.Component<Props> {
-  loadData = (props: Props) => {
+  private loadData = (props: Props) => {
     const { orgId, load, location: { search } } = props;
     load(orgId, QS.parse(search));
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props) {
     const { location: { search: prevSearch } } = prevProps;
     const { status, location: { search } } = this.props;
 
@@ -51,7 +51,7 @@ class AllInvoices extends React.Component<Props> {
 
   }
 
-  render() {
+  public render() {
     const { status, invoices } = this.props;
 
     if (status !== Status.Success || !invoices) {
@@ -74,11 +74,11 @@ const mapState = (state: {}) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectInvoicesStatus(state),
   invoices:   selectInvoices(state),
-  pagination: selectInvoicesPagination(state)
+  pagination: selectInvoicesPagination(state),
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, params: object) => dispatch(loadInvoices(orgId, params)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(AllInvoices));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(AllInvoices));

@@ -15,24 +15,24 @@ import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form, { InvoiceFormData } from './form';
+import Form, { IInvoiceFormData } from './form';
 import LoadingView from '../utils/loading-view';
 
-interface StateProps {
+interface IStateProps {
   orgId:   number;
   status:  Status;
   invoice: Invoice | null;
 }
-interface DispatchProps {
+interface IDispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
   update:       (orgId: number, invoiceId: number, data: InvoiceParams) => Promise<Invoice>;
   flashMessage: (msg: string) => void;
 }
 
-type Props = RouteComponentProps<{ id: string }> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class EditInvoice extends React.Component<Props> {
-  handleSubmit = (values: InvoiceFormData) => {
+class EditInvoice extends React.Component<IProps> {
+  private handleSubmit = (values: IInvoiceFormData) => {
     const { orgId, update, invoice } = this.props;
     if (!invoice) { return; }
 
@@ -49,7 +49,7 @@ class EditInvoice extends React.Component<Props> {
         endsAt:        values.endsAt,
         sentAt:        values.sentAt,
         paidAt:        values.paidAt,
-        invoiceItemsAttributes: values.invoiceItems.map((item) => ({
+        invoiceItemsAttributes: values.invoiceItems.map(item => ({
           _destroy:     item._destroy,
           id:           item.id,
           customerId:   item.customerId,
@@ -57,12 +57,12 @@ class EditInvoice extends React.Component<Props> {
           hours:        Number(item.hours),
           description:  item.description,
           amount:       formatMoneyParam(item.amount),
-        }))
-      }
+        })),
+      },
     ).catch(prepareSubmissionError);
   }
 
-  initialPrepare = (invoice: Invoice): InvoiceFormData => {
+  private initialPrepare = (invoice: Invoice): IInvoiceFormData => {
     return ({
       amount:        formatMoneyValue(invoice.amount),
       currency:      invoice.currency,
@@ -73,30 +73,30 @@ class EditInvoice extends React.Component<Props> {
       startsAt:      invoice.startsAt,
       sentAt:        invoice.sentAt,
       paidAt:        invoice.paidAt,
-      invoiceItems: invoice.invoiceItems.map((item) => ({
+      invoiceItems: invoice.invoiceItems.map(item => ({
         id:          item.id,
         customerId:  item.customerId,
         amount:      formatMoneyValue(item.amount),
         date:        item.date,
         hours:       item.hours,
         description: item.description,
-      }))
+      })),
     });
   }
 
-  afterUpdate = () => {
+  private afterUpdate = () => {
     const { flashMessage, history } = this.props;
     flashMessage('Invoice was updated successfully');
     history.push('/invoices');
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { orgId, match, load } = this.props;
 
     load(orgId, Number(match.params.id));
   }
 
-  render() {
+  public render() {
     const { status, invoice } = this.props;
 
     if (status !== Status.Success || !invoice) {
@@ -131,4 +131,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   flashMessage:  (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditInvoice));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditInvoice));

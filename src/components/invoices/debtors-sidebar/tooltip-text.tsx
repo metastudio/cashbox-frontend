@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { formatMoney, ConvertedAmount } from 'utils/money';
+import { formatMoney, IConvertedAmount } from 'utils/money';
 import { formatDate } from 'utils/date';
 
-interface Props {
-  amount: ConvertedAmount;
+interface IProps {
+  amount: IConvertedAmount;
 }
 
-const TooltipText: React.SFC<Props> = ({ amount }) => {
+const TooltipText: React.SFC<IProps> = ({ amount }) => {
   if  (!amount.amount) { return null; }
   return(
     <span>

@@ -37,7 +37,10 @@ class NewIncomeTransaction extends React.Component {
 
   render() {
     return(
-      <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } orgId={ this.props.orgId } type="Income" action="Create" />
+      <Form
+        onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate }
+        type="Income" action="Create"
+      />
     );
   }
 }
@@ -46,7 +49,7 @@ NewIncomeTransaction.propTypes = {
   orgId:              PropTypes.number.isRequired,
   createTransaction:  PropTypes.func.isRequired,
   addFlashMessage:    PropTypes.func.isRequired,
-  history:            PropTypes.object.isRequired
+  history:            PropTypes.object.isRequired,
 };
 
 const select = (state) => ({

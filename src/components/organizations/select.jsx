@@ -31,7 +31,9 @@ class SelectOrganization extends React.Component {
           <h2 className="text-center">Select organization</h2>
           <OrganizationsList organizations={ organizations } />
           <p className="text-center">or</p>
-          <p className="text-center"><Button bsStyle="primary" href="/organizations/new">Create a new Organization</Button></p>
+          <p className="text-center">
+            <Button bsStyle="primary" href="/organizations/new">Create a new Organization</Button>
+          </p>
         </Col>
       </Row>
     );

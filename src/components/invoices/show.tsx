@@ -21,27 +21,26 @@ import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
 import DownloadPDFButton from './download_pdf';
 
-interface StateProps {
+interface IStateProps {
   orgId:        number;
   status:       Status;
   invoice:      Invoice | null;
   userFullName: string;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class ShowInvoice extends React.Component<Props> {
-  componentDidMount() {
+class ShowInvoice extends React.Component<IProps> {
+  public componentDidMount() {
     const { orgId, load, match } = this.props;
     load(orgId, Number(match.params.id));
   }
 
-  render() {
+  public render() {
     if (this.props.status !== Status.Success || !this.props.invoice) {
       return <LoadingView status={ this.props.status } />;
     }
@@ -78,4 +77,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(ShowInvoice));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(ShowInvoice));

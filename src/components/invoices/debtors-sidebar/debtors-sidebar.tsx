@@ -14,34 +14,34 @@ import {
   loadDebtors,
 } from 'services/debtors';
 import { Status } from 'model-types';
-import { Money } from 'utils/money';
+import { IMoney } from 'utils/money';
 import LoadingView from 'components/utils/loading-view';
 
 import Debtors from './debtors';
 import Total from './total';
 import TotalsByCurrency from './totals_by_currency';
 
-interface StateProps {
+interface IStateProps {
   orgId:   number;
   status:  Status;
   debtors: Debtor[] | null;
-  total:   Money | null;
+  total:   IMoney | null;
   totalsByCurrency: TotalByCurrency[] | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type IProps = IStateProps & IDispatchProps;
 
-class DebtorSidebar extends React.Component<Props> {
-  componentDidMount() {
+class DebtorSidebar extends React.Component<IProps> {
+  public componentDidMount() {
     const { orgId, load } = this.props;
     load(orgId);
   }
 
-  render() {
+  public render() {
     const { status, debtors, totalsByCurrency, total } = this.props;
 
     if (status !== Status.Success || !debtors) {

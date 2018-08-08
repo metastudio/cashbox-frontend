@@ -31,7 +31,7 @@ export default handleActions({
     ...state,
     items:  [],
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
   [createCustomer.success]: (state) => ({
     ...state,

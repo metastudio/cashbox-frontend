@@ -6,24 +6,24 @@ import NewIncomeTransaction from './new/income.jsx';
 import NewExpenseTransaction from './new/expense.jsx';
 import NewTransfer from './new/transfer.jsx';
 
-interface State {
+interface IState {
   show: boolean;
 }
 
-type Props = RouteComponentProps<{ id: string }>;
+type IProps = RouteComponentProps<{ id: string }>;
 
-class NewTransaction extends React.Component<Props, State> {
-  constructor(props: Props) {
+class NewTransaction extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
 
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClose() {
+  private handleClose() {
     this.props.history.push('/transactions');
   }
 
-  render() {
+  public render() {
     return(
       <Modal show onHide={ this.handleClose }>
         <Modal.Header closeButton>

@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import { Money, formatMoney } from 'utils/money';
+import { IMoney, formatMoney } from 'utils/money';
 
 import './index.css';
 
-interface Props {
-  amount?: Money;
+interface IProps {
+  amount?: IMoney;
   colorize?: boolean | 'onlyNegative';
   transfer?: boolean;
 }
 
-const MoneyAmount: React.SFC<Props> = ({ amount, colorize, transfer }) => {
+const MoneyAmount: React.SFC<IProps> = ({ amount, colorize, transfer }) => {
   if (!amount) { return null; }
 
   const classNames = ['money-amount'];

@@ -66,5 +66,3 @@ export default function* () {
   yield takeEvery(setCurrentOrganization, handleSetCurrentOrganization);
   yield takeEvery(restoreOrganization,    handleRestoreOrganization);
 }
-
-

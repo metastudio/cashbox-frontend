@@ -1,11 +1,11 @@
-export interface FlashMessage {
+export interface IFlashMessage {
   uid:        string;
   type:       string;
   text:       string;
   autoClose?: boolean;
 }
 
-export interface FlashMessageOptions {
+export interface IFlashMessageOptions {
   type:       'success' | 'danger' | 'info';
   autoClose?: boolean;
 }

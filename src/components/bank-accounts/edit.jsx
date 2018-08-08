@@ -21,13 +21,13 @@ class EditBankAccount extends React.Component {
   }
 
   componentDidMount() {
-    const { orgId, loadBankAccount } = this.props;
-    loadBankAccount(orgId, this.props.match.params.bankAccountId);
+    const { orgId, load } = this.props;
+    load(orgId, this.props.match.params.bankAccountId);
   }
 
   handleSubmit(values) {
-    const { orgId, bankAccount, updateBankAccount } = this.props;
-    return updateBankAccount(orgId, bankAccount.id, {
+    const { orgId, bankAccount, update } = this.props;
+    return update(orgId, bankAccount.id, {
       name:           values.name,
       description:    values.description,
       invoiceDetails: values.invoiceDetails,
@@ -50,7 +50,12 @@ class EditBankAccount extends React.Component {
               <PageHeader>Edit Bank Account</PageHeader>
               <Panel>
                 <Panel.Body>
-                  <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterUpdate } initialValues={ this.props.bankAccount } action="Update"/>
+                  <Form
+                    onSubmit={ this.handleSubmit }
+                    onSubmitSuccess={ this.afterUpdate }
+                    initialValues={ this.props.bankAccount }
+                    action="Update"
+                  />
                 </Panel.Body>
               </Panel>
             </Col>
@@ -66,8 +71,8 @@ EditBankAccount.propTypes = {
   orgId:             PropTypes.number.isRequired,
   bankAccount:       PropTypes.object,
   status:            PropTypes.string.isRequired,
-  loadBankAccount:   PropTypes.func.isRequired,
-  updateBankAccount: PropTypes.func.isRequired,
+  load:   PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
   addFlashMessage:   PropTypes.func.isRequired,
   history:           PropTypes.object.isRequired,
 };
@@ -79,8 +84,10 @@ const select = (state) => ({
 });
 
 const dispatcher = (dispatch) => ({
-  loadBankAccount:   (orgId, bankAccountId) => dispatch(loadBankAccount(orgId, bankAccountId)),
-  updateBankAccount: (orgId, bankAccountId, data) => new Promise((res, rej) => dispatch(updateBankAccount(orgId, bankAccountId, data, res, rej))),
+  load:   (orgId, bankAccountId) => dispatch(loadBankAccount(orgId, bankAccountId)),
+  update: (orgId, bankAccountId, data) => (
+    new Promise((res, rej) => dispatch(updateBankAccount(orgId, bankAccountId, data, res, rej)))
+  ),
   addFlashMessage:   (message, type = null) => dispatch(addFlashMessage(message, type)),
 });
 

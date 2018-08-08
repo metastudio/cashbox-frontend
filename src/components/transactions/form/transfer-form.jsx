@@ -18,7 +18,10 @@ const TransferForm = ({ handleSubmit, submitting, error, action, transaction }) 
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
     { action === 'Update' && <Field name="categoryName" label="Category" component={ HorizontalFormInput } disabled /> }
     { action === 'Update' && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
-    <Field name="bankAccountId" label="From" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
+    <Field
+      name="bankAccountId" component={ HorizontalBankAccountsSelect }
+      label="From" disabled={ action === 'Update' }
+    />
     <Field name="referenceId" label="To" component={ HorizontalBankAccountsSelect } disabled={ action === 'Update' } />
     { action === 'Create' && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
     { action === 'Create' && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
@@ -38,5 +41,5 @@ TransferForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'transferForm'
+  form: 'transferForm',
 })(TransferForm);

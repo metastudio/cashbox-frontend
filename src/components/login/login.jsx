@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Panel } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { loginUser } from 'services/auth';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form from './form.jsx'
+import Form from './form.jsx';
 
 class Login extends React.Component {
   constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(values) {
-    const { login } = this.props
-    const { email, password } = values
+    const { login } = this.props;
+    const { email, password } = values;
 
     return login(email, password).catch(prepareSubmissionError);
   }
@@ -41,14 +41,14 @@ class Login extends React.Component {
 Login.propTypes = {
   isAuthorized: PropTypes.bool,
   login:        PropTypes.func.isRequired,
-}
+};
 
 const select = (state) => ({
   isAuthorized: !!state.auth.token,
-})
+});
 
 const dispatcher = (dispatch) => ({
   login: (email, password) => new Promise((res, rej) => dispatch(loginUser(email, password, res, rej))),
-})
+});
 
-export default connect(select, dispatcher)(Login)
+export default connect(select, dispatcher)(Login);

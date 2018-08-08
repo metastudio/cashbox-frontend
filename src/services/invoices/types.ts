@@ -1,9 +1,9 @@
-import { Money } from 'utils/money';
+import { IMoney } from 'utils/money';
 
 export interface InvoiceItem {
   id:           number;
   customerId:   number;
-  amount:       Money;
+  amount:       IMoney;
   date?:        Date;
   hours?:       number;
   description?: string;
@@ -13,7 +13,7 @@ export interface Invoice {
   id:                    number;
   customerId:            number;
   customerName:          string;
-  amount:                Money;
+  amount:                IMoney;
   currency:              string;
   bankAccountId?:        number;
   number:                number;

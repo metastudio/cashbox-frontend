@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { Organization } from 'services/organizations';
+import { IOrganization } from 'services/organizations';
 
 import Row from './table-row';
 
-interface Props {
-  organizations: Organization[];
+interface IProps {
+  organizations: IOrganization[];
 }
 
-const OrganizationsTable: React.SFC<Props> = ({ organizations }) => (
+const OrganizationsTable: React.SFC<IProps> = ({ organizations }) => (
   <Table striped responsive hover id="organizations">
     <thead>
       <tr>
@@ -19,7 +19,7 @@ const OrganizationsTable: React.SFC<Props> = ({ organizations }) => (
       </tr>
     </thead>
     <tbody>
-      { organizations.map((o) => o ? <Row organization={ o } key={ o.id } /> : null) }
+      { organizations.map(o => o ? <Row organization={ o } key={ o.id } /> : null) }
   </tbody>
   </Table>
 );

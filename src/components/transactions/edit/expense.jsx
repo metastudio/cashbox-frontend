@@ -75,7 +75,7 @@ EditExpenseTransaction.propTypes = {
   orgId:             PropTypes.number.isRequired,
   updateTransaction: PropTypes.func.isRequired,
   addFlashMessage:   PropTypes.func.isRequired,
-  history:           PropTypes.object.isRequired
+  history:           PropTypes.object.isRequired,
 };
 
 const select = (state) => ({
@@ -84,7 +84,9 @@ const select = (state) => ({
 });
 
 const dispatcher = (dispatch) => ({
-  updateTransaction: (orgId, transactionId, data) => new Promise((res, rej) => dispatch(updateTransaction(orgId, transactionId, data, res, rej))),
+  updateTransaction: (orgId, transactionId, data) => (
+    new Promise((res, rej) => dispatch(updateTransaction(orgId, transactionId, data, res, rej)))
+  ),
   addFlashMessage:   (message, type = null) => dispatch(addFlashMessage(message, type)),
   clearTransaction:  () => dispatch(clearTransaction()),
 });

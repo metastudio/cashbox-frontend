@@ -21,7 +21,7 @@ class NewOrganization extends React.Component {
     const { createOrganization } = this.props;
     return createOrganization({
       name: values.name,
-      defaultCurrency: values.defaultCurrency
+      defaultCurrency: values.defaultCurrency,
     }).catch(prepareSubmissionError);
   }
 

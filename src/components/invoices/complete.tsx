@@ -7,30 +7,30 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Invoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { TransactionParams, createTransaction } from 'services/transactions';
+import { ITransactionParams, createTransaction } from 'services/transactions';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import Form from 'components/transactions/form/form.jsx';
 
-interface StateProps {
+interface IStateProps {
   invoice: Invoice;
   orgId:   number;
 }
 
-interface CompleteState {
+interface ICompleteState {
   show: boolean;
 }
 
-interface DispatchProps {
-  create:       (orgId: number, data: TransactionParams) => Promise<{}>;
+interface IDispatchProps {
+  create:       (orgId: number, data: ITransactionParams) => Promise<{}>;
   flashMessage: (msg: string) => void;
 }
 
-type Props = RouteComponentProps<{}> & DispatchProps & StateProps;
+type IProps = RouteComponentProps<{}> & IDispatchProps & IStateProps;
 
-class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
-  constructor(props: Props) {
+class CompleteInvoiceButton extends React.Component<IProps, ICompleteState> {
+  constructor(props: IProps) {
     super(props);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -39,11 +39,11 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
     this.initialValues = this.initialValues.bind(this);
 
     this.state = {
-      show: false
+      show: false,
     };
   }
 
-  handleSubmit = (values: TransactionParams) => {
+  private handleSubmit = (values: ITransactionParams) => {
     const { orgId, create } = this.props;
     return create(orgId, {
       amount:        formatMoneyParam(values.amount),
@@ -55,31 +55,31 @@ class CompleteInvoiceButton extends React.Component<Props, CompleteState> {
     }).catch(prepareSubmissionError);
   }
 
-  afterCreate = () => {
+  private afterCreate = () => {
     this.props.flashMessage('Transaction successfully created.');
     this.props.history.push('/invoices');
   }
 
-  handleClose() {
+  private handleClose() {
     this.setState({ show: false });
   }
 
-  handleShow() {
+  private handleShow() {
     this.setState({ show: true });
   }
 
-  initialValues() {
+  private initialValues() {
     const { invoice } = this.props;
     return({
       amount:     formatMoneyValue(invoice.amount),
-      customerId: invoice.customerId
+      customerId: invoice.customerId,
     });
   }
 
-  render() {
+  public render() {
     return(
       <>
-        <Button 
+        <Button
           key="button"
           bsStyle="primary"
           onClick={ this.handleShow }
@@ -110,7 +110,7 @@ const mapState = (state: { show: boolean; }) => ({
 
 const mapDispatch = (dispatch: Dispatch) => ({
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
-  create: (orgId: number, data: TransactionParams) => (
+  create: (orgId: number, data: ITransactionParams) => (
     new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej)))
   ),
 });

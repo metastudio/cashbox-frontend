@@ -21,21 +21,23 @@ class EditCustomer extends React.Component {
   }
 
   componentDidMount() {
-    const { orgId, loadCustomer } = this.props;
-    loadCustomer(orgId, this.props.match.params.customerId);
+    const { orgId, load } = this.props;
+    load(orgId, this.props.match.params.customerId);
   }
 
   handleSubmit(values) {
-    const { orgId, customer, updateCustomer } = this.props;
-    return updateCustomer(orgId, customer.id, {
+    const { orgId, customer, update } = this.props;
+    return update(orgId, customer.id, {
       name: values.name,
       invoiceDetails: values.invoiceDetails,
     }).catch(prepareSubmissionError);
   }
 
   afterUpdate() {
-    this.props.addFlashMessage('Customer successfully updated.');
-    this.props.history.push('/customers');
+    const { message, history } = this.props;
+
+    message('Customer successfully updated.');
+    history.push('/customers');
   }
 
   render() {
@@ -64,14 +66,14 @@ class EditCustomer extends React.Component {
 }
 
 EditCustomer.propTypes = {
-  match:           PropTypes.object.isRequired,
-  orgId:           PropTypes.number.isRequired,
-  customer:        PropTypes.object,
-  status:          PropTypes.string.isRequired,
-  loadCustomer:    PropTypes.func.isRequired,
-  updateCustomer:  PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired,
-  history:         PropTypes.object.isRequired,
+  match:    PropTypes.object.isRequired,
+  orgId:    PropTypes.number.isRequired,
+  customer: PropTypes.object,
+  status:   PropTypes.string.isRequired,
+  load:     PropTypes.func.isRequired,
+  update:   PropTypes.func.isRequired,
+  message:  PropTypes.func.isRequired,
+  history:  PropTypes.object.isRequired,
 };
 
 const select = (state) => ({
@@ -81,9 +83,11 @@ const select = (state) => ({
 });
 
 const dispatcher = (dispatch) => ({
-  loadCustomer:        (orgId, customerId) => dispatch(loadCustomer(orgId, customerId)),
-  updateCustomer:      (orgId, customerId, data) => new Promise((res, rej) => dispatch(updateCustomer(orgId, customerId, data, res, rej))),
-  addFlashMessage:     (message, type = null) => dispatch(addFlashMessage(message, type)),
+  load:    (orgId, customerId) => dispatch(loadCustomer(orgId, customerId)),
+  update:  (orgId, customerId, data) => (
+    new Promise((res, rej) => dispatch(updateCustomer(orgId, customerId, data, res, rej)))
+  ),
+  message: (message, type = null) => dispatch(addFlashMessage(message, type)),
 });
 
 export default withRouter(connect(select, dispatcher)(EditCustomer));
