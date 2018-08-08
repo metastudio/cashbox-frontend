@@ -85,4 +85,8 @@ const wrapHorizontalFormGroup = <P extends WrappedFieldProps>(Component: React.C
   return HorizontalFormGroupWrapper;
 };
 
-export { HorizontalFormGroup as default, wrapHorizontalFormGroup };
+export {
+  HorizontalFormGroup as default,
+  IProps as IHorizontalFormGroupProps,
+  wrapHorizontalFormGroup,
+};

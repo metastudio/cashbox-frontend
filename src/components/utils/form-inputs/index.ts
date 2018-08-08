@@ -1,5 +1,5 @@
 export * from './form-input.jsx';
-export * from './horizontal-checkbox.jsx';
+export * from './horizontal-checkbox';
 export * from './radio.jsx';
 export * from './date-picker.jsx';
 export * from './horizontal-file-input.jsx';
