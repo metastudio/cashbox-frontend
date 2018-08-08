@@ -12,6 +12,7 @@ import Show from './show';
 import Edit from './edit';
 
 const InvoicesScene: React.SFC<{}> = () => (
+  // tslint:disable:jsx-no-lambda
   <RequireLogin>
     <RequireOrganization>
       <MainLayout sidebar={ () => <Sidebar /> } >
@@ -25,6 +26,7 @@ const InvoicesScene: React.SFC<{}> = () => (
       </MainLayout>
     </RequireOrganization>
   </RequireLogin>
+  // tslint:enable:jsx-no-lambda
 );
 
 export default InvoicesScene;

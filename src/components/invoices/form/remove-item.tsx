@@ -18,7 +18,7 @@ interface IDispatchProps {
 
 type Props = IOwnProps & IDispatchProps;
 
-class RemoveItemButton extends React.Component<Props> {
+class RemoveItemButton extends React.PureComponent<Props> {
   private handleRemove = () => {
     const { name, idx, invoiceItem, changeField, fields } = this.props;
 
@@ -31,7 +31,9 @@ class RemoveItemButton extends React.Component<Props> {
 
   public render() {
     return(
-      <Button bsStyle="danger" onClick={ this.handleRemove }>Remove Item</Button>
+      <Button bsStyle="danger" onClick={ this.handleRemove }>
+        Remove Item
+      </Button>
     );
   }
 }

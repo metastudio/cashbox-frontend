@@ -12,7 +12,7 @@ interface IProps {
   children?:   React.ReactNode | ((status?: Status) => React.ReactNode);
 }
 
-class LoadingView extends React.Component<IProps> {
+class LoadingView extends React.PureComponent<IProps> {
   public static defaultProps = {
     error: 'Error on data loading.',
   };

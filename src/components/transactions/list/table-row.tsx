@@ -15,13 +15,14 @@ interface IOwnProps {
 
 type IProps =  RouteComponentProps<{ id: number }> & IOwnProps;
 
-class TransactionsTableRow extends React.Component<IProps> {
+class TransactionsTableRow extends React.PureComponent<IProps> {
   private rowClass = (transaction: ITransaction): string => {
     return !transaction.isViewed ? 'new-transaction' : '';
   }
 
-  private handleClick = (transactionId: number) => {
-    this.props.history.push(`/transactions/${transactionId}/edit`);
+  private handleRowClick = () => {
+    const { transaction, history } = this.props;
+    history.push(`/transactions/${transaction.id}/edit`);
   }
 
   public render() {
@@ -31,10 +32,7 @@ class TransactionsTableRow extends React.Component<IProps> {
 
     return(
       <>
-        <tr
-          className={ this.rowClass(transaction) }
-          onClick={ () => this.handleClick(transaction.id) }
-        >
+        <tr className={ this.rowClass(transaction) } onClick={ this.handleRowClick }>
           <td className="text-right">
             <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
           </td>
