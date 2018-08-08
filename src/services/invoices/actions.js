@@ -66,11 +66,11 @@ export const loadInvoice = createAction(
 );
 loadInvoice.request = createAction(
   'LOAD_INVOICE_REQUEST',
-  (organizationId, invoiceId) => ({ organizationId, invoiceId })
+  (organizationId, invoiceId) => ({ organizationId, invoiceId }),
 );
 loadInvoice.success = createAction(
   'LOAD_INVOICE_SUCCESS',
-  (organizationId, invoice) => ({ organizationId, invoice })
+  (organizationId, invoice) => ({ organizationId, invoice }),
 );
 loadInvoice.failure = createAction('LOAD_INVOICE_FAILURE');
 

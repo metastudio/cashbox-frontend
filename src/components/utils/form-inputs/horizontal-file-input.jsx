@@ -12,7 +12,6 @@ export const HorizontalFileInput = ({ field, label, ...inputProps }) => {
 
     const reader = new FileReader();
     reader.onload = (upload) => {
-      const { field } = this.props;
       field.onChange(upload.target.result);
     };
     reader.readAsDataURL(file);

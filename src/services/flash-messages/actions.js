@@ -12,5 +12,5 @@ export const addFlashMessage = createAction(
 );
 export const removeFlashMessage = createAction(
   'FLASH_MESSAGE_REMOVE',
-  (messageUID) => ({ messageUID })
+  (messageUID) => ({ messageUID }),
 );

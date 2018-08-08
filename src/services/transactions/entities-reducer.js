@@ -46,5 +46,5 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
-  })
+  }),
 }, defaultState);

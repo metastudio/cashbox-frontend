@@ -38,4 +38,3 @@ export default handleActions({
     error:  payload,
   }),
 }, defaultState);
-

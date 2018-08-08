@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { TotalByCurrency } from 'services/debtors';
+import { ITotalByCurrency } from 'services/debtors';
 import { formatMoney } from 'utils/money';
 
 interface IProps {
-  totals: TotalByCurrency[] | null;
+  totals: ITotalByCurrency[] | null;
 }
 
 const TotalsByCurrency: React.SFC<IProps> = ({ totals }) => {

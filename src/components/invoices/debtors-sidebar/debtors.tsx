@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { flatten } from 'lodash';
 
-import { Debtor } from 'services/debtors';
+import { IDebtor } from 'services/debtors';
 import { IConvertedAmount, formatMoney } from 'utils/money';
 
 import ConvertedDebt from './converted-debt';
 
 interface IProps {
-  debtors: Debtor[];
+  debtors: IDebtor[];
 }
 
 const Debtors: React.SFC<IProps> = ({ debtors }) => {

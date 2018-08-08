@@ -9,7 +9,7 @@ export const VerticalCurrencyInput = ({ label, field, help, ...inputProps }) => 
     <FormGroup field={ field } label={ label } help={ help } >
       <CurrencyInput className="form-control" value={ field.value } onChange={ field.onChange } { ...inputProps } />
     </FormGroup>
-  )
+  );
 };
 
 VerticalCurrencyInput.propTypes = {

@@ -9,8 +9,8 @@ import {
   selectTotal,
   selectTotalsByCurrency,
   selectDebtorsStatus,
-  Debtor,
-  TotalByCurrency,
+  IDebtor,
+  ITotalByCurrency,
   loadDebtors,
 } from 'services/debtors';
 import { Status } from 'model-types';
@@ -24,9 +24,9 @@ import TotalsByCurrency from './totals_by_currency';
 interface IStateProps {
   orgId:   number;
   status:  Status;
-  debtors: Debtor[] | null;
+  debtors: IDebtor[] | null;
   total:   IMoney | null;
-  totalsByCurrency: TotalByCurrency[] | null;
+  totalsByCurrency: ITotalByCurrency[] | null;
 }
 
 interface IDispatchProps {

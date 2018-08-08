@@ -21,12 +21,12 @@ interface IDispatchProps {
 type IProps = IStateProps & IDispatchProps;
 
 const FlashMessages: React.SFC<IProps> = ({ messages, removeMessage }) => {
-  const message = (m: IFlashMessage): React.ReactNode => (
+  const message = (msg: IFlashMessage): React.ReactNode => (
     <FlashMessage
-      key={ m.uid }
-      message={ m }
+      key={ msg.uid }
+      message={ msg }
       handleClose={ (m: IFlashMessage) => removeMessage(m.uid) }
-      autoClose={ m.autoClose }
+      autoClose={ msg.autoClose }
     />
   );
 
