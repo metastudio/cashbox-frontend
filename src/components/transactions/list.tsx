@@ -15,7 +15,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';
-import Pagination from 'components/pagination';
+import Paginator from 'components/utils/paginator';
 import TransactionsFilter from './filter';
 
 interface IState {
@@ -64,7 +64,7 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
     return (
       <>
         <Table transactions={ transactions } />
-        <Pagination data={ pagination } newPathname={ '/transactions' } />
+        <Paginator data={ pagination } />
       </>
     );
   }
