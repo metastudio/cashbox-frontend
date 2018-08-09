@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
+import { GroupedOptionsType } from 'react-select/lib/types';
 
 import { Status } from 'model-types';
 import {
@@ -11,12 +12,14 @@ import {
   selectVisibleBankAccountsStatus,
   selectVisibleBankAccounts,
   formatBankAccountName,
+  selectVisibleBankAccountsCurrencies,
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
+import { Currency } from 'services/currencies';
 
 interface IOwnProps {
   disabled?: boolean;
@@ -25,7 +28,8 @@ interface IOwnProps {
 interface IStateProps {
   status:       string;
   orgId:        number;
-  bankAccounts: IBankAccount[] | null;
+  currencies:   Currency[];
+  bankAccounts: IBankAccount[];
 }
 
 interface IDispatchProps {
@@ -45,12 +49,16 @@ class BankAccountsSelect extends React.Component<IProps> {
     this.props.input.onChange(ba && ba.id);
   }
 
-  private options = (): IBankAccount[] => {
-    const { status, bankAccounts } = this.props;
-    if (status !== Status.Success || !bankAccounts) {
+  private options = (): GroupedOptionsType<IBankAccount> => {
+    const { status, currencies, bankAccounts } = this.props;
+    if (status !== Status.Success) {
       return [];
     }
-    return bankAccounts;
+
+    return currencies.map(currency => ({
+      label: currency,
+      options: bankAccounts.filter(ba => ba.currency === currency),
+    }));
   }
 
   private styles = () => ({
@@ -95,13 +103,14 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: {}): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectVisibleBankAccountsStatus(state),
+  currencies:   selectVisibleBankAccountsCurrencies(state),
   bankAccounts: selectVisibleBankAccounts(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
