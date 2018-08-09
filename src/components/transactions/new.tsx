@@ -1,25 +1,15 @@
 import * as React from 'react';
-import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
+import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import NewIncomeTransaction from './new/income.jsx';
-import NewExpenseTransaction from './new/expense.jsx';
-import NewTransfer from './new/transfer.jsx';
-
-interface IState {
-  show: boolean;
-}
+import NewNormal   from './new/normal';
+import NewTransfer from './new/transfer';
+import { CategoryType } from 'services/categories';
 
 type IProps = RouteComponentProps<{ id: string }>;
 
-class NewTransaction extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.handleClose = this.handleClose.bind(this);
-  }
-
-  private handleClose() {
+class NewTransaction extends React.PureComponent<IProps> {
+  private handleClose = () => {
     this.props.history.push('/transactions');
   }
 
@@ -30,21 +20,18 @@ class NewTransaction extends React.Component<IProps, IState> {
           <Modal.Title>New Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col xs={ 12 }>
-              <Tabs defaultActiveKey={ 1 } mountOnEnter id="transactionType">
-                <Tab eventKey={ 1 } title="Income">
-                  <NewIncomeTransaction />
-                </Tab>
-                <Tab eventKey={ 2 } title="Expense">
-                  <NewExpenseTransaction />
-                </Tab>
-                <Tab eventKey={ 3 } title="Transfer">
-                  <NewTransfer />
-                </Tab>
-              </Tabs>
-            </Col>
-          </Row>
+          <Tabs defaultActiveKey={ 1 } mountOnEnter id="transactionType">
+            <Tab eventKey={ 1 } title="Income">
+              <NewNormal type={ CategoryType.Income } />
+            </Tab>
+            <Tab eventKey={ 2 } title="Expense">
+              <NewNormal type={ CategoryType.Expense } />
+            </Tab>
+            <Tab eventKey={ 3 } title="Transfer">
+              <NewTransfer />
+            </Tab>
+          </Tabs>
+          <Clearfix />
         </Modal.Body>
       </Modal>
     );

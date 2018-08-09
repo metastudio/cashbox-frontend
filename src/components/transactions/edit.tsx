@@ -1,24 +1,23 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Modal, Tabs, Tab, Row, Col } from 'react-bootstrap';
+import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Status } from 'model-types';
+import { Status, ID } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   ITransaction,
   loadTransaction,
-  selectTransaction, selectTransactionStatus,
+  selectTransaction, selectTransactionStatus, ITransfer,
 } from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';
-import EditIncomeTransaction from './edit/income.jsx';
-import EditExpenseTransaction from './edit/expense.jsx';
-import EditTransfer from './edit/transfer.jsx';
+import EditNormal from './edit/normal';
+import EditTransfer from './edit/transfer';
 
 interface IStateProps {
-  orgId:       number;
+  orgId:       ID;
   status:      Status;
   transaction: ITransaction | null;
 }
@@ -29,53 +28,65 @@ interface IDispatchProps {
 
 type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class EditTransaction extends React.Component<IProps> {
+class EditTransaction extends React.PureComponent<IProps> {
+  private loadData = () => {
+    const { orgId, load, match } = this.props;
+    load(orgId, Number(match.params.id));
+  }
+
   private handleClose = () => {
     this.props.history.push('/transactions');
   }
 
-  private loadData(props: IProps) {
-    const { orgId, load, match } = props;
-    load(orgId, Number(match.params.id));
+  private renderTransferTab = (orgId: ID, transaction: ITransfer) => (
+    <Tab eventKey={ 1 } title="Transfer">
+      <EditTransfer orgId={ orgId } transfer={ transaction } />
+    </Tab>
+  )
+
+  private renderNormalTab = (orgId: ID, transaction: ITransaction) => (
+    <Tab eventKey={ 1 } title={ transaction.category.type }>
+      <EditNormal
+        type={ transaction.category.type }
+        orgId={ orgId }
+        transaction={ transaction }
+      />
+    </Tab>
+  )
+
+  private renderTab = (orgId: ID, transaction: ITransaction) => {
+    if (transaction.category.name === 'Transfer') {
+      return this.renderTransferTab(orgId, transaction);
+    }
+
+    return this.renderNormalTab(orgId, transaction);
   }
 
-  private renderTab(transaction: ITransaction) {
-    if (transaction.category && transaction.category.name === 'Transfer') {
-      return (
-        <Tab eventKey={ 1 } title="Transfer">
-          <EditTransfer />
-        </Tab>
-      );
-    }
-    if (Number(transaction.amount.fractional) > 0) {
-      return (
-        <Tab eventKey={ 1 } title="Income">
-          <EditIncomeTransaction />
-        </Tab>
-      );
-    } else {
-      return (
-        <Tab eventKey={ 1 } title="Expense">
-          <EditExpenseTransaction />
-        </Tab>
-      );
-    }
+  private renderContent = () => {
+    const { orgId, transaction } = this.props;
+    if (!transaction) { return null; }
+
+    return (
+      <Tabs defaultActiveKey={ 1 } id="transactionType">
+        { this.renderTab(orgId, transaction) }
+      </Tabs>
+    );
   }
 
   public componentDidMount() {
-    this.loadData(this.props);
+    this.loadData();
   }
 
   public componentDidUpdate(prevProps: IProps) {
     const { match } = prevProps;
     const { status, transaction } = this.props;
     if (status === Status.Invalid || (transaction && transaction.id !== Number(match.params.id))) {
-      this.loadData(this.props);
+      this.loadData();
     }
   }
 
   public render() {
-    const { status, transaction } = this.props;
+    const { status } = this.props;
 
     return(
       <Modal show onHide={ this.handleClose }>
@@ -83,15 +94,10 @@ class EditTransaction extends React.Component<IProps> {
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col xs={ 12 }>
-              <LoadingView status={ status }>
-                <Tabs defaultActiveKey={ 1 } id="transactionType">
-                  { status === Status.Success && transaction && this.renderTab(transaction) }
-                </Tabs>
-              </LoadingView>
-            </Col>
-          </Row>
+          <LoadingView status={ status }>
+            { this.renderContent }
+          </LoadingView>
+          <Clearfix />
         </Modal.Body>
       </Modal>
     );

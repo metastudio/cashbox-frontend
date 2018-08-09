@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Collapse, Row, Col } from 'react-bootstrap';
-import FilterForm from './form/filter-form.jsx';
 import * as QS from 'qs';
+
+import FilterForm from './forms/filter';
 
 interface IOwnProps {
   isFilterOpened: boolean;
