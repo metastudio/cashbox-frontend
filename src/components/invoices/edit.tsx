@@ -7,7 +7,7 @@ import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import { Status } from 'model-types';
 import {
-  Invoice, InvoiceParams,
+  IInvoice, InvoiceParams,
   loadInvoice, updateInvoice,
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
@@ -21,11 +21,11 @@ import LoadingView from '../utils/loading-view';
 interface IStateProps {
   orgId:   number;
   status:  Status;
-  invoice: Invoice | null;
+  invoice: IInvoice | null;
 }
 interface IDispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
-  update:       (orgId: number, invoiceId: number, data: InvoiceParams) => Promise<Invoice>;
+  update:       (orgId: number, invoiceId: number, data: InvoiceParams) => Promise<IInvoice>;
   flashMessage: (msg: string) => void;
 }
 
@@ -62,7 +62,7 @@ class EditInvoice extends React.Component<IProps> {
     ).catch(prepareSubmissionError);
   }
 
-  private initialPrepare = (invoice: Invoice): IInvoiceFormData => {
+  private initialPrepare = (invoice: IInvoice): IInvoiceFormData => {
     return ({
       amount:        formatMoneyValue(invoice.amount),
       currency:      invoice.currency,
@@ -125,7 +125,7 @@ const mapState = (state: {}) => ({
 
 const mapDispatch = (dispatch: Dispatch) => ({
   load:          (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
-  update:        (orgId: number, invoiceId: number, data: InvoiceParams) => new Promise<Invoice>((res, rej) => {
+  update:        (orgId: number, invoiceId: number, data: InvoiceParams) => new Promise<IInvoice>((res, rej) => {
     dispatch(updateInvoice(orgId, invoiceId, data, res, rej));
   }),
   flashMessage:  (msg: string) => dispatch(addFlashMessage(msg)),

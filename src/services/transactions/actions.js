@@ -88,5 +88,3 @@ destroyTransaction.success = createAction(
   (organizationId, transaction) => ({ organizationId, transaction }),
 );
 destroyTransaction.failure = createAction('DESTROY_TRANSACTION_FAILURE');
-
-export const clearTransaction = createAction('CLEAR_TRANSACTION');

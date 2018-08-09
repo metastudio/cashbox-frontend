@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Invoice, destroyInvoice, selectInvoice } from 'services/invoices';
+import { IInvoice, destroyInvoice, selectInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
   orgId:        number;
-  invoice:      Invoice | null;
+  invoice:      IInvoice | null;
 }
 
 interface IDispatchProps {

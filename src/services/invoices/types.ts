@@ -9,7 +9,7 @@ export interface InvoiceItem {
   description?: string;
 }
 
-export interface Invoice {
+export interface IInvoice {
   id:                    number;
   customerId:            number;
   customerName:          string;

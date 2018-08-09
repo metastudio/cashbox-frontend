@@ -7,7 +7,7 @@ import { Table } from 'react-bootstrap';
 
 import { Status, IPagination } from 'model-types';
 import {
-  Invoice,
+  IInvoice,
   loadInvoices,
   selectInvoices, selectInvoicesStatus, selectInvoicesPagination,
 } from 'services/invoices';
@@ -21,7 +21,7 @@ import Pagination from 'components/pagination';
 interface IStateProps {
   orgId:      number;
   status:     Status;
-  invoices:   Invoice[] | null;
+  invoices:   IInvoice[] | null;
   pagination: IPagination;
 }
 

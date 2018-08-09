@@ -6,14 +6,14 @@ import * as FileSaver from 'file-saver';
 
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { addFlashMessage } from 'services/flash-messages';
-import { Invoice, downloadInvoicePDF } from 'services/invoices';
+import { IInvoice, downloadInvoicePDF } from 'services/invoices';
 
 interface IStateProps {
   orgId: number;
 }
 
 interface IParamsProps {
-  invoice: Invoice;
+  invoice: IInvoice;
 }
 
 interface IDispatchProps {

@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
 interface IProps {
-  invoice: Invoice;
+  invoice: IInvoice;
 }
 
 const Items: React.SFC<IProps> = ({ invoice: { invoiceItems, currency } }) => {

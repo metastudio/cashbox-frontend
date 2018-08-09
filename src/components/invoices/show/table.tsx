@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 import { formatDate } from 'utils/date';
 import Items from './items';
 
 import { MoneyAmount } from 'components/utils/money';
 
 interface IProps {
-  invoice:      Invoice;
+  invoice:      IInvoice;
   userFullName: string;
 }
 

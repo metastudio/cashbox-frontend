@@ -7,7 +7,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Status } from 'model-types';
 import {
-  Invoice,
+  IInvoice,
   loadInvoice,
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
@@ -24,7 +24,7 @@ import DownloadPDFButton from './download_pdf';
 interface IStateProps {
   orgId:        number;
   status:       Status;
-  invoice:      Invoice | null;
+  invoice:      IInvoice | null;
   userFullName: string;
 }
 

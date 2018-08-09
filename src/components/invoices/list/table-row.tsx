@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 import { formatDate, formatDateRange } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
 interface IProps {
-  invoice: Invoice;
+  invoice: IInvoice;
 }
 
 const InvoiceRow: React.SFC<IProps> = ({ invoice }) => (

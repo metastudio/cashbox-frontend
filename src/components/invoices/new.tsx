@@ -5,7 +5,7 @@ import { PageHeader } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { formatMoneyParam } from 'utils/money';
 
-import { Invoice, InvoiceParams, createInvoice } from 'services/invoices';
+import { IInvoice, InvoiceParams, createInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
@@ -16,7 +16,7 @@ interface IStateProps {
   orgId: number;
 }
 interface IDispatchProps {
-  create:       (orgId: number, data: InvoiceParams) => Promise<Invoice>;
+  create:       (orgId: number, data: InvoiceParams) => Promise<IInvoice>;
   flashMessage: (msg: string) => void;
 }
 type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
@@ -72,7 +72,7 @@ const mapState = (state: {}) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  create: (orgId: number, data: InvoiceParams) => new Promise<Invoice>((res, rej) => {
+  create: (orgId: number, data: InvoiceParams) => new Promise<IInvoice>((res, rej) => {
     dispatch(createInvoice(orgId, data, res, rej));
   }),
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),

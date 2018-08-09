@@ -3,7 +3,7 @@ import { IBankAccount } from 'services/bank-accounts/types';
 import { ICustomer } from 'services/customers/types';
 import { ICategory } from 'services/categories/types';
 
-export interface ITransferOut {
+interface ITransferOut {
   id:          number;
   amount:      IMoney;
   category:    ICategory;
@@ -12,7 +12,7 @@ export interface ITransferOut {
   comment?:    string;
 }
 
-export interface ITransaction {
+interface ITransaction {
   id:          number;
   amount:      IMoney;
   category:    ICategory;
@@ -21,11 +21,13 @@ export interface ITransaction {
   date?:       Date;
   comment?:    string;
   isViewed:    boolean;
-
-  transfer_out?: ITransferOut;
 }
 
-export interface ITransactionParams {
+interface ITransfer extends ITransaction {
+  transferOut?: ITransferOut;
+}
+
+interface ITransactionParams {
   amount?:        string;
   categoryId?:    number;
   customerId?:    number;
@@ -33,3 +35,18 @@ export interface ITransactionParams {
   date?:          Date;
   comment?:       string;
 }
+
+interface ITransferParams {
+  amount?:        string;
+  bankAccountId?: number;
+  referenceId?:   number;
+  exchangeRate?:  string;
+  comission?:     string;
+  comment?:       string;
+  date?:          Date;
+}
+
+export {
+  ITransaction, ITransactionParams,
+  ITransfer, ITransferParams,
+};
