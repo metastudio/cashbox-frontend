@@ -17,6 +17,10 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
+interface IOwnProps {
+  disabled?: boolean;
+}
+
 interface IStateProps {
   status:       string;
   orgId:        number;
@@ -27,7 +31,7 @@ interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type IProps = WrappedFieldProps & IStateProps & IDispatchProps;
+type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
 
 class BankAccountsSelect extends React.Component<IProps> {
   private loadData = (props: IProps) => {
@@ -37,7 +41,7 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 
   private handleChange = (ba: IBankAccount) => {
-    this.props.input.onChange(ba && String(ba.id));
+    this.props.input.onChange(ba && ba.id);
   }
 
   private options = (): IBankAccount[] => {
@@ -66,16 +70,17 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 
   public render () {
-    const { status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+    const { disabled, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
 
     let selectedBankAccount;
     if (input.value && status === Status.Success && bankAccounts) {
-      selectedBankAccount = bankAccounts.find(ba => String(ba.id) === String(input.value));
+      selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
     }
 
     return (
       <Select<IBankAccount>
         { ...inputProps }
+        isDisabled={ disabled }
         name={ input.name }
         value={ selectedBankAccount }
         onChange={ this.handleChange }
@@ -102,7 +107,9 @@ const mapDispatch = (dispatch: Dispatch) => ({
 const BankAccountsSelectContainer =
   connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsSelect);
 
-const HorizontalBankAccountsSelect = wrapHorizontalFormGroup(BankAccountsSelectContainer);
-const VerticalBankAccountsSelect   = wrapVerticalFormGroup(BankAccountsSelectContainer);
+const HorizontalBankAccountsSelect =
+  wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const VerticalBankAccountsSelect =
+  wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
 
 export { BankAccountsSelectContainer as BankAccountsSelect, HorizontalBankAccountsSelect, VerticalBankAccountsSelect };

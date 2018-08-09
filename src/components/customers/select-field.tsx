@@ -31,7 +31,7 @@ class CustomersSelect extends React.Component<IProps> {
   }
 
   private handleChange = (customer: ICustomer) => {
-    this.props.input.onChange(customer && String(customer.id));
+    this.props.input.onChange(customer && customer.id);
   }
 
   private options = (): ICustomer[] => {
@@ -64,7 +64,7 @@ class CustomersSelect extends React.Component<IProps> {
 
     let selectedCustomer;
     if (input.value && status === Status.Success && customers) {
-      selectedCustomer = customers.find(c => String(c.id) === String(input.value));
+      selectedCustomer = customers.find(c => c.id === input.value);
     }
 
     return (

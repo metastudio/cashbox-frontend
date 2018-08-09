@@ -41,7 +41,7 @@ class CategoriesSelect extends React.Component<IProps> {
   }
 
   private handleChange = (category: ICategory) => {
-    this.props.input.onChange(category && String(category.id));
+    this.props.input.onChange(category && category.id);
   }
 
   private options = (): ICategory[] => {
@@ -74,7 +74,7 @@ class CategoriesSelect extends React.Component<IProps> {
 
     let selectedCategory;
     if (input.value && status === Status.Success && categories) {
-      selectedCategory = categories.find(c => String(c.id) === String(input.value));
+      selectedCategory = categories.find(c => c.id === input.value);
     }
 
     return (
