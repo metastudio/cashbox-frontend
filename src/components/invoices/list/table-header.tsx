@@ -2,65 +2,85 @@ import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 
-type Props = RouteComponentProps<{}>;
+interface IHeader {
+  field:  string;
+  title: string;
+}
 
-const headers = [
-  { sort: 'customer_name', title: 'Customer' },
-  { sort: 'ends_at', title: 'Date range' },
-  { sort: 'amount_cents', title: 'Invoice total' },
-  { sort: 'sent_at', title: 'Sent date' },
-  { sort: 'paid_at', title: 'Paid date' },
+interface ISort {
+  title?: string;
+  field:  string;
+  order:  'asc' | 'desc';
+}
+
+type IProps = RouteComponentProps<{}>;
+
+const headers: IHeader[] = [
+  { field: 'customer_name', title: 'Customer' },
+  { field: 'ends_at',       title: 'Date range' },
+  { field: 'amount_cents',  title: 'Invoice total' },
+  { field: 'sent_at',       title: 'Sent date' },
+  { field: 'paid_at',       title: 'Paid date' },
 ];
 
-const InvoicesTableHeader: React.SFC<Props> = ({ location: { pathname, search } }) => {
-  const sortParam: string | undefined = QS.parse(search)['q[s]'];
+const SORT_PARAM = 'q[s]';
+const ASC_SYMBOL  = '▼';
+const DESC_SYMBOL = '▲';
 
-  const toggleSortIndex = (sortIndex: string) => sortIndex === 'asc' ? 'desc' : 'asc';
+class InvoicesTableHeader extends React.PureComponent<IProps> {
+  private toggleOrder = (order: string) => order === 'asc' ? 'desc' : 'asc';
 
-  const prepareLink = (sort: string): string => {
-    let order = 'asc';
-    if (sortParam && sortParam.includes(sort)) {
-      order = toggleSortIndex(sortParam.split(' ')[1]);
-    } else if (sort === 'ends_at') {
-      order = 'desc';
+  private queryToSort = (query: {}): ISort => {
+    const sortParam = query[SORT_PARAM];
+    if (!sortParam) {
+      return { field: 'ends_at', order: 'desc' };
     }
 
-    return `${pathname}?q[s]=${sort}+${order}`;
-  };
+    const [field, order] = sortParam.split(' ');
+    return { field, order };
+  }
 
-  const prepareTitle = ({ title, sort }: { title: string, sort: string }): string => {
-    const ascRender = '▼';
-    const descRender = '▲';
-    if (sortParam && sortParam.includes(sort)) {
-      const sortIndex = sortParam.split(' ')[1];
-      if (sortIndex === 'asc') {
-        return(`${title} ${ascRender}`);
-      } else {
-        return(`${title} ${descRender}`);
-      }
-    } else if (!sortParam && sort === 'ends_at') {
-      return(`${title} ${ascRender}`);
-    } else {
-      return(title);
+  private sortToQuery = (sort: ISort) => ({ [SORT_PARAM]: `${sort.field} ${sort.order}` });
+
+  private prepareTitle = (sort: ISort, current: ISort) => {
+    if (current.field !== sort.field) {
+      return sort.title;
     }
-  };
 
-  const renderHeaders = headers.map(header => (
-    <th key={ header.sort }>
-      <Link to={ prepareLink(header.sort) } >
-        { prepareTitle(header) }
-      </Link>
-    </th>
-  ));
+    return `${sort.title} ${sort.order === 'asc' ? ASC_SYMBOL : DESC_SYMBOL}`;
+  }
 
-  return(
-    <thead>
-      <tr>
-        { renderHeaders }
-        <th />
-      </tr>
-    </thead>
-  );
-};
+  private renderHeaders = () => {
+    const { location: { pathname, search } } = this.props;
+    const query = QS.parse(search);
+    const current = this.queryToSort(query);
+
+    return headers.map((header) => {
+      const sort: ISort = {
+        ...header,
+        order: current.field === header.field ? this.toggleOrder(current.order) : 'asc',
+      };
+
+      return (
+        <th key={ sort.field }>
+          <Link to={ { pathname, search: QS.stringify({ ...query, ...this.sortToQuery(sort) }) } }>
+            { this.prepareTitle(sort, current) }
+          </Link>
+        </th>
+      );
+    });
+  }
+
+  public render() {
+    return(
+      <thead>
+        <tr>
+          { this.renderHeaders() }
+          <th />
+        </tr>
+      </thead>
+    );
+  }
+}
 
 export default withRouter(InvoicesTableHeader);
