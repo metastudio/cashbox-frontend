@@ -112,5 +112,5 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
 });
 
 export default withRouter<IOwnProps & IRouteProps>(
-  connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(CompleteInvoiceButton)
+  connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(CompleteInvoiceButton),
 );

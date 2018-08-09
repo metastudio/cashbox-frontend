@@ -10,6 +10,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IStateProps {
   orgId:       number;
@@ -98,5 +99,11 @@ const CustomersSelectContainer =
 
 const HorizontalCustomersSelect = wrapHorizontalFormGroup(CustomersSelectContainer);
 const VerticalCustomersSelect   = wrapVerticalFormGroup(CustomersSelectContainer);
+const NoLabelCustomersSelect    = wrapNoLabelFormGroup(CustomersSelectContainer);
 
-export { CustomersSelectContainer as CustomersSelect, HorizontalCustomersSelect, VerticalCustomersSelect };
+export {
+  CustomersSelectContainer as CustomersSelect,
+  HorizontalCustomersSelect,
+  VerticalCustomersSelect,
+  NoLabelCustomersSelect,
+};

@@ -10,7 +10,7 @@ interface IOwnProps {
 
 type IProps = WrappedFieldProps & IOwnProps;
 
-class HorizontalFormGroup extends React.Component<IProps> {
+class HorizontalFormGroup extends React.PureComponent<IProps> {
   private labelBlock = () => {
     const { label, required } = this.props;
 

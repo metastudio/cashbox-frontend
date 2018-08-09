@@ -14,6 +14,7 @@ import {
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IOwnProps {
   type: CategoryType;
@@ -108,5 +109,11 @@ const CategoriesSelectContainer =
 
 const HorizontalCategoriesSelect = wrapHorizontalFormGroup(CategoriesSelectContainer);
 const VerticalCategoriesSelect   = wrapVerticalFormGroup(CategoriesSelectContainer);
+const NoLabelCategoriesSelect    = wrapNoLabelFormGroup(CategoriesSelectContainer);
 
-export { CategoriesSelectContainer as CategoriesSelect, HorizontalCategoriesSelect, VerticalCategoriesSelect };
+export {
+  CategoriesSelectContainer as CategoriesSelect,
+  HorizontalCategoriesSelect,
+  VerticalCategoriesSelect,
+  NoLabelCategoriesSelect,
+};

@@ -6,24 +6,30 @@ import * as QS from 'qs';
 import FilterForm from './forms/filter';
 
 interface IOwnProps {
-  isFilterOpened: boolean;
+  open: boolean;
 }
 
-type IProps = RouteComponentProps<{ id: string }> & IOwnProps;
+type IProps = RouteComponentProps<{}> & IOwnProps;
 
-class TransactionsFilter extends React.Component<IProps> {
+class TransactionsFilter extends React.PureComponent<IProps> {
   private handleSubmit = (values: object) => {
     const { history, location: { pathname } } = this.props;
 
     history.push({ pathname, search: QS.stringify(values) });
   }
 
+  private handleReset = () => {
+    const { history, location: { pathname } } = this.props;
+
+    history.push({ pathname });
+  }
+
   public render() {
     return(
-      <Collapse in={ this.props.isFilterOpened }>
+      <Collapse in={ this.props.open }>
         <Row>
           <Col xs={ 12 }>
-            <FilterForm onSubmit={ this.handleSubmit }/>
+            <FilterForm onSubmit={ this.handleSubmit } onReset={ this.handleReset } />
           </Col>
         </Row>
       </Collapse>

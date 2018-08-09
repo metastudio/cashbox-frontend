@@ -18,14 +18,14 @@ import Table from './list/table';
 import Pagination from 'components/pagination';
 import TransactionsFilter from './filter';
 
-interface IOwnState {
+interface IState {
   isFilterOpened: boolean;
 }
 
 interface IStateProps {
   orgId:        number;
   status:       Status;
-  transactions: ITransaction[] | null;
+  transactions: ITransaction[];
   pagination:   IPagination;
 }
 
@@ -35,18 +35,42 @@ interface IDispatchProps {
 
 type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class TransactionsList extends React.Component<IProps, IOwnState> {
-  public state: IOwnState = {
+class TransactionsList extends React.PureComponent<IProps, IState> {
+  public state: IState = {
     isFilterOpened: false,
   };
 
-  private loadData = (props: IProps) => {
-    const { orgId, load, location: { search } } = props;
+  private loadData = () => {
+    const { orgId, load, location: { search } } = this.props;
     load(orgId, QS.parse(search));
   }
 
+  private handleToggleFilter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    this.setState({ isFilterOpened: !this.state.isFilterOpened });
+  }
+
+  private renderToggleFilter = () => (
+    <small>
+      <a href="#" onClick={ this.handleToggleFilter } title="Filter">
+        <i className="fa fa-filter" />
+      </a>
+    </small>
+  )
+
+  private renderTransactions = () => {
+    const { transactions, pagination } = this.props;
+
+    return (
+      <>
+        <Table transactions={ transactions } />
+        <Pagination data={ pagination } newPathname={ '/transactions' } />
+      </>
+    );
+  }
+
   public componentDidMount() {
-    this.loadData(this.props);
+    this.loadData();
   }
 
   public componentDidUpdate(prevProps: IProps) {
@@ -54,42 +78,35 @@ class TransactionsList extends React.Component<IProps, IOwnState> {
     const { status, location: { search } } = this.props;
 
     if (status === Status.Invalid || search !== prevSearch) {
-      this.loadData(this.props);
+      this.loadData();
     }
   }
 
   public render() {
-    const { status, transactions } = this.props;
-
-    if (status !== Status.Success || !transactions) {
-      return <LoadingView status={ status } />;
-    }
     return (
       <>
         <PageHeader>
           <Link to="/transactions/new" className="btn btn-default pull-right">New Transaction...</Link>
-          Transactions
-          <Link to="#" onClick={ () => this.setState({ isFilterOpened: !this.state.isFilterOpened }) } title="Filters">
-            <i className="fa fa-filter" />
-          </Link>
+          Transactions&nbsp;{ this.renderToggleFilter() }
         </PageHeader>
-        <TransactionsFilter isFilterOpened={ this.state.isFilterOpened } />
-        <Table transactions={ transactions } />
-        <Pagination data={ this.props.pagination } newPathname={ '/transactions' } />
+        <TransactionsFilter open={ this.state.isFilterOpened } />
+        <LoadingView status={ this.props.status }>
+          { this.renderTransactions }
+        </LoadingView>
       </>
     );
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: {}): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: (orgId: number, params: object) => dispatch(loadTransactions(orgId, params)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: (orgId, params) => dispatch(loadTransactions(orgId, params)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList));

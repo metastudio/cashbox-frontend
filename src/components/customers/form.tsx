@@ -2,7 +2,11 @@ import * as React from 'react';
 import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 
 import { Alert, Form } from 'react-bootstrap';
-import { HorizontalFormInput, HorizontalSubmitButton } from 'components/utils/form-inputs';
+import {
+  HorizontalFormInput,
+  HorizontalTextarea,
+  HorizontalSubmitButton,
+} from 'components/utils/form-inputs';
 
 interface IOwnProps {
   action: string;
@@ -21,10 +25,9 @@ const CustomerForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
     <Field name="name" label="Name" component={ HorizontalFormInput } />
     <Field
       name="invoiceDetails"
-      label="Invoice Details"
-      componentClass="textarea"
+      component={ HorizontalTextarea }
       type="textarea"
-      component={ HorizontalFormInput }
+      label="Invoice Details"
     />
     <HorizontalSubmitButton submitting={ submitting }>{ action } Customer</HorizontalSubmitButton>
   </Form>

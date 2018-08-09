@@ -16,6 +16,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IOwnProps {
   disabled?: boolean;
@@ -111,5 +112,12 @@ const HorizontalBankAccountsSelect =
   wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
 const VerticalBankAccountsSelect =
   wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const NoLabelBankAccountsSelect =
+  wrapNoLabelFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
 
-export { BankAccountsSelectContainer as BankAccountsSelect, HorizontalBankAccountsSelect, VerticalBankAccountsSelect };
+export {
+  BankAccountsSelectContainer as BankAccountsSelect,
+  HorizontalBankAccountsSelect,
+  VerticalBankAccountsSelect,
+  NoLabelBankAccountsSelect,
+};

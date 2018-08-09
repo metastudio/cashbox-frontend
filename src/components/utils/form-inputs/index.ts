@@ -1,4 +1,4 @@
-export * from './form-input.jsx';
+export * from './form-input';
 export * from './horizontal-checkbox';
 export * from './radio.jsx';
 export * from './date-picker.jsx';
@@ -7,3 +7,4 @@ export * from './horizontal-image-input.jsx';
 export * from './select.jsx';
 export * from './currency-input.jsx';
 export * from './submit-button';
+export * from './textarea';

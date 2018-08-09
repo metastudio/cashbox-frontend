@@ -6,6 +6,7 @@ import {
   HorizontalFormInput,
   HorizontalSubmitButton,
   HorizontalCheckbox,
+  HorizontalTextarea,
 } from 'components/utils/form-inputs';
 import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 
@@ -31,12 +32,12 @@ const BankAccountForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, a
     <Field name="currency" label="Currency" component={ HorizontalCurrencySelect } required />
     <Field name="visible" label="Visible" component={ HorizontalCheckbox } />
     <Field name="description" label="Description" component={ HorizontalFormInput } />
+    // tslint:disable-next-line
     <Field
       name="invoiceDetails"
-      label="Invoice Details"
-      componentClass="textarea"
+      component={ HorizontalTextarea }
       type="textarea"
-      component={ HorizontalFormInput }
+      label="Invoice Details"
     />
     <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>
       { action } Bank Account
