@@ -5,7 +5,7 @@ import { IFlashMessage } from 'services/flash-messages';
 
 interface IProps {
   message:       IFlashMessage;
-  handleClose:   (m: IFlashMessage) => void;
+  onClose:       (m: IFlashMessage) => void;
   autoClose?:    boolean;
   closeTimeout?: number;
 }
@@ -26,8 +26,8 @@ class FlashMessage extends React.Component<IProps, IState> {
   }
 
   private handleClose = () => {
-    const { handleClose, message } = this.props;
-    handleClose(message);
+    const { onClose, message } = this.props;
+    onClose(message);
   }
 
   private setAutoClose(props: IProps) {

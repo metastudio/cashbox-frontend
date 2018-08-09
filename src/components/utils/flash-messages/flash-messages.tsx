@@ -20,28 +20,36 @@ interface IDispatchProps {
 
 type IProps = IStateProps & IDispatchProps;
 
-const FlashMessages: React.SFC<IProps> = ({ messages, removeMessage }) => {
-  const message = (msg: IFlashMessage): React.ReactNode => (
+class FlashMessages extends React.PureComponent<IProps> {
+  private handleClose = (m: IFlashMessage) => {
+    this.props.removeMessage(m.uid);
+  }
+
+  private renderMessage = (m: IFlashMessage) => (
     <FlashMessage
-      key={ msg.uid }
-      message={ msg }
-      handleClose={ (m: IFlashMessage) => removeMessage(m.uid) }
-      autoClose={ msg.autoClose }
+      key={ m.uid }
+      message={ m }
+      onClose={ this.handleClose }
+      autoClose={ m.autoClose }
     />
-  );
+  )
 
-  return (
-    <div id="flash_messages">
-      { messages.map(message) }
-    </div>
-  );
-};
+  public render() {
+    const { messages } = this.props;
 
-const mapState = (state: object) => ({
+    return (
+      <div id="flash_messages">
+        { messages.map(this.renderMessage) }
+      </div>
+    );
+  }
+}
+
+const mapState = (state: object): IStateProps => ({
   messages: selectFlashMessages(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   removeMessage: (muid: string) => dispatch(removeFlashMessage(muid)),
 });
 
