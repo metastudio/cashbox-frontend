@@ -1,29 +1,35 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Collapse, Row, Col } from 'react-bootstrap';
-import FilterForm from './form/filter-form.jsx';
 import * as QS from 'qs';
 
-interface OwnProps {
-  isFilterOpened: boolean;
+import FilterForm from './forms/filter';
+
+interface IOwnProps {
+  open: boolean;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & OwnProps;
+type IProps = RouteComponentProps<{}> & IOwnProps;
 
-class TransactionsFilter extends React.Component<Props> {
-  handleSubmit = (values: object) => {
+class TransactionsFilter extends React.PureComponent<IProps> {
+  private handleSubmit = (values: object) => {
     const { history, location: { pathname } } = this.props;
 
-    history.push({ pathname: pathname, search: QS.stringify(values) });
+    history.push({ pathname, search: QS.stringify(values) });
   }
 
-  render() {
+  private handleReset = () => {
+    const { history, location: { pathname } } = this.props;
+
+    history.push({ pathname });
+  }
+
+  public render() {
     return(
-      <Collapse in={ this.props.isFilterOpened }>
+      <Collapse in={ this.props.open }>
         <Row>
           <Col xs={ 12 }>
-            <FilterForm onSubmit={ this.handleSubmit }/>
+            <FilterForm onSubmit={ this.handleSubmit } onReset={ this.handleReset } />
           </Col>
         </Row>
       </Collapse>

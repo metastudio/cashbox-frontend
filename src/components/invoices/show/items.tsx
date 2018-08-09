@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
-  invoice: Invoice;
+interface IProps {
+  invoice: IInvoice;
 }
 
-const Items: React.SFC<Props> = ({ invoice: { invoiceItems, currency }}) => {
+const Items: React.SFC<IProps> = ({ invoice: { invoiceItems, currency } }) => {
   if (invoiceItems.length <= 0) { return null; }
 
   const items = invoiceItems.map((item, index) => (

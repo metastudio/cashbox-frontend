@@ -8,21 +8,16 @@ import AppLayout from 'components/layouts/app-layout';
 
 import Profile from './profile';
 
-interface UserSceneType extends React.SFC<{}> {
-  Profile?: React.ComponentType;
-}
-
-const UserScene: UserSceneType = ({ children }) => (
+const UserScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
+        { /* tslint:disable-next-line:jsx-no-lambda */ }
         <Route exact path="/user" render={ () => <Redirect to="/user/profile" /> } />
         <Route path="/user/profile" component={ Profile } />
       </AppLayout>
     </RequireOrganization>
   </RequireLogin>
 );
-
-UserScene.Profile = Profile;
 
 export default UserScene;

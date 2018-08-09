@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
-import { Switch, Route } from 'react-router-dom';
 
 import Navigation     from './list/navigation';
 import AllInvoices    from './list/all';

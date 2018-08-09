@@ -1,26 +1,25 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+import { change, FieldsProps } from 'redux-form';
 import { Button } from 'react-bootstrap';
-import { FieldsProps } from 'redux-form';
 import { InvoiceItemFormData } from './item-fields';
 
-interface OwnProps {
+interface IOwnProps {
   name:   string;
   idx:    number;
   fields: FieldsProps<InvoiceItemFormData>;
   invoiceItem: InvoiceItemFormData;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   changeField: (formName: string, formField: string, value: string) => void;
 }
 
-type Props = OwnProps & DispatchProps;
+type Props = IOwnProps & IDispatchProps;
 
-class RemoveItemButton extends React.Component<Props> {
-  handleRemove = () => {
+class RemoveItemButton extends React.PureComponent<Props> {
+  private handleRemove = () => {
     const { name, idx, invoiceItem, changeField, fields } = this.props;
 
     if (invoiceItem.id) {
@@ -30,15 +29,17 @@ class RemoveItemButton extends React.Component<Props> {
     }
   }
 
-  render() {
+  public render() {
     return(
-      <Button bsStyle="danger" onClick={ this.handleRemove }>Remove Item</Button>
+      <Button bsStyle="danger" onClick={ this.handleRemove }>
+        Remove Item
+      </Button>
     );
   }
 }
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  changeField: (formName: string, formField: string, value: string) => dispatch(change(formName, formField, value))
+  changeField: (formName: string, formField: string, value: string) => dispatch(change(formName, formField, value)),
 });
 
-export default connect<{}, DispatchProps>(undefined, mapDispatch)(RemoveItemButton);
+export default connect<{}, IDispatchProps>(undefined, mapDispatch)(RemoveItemButton);

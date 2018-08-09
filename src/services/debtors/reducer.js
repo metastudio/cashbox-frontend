@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 
-import * as statuses from 'constants/statuses.js'
-import { loadDebtors } from 'services/debtors/actions.js'
+import * as statuses from 'constants/statuses.js';
+import { loadDebtors } from 'services/debtors/actions.js';
 
 const defaultState = {
   items:  [],
@@ -9,7 +9,7 @@ const defaultState = {
   totalsByCurrency: [],
   status: statuses.INVALID,
   error:  null,
-}
+};
 
 export default handleActions({
   [loadDebtors.request]: (state) => ({
@@ -34,6 +34,6 @@ export default handleActions({
     total: 0,
     totalsByCurrency: [],
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
-}, defaultState)
+}, defaultState);

@@ -2,39 +2,55 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { removeFlashMessage, selectFlashMessages, FlashMessage as FlashMessageType } from 'services/flash-messages';
+import {
+  IFlashMessage,
+  removeFlashMessage,
+  selectFlashMessages,
+} from 'services/flash-messages';
 
 import FlashMessage from './flash-message';
 
-interface StateProps {
-  messages: FlashMessageType[];
+interface IStateProps {
+  messages: IFlashMessage[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   removeMessage: (muid: string) => void;
 }
 
-const FlashMessages: React.SFC<StateProps & DispatchProps> = ({ messages, removeMessage }) => (
-  <div id="flash_messages">
-    {
-      messages.map(message => (
-        <FlashMessage
-          key={ message.uid }
-          message={ message }
-          handleClose={ (m: FlashMessageType) => removeMessage(m.uid) }
-          autoClose={ message.autoClose }
-        />
-      ))
-    }
-  </div>
-);
+type IProps = IStateProps & IDispatchProps;
 
-const mapState = (state: object) => ({
+class FlashMessages extends React.PureComponent<IProps> {
+  private handleClose = (m: IFlashMessage) => {
+    this.props.removeMessage(m.uid);
+  }
+
+  private renderMessage = (m: IFlashMessage) => (
+    <FlashMessage
+      key={ m.uid }
+      message={ m }
+      onClose={ this.handleClose }
+      autoClose={ m.autoClose }
+    />
+  )
+
+  public render() {
+    const { messages } = this.props;
+
+    return (
+      <div id="flash_messages">
+        { messages.map(this.renderMessage) }
+      </div>
+    );
+  }
+}
+
+const mapState = (state: object): IStateProps => ({
   messages: selectFlashMessages(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   removeMessage: (muid: string) => dispatch(removeFlashMessage(muid)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(FlashMessages);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(FlashMessages);

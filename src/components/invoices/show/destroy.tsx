@@ -4,25 +4,24 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Invoice, destroyInvoice, selectInvoice } from 'services/invoices';
+import { IInvoice, destroyInvoice, selectInvoice } from 'services/invoices';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-interface StateProps {
+interface IStateProps {
   orgId:        number;
-  invoice:      Invoice | null;
+  invoice:      IInvoice | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   destroy:      (orgId: number, invoiceId: number) => Promise<{}>;
   flashMessage: (message: string) => void;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = StateProps & DispatchProps & RouteProps;
+type IProps = IStateProps & IDispatchProps & RouteComponentProps<{ id: string }>;
 
-class DestroyButton extends React.Component<Props> {
-  handleDestroy = () => {
+class DestroyButton extends React.Component<IProps> {
+  private handleDestroy = () => {
     const { orgId, invoice, destroy } = this.props;
     if (!invoice) { return; }
 
@@ -34,7 +33,7 @@ class DestroyButton extends React.Component<Props> {
     });
   }
 
-  render() {
+  public render() {
     return(
       <Button bsStyle="danger" onClick={ this.handleDestroy }>Destroy</Button>
     );
@@ -53,4 +52,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(DestroyButton));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DestroyButton));

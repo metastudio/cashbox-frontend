@@ -14,42 +14,34 @@ import {
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
-interface CurrencyOption {
+interface ICurrencyOption {
   label: string;
   value: Currency;
 }
 
-interface StateProps {
+interface IStateProps {
   status:     string;
   currencies: Currency[] | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: () => void;
 }
 
-type Props = WrappedFieldProps & StateProps & DispatchProps;
+type IProps = WrappedFieldProps & IStateProps & IDispatchProps;
 
-class CurrencySelect extends React.Component<Props> {
-  loadData = (props: Props) => {
+class CurrencySelect extends React.Component<IProps> {
+  private loadData = (props: IProps) => {
     if (props.status === Status.Invalid) {
       props.load();
     }
   }
 
-  componentDidMount() {
-    this.loadData(this.props);
-  }
-
-  componentDidUpdate() {
-    this.loadData(this.props);
-  }
-
-  handleChange = (value: CurrencyOption) => {
+  private handleChange = (value: ICurrencyOption) => {
     this.props.input.onChange(value && value.value);
   }
 
-  options = (): CurrencyOption[] => {
+  private options = (): ICurrencyOption[] => {
     const { status, currencies } = this.props;
     if (status !== Status.Success || !currencies) {
       return [];
@@ -58,14 +50,22 @@ class CurrencySelect extends React.Component<Props> {
     return currencies.map(c => ({ value: c, label: c }));
   }
 
-  styles = () => ({
+  private styles = () => ({
     menu: (styles: {}) => ({
       ...styles,
       zIndex: 3,
-    })
+    }),
   })
 
-  render () {
+  public componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  public componentDidUpdate() {
+    this.loadData(this.props);
+  }
+
+  public render () {
     const {
       status,
       input,
@@ -78,7 +78,7 @@ class CurrencySelect extends React.Component<Props> {
     const selectedCurrency = input.value && { label: input.value, value: input.value };
 
     return (
-      <Select<CurrencyOption>
+      <Select<ICurrencyOption>
         { ...inputProps }
         name={ input.name }
         value={ selectedCurrency }
@@ -101,7 +101,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 });
 
 const CurrencySelectContainer =
-  connect<StateProps, DispatchProps>(mapState, mapDispatch)(CurrencySelect);
+  connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(CurrencySelect);
 
 const HorizontalCurrencySelect = wrapHorizontalFormGroup(CurrencySelectContainer);
 const VerticalCurrencySelect   = wrapVerticalFormGroup(CurrencySelectContainer);

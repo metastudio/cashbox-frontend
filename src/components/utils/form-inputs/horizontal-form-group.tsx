@@ -2,16 +2,16 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-interface OwnProps {
+interface IOwnProps {
   help?:     string;
   label?:    string;
   required?: boolean;
 }
 
-type Props = WrappedFieldProps & OwnProps;
+type IProps = WrappedFieldProps & IOwnProps;
 
-class HorizontalFormGroup extends React.Component<Props> {
-  labelBlock = () => {
+class HorizontalFormGroup extends React.PureComponent<IProps> {
+  private labelBlock = () => {
     const { label, required } = this.props;
 
     if (!label) { return null; }
@@ -23,7 +23,7 @@ class HorizontalFormGroup extends React.Component<Props> {
     );
   }
 
-  errorBlock = () => {
+  private errorBlock = () => {
     const { meta: { invalid, error } } = this.props;
 
     if (!invalid) { return null; }
@@ -35,7 +35,7 @@ class HorizontalFormGroup extends React.Component<Props> {
     );
   }
 
-  helpBlock = () => {
+  private helpBlock = () => {
     const { help } = this.props;
 
     if (!help) { return null; }
@@ -43,7 +43,7 @@ class HorizontalFormGroup extends React.Component<Props> {
     return <HelpBlock>{ help }</HelpBlock>;
   }
 
-  render () {
+  public render () {
     const { input, meta, label, children } = this.props;
 
     return (
@@ -60,10 +60,11 @@ class HorizontalFormGroup extends React.Component<Props> {
 }
 
 const wrapHorizontalFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
-  class HorizontalFormGroupWrapper extends React.Component<Props> {
-    static displayName = `HorizontalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
+  // tslint:disable-next-line:max-classes-per-file
+  class HorizontalFormGroupWrapper extends React.Component<IProps> {
+    public static displayName = `HorizontalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
-    render() {
+    public render() {
       const { input, meta, label, required, help, ...props } = this.props;
 
       return (
@@ -84,4 +85,8 @@ const wrapHorizontalFormGroup = <P extends WrappedFieldProps>(Component: React.C
   return HorizontalFormGroupWrapper;
 };
 
-export { HorizontalFormGroup as default, wrapHorizontalFormGroup };
+export {
+  HorizontalFormGroup as default,
+  IProps as IHorizontalFormGroupProps,
+  wrapHorizontalFormGroup,
+};

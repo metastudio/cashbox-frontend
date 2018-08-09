@@ -5,7 +5,7 @@ import { setCurrentOrganization, restoreOrganization, clearCurrentOrganization }
 const defaultState = {
   id:       null,
   data:     null,
-  isLoaded: false
+  isLoaded: false,
 };
 
 export default handleActions({
@@ -13,22 +13,22 @@ export default handleActions({
     ...state,
     id:       null,
     data:     null,
-    isLoaded: false
+    isLoaded: false,
   }),
   [combineActions(setCurrentOrganization.success, restoreOrganization.success)]: (state, { payload }) => ({
     ...state,
     id:       payload.organization && payload.organization.id,
     data:     payload.organization,
-    isLoaded: true
+    isLoaded: true,
   }),
   [restoreOrganization.failure]: (state) => ({
     ...state,
-    isLoaded: true
+    isLoaded: true,
   }),
   [clearCurrentOrganization]: (state) => ({
     ...state,
     id:       null,
     data:     null,
-    isLoaded: false
+    isLoaded: false,
   }),
 }, defaultState);

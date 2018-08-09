@@ -6,7 +6,7 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import {
-  BankAccount,
+  IBankAccount,
   loadVisibleBankAccounts,
   selectVisibleBankAccountsStatus,
   selectVisibleBankAccounts,
@@ -16,39 +16,36 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
-interface StateProps {
-  status:       string;
-  orgId:        number;
-  bankAccounts: BankAccount[] | null;
+interface IOwnProps {
+  disabled?: boolean;
 }
 
-interface DispatchProps {
+interface IStateProps {
+  status:       string;
+  orgId:        number;
+  bankAccounts: IBankAccount[] | null;
+}
+
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = WrappedFieldProps & StateProps & DispatchProps;
+type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
 
-class BankAccountsSelect extends React.Component<Props> {
-  loadData = (props: Props) => {
+class BankAccountsSelect extends React.Component<IProps> {
+  private loadData = (props: IProps) => {
     if (props.status === Status.Invalid) {
       props.load(props.orgId);
     }
   }
 
-  componentDidMount() {
-    this.loadData(this.props);
+  private handleChange = (ba: IBankAccount) => {
+    this.props.input.onChange(ba && ba.id);
   }
 
-  componentDidUpdate() {
-    this.loadData(this.props);
-  }
-
-  handleChange = (ba: BankAccount) => {
-    this.props.input.onChange(ba && String(ba.id));
-  }
-
-  options = (): BankAccount[] => {
+  private options = (): IBankAccount[] => {
     const { status, bankAccounts } = this.props;
     if (status !== Status.Success || !bankAccounts) {
       return [];
@@ -56,24 +53,35 @@ class BankAccountsSelect extends React.Component<Props> {
     return bankAccounts;
   }
 
-  styles = () => ({
+  private styles = () => ({
     menu: (styles: {}) => ({
       ...styles,
       zIndex: 3,
-    })
+    }),
   })
 
-  render () {
-    const { status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+  private formatValue = (ba: IBankAccount) => String(ba.id);
 
-    let selectedBankAccount = undefined;
+  public componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  public componentDidUpdate() {
+    this.loadData(this.props);
+  }
+
+  public render () {
+    const { disabled, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+
+    let selectedBankAccount;
     if (input.value && status === Status.Success && bankAccounts) {
-      selectedBankAccount = bankAccounts.find((ba) => String(ba.id) === String(input.value));
+      selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
     }
 
     return (
-      <Select<BankAccount>
+      <Select<IBankAccount>
         { ...inputProps }
+        isDisabled={ disabled }
         name={ input.name }
         value={ selectedBankAccount }
         onChange={ this.handleChange }
@@ -81,7 +89,7 @@ class BankAccountsSelect extends React.Component<Props> {
         options={ this.options() }
         styles={ this.styles() }
         getOptionLabel={ formatBankAccountName }
-        getOptionValue={ (ba) => String(ba.id) }
+        getOptionValue={ this.formatValue }
       />
     );
   }
@@ -98,9 +106,18 @@ const mapDispatch = (dispatch: Dispatch) => ({
 });
 
 const BankAccountsSelectContainer =
-  connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccountsSelect);
+  connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsSelect);
 
-const HorizontalBankAccountsSelect = wrapHorizontalFormGroup(BankAccountsSelectContainer);
-const VerticalBankAccountsSelect   = wrapVerticalFormGroup(BankAccountsSelectContainer);
+const HorizontalBankAccountsSelect =
+  wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const VerticalBankAccountsSelect =
+  wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const NoLabelBankAccountsSelect =
+  wrapNoLabelFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
 
-export { BankAccountsSelectContainer as BankAccountsSelect, HorizontalBankAccountsSelect, VerticalBankAccountsSelect };
+export {
+  BankAccountsSelectContainer as BankAccountsSelect,
+  HorizontalBankAccountsSelect,
+  VerticalBankAccountsSelect,
+  NoLabelBankAccountsSelect,
+};

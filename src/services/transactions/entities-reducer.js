@@ -29,14 +29,14 @@ export default handleActions({
     items:      payload.transactions,
     status:     statuses.SUCCESS,
     error:      null,
-    pagination: payload.pagination
+    pagination: payload.pagination,
   }),
   [loadTransactions.failure]: (state, { payload }) => ({
     ...state,
     items:      [],
     status:     statuses.FAILURE,
     error:      payload,
-    pagination: null
+    pagination: null,
   }),
   [combineActions(
     createTransaction.success,
@@ -46,5 +46,5 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
-  })
+  }),
 }, defaultState);

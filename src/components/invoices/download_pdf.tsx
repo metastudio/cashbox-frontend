@@ -6,25 +6,25 @@ import * as FileSaver from 'file-saver';
 
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { addFlashMessage } from 'services/flash-messages';
-import { Invoice, downloadInvoicePDF } from 'services/invoices';
+import { IInvoice, downloadInvoicePDF } from 'services/invoices';
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
 
-interface ParamsProps {
-  invoice: Invoice;
+interface IParamsProps {
+  invoice: IInvoice;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   downloadPDF:  (orgId: number, invoiceId: number) => Promise<Blob>;
   errorMessage: (msg: string) => void;
 }
 
-type Props = StateProps & DispatchProps & ParamsProps;
+type IProps = IStateProps & IDispatchProps & IParamsProps;
 
-class DownloadPDFButton extends React.Component<Props> {
-  handleDownloadPDF = () => {
+class DownloadPDFButton extends React.Component<IProps> {
+  private handleDownloadPDF = () => {
     const { orgId, invoice, downloadPDF, errorMessage } = this.props;
 
     downloadPDF(orgId, invoice.id).then((blob) => {
@@ -34,7 +34,7 @@ class DownloadPDFButton extends React.Component<Props> {
     });
   }
 
-  render() {
+  public render() {
     return(<Button onClick={ this.handleDownloadPDF }>Download as PDF</Button>);
   }
 }
@@ -47,7 +47,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
   downloadPDF:  (orgId: number, invoiceId: number | string) => new Promise<Blob>((res, rej) => {
     dispatch(downloadInvoicePDF(orgId, invoiceId, res, rej));
   }),
-  errorMessage: (msg: string) => dispatch(addFlashMessage(msg, { type: 'danger' } )),
+  errorMessage: (msg: string) => dispatch(addFlashMessage(msg, { type: 'danger' })),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(DownloadPDFButton);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DownloadPDFButton);

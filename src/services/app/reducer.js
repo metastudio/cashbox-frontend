@@ -1,24 +1,22 @@
 import { handleActions } from 'redux-actions';
 
-import {
-  restoreSession
-} from 'services/auth';
+import { restoreSession } from 'services/auth';
 
 const defaultState = {
-  isSessionLoaded: false
+  isSessionLoaded: false,
 };
 
 export default handleActions({
   [restoreSession.request]: (state) => ({
     ...state,
-    isSessionLoaded: false
+    isSessionLoaded: false,
   }),
   [restoreSession.success]: (state) => ({
     ...state,
-    isSessionLoaded: true
+    isSessionLoaded: true,
   }),
   [restoreSession.failure]: (state) => ({
     ...state,
-    isSessionLoaded: true
+    isSessionLoaded: true,
   }),
 }, defaultState);

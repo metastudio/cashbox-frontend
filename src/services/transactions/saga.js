@@ -15,7 +15,7 @@ import {
   createTransaction,
   createTransfer,
   updateTransaction,
-  destroyTransaction
+  destroyTransaction,
 } from './actions.js';
 import { updateMemberLastVisit } from 'services/members';
 

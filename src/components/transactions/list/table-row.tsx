@@ -2,39 +2,37 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
-import { Transaction } from 'services/transactions';
+import { ITransaction } from 'services/transactions';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
 import './../css/default.css';
 
-interface OwnProps {
-  transaction: Transaction;
+interface IOwnProps {
+  transaction: ITransaction;
 }
 
-type Props =  RouteComponentProps<{ id: number }> & OwnProps;
+type IProps =  RouteComponentProps<{ id: number }> & IOwnProps;
 
-class TransactionsTableRow extends React.Component<Props> {
-  rowClass = (transaction: Transaction): string => {
+class TransactionsTableRow extends React.PureComponent<IProps> {
+  private rowClass = (transaction: ITransaction): string => {
     return !transaction.isViewed ? 'new-transaction' : '';
   }
 
-  handleClick = (transactionId: number) => {
-    this.props.history.push(`/transactions/${transactionId}/edit`);
+  private handleRowClick = () => {
+    const { transaction, history } = this.props;
+    history.push(`/transactions/${transaction.id}/edit`);
   }
 
-  render() {
+  public render() {
     const { transaction } = this.props;
 
     const isTransfer = transaction.category && transaction.category.name === 'Transfer';
 
     return(
       <>
-        <tr
-          className={ this.rowClass(transaction) }
-          onClick={ () => this.handleClick(transaction.id) }
-        >
+        <tr className={ this.rowClass(transaction) } onClick={ this.handleRowClick }>
           <td className="text-right">
             <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
           </td>

@@ -6,42 +6,42 @@ import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { CategoryParams, createCategory } from 'services/categories';
+import { ICategoryParams, createCategory } from 'services/categories';
 
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
 
-interface DispatchProps {
-  create:  (orgId: number, data: CategoryParams) => Promise<{}>;
+interface IDispatchProps {
+  create:  (orgId: number, data: ICategoryParams) => Promise<{}>;
   message: (msg: string) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class NewCategory extends React.Component<Props> {
-  handleSubmit = (values: CategoryParams) => {
+class NewCategory extends React.Component<IProps> {
+  private handleSubmit = (values: ICategoryParams) => {
     const { create, orgId } = this.props;
     return create(
       orgId,
       {
         name: values.name,
         type: values.type,
-      }
+      },
     ).catch(prepareSubmissionError);
   }
 
-  afterCreate = () => {
+  private afterCreate = () => {
     const { message, history } = this.props;
     message('Category has been created.');
     history.push('/categories');
   }
 
-  render() {
+  public render() {
     return(
       <Row>
         <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
@@ -66,10 +66,10 @@ const mapState = (state: {}) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  create: (orgId: number, data: CategoryParams) => (
+  create: (orgId: number, data: ICategoryParams) => (
     new Promise((res, rej) => dispatch(createCategory(orgId, data, res, rej)))
   ),
-  message: (msg: String) => dispatch(addFlashMessage(msg)),
+  message: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(NewCategory));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewCategory));

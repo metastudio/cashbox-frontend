@@ -1,24 +1,17 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { MenuItem } from 'react-bootstrap';
-import { Money } from 'utils/money';
+
+import { IBalance } from 'services/balances';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Balance {
-  total:     Money;
-  exTotal?:  Money;
-  rate:      string;
-  currency:  string;
-  updatedAt: Date;
-}
-
-interface Props {
-  balance:          Balance;
+interface IProps {
+  balance:          IBalance;
   defaultCurrency?: string;
 }
 
-const MenuBalanceItem: React.SFC<Props> = ({ balance, defaultCurrency }) => {
+const MenuBalanceItem: React.SFC<IProps> = ({ balance, defaultCurrency }) => {
   const balanceTitle = (): string => {
     if (!balance.rate) {
       return '';
@@ -45,4 +38,4 @@ const MenuBalanceItem: React.SFC<Props> = ({ balance, defaultCurrency }) => {
   );
 };
 
-export { MenuBalanceItem as default, Balance };
+export default MenuBalanceItem;

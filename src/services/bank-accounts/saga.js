@@ -18,27 +18,23 @@ import {
   deleteBankAccount,
 } from './actions.js';
 
-function* handleLoadBankAccounts({ payload: { organizationId }, meta: { resolve, reject } }) {
+function* handleLoadBankAccounts({ payload: { organizationId } }) {
   try {
     yield put(loadBankAccounts.request(organizationId));
     const bankAccounts = yield call(getOrganizationBankAccounts, organizationId);
     yield put(loadBankAccounts.success(organizationId, bankAccounts));
-    yield call(resolve, bankAccounts);
   } catch (error) {
     yield put(loadBankAccounts.failure(error));
-    yield call(reject, error);
   }
 }
 
-function* handleLoadVisibleBankAccounts({ payload: { organizationId }, meta: { resolve, reject } }) {
+function* handleLoadVisibleBankAccounts({ payload: { organizationId } }) {
   try {
     yield put(loadVisibleBankAccounts.request(organizationId));
     const bankAccounts = yield call(getOrganizationVisibleBankAccounts, organizationId);
     yield put(loadVisibleBankAccounts.success(organizationId, bankAccounts));
-    yield call(resolve, bankAccounts);
   } catch (error) {
     yield put(loadVisibleBankAccounts.failure(error));
-    yield call(reject, error);
   }
 }
 

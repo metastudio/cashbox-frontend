@@ -35,6 +35,6 @@ export default handleActions({
     defaultCurrency: null,
     totals:          [],
     status:          statuses.FAILURE,
-    error:           payload
+    error:           payload,
   }),
 }, defaultState);

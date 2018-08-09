@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Organization } from 'services/organizations';
+import { IOrganization } from 'services/organizations';
 
-interface Props {
-  organization: Organization;
+interface IProps {
+  organization: IOrganization;
 }
 
-const OrganizationsTableRow: React.SFC<Props> = ({ organization }) => (
+const OrganizationsTableRow: React.SFC<IProps> = ({ organization }) => (
   <tr>
     <td>{ organization.name }</td>
     <td>{ organization.defaultCurrency }</td>

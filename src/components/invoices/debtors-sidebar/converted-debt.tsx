@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { formatMoney, ConvertedAmount } from 'utils/money';
+import { formatMoney, IConvertedAmount } from 'utils/money';
 import TooltipText from './tooltip-text';
 
-interface Props {
-  amount: ConvertedAmount;
+interface IProps {
+  amount: IConvertedAmount;
 }
 
-const tooltip = (amount: ConvertedAmount) => {
+const tooltip = (amount: IConvertedAmount) => {
   return(
     <Tooltip id="tooltip">
       <TooltipText amount={ amount } />
@@ -16,7 +16,7 @@ const tooltip = (amount: ConvertedAmount) => {
   );
 };
 
-const ConvertedDebt: React.SFC<Props> = ({ amount }) => (
+const ConvertedDebt: React.SFC<IProps> = ({ amount }) => (
   <td className="text-right">
     { formatMoney(amount.oldAmount) }
     { ' ' }

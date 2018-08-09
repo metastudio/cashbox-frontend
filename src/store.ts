@@ -17,7 +17,7 @@ function createAppStore() {
 
   const createStoreWithMiddleware = applyMiddleware(
     sagaMiddleware,
-    logger // TODO disable in prod
+    logger, // TODO disable in prod
   )(createStore);
 
   const store = createStoreWithMiddleware(reducer);

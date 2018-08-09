@@ -5,7 +5,7 @@ import {
 } from 'services/debtors/api.js';
 
 import {
-  loadDebtors
+  loadDebtors,
 } from 'services/debtors/actions.js';
 
 function* handleLoadDebtors({ payload: { organizationId } }) {

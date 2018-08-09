@@ -6,23 +6,36 @@ import * as Moment from 'moment';
 
 import { wrapHorizontalFormGroup } from './horizontal-form-group';
 import { wrapVerticalFormGroup } from './vertical-form-group';
+import { wrapInlineFormGroup } from './inline-form-group';
+import { wrapNoLabelFormGroup } from './no-label-form-group';
 
-export const DatePickerInput = ({ input, onValueChange, ...inputProps }) => {
-  delete inputProps.meta;
+const DatePickerInput = ({ input, meta, ...inputProps }) => {
   const dateFormat = Moment.localeData().longDateFormat('L');
 
   return (
-    <DatePicker value={ input.value } onChange={ onValueChange || input.onChange } dateFormat={ dateFormat } { ...inputProps } />
+    <DatePicker
+      { ...inputProps }
+      value={ input.value }
+      onChange={ input.onChange }
+      dateFormat={ dateFormat }
+    />
   );
 };
 
 DatePickerInput.propTypes = {
   input:         PropTypes.object.isRequired,
   meta:          PropTypes.object,
-  onValueChange: PropTypes.func,
 };
 
 const HorizontalDatePicker = wrapHorizontalFormGroup(DatePickerInput);
 const VerticalDatePicker   = wrapVerticalFormGroup(DatePickerInput);
+const InlineDatePicker     = wrapInlineFormGroup(DatePickerInput);
+const NoLabelDatePicker    = wrapNoLabelFormGroup(DatePickerInput);
 
-export { HorizontalDatePicker, VerticalDatePicker };
+export {
+  DatePickerInput,
+  HorizontalDatePicker,
+  VerticalDatePicker,
+  InlineDatePicker,
+  NoLabelDatePicker,
+};

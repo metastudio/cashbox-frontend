@@ -1,6 +1,6 @@
-import { BankAccount } from './types';
+import { IBankAccount } from './types';
 
-const formatBankAccountName = (bankAccount: BankAccount): string => {
+const formatBankAccountName = (bankAccount: IBankAccount): string => {
   return `${bankAccount.name} (${bankAccount.currency})`;
 };
 

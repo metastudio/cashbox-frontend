@@ -15,30 +15,30 @@ import {
 import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
 
-interface StateProps {
+interface IStateProps {
   orgId:      number;
   status:     Status;
   currencies: string[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type IProps = IStateProps & IDispatchProps;
 
-class BankAccountsList extends React.Component<Props> {
-  loadData = () => {
+class BankAccountsList extends React.Component<IProps> {
+  private loadData = () => {
     const { orgId, load } = this.props;
 
     load(orgId);
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData();
   }
 
-  render() {
+  public render() {
     const { status, currencies } = this.props;
 
     return (
@@ -65,4 +65,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccountsList);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsList);

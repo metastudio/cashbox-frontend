@@ -6,11 +6,11 @@ import MainMenu      from 'components/layouts/main-menu';
 import Sidebar       from 'components/layouts/sidebar';
 import FlashMessages from 'components/utils/flash-messages';
 
-interface Props {
+interface IProps {
   sidebar?: () => React.ReactNode;
 }
 
-const MainLayout: React.SFC<Props> = ({ children, sidebar }) => {
+const MainLayout: React.SFC<IProps> = ({ children, sidebar }) => {
   const renderSidebar = () => {
     if (sidebar) { return sidebar(); }
     return <Sidebar />;

@@ -17,7 +17,7 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
     const token = getCookies().token;
-    if (!token) throw new Error('Token not found');
+    if (!token) { throw new Error('Token not found'); }
     const user = yield call(getCurrentUser);
 
     yield put(restoreSession.success(token, user));

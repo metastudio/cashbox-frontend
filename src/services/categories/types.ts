@@ -3,13 +3,13 @@ export enum CategoryType {
   Expense = 'Expense',
 }
 
-export interface Category {
+export interface ICategory {
   id:       number;
   name:     string;
   type:     CategoryType;
 }
 
-export interface CategoryParams {
+export interface ICategoryParams {
   name?: string | null;
   type?: string | null;
 }

@@ -1,53 +1,53 @@
 import * as React from 'react';
 import { Alert, Collapse } from 'react-bootstrap';
 
-import { FlashMessage as FlashMessageType } from 'services/flash-messages';
+import { IFlashMessage } from 'services/flash-messages';
 
-interface Props {
-  message:       FlashMessageType;
-  handleClose:   (m: FlashMessageType) => void;
+interface IProps {
+  message:       IFlashMessage;
+  onClose:       (m: IFlashMessage) => void;
   autoClose?:    boolean;
   closeTimeout?: number;
 }
 
-interface State {
+interface IState {
   shown: boolean;
   timer: number | null;
 }
 
-class FlashMessage extends React.Component<Props, State> {
-  state: State = {
+class FlashMessage extends React.Component<IProps, IState> {
+  public state: IState = {
     shown: true,
     timer: null,
   };
 
-  closeMessage = () => {
+  private closeMessage = () => {
     this.setState({ shown: false });
   }
 
-  handleClose = () => {
-    const { handleClose, message } = this.props;
-    handleClose(message);
+  private handleClose = () => {
+    const { onClose, message } = this.props;
+    onClose(message);
   }
 
-  setAutoClose(props: Props) {
+  private setAutoClose(props: IProps) {
     if (props.autoClose) {
       const timer = window.setTimeout(this.closeMessage, props.closeTimeout || 5000);
       this.setState({ timer });
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.setAutoClose(this.props);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: IProps) {
     if (this.props.autoClose !== prevProps.autoClose) {
       this.setAutoClose(this.props);
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (this.state.timer) {
       window.clearTimeout(this.state.timer);
       this.setState({
@@ -56,7 +56,7 @@ class FlashMessage extends React.Component<Props, State> {
     }
   }
 
-  render() {
+  public render() {
     const { message } = this.props;
 
     return(

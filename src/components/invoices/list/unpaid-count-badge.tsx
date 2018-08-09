@@ -10,36 +10,36 @@ import {
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-interface StateProps {
+interface IStateProps {
   orgId:  number;
   status: string;
   count:  number | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type IProps = IStateProps & IDispatchProps;
 
-class UnpaidInvoicesCountBadge extends React.Component<Props> {
-  loadData(props: Props) {
+class UnpaidInvoicesCountBadge extends React.Component<IProps> {
+  private loadData(props: IProps) {
     const { orgId, load } = this.props;
 
     load(orgId);
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     if (this.props.status === Status.Invalid) {
       this.loadData(this.props);
     }
   }
 
-  render() {
+  public render() {
     if (this.props.status !== Status.Success || this.props.count === null) {
       return null;
     }
@@ -58,4 +58,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => dispatch(loadUnpaidInvoicesCount(orgId)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(UnpaidInvoicesCountBadge);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(UnpaidInvoicesCountBadge);

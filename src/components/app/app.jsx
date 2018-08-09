@@ -54,7 +54,7 @@ App.propTypes = {
 };
 
 const select = (state) => ({
-  isSessionLoaded: state.app.isSessionLoaded
+  isSessionLoaded: state.app.isSessionLoaded,
 });
 
 const dispatches = (dispatch) => ({

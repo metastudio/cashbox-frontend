@@ -3,29 +3,29 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 
-import { BankAccount, deleteBankAccount as deleteBankAccountAction } from 'services/bank-accounts';
-import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
+import { IBankAccount, deleteBankAccount as deleteBankAccountAction } from 'services/bank-accounts';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 
 import { confirm } from 'components/utils/confirm';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-interface OwnProps {
-  bankAccount: BankAccount;
+interface IOwnProps {
+  bankAccount: IBankAccount;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   deleteBankAccount: (orgId: number, bankAccountId: number) => Promise<{}>;
-  message:           (msg: string, type?: FlashMessageOptions) => void;
+  message:           (msg: string, type?: IFlashMessageOptions) => void;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & RouteComponentProps<{}>;
+type Props = IOwnProps & IStateProps & IDispatchProps & RouteComponentProps<{}>;
 
 class DestroyBankAccount extends React.Component<Props> {
-  handleDeleteBankAccountClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  private handleDeleteBankAccountClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     const { orgId, bankAccount, message, history, deleteBankAccount } = this.props;
@@ -34,13 +34,13 @@ class DestroyBankAccount extends React.Component<Props> {
       deleteBankAccount(orgId, bankAccount.id).then(() => {
         message(`Bank Account "${bankAccount.name}" has been removed.`);
         history.push('/bank_accounts');
-      }).catch(error => {
+      }).catch((error) => {
         message(`Unable to delete bank account: ${error.message}`, { type: 'danger' });
       });
     });
   }
 
-  render() {
+  public render() {
     const { bankAccount } = this.props;
     return (
       <Link
@@ -63,7 +63,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
     (orgId: number, bankAccountId: number) => (
       new Promise((res, rej) => dispatch(deleteBankAccountAction(orgId, bankAccountId, res, rej)))
     ),
-  message: (msg: string, type?: FlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
+  message: (msg: string, type?: IFlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(DestroyBankAccount));
+export default withRouter(connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(DestroyBankAccount));

@@ -5,9 +5,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
-import { Status, Pagination as PaginationInterface } from 'model-types';
+import { Status, IPagination } from 'model-types';
 import {
-  Invoice,
+  IInvoice,
   loadUnpaidInvoices,
   selectUnpaidInvoices, selectUnpaidInvoicesStatus, selectUnpaidInvoicesPagination,
 } from 'services/invoices';
@@ -16,32 +16,32 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
-import Pagination from 'components/pagination';
+import Paginator from 'components/utils/paginator';
 
-interface StateProps {
-  orgId:    number;
-  status:   Status;
-  invoices: Invoice[] | null;
-  pagination: PaginationInterface;
+interface IStateProps {
+  orgId:      number;
+  status:     Status;
+  invoices:   IInvoice[] | null;
+  pagination: IPagination;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number, params: object) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class UnpaidInvoices extends React.Component<Props> {
-  loadData = (props: Props) => {
+class UnpaidInvoices extends React.Component<IProps> {
+  private loadData = (props: IProps) => {
     const { orgId, load, location: { search } } = props;
     load(orgId, QS.parse(search));
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: IProps) {
     const { location: { search: prevSearch } } = prevProps;
     const { status, location: { search } } = this.props;
 
@@ -50,7 +50,7 @@ class UnpaidInvoices extends React.Component<Props> {
     }
   }
 
-  render() {
+  public render() {
     const { status, invoices } = this.props;
 
     if (status !== Status.Success || !invoices) {
@@ -63,7 +63,7 @@ class UnpaidInvoices extends React.Component<Props> {
           <TableHeader />
           <TableBody invoices={ invoices } />
         </Table>
-        <Pagination data={ this.props.pagination } />
+        <Paginator data={ this.props.pagination } />
       </>
     );
   }
@@ -73,11 +73,11 @@ const mapState = (state: {}) => ({
   orgId:    selectCurrentOrganizationId(state),
   status:   selectUnpaidInvoicesStatus(state),
   invoices: selectUnpaidInvoices(state),
-  pagination: selectUnpaidInvoicesPagination(state)
+  pagination: selectUnpaidInvoicesPagination(state),
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number, params: object) => dispatch(loadUnpaidInvoices(orgId, params)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(UnpaidInvoices));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(UnpaidInvoices));

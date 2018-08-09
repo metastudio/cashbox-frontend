@@ -2,16 +2,16 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-interface OwnProps {
+interface IOwnProps {
   help?:     string;
   label?:    string;
   required?: boolean;
 }
 
-type Props = WrappedFieldProps & OwnProps;
+type Props = WrappedFieldProps & IOwnProps;
 
 class VerticalFormGroup extends React.Component<Props> {
-  labelBlock = () => {
+  private labelBlock = () => {
     const { label, required } = this.props;
 
     if (!label) { return null; }
@@ -23,7 +23,7 @@ class VerticalFormGroup extends React.Component<Props> {
     );
   }
 
-  errorBlock = () => {
+  private errorBlock = () => {
     const { meta: { invalid, error } } = this.props;
 
     if (!invalid) { return null; }
@@ -35,7 +35,7 @@ class VerticalFormGroup extends React.Component<Props> {
     );
   }
 
-  helpBlock = () => {
+  private helpBlock = () => {
     const { help } = this.props;
 
     if (!help) { return null; }
@@ -43,7 +43,7 @@ class VerticalFormGroup extends React.Component<Props> {
     return <HelpBlock>{ help }</HelpBlock>;
   }
 
-  render() {
+  public render() {
     const { input, meta, children } = this.props;
 
     return (
@@ -58,10 +58,11 @@ class VerticalFormGroup extends React.Component<Props> {
 }
 
 const wrapVerticalFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
+  // tslint:disable-next-line:max-classes-per-file
   class VerticalFormGroupWrapper extends React.Component<Props> {
-    static displayName = `VerticalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
+    public static displayName = `VerticalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
-    render() {
+    public render() {
       const { input, meta, label, help, required, ...props } = this.props;
 
       return (

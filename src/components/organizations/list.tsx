@@ -6,43 +6,39 @@ import { PageHeader } from 'react-bootstrap';
 
 import { Status } from 'model-types';
 import {
-  Organization,
+  IOrganization,
   selectOrganizations,
   selectOrganizationsStatus,
-  loadOrganizations
+  loadOrganizations,
 } from 'services/organizations';
 
 import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
 
-interface StateProps {
+interface IStateProps {
   status:        Status;
-  organizations: Organization[] | null;
+  organizations: IOrganization[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: () => void;
 }
 
-type Props = StateProps & DispatchProps;
+type IProps = IStateProps & IDispatchProps;
 
-class OrganizationsList extends React.Component<Props> {
-  loadData = () => {
+class OrganizationsList extends React.Component<IProps> {
+  private loadData = () => {
     const { load } = this.props;
 
     load();
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData();
   }
 
-  render() {
+  public render() {
     const { status, organizations } = this.props;
-
-    if (status !== Status.Success || !organizations) {
-      return <LoadingView status={ status } />;
-    }
 
     return (
       <>
@@ -50,7 +46,9 @@ class OrganizationsList extends React.Component<Props> {
           <Link to="/organizations/new" className="btn btn-default pull-right">Add Organization...</Link>
           Organizations
         </PageHeader>
-        <Table organizations={ organizations } />
+        <LoadingView status={ status }>
+          { () => <Table organizations={ organizations } /> }
+        </LoadingView>
       </>
     );
   }
@@ -65,4 +63,4 @@ const mapDispatch = (dispatch: Dispatch) => ({
   load: () => dispatch(loadOrganizations()),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(OrganizationsList);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(OrganizationsList);

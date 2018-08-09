@@ -11,7 +11,13 @@ export const RadioInput = ({ input, collection, ...inputProps }) => {
     <div>
       {
         collection.map((i) => (
-          <Radio key={ i.value } {...inputProps} value={ i.value } checked={ input.value === i.value } onChange={ input.onChange } >
+          <Radio
+            key={ i.value }
+            {...inputProps}
+            value={ i.value }
+            checked={ input.value === i.value }
+            onChange={ input.onChange }
+          >
             { i.label }
           </Radio>
         ))

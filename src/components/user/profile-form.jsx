@@ -11,7 +11,10 @@ const ProfileForm = ({ handleSubmit, submitting, error }) => {
     <Form onSubmit={ handleSubmit }>
       { error && <Alert bsStyle="danger">{ error }</Alert> }
       <Field name="fullName" label="Full name *" placeholder="Enter full name" component={ VerticalFormInput } />
-      <Field name="profile.phoneNumber" label="Phone number" placeholder="Enter phone number" component={ VerticalFormInput } />
+      <Field
+        name="profile.phoneNumber"  component={ VerticalFormInput }
+        label="Phone number" placeholder="Enter phone number"
+      />
       <VerticalSubmitButton submitting={ submitting } >Update profile</VerticalSubmitButton>
     </Form>
   );
@@ -21,7 +24,7 @@ ProfileForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting:   PropTypes.bool,
   error:        PropTypes.string,
-  store:        PropTypes.object
+  store:        PropTypes.object,
 };
 
 export default reduxForm({

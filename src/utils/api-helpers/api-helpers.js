@@ -4,7 +4,7 @@ import Url   from 'url';
 import { getCookies } from 'utils/cookies';
 import { HttpError, ValidationError } from 'utils/errors';
 
-const headers = (headers = {}) => {
+const authorizeHeaders = (headers = {}) => {
   const token = getCookies().token;
   const basicAuth = token ? { 'Authorization': token } : null;
 
@@ -22,8 +22,8 @@ const fetchApi = (url, fullOptions = {}) => {
   const { camelizeSkipFilter, ...options } = fullOptions;
 
   return fetch(url, {
-    headers: headers(),
-    ...options
+    headers: authorizeHeaders(),
+    ...options,
   }).then(response => {
     if (response.status === 204) {
       // Empty body
@@ -43,11 +43,11 @@ const fetchApi = (url, fullOptions = {}) => {
   });
 };
 
-export const getPDF = (url, query, fullOptions = {}) => {
+const getPDF = (url, query, fullOptions = {}) => {
   return fetch(url, {
-    headers: headers({ 'Accept': 'text/pdf' }),
+    headers: authorizeHeaders({ 'Accept': 'text/pdf' }),
     method: 'GET',
-    ...fullOptions
+    ...fullOptions,
   }).then(response => {
     if (response.ok) {
       return response.blob();
@@ -57,7 +57,7 @@ export const getPDF = (url, query, fullOptions = {}) => {
   });
 };
 
-export const prepareURL = (pathname, query = {}) => Url.format({
+const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
   hostname: process.env.REACT_APP_BACKEND_HOSTNAME,
   port:     process.env.REACT_APP_BACKEND_PORT,
@@ -65,8 +65,24 @@ export const prepareURL = (pathname, query = {}) => Url.format({
   pathname: pathname,
 });
 
-export const getApi    = (url, options = {})       => fetchApi(url, { ...options, method: 'GET' });
-export const postApi   = (url, data, options = {}) => fetchApi(url, { ...options, method: 'POST',  body: formatJsonBody(data) });
-export const putApi    = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PUT',   body: formatJsonBody(data) });
-export const patchApi  = (url, data, options = {}) => fetchApi(url, { ...options, method: 'PATCH', body: formatJsonBody(data) });
-export const deleteApi = (url, options = {})       => fetchApi(url, { ...options, method: 'DELETE' });
+const getApi = (url, options = {}) => {
+  return fetchApi(url, { ...options, method: 'GET' });
+};
+const postApi = (url, data, options = {}) => {
+  return fetchApi(url, { ...options, method: 'POST',  body: formatJsonBody(data) });
+};
+const putApi = (url, data, options = {}) => {
+  return fetchApi(url, { ...options, method: 'PUT',   body: formatJsonBody(data) });
+};
+const patchApi = (url, data, options = {}) => {
+  return fetchApi(url, { ...options, method: 'PATCH', body: formatJsonBody(data) });
+};
+const deleteApi = (url, options = {}) => {
+  return fetchApi(url, { ...options, method: 'DELETE' });
+};
+
+export {
+  prepareURL,
+  getApi, postApi, putApi, patchApi, deleteApi,
+  getPDF,
+};

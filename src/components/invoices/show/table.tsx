@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 import { formatDate } from 'utils/date';
 import Items from './items';
 
 import { MoneyAmount } from 'components/utils/money';
 
-interface Props {
-  invoice:      Invoice;
+interface IProps {
+  invoice:      IInvoice;
   userFullName: string;
 }
 
-const Table: React.SFC<Props> = ({ invoice, userFullName }) => (
+const Table: React.SFC<IProps> = ({ invoice, userFullName }) => (
   <BsTable bordered className="invoice">
     <tbody>
       <tr>
