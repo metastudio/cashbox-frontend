@@ -14,13 +14,13 @@ const Debtors: React.SFC<IProps> = ({ debtors }) => {
   const debtorRender = (amount: IConvertedAmount) => {
     if (amount.amount) {
       return <ConvertedDebt amount={ amount } />;
-    } else {
-      return (
-        <td className="text-right">
-          { formatMoney(amount.oldAmount) }
-        </td>
-      );
     }
+
+    return (
+      <td className="text-right">
+        { formatMoney(amount.oldAmount) }
+      </td>
+    );
   };
 
   const renderDebtors = flatten(debtors.map(debtor => (

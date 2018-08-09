@@ -12,6 +12,7 @@ const UserScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
+        { /* tslint:disable-next-line:jsx-no-lambda */ }
         <Route exact path="/user" render={ () => <Redirect to="/user/profile" /> } />
         <Route path="/user/profile" component={ Profile } />
       </AppLayout>
