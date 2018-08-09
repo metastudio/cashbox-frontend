@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import { GroupedOptionsType } from 'react-select/lib/types';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
@@ -17,13 +18,13 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IOwnProps {
-  type: CategoryType;
+  type?: CategoryType;
 }
 
 interface IStateProps {
   orgId:      number;
   status:     Status;
-  categories: ICategory[] | null;
+  categories: ICategory[];
 }
 
 interface IDispatchProps {
@@ -45,11 +46,18 @@ class CategoriesSelect extends React.Component<IProps> {
     this.props.input.onChange(category && category.id);
   }
 
-  private options = (): ICategory[] => {
-    const { status, categories } = this.props;
-    if (status !== Status.Success || !categories) { return []; }
+  private options = (): GroupedOptionsType<ICategory> | ICategory[] => {
+    const { status, categories, type } = this.props;
+    if (status !== Status.Success) { return []; }
 
-    return categories;
+    if (type) {
+      return categories;
+    }
+
+    return [CategoryType.Income, CategoryType.Expense].map(t => ({
+      label: t,
+      options: categories.filter(c => c.type === t),
+    }));
   }
 
   private styles = () => ({
