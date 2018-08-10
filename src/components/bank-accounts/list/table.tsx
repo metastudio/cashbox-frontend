@@ -1,30 +1,40 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-import { BankAccount } from 'services/bank-accounts';
+import { IBankAccount, selectBankAccountsWithCurrency } from 'services/bank-accounts';
 
 import Row from './table-row';
 
-interface Props {
-  bankAccounts: BankAccount[];
+interface IOwnProps {
+  currency: string;
 }
 
-const BankAccountsTable: React.SFC<Props> = ({ bankAccounts }) => (
+interface IStateProps {
+  bankAccounts: IBankAccount[];
+}
+
+type IProps = IOwnProps & IStateProps;
+
+const BankAccountsTable: React.SFC<IProps> = ({ bankAccounts }) => (
   <Table striped responsive hover id="bankAccounts">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Currency</th>
-        <th>Description</th>
-        <th>Balance</th>
-        <th>Invoice Details</th>
-        <th colSpan={ 2 } />
+        <th className="col-xs-3">Name</th>
+        <th className="col-xs-1">Balance</th>
+        <th className="col-xs-4">Description</th>
+        <th className="col-xs-3">Invoice Details</th>
+        <th className="col-xs-1" colSpan={ 2 } />
       </tr>
     </thead>
     <tbody>
-      { bankAccounts.map((ba) => ba ? <Row bankAccount={ ba } key={ ba.id } /> : null) }
+      { bankAccounts.map(ba => ba ? <Row bankAccount={ ba } key={ ba.id } /> : null) }
   </tbody>
   </Table>
 );
 
-export default BankAccountsTable;
+const mapState = (state: {}, props: IOwnProps) => ({
+  bankAccounts: selectBankAccountsWithCurrency(state, props.currency),
+});
+
+export default connect<IStateProps, {}, IOwnProps>(mapState)(BankAccountsTable);

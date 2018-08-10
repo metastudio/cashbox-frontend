@@ -9,7 +9,7 @@ import {
 import {
   updateProfile,
   updateAccount,
-  cancelAccount
+  cancelAccount,
 } from './actions.js';
 
 export function* handleUpdateProfile({ payload: { userId, data }, meta: { resolve, reject } }) {

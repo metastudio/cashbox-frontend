@@ -17,14 +17,14 @@ class CancelAccount extends React.Component {
       const { userId, cancelAccount } = this.props;
       cancelAccount(userId).then(
         () => this.props.addFlashMessage('Account canceled successfull'),
-        error => this.props.addFlashMessage(error.message, { type: 'danger' })
+        error => this.props.addFlashMessage(error.message, { type: 'danger' }),
       );
     }
   }
 
   render() {
     return(
-      <div style={{ 'margin-bottom': '20px' }}>
+      <div style={{ marginBottom: '20px' }}>
         <h3>Cancel my account</h3>
         <div>Unhappy?&nbsp;
           <a onClick={ this.handleClick } href="" >Cancel my account</a>
@@ -41,14 +41,14 @@ CancelAccount.propTypes = {
 };
 
 const select = (state) => ({
-  userId: state.auth.user.id
+  userId: state.auth.user.id,
 });
 
 const dispatcher = (dispatch) => ({
   cancelAccount: (userId) => new Promise((res, rej) => {
     dispatch(cancelAccountAction(userId, res, rej));
   }),
-  addFlashMessage: (message, type=null) => dispatch(addFlashMessage(message, type))
+  addFlashMessage: (message, type = null) => dispatch(addFlashMessage(message, type)),
 });
 
 export default connect(select, dispatcher)(CancelAccount);

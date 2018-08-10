@@ -5,32 +5,38 @@ import { Button, Row, Col } from 'react-bootstrap';
 import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
 import RemoveItemButton from './remove-item';
 
-const ItemsFields: React.SFC<WrappedFieldArrayProps<InvoiceItemFormData>> = ({ fields }) => {
-  return(
-    <>
-      {
-        fields.map((name, idx) => {
-          const invoiceItem = fields.get(idx);
+class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItemFormData>> {
+  private renderField = (name: string, idx: number) => {
+    const invoiceItem = this.props.fields.get(idx);
 
-          if (invoiceItem._destroy) {
-            return null;
-          }
+    if (invoiceItem._destroy) {
+      return null;
+    }
 
-          return(
-            <Row key={ idx }>
-              <Col xs={ 12 }>
-                <RemoveItemButton name={ name } idx={ idx } fields={ fields } invoiceItem={ invoiceItem } />
-                <InvoiceItemFields name={ name } idx={ idx } />
-              </Col>
-            </Row>
-          );
-        })
-      }
+    return(
+      <Row key={ idx }>
+        <Col xs={ 12 }>
+          <RemoveItemButton name={ name } idx={ idx } fields={ this.props.fields } invoiceItem={ invoiceItem } />
+          <InvoiceItemFields name={ name } idx={ idx } />
+        </Col>
+      </Row>
+    );
+  }
 
-      <Button onClick={ () => fields.push({}) }>Add Item...</Button>
-    </>
-  );
-};
+  private handleAddItem = () => {
+    this.props.fields.push({});
+  }
+
+  public render () {
+    const { fields } = this.props;
+    return(
+      <>
+        { fields.map(this.renderField) }
+        <Button onClick={ this.handleAddItem }>Add Item...</Button>
+      </>
+    );
+  }
+}
 
 const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<InvoiceItemFormData>;
 

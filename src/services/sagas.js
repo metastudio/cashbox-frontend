@@ -6,6 +6,7 @@ import bankAccountsSaga  from './bank-accounts/saga.js';
 import categoriesSaga    from './categories/saga.js';
 import currenciesSaga    from './currencies/saga.js';
 import customersSaga     from './customers/saga.js';
+import debtorsSaga       from './debtors/saga.js';
 import invoicesSaga      from './invoices/saga.js';
 import membersSaga       from './members/saga.js';
 import organizationsSaga from './organizations/saga.js';
@@ -22,9 +23,10 @@ function* rootSaga() {
     fork(currenciesSaga),
     fork(customersSaga),
     fork(categoriesSaga),
+    fork(debtorsSaga),
     fork(membersSaga),
     fork(usersSaga),
-    fork(invoicesSaga)
+    fork(invoicesSaga),
   ]);
 }
 

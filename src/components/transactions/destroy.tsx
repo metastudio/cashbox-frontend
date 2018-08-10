@@ -1,36 +1,36 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import { Transaction, destroyTransaction } from 'services/transactions';
+import { ITransaction, destroyTransaction } from 'services/transactions';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
 
-interface OwnProps {
-  transaction: Transaction;
+interface IOwnProps {
+  transaction: ITransaction;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   destroy:      (orgId: number, transactionId: number) => Promise<{}>;
   flashMessage: (message: string) => void;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & OwnProps & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IOwnProps & IStateProps & IDispatchProps;
 
-class DestroyButton extends React.Component<Props> {
-  handleDestroy = () => {
+class DestroyButton extends React.Component<IProps> {
+  private handleDestroy = () => {
     const { orgId, transaction, destroy } = this.props;
     if (!transaction) { return; }
 
-    confirm('Are you sure?').then( () => {
+    confirm('Are you sure?').then(() => {
       destroy(orgId, transaction.id).then(() => {
         const { flashMessage, history } = this.props;
 
@@ -40,7 +40,7 @@ class DestroyButton extends React.Component<Props> {
     });
   }
 
-  render() {
+  public render() {
     return(
       <Button bsStyle="danger" onClick={ this.handleDestroy }>Remove</Button>
     );
@@ -51,10 +51,10 @@ const mapState = (state: {}) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   destroy: (orgId: number, transactionId: number) =>
     new Promise((res, rej) => { dispatch(destroyTransaction(orgId, transactionId, res, rej)); }),
   flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(DestroyButton));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DestroyButton));

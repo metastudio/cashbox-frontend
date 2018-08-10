@@ -1,20 +1,22 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { BankAccount } from 'services/bank-accounts';
-import { formatMoney } from 'utils/money';
+import { IBankAccount } from 'services/bank-accounts';
 import DestroyButton from '../destroy';
 
-interface Props {
-  bankAccount: BankAccount;
+import { MoneyAmount } from 'components/utils/money';
+
+interface IProps {
+  bankAccount: IBankAccount;
 }
 
-const BankAccountsTableRow: React.SFC<Props> = ({ bankAccount }) => (
-  <tr>
+const BankAccountsTableRow: React.SFC<IProps> = ({ bankAccount }) => (
+  <tr className={ bankAccount.visible ? '' : 'text-muted' }>
     <td>{ bankAccount.name }</td>
-    <td>{ bankAccount.currency }</td>
+    <td className="text-right">
+      <MoneyAmount colorize="onlyNegative" amount={ bankAccount.balance } />
+    </td>
     <td>{ bankAccount.description }</td>
-    <td>{ formatMoney(bankAccount.balance) }</td>
     <td>{ bankAccount.invoiceDetails }</td>
     <td><Link to={ `/bank_accounts/${bankAccount.id}/edit` } title="Edit"><i className="fa fa-edit" /></Link></td>
     <td><DestroyButton bankAccount={ bankAccount } /></td>

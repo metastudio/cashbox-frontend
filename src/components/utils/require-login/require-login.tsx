@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import { selectIsAuthorized } from 'services/auth';
 
-interface StateProps {
+interface IStateProps {
   isAuthorized: boolean;
 }
 
-interface DispatchProps {
-  flashMessage: (msg: string, opts?: FlashMessageOptions) => void;
+interface IDispatchProps {
+  flashMessage: (msg: string, opts?: IFlashMessageOptions) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class RequireLogin extends React.Component<Props> {
-  checkAuth(props: Props) {
+class RequireLogin extends React.Component<IProps> {
+  private checkAuth(props: IProps) {
     if (!props.isAuthorized) {
       props.flashMessage('Login is required.', { type: 'danger' });
       props.history.push('/login');
@@ -24,20 +25,20 @@ class RequireLogin extends React.Component<Props> {
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.checkAuth(this.props);
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     this.checkAuth(this.props);
   }
 
-  render() {
-    if (this.props.isAuthorized) {
-      return this.props.children;
-    } else {
-      return null;
-    }
+  public render() {
+    const { isAuthorized, children } = this.props;
+
+    if (!isAuthorized) { return null; }
+
+    return children;
   }
 }
 
@@ -45,8 +46,8 @@ const mapState = (state: object) => ({
   isAuthorized: selectIsAuthorized(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  flashMessage: (msg: String, opts: FlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
+const mapDispatch = (dispatch: Dispatch) => ({
+  flashMessage: (msg: string, opts: IFlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(RequireLogin));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(RequireLogin));

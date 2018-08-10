@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import {  } from 'model-types';
-import * as statuses from 'constants/statuses.js';
+import { Status } from 'model-types';
 import {
-  Invoice,
+  IInvoice,
   loadInvoice,
   selectInvoice, selectInvoiceStatus,
 } from 'services/invoices';
@@ -21,28 +21,27 @@ import DestroyButton from './show/destroy';
 import LoadingView from '../utils/loading-view';
 import DownloadPDFButton from './download_pdf';
 
-interface StateProps {
+interface IStateProps {
   orgId:        number;
-  status:       string;
-  invoice:      Invoice | null;
+  status:       Status;
+  invoice:      IInvoice | null;
   userFullName: string;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load:         (orgId: number, invoiceId: number) => void;
 }
 
-type RouteProps = RouteComponentProps<{ id: string }>;
-type Props = RouteProps & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class ShowInvoice extends React.Component<Props> {
-  componentDidMount() {
+class ShowInvoice extends React.Component<IProps> {
+  public componentDidMount() {
     const { orgId, load, match } = this.props;
     load(orgId, Number(match.params.id));
   }
 
-  render() {
-    if (this.props.status !== statuses.SUCCESS || !this.props.invoice) {
+  public render() {
+    if (this.props.status !== Status.Success || !this.props.invoice) {
       return <LoadingView status={ this.props.status } />;
     }
 
@@ -74,8 +73,8 @@ const mapState = (state: {}) => ({
   userFullName: selectUserFullName(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(ShowInvoice));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(ShowInvoice));

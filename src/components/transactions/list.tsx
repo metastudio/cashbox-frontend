@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
 import * as QS from 'query-string';
 
-import { Status, Pagination as PaginationInterface } from 'model-types';
+import { Status, IPagination } from 'model-types';
 import {
-  Transaction,
+  ITransaction,
   loadTransactions,
   selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
 } from 'services/transactions';
@@ -14,81 +15,98 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';
-import Pagination from 'components/pagination';
+import Paginator from 'components/utils/paginator';
 import TransactionsFilter from './filter';
 
-interface OwnState {
+interface IState {
   isFilterOpened: boolean;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId:        number;
-  status:       string;
-  transactions: Transaction[] | null;
-  pagination:   PaginationInterface;
+  status:       Status;
+  transactions: ITransaction[];
+  pagination:   IPagination;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number, params: object) => void;
 }
 
-type Props = RouteComponentProps<{}> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
-class TransactionsList extends React.Component<Props, OwnState> {
-  state: OwnState = {
+class TransactionsList extends React.PureComponent<IProps, IState> {
+  public state: IState = {
     isFilterOpened: false,
   };
 
-  loadData = (props: Props) => {
-    const { orgId, load, location: { search } } = props;
+  private loadData = () => {
+    const { orgId, load, location: { search } } = this.props;
     load(orgId, QS.parse(search));
   }
 
-  componentDidMount() {
-    this.loadData(this.props);
+  private handleToggleFilter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    this.setState({ isFilterOpened: !this.state.isFilterOpened });
   }
 
-  componentDidUpdate(prevProps: Props) {
+  private renderToggleFilter = () => (
+    <small>
+      <a href="#" onClick={ this.handleToggleFilter } title="Filter">
+        <i className="fa fa-filter" />
+      </a>
+    </small>
+  )
+
+  private renderTransactions = () => {
+    const { transactions, pagination } = this.props;
+
+    return (
+      <>
+        <Table transactions={ transactions } />
+        <Paginator data={ pagination } />
+      </>
+    );
+  }
+
+  public componentDidMount() {
+    this.loadData();
+  }
+
+  public componentDidUpdate(prevProps: IProps) {
     const { location: { search: prevSearch } } = prevProps;
     const { status, location: { search } } = this.props;
 
     if (status === Status.Invalid || search !== prevSearch) {
-      this.loadData(this.props);
+      this.loadData();
     }
   }
 
-  render() {
-    const { status, transactions } = this.props;
-
-    if (status !== Status.Success || !transactions) {
-      return <LoadingView status={ status } />;
-    }
+  public render() {
     return (
       <>
         <PageHeader>
           <Link to="/transactions/new" className="btn btn-default pull-right">New Transaction...</Link>
-          Transactions
-          <Link to="#" onClick={ () => this.setState({ isFilterOpened: !this.state.isFilterOpened }) } title="Filters">
-            <i className="fa fa-filter" />
-          </Link>
+          Transactions&nbsp;{ this.renderToggleFilter() }
         </PageHeader>
-        <TransactionsFilter isFilterOpened={ this.state.isFilterOpened } />
-        <Table transactions={ transactions } />
-        <Pagination data={ this.props.pagination } newPathname={ '/transactions' } />
+        <TransactionsFilter open={ this.state.isFilterOpened } />
+        <LoadingView status={ this.props.status }>
+          { this.renderTransactions }
+        </LoadingView>
       </>
     );
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: {}): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number, params: object) => dispatch(loadTransactions(orgId, params)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: (orgId, params) => dispatch(loadTransactions(orgId, params)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(TransactionsList));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList));

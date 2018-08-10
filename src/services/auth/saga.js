@@ -17,18 +17,10 @@ function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
     const token = getCookies().token;
-    if (!token) throw new Error('Token not found');
+    if (!token) { throw new Error('Token not found'); }
     const user = yield call(getCurrentUser);
 
-    let organization;
-    const currentOrganizationId = getCookies().currentOrganizationId;
-    try {
-      organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
-    } catch (error) {
-      organization = null;
-    }
-
-    yield put(restoreSession.success(token, user, organization));
+    yield put(restoreSession.success(token, user));
     yield call(resolve, user);
   } catch (error) {
     yield put(restoreSession.failure(error));

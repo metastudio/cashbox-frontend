@@ -1,50 +1,50 @@
 import * as React from 'react';
-
-import { connect, Dispatch } from 'react-redux';
-import * as moment from 'moment';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
-import { Money, formatMoney } from 'utils/money';
+import { IMoney, formatMoney } from 'utils/money';
 
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
+  IBalance,
   loadOrganizationBalances,
   selectBalancesTotalAmount, selectBalancesDefaultCurrency, selectBalancesTotals,
 } from 'services/balances';
 
-import BalanceItem, { Balance } from './balance-item';
+import BalanceItem from './balance-item';
 
-interface StateProps {
+interface IStateProps {
   organizationId?:  number;
-  totalAmount?:     Money;
+  totalAmount?:     IMoney;
   defaultCurrency?: string;
-  balances:         Balance[];
+  balances:         IBalance[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   loadData: (organizationId: number) => void;
 }
 
-class Balances extends React.Component<StateProps & DispatchProps> {
-  componentDidMount() {
+class Balances extends React.Component<IStateProps & IDispatchProps> {
+  // private balanceTitle = (balance: IBalance): string => {
+  //   if (!balance.rate) {
+  //     return '';
+  //   }
+
+  //   const { defaultCurrency } = this.props;
+
+  //   return `${ balance.currency }/${ defaultCurrency }, `
+  //     + `rate: ${ balance.rate }, `
+  //     + `by: ${ moment(balance.updatedAt).format('L') }`;
+  // }
+
+  public componentDidMount() {
     const { organizationId, loadData } = this.props;
     if (organizationId) {
       loadData(organizationId);
     }
   }
 
-  balanceTitle = (balance: Balance): string => {
-    if (!balance.rate) {
-      return '';
-    }
-
-    const { defaultCurrency } = this.props;
-
-    return `${ balance.currency }/${ defaultCurrency }, `
-      + `rate: ${ balance.rate }, `
-      + `by: ${ moment(balance.updatedAt).format('L') }`;
-  }
-
-  render() {
+  public render() {
     const { organizationId, totalAmount, balances, defaultCurrency } = this.props;
 
     if (!organizationId || !totalAmount) { return null; }
@@ -64,8 +64,8 @@ const mapState = (state: object) => ({
   balances:        selectBalancesTotals(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<void>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   loadData: (organizationId: number) => dispatch(loadOrganizationBalances(organizationId)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(Balances);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(Balances);

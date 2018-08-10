@@ -1,30 +1,31 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Category, deleteCategory as deleteCategoryAction } from 'services/categories';
-import { addFlashMessage, FlashMessageOptions } from 'services/flash-messages';
+import { ICategory, deleteCategory as deleteCategoryAction } from 'services/categories';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 
 import { confirm } from 'components/utils/confirm';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-interface OwnProps {
-  category: Category;
+interface IOwnProps {
+  category: ICategory;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId: number;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   deleteCategory: (orgId: number, categoryId: number) => Promise<{}>;
-  message:        (msg: string, type?: FlashMessageOptions) => void;
+  message:        (msg: string, type?: IFlashMessageOptions) => void;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & RouteComponentProps<{}>;
+type Props = IOwnProps & IStateProps & IDispatchProps & RouteComponentProps<{}>;
 
 class DestroyCategory extends React.Component<Props> {
-  handleDeleteCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  private handleDeleteCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     const { orgId, category, message, history, deleteCategory } = this.props;
@@ -33,13 +34,13 @@ class DestroyCategory extends React.Component<Props> {
       deleteCategory(orgId, category.id).then(() => {
         message(`Category "${category.name}" has been removed.`);
         history.push('/categories');
-      }).catch(error => {
+      }).catch((error) => {
         message(`Unable to delete category: ${error.message}`, { type: 'danger' });
       });
     });
   }
 
-  render() {
+  public render() {
     const { category } = this.props;
     return (
       <a
@@ -57,12 +58,12 @@ const mapState = (state: object) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   deleteCategory:
     (orgId: number, categoryId: number) => (
       new Promise((res, rej) => dispatch(deleteCategoryAction(orgId, categoryId, res, rej)))
     ),
-  message: (msg: string, type?: FlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
+  message: (msg: string, type?: IFlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(DestroyCategory));
+export default withRouter(connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(DestroyCategory));

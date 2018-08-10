@@ -1,7 +1,12 @@
 import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadBankAccounts, deleteBankAccount } from './actions.js';
+import {
+  loadBankAccounts,
+  createBankAccount,
+  updateBankAccount,
+  deleteBankAccount,
+} from './actions.js';
 import {
   createTransaction,
   createTransfer,
@@ -18,7 +23,6 @@ const defaultState = {
 export default handleActions({
   [loadBankAccounts.request]: (state) => ({
     ...state,
-    items:  [],
     status: statuses.PENDING,
     error:  null,
   }),
@@ -30,17 +34,19 @@ export default handleActions({
   }),
   [loadBankAccounts.failure]: (state, { payload }) => ({
     ...state,
-    items:  [],
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
+  }),
+  [updateBankAccount.success]: (state, { payload }) => ({
+    ...state,
+    items: state.items.map((ba) => ba.id === payload.bankAccount.id ? payload.bankAccount.id : ba),
   }),
   [deleteBankAccount.success]: (state, { payload }) => ({
     ...state,
-    items:  state.items.filter((item) => item.id !== payload.bankAccount.id),
-    status: statuses.SUCCESS,
-    error:  null
+    items:  state.items.filter((ba) => ba.id !== payload.bankAccount.id),
   }),
   [combineActions(
+    createBankAccount.success,
     createTransaction.success,
     createTransfer.success,
     updateTransaction.success,
@@ -48,5 +54,5 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
-  })
+  }),
 }, defaultState);

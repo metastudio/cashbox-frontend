@@ -6,11 +6,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import LogoutItem from './logout-item';
 import { selectUserFullName } from 'services/users';
 
-interface StatePropTypes {
+interface IStateProps {
   userFullName: string;
 }
 
-const ProfileItem: React.SFC<StatePropTypes> = ({ userFullName }) => (
+const ProfileItem: React.SFC<IStateProps> = ({ userFullName }) => (
   <NavDropdown title={ userFullName } id="user_links">
     <LinkContainer exact to="/organizations/select">
       <MenuItem>Change organization</MenuItem>
@@ -29,4 +29,4 @@ const select = (state: object) => ({
   userFullName: selectUserFullName(state),
 });
 
-export default connect<StatePropTypes>(select)(ProfileItem);
+export default connect<IStateProps>(select)(ProfileItem);

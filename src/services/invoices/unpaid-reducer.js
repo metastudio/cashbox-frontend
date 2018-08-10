@@ -35,7 +35,6 @@ export default handleActions({
   [loadUnpaidInvoices.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
 }, defaultState);
-

@@ -1,1 +1,1 @@
-export { default, InvoiceFormData } from './form';
+export { default, IInvoiceFormData } from './form';

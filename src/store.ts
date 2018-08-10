@@ -1,6 +1,6 @@
-import { combineReducers, applyMiddleware, createStore } from 'redux';
+import { combineReducers, applyMiddleware, createStore, Middleware } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import createLogger from 'redux-logger';
+import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
 import * as reducers from 'services/reducers.js';
@@ -13,13 +13,16 @@ function createAppStore() {
     form: formReducer,
   });
 
-  const logger = createLogger();
   const sagaMiddleware = createSagaMiddleware();
 
-  const createStoreWithMiddleware = applyMiddleware(
+  const middlewares: Middleware[] = [
     sagaMiddleware,
-    logger // TODO disable in prod
-  )(createStore);
+  ];
+  if (process.env.REACT_APP_ENABLE_REDUX_LOGGER === 'true') {
+    middlewares.push(logger);
+  }
+
+  const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
   const store = createStoreWithMiddleware(reducer);
 

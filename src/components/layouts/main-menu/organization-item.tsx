@@ -6,13 +6,13 @@ import { Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { selectCurrentOrganization } from 'services/organizations';
 import 'components/app/css/default.css';
 
-interface StatePropTypes {
+interface IStatePropTypes {
   organization?: {
-    name: string
+    name: string,
   };
 }
 
-const MenuOrganizationItem: React.SFC<StatePropTypes> = ({ organization }) => {
+const MenuOrganizationItem: React.SFC<IStatePropTypes> = ({ organization }) => {
   if (!organization) { return null; }
 
   const renderTitle = (title: string): object => {
@@ -57,4 +57,4 @@ const mapState = (state: object) => ({
   organization: selectCurrentOrganization(state),
 });
 
-export default connect<StatePropTypes>(mapState)(MenuOrganizationItem);
+export default connect<IStatePropTypes>(mapState)(MenuOrganizationItem);

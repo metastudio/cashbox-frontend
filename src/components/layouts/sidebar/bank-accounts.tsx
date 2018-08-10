@@ -1,62 +1,61 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 
 import { Status } from 'model-types';
 import {
-  BankAccount,
-  loadBankAccounts,
-  selectBankAccounts,
-  selectBankAccountsStatus
+  loadVisibleBankAccounts,
+  selectVisibleBankAccountsStatus,
+  selectVisibleBankAccountsCurrencies,
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
 import BankAccountsTable from './bank-accounts-table';
 
-interface StateProps {
-  orgId?:        number;
-  status:        Status;
-  bankAccounts?: BankAccount[];
+interface IStateProps {
+  orgId?:     number;
+  status:     Status;
+  currencies: string[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = IStateProps & IDispatchProps;
 
 class BankAccounts extends React.Component<Props> {
-  loadData = (props: Props) => {
+  private loadData = (props: Props) => {
     const { orgId, load } = this.props;
     if (orgId) {
       load(orgId);
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.loadData(this.props);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props) {
     const { status, orgId } = this.props;
     if (status === Status.Invalid || orgId !== prevProps.orgId) {
       this.loadData(this.props);
     }
   }
 
-  render() {
-    const { orgId, status, bankAccounts } = this.props;
+  public render() {
+    const { orgId, status, currencies } = this.props;
 
     if (!orgId) { return null; }
-    if (status !== Status.Success || !bankAccounts) {
-      return <LoadingView status={ status } />;
-    }
 
     return (
       <>
         <PageHeader>Accounts</PageHeader>
-        <BankAccountsTable bankAccounts={ bankAccounts } />
+        <LoadingView status={ status }>
+          { () => currencies.map(c => <BankAccountsTable key={ c } currency={ c } />) }
+        </LoadingView>
       </>
     );
   }
@@ -64,12 +63,12 @@ class BankAccounts extends React.Component<Props> {
 
 const mapState = (state: {}) => ({
   orgId:        selectCurrentOrganizationId(state),
-  bankAccounts: selectBankAccounts(state),
-  status:       selectBankAccountsStatus(state),
+  status:       selectVisibleBankAccountsStatus(state),
+  currencies:   selectVisibleBankAccountsCurrencies(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+const mapDispatch = (dispatch: Dispatch) => ({
+  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
-export default connect<StateProps, DispatchProps>(mapState, mapDispatch)(BankAccounts);
+export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccounts);

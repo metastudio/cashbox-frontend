@@ -26,7 +26,6 @@ export default handleActions({
   [loadInvoice.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
-    error:  payload
+    error:  payload,
   }),
 }, defaultState);
-

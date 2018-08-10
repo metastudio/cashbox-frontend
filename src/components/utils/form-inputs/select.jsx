@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormControl } from 'react-bootstrap';
 
-import { wrapInlineFormGroup } from './inline-form-group.jsx';
-import { wrapHorizontalFormGroup } from './horizontal-form-group.jsx';
+import { wrapInlineFormGroup } from './inline-form-group';
+import { wrapHorizontalFormGroup } from './horizontal-form-group';
 
 const Select = ({ input, collection, prompt, ...inputProps }) => {
   delete inputProps.meta;

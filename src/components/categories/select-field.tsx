@@ -1,41 +1,40 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
+import { GroupedOptionsType } from 'react-select/lib/types';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
-  Category, CategoryType,
+  ICategory, CategoryType,
   loadCategories,
-  selectCategoriesStatus, selectTypedCategories,
+  selectCategoriesStatus, selectCategories,
 } from 'services/categories';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
-interface OwnProps {
-  type:        CategoryType;
-  emptyTitle?: string;
+interface IOwnProps {
+  type?: CategoryType;
 }
 
-interface StateProps {
+interface IStateProps {
   orgId:      number;
   status:     Status;
-  categories: Category[] | null;
+  categories: ICategory[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
 
-class CategoriesSelect extends React.Component<Props> {
-  loadData = () => {
+class CategoriesSelect extends React.Component<IProps> {
+  private loadData = () => {
     const { status, load, orgId } = this.props;
 
     if (status === Status.Invalid) {
@@ -43,57 +42,86 @@ class CategoriesSelect extends React.Component<Props> {
     }
   }
 
-  componentDidMount() {
+  private handleChange = (category: ICategory) => {
+    this.props.input.onChange(category && category.id);
+  }
+
+  private options = (): GroupedOptionsType<ICategory> | ICategory[] => {
+    const { status, categories, type } = this.props;
+    if (status !== Status.Success) { return []; }
+
+    if (type) {
+      return categories;
+    }
+
+    return [CategoryType.Income, CategoryType.Expense].map(t => ({
+      label: t,
+      options: categories.filter(c => c.type === t),
+    }));
+  }
+
+  private styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    }),
+  })
+
+  private formatLabel = (c: ICategory) => c.name;
+  private formatValue = (c: ICategory) => String(c.id);
+
+  public componentDidMount() {
     this.loadData();
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     this.loadData();
   }
 
-  handleChange = (value: Option<string>) => {
-    this.props.input.onChange(value && value.value);
-  }
+  public render() {
+    const { orgId, type, input, meta, status, categories, ...inputProps } = this.props;
 
-  options = (): Option[] => {
-    const { status, categories, emptyTitle } = this.props;
-    if (status !== Status.Success || !categories) { return []; }
-
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(categories.map(c => ({ value: String(c.id), label: c.name })));
-  }
-
-  render() {
-    const { orgId, type, input, meta, status, ...inputProps } = this.props;
+    let selectedCategory;
+    if (input.value && status === Status.Success && categories) {
+      selectedCategory = categories.find(c => c.id === input.value);
+    }
 
     return (
-      <Select
+      <Select<ICategory>
         { ...inputProps }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedCategory }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
+        getOptionLabel={ this.formatLabel }
+        getOptionValue={ this.formatValue }
       />
     );
   }
 }
 
-const mapState = (state: {}, props: OwnProps) => ({
+const mapState = (state: {}, props: IOwnProps) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectCategoriesStatus(state),
-  categories: selectTypedCategories(state, props.type),
+  categories: selectCategories(state, props.type),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load: (orgId: number) => new Promise((res, rej) => dispatch(loadCategories(orgId, res, rej))),
 });
 
 const CategoriesSelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(CategoriesSelect);
+  connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(CategoriesSelect);
 
 const HorizontalCategoriesSelect = wrapHorizontalFormGroup(CategoriesSelectContainer);
 const VerticalCategoriesSelect   = wrapVerticalFormGroup(CategoriesSelectContainer);
+const NoLabelCategoriesSelect    = wrapNoLabelFormGroup(CategoriesSelectContainer);
 
-export { CategoriesSelectContainer as CategoriesSelect, HorizontalCategoriesSelect, VerticalCategoriesSelect };
+export {
+  CategoriesSelectContainer as CategoriesSelect,
+  HorizontalCategoriesSelect,
+  VerticalCategoriesSelect,
+  NoLabelCategoriesSelect,
+};

@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import { Invoice } from 'services/invoices';
+import { IInvoice } from 'services/invoices';
 
 import Row from './table-row';
 
-interface Props {
-  invoices: Invoice[];
+interface IProps {
+  invoices: IInvoice[];
 }
 
-const InvoicesTableBody: React.SFC<Props> = ({ invoices }) => (
+const InvoicesTableBody: React.SFC<IProps> = ({ invoices }) => (
   <tbody>
-    { invoices.map((i) => <Row invoice={ i } key={ i.id } />) }
+    { invoices.map(i => <Row invoice={ i } key={ i.id } />) }
   </tbody>
 );
 

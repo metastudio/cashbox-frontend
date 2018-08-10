@@ -19,17 +19,32 @@ Copy `.env.sample` to `.env.local` and edit this file.
 $ yarn start
 ```
 
-## ESLint
+## Linting
 
-To make ESLint work you have to install additional packages globally:
+TSLint is used to lint both JavaScript and TypesScript files. Linting is run
+when you start development server or build bundle.
 
-```sh
-$ npm install -g eslint-config-react-app babel-eslint@^7.2.3 eslint@^4.1.1 eslint-plugin-flowtype@^2.34.1 eslint-plugin-import@^2.6.0 eslint-plugin-jsx-a11y@^5.1.1 eslint-plugin-react@^7.1.0
+### Visual Studio Code
+
+To use TSLint for JavasSrript files set config `tslint.jsEnable` to `true`.
+
+Add next task to be able to run lint as task in VSCode:
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Lint",
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": {
+        "base": "$tslint5",
+        "fileLocation": "relative"
+      }
+    }
+  ]
+}
 ```
-
-## TSLint
-
-Should work out of the box.
 
 # Deployment
 

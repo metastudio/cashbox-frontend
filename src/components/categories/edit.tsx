@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
 
 import { Status } from 'model-types';
 import { addFlashMessage } from 'services/flash-messages';
 import {
-  CategoryParams, Category,
+  ICategoryParams, ICategory,
   loadCategory, updateCategory,
   selectCategoryStatus, selectCategory,
 } from 'services/categories';
@@ -16,32 +17,50 @@ import LoadingView from '../utils/loading-view';
 import Form from './form.jsx';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-interface StateProps {
+interface IStateProps {
   orgId:    number;
   status:   Status;
-  category: Category | null;
+  category: ICategory | null;
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load:    (orgId: number, categoryId: number) => void;
-  update:  (orgId: number, categoryId: number, data: CategoryParams) => Promise<{}>;
+  update:  (orgId: number, categoryId: number, data: ICategoryParams) => Promise<{}>;
   message: (msg: string) => void;
 }
 
-type Props = RouteComponentProps<{ id: string }> & StateProps & DispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class EditCategory extends React.Component<Props> {
-  loadData = () => {
-    const { load, orgId, match: { params: { id }}} = this.props;
+class EditCategory extends React.Component<IProps> {
+  private loadData = () => {
+    const { load, orgId, match: { params: { id } } } = this.props;
 
     load(orgId, Number(id));
   }
 
-  componentDidMount() {
+  private handleSubmit = (values: ICategoryParams) => {
+    const { update, orgId, match: { params: { id } } } = this.props;
+    return update(
+      orgId, Number(id),
+      {
+        name: values.name,
+        type: values.type,
+      },
+    ).catch(prepareSubmissionError);
+  }
+
+  private afterUpdate = () => {
+    const { message, history } = this.props;
+
+    message('Category successfully updated.');
+    history.push('/categories');
+  }
+
+  public componentDidMount() {
     this.loadData();
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: IProps) {
     const { match: { params: { id: prevId } } } = prevProps;
     const { status, match: { params: { id } } } = this.props;
 
@@ -50,25 +69,7 @@ class EditCategory extends React.Component<Props> {
     }
   }
 
-  handleSubmit = (values: CategoryParams) => {
-    const { update, orgId, match: { params: { id } } } = this.props;
-    return update(
-      orgId, Number(id),
-      {
-        name: values.name,
-        type: values.type,
-      }
-    ).catch(prepareSubmissionError);
-  }
-
-  afterUpdate = () => {
-    const { message, history } = this.props;
-
-    message('Category successfully updated.');
-    history.push('/categories');
-  }
-
-  render() {
+  public render() {
     const { status, category } = this.props;
 
     if (status === Status.Invalid || !category) {
@@ -101,12 +102,12 @@ const mapState = (state: object) => ({
   category: selectCategory(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   load:    (orgId: number, categoyId: number) => dispatch(loadCategory(orgId, categoyId)),
-  update:  (orgId: number, categoryId: number, data: CategoryParams) => (
+  update:  (orgId: number, categoryId: number, data: ICategoryParams) => (
     new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej)))
   ),
   message: (msg: string) => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<StateProps, DispatchProps>(mapState, mapDispatch)(EditCategory));
+export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditCategory));

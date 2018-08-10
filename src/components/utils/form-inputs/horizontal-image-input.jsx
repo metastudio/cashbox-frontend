@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, FormControl } from 'react-bootstrap';
 
-import FormGroup from './horizontal-form-group.jsx';
+import FormGroup from './horizontal-form-group';
 
 export const HorizontalImageInput = ({ field, label, ...inputProps }) => {
   const handleChange = (e) => {

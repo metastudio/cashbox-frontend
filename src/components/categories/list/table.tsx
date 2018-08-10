@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { Category } from 'services/categories';
+import { ICategory } from 'services/categories';
 
 import Row from './table-row';
 
-interface Props {
-  categories: Category[];
+interface IProps {
+  categories: ICategory[];
 }
 
-const CategoriesTable: React.SFC<Props> = ({ categories }) => (
+const CategoriesTable: React.SFC<IProps> = ({ categories }) => (
   <Table striped responsive hover id="categories">
     <thead>
       <tr>
@@ -19,7 +19,7 @@ const CategoriesTable: React.SFC<Props> = ({ categories }) => (
       </tr>
     </thead>
     <tbody>
-      { categories.map((c) => c ? <Row category={ c } key={ c.id } /> : null) }
+      { categories.map(c => c ? <Row category={ c } key={ c.id } /> : null) }
   </tbody>
   </Table>
 );

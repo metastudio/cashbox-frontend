@@ -1,1 +1,1 @@
-export  * from './cookies.js';
+export  * from './cookies';

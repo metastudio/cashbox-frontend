@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Category } from 'services/categories';
+import { ICategory } from 'services/categories';
 
 import DestroyButton from '../destroy';
 
-interface Props {
-  category: Category;
+interface IProps {
+  category: ICategory;
 }
 
-const CategoriesTableRow: React.SFC<Props> = ({ category }) => (
+const CategoriesTableRow: React.SFC<IProps> = ({ category }) => (
   <tr>
     <td>{ category.name }</td>
     <td>{ category.type }</td>

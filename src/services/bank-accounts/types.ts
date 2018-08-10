@@ -1,10 +1,22 @@
-import { Money } from 'utils/money';
+import { ID } from 'model-types';
+import { IMoney } from 'utils/money/types';
 
-export interface BankAccount {
-  id:             number;
+interface IBankAccount {
+  id:             ID;
   name:           string;
   currency:       string;
-  balance:        Money;
+  balance:        IMoney;
   description:    string;
   invoiceDetails: string;
+  visible:        boolean;
 }
+
+interface IBankAccountParams {
+  name?:           string;
+  currency?:       string;
+  description?:    string;
+  invoiceDetails?: string;
+  visible?:        boolean;
+}
+
+export { IBankAccount, IBankAccountParams };

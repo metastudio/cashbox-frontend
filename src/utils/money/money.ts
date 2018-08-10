@@ -1,26 +1,16 @@
 import * as accounting from 'accounting';
 
-import Locales, { MoneyLocale } from './locales';
+import { IMoney, IMoneyLocale } from './types';
+import Locales from './locales';
 
-interface Money {
-  fractional: string;
-  currency:   {
-    isoCode: string;
-    name:          string;
-    symbol:        string;
-    subunitToUnit: number;
-    htmlEntity:    string;
-  };
-}
-
-const defaultMoneyLocale: MoneyLocale = Locales.ru_RU;
+const defaultMoneyLocale: IMoneyLocale = Locales.ru_RU;
 
 /**
  * Format money value with default locale
- * @param {Money} money - money value to format
- * @param {MoneyLocale} locale - locale in which format money value
+ * @param {IMoney} money - money value to format
+ * @param {IMoneyLocale} locale - locale in which format money value
  */
-const formatMoney = (money?: Money, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
+const formatMoney = (money?: IMoney, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
   if (!money) { return undefined; }
 
   const amount = Number(money.fractional) / money.currency.subunitToUnit;
@@ -36,10 +26,10 @@ const formatMoney = (money?: Money, locale: MoneyLocale = defaultMoneyLocale): s
 
 /**
  * Format money value to show in input
- * @param {Money} money - money value to format
- * @param {MoneyLocale} locale - locale in which format money value
+ * @param {IMoney} money - money value to format
+ * @param {IMoneyLocale} locale - locale in which format money value
  */
-const formatMoneyValue = (money?: Money, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
+const formatMoneyValue = (money?: IMoney, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
   if (!money) { return undefined; }
 
   const amount = Number(money.fractional) / money.currency.subunitToUnit;
@@ -55,9 +45,9 @@ const formatMoneyValue = (money?: Money, locale: MoneyLocale = defaultMoneyLocal
 /**
  * Reformat money string to format accepted by API
  * @param {string} str - string representation of money
- * @param {MoneyLocale} locale - locale in which money is formatted
+ * @param {IMoneyLocale} locale - locale in which money is formatted
  */
-const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale): string | undefined => {
+const formatMoneyParam = (str?: string, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
   if (!str) { return undefined; }
 
   return accounting.formatNumber(
@@ -66,8 +56,8 @@ const formatMoneyParam = (str?: string, locale: MoneyLocale = defaultMoneyLocale
       precision: 2,
       thousand:  '',
       decimal:   '.',
-    }
+    },
   );
 };
 
-export { Money, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };
+export { IMoney, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };

@@ -2,15 +2,18 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 
 import RequireLogin from 'components/utils/require-login';
+import RequireOrganization from 'components/require-organization';
 import AppLayout from 'components/layouts/app-layout';
 
-import Members from './members.jsx';
+import List from './list';
 
-const MembersScene: React.SFC<{}> = ({ children }) => (
+const MembersScene: React.SFC = () => (
   <RequireLogin>
-    <AppLayout>
-      <Route path="/members" component={ Members } />
-    </AppLayout>
+    <RequireOrganization>
+      <AppLayout>
+        <Route path="/members" component={ List } />
+      </AppLayout>
+    </RequireOrganization>
   </RequireLogin>
 );
 

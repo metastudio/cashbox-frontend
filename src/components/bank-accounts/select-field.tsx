@@ -1,99 +1,132 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
-import Select, { Option } from 'react-select';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
+import { GroupedOptionsType } from 'react-select/lib/types';
 
 import { Status } from 'model-types';
 import {
-  BankAccount,
-  loadBankAccounts,
-  selectBankAccountsStatus,
-  selectBankAccounts,
+  IBankAccount,
+  loadVisibleBankAccounts,
+  selectVisibleBankAccountsStatus,
+  selectVisibleBankAccounts,
   formatBankAccountName,
+  selectVisibleBankAccountsCurrencies,
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
-import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group.jsx';
+import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
+import { Currency } from 'services/currencies';
 
-import 'react-select/dist/react-select.css';
-import 'components/utils/form-inputs/async-select-fix.css';
-
-interface OwnProps {
-  emptyTitle?: string;
+interface IOwnProps {
+  disabled?: boolean;
 }
 
-interface StateProps {
+interface IStateProps {
   status:       string;
   orgId:        number;
-  bankAccounts: BankAccount[] | null;
+  currencies:   Currency[];
+  bankAccounts: IBankAccount[];
 }
 
-interface DispatchProps {
+interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type Props = OwnProps & WrappedFieldProps & StateProps & DispatchProps;
+type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
 
-class BankAccountsSelect extends React.Component<Props> {
-  loadData = (props: Props) => {
+class BankAccountsSelect extends React.Component<IProps> {
+  private loadData = (props: IProps) => {
     if (props.status === Status.Invalid) {
       props.load(props.orgId);
     }
   }
 
-  componentDidMount() {
-    this.loadData(this.props);
+  private handleChange = (ba: IBankAccount) => {
+    this.props.input.onChange(ba && ba.id);
   }
 
-  componentDidUpdate() {
-    this.loadData(this.props);
-  }
-
-  handleChange = (value: Option<string>) => {
-    this.props.input.onChange(value && value.value);
-  }
-
-  options = (): Option[] => {
-    const { status, bankAccounts, emptyTitle } = this.props;
-    if (status !== Status.Success || !bankAccounts) {
+  private options = (): GroupedOptionsType<IBankAccount> => {
+    const { status, currencies, bankAccounts } = this.props;
+    if (status !== Status.Success) {
       return [];
     }
-    return (emptyTitle ? [{ value: '', label: emptyTitle }] : [])
-      .concat(bankAccounts.map(ba => ({ value: String(ba.id), label: formatBankAccountName(ba) })));
+
+    return currencies.map(currency => ({
+      label: currency,
+      options: bankAccounts.filter(ba => ba.currency === currency),
+    }));
   }
 
-  render () {
-    const { status, orgId, input, meta, ...inputProps } = this.props;
+  private styles = () => ({
+    menu: (styles: {}) => ({
+      ...styles,
+      zIndex: 3,
+    }),
+  })
+
+  private formatValue = (ba: IBankAccount) => String(ba.id);
+
+  public componentDidMount() {
+    this.loadData(this.props);
+  }
+
+  public componentDidUpdate() {
+    this.loadData(this.props);
+  }
+
+  public render () {
+    const { disabled, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+
+    let selectedBankAccount;
+    if (input.value && status === Status.Success && bankAccounts) {
+      selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
+    }
 
     return (
-      <Select
+      <Select<IBankAccount>
         { ...inputProps }
+        isDisabled={ disabled }
         name={ input.name }
-        value={ String(input.value) }
+        value={ selectedBankAccount }
         onChange={ this.handleChange }
-        onBlur={ () => input.onBlur(input.value) }
         isLoading={ status !== Status.Success }
         options={ this.options() }
+        styles={ this.styles() }
+        getOptionLabel={ formatBankAccountName }
+        getOptionValue={ this.formatValue }
       />
     );
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: {}): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
-  status:       selectBankAccountsStatus(state),
-  bankAccounts: selectBankAccounts(state),
+  status:       selectVisibleBankAccountsStatus(state),
+  currencies:   selectVisibleBankAccountsCurrencies(state),
+  bankAccounts: selectVisibleBankAccounts(state),
 });
 
-const mapDispatch = (dispatch: Dispatch<{}>) => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 
 const BankAccountsSelectContainer =
-  connect<StateProps, DispatchProps, OwnProps>(mapState, mapDispatch)(BankAccountsSelect);
+  connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsSelect);
 
-const HorizontalBankAccountsSelect = wrapHorizontalFormGroup(BankAccountsSelectContainer);
-const VerticalBankAccountsSelect   = wrapVerticalFormGroup(BankAccountsSelectContainer);
+const HorizontalBankAccountsSelect =
+  wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const VerticalBankAccountsSelect =
+  wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
+const NoLabelBankAccountsSelect =
+  wrapNoLabelFormGroup<IOwnProps & WrappedFieldProps>(BankAccountsSelectContainer);
 
-export { BankAccountsSelectContainer as BankAccountsSelect, HorizontalBankAccountsSelect, VerticalBankAccountsSelect };
+export {
+  BankAccountsSelectContainer as BankAccountsSelect,
+  HorizontalBankAccountsSelect,
+  VerticalBankAccountsSelect,
+  NoLabelBankAccountsSelect,
+};

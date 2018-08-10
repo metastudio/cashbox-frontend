@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { Transaction } from 'services/transactions';
+import { ITransaction } from 'services/transactions';
 
 import Row from './table-row';
 
-interface Props {
-  transactions: Transaction[];
+interface IProps {
+  transactions: ITransaction[];
 }
 
-const TransactionsTableBody: React.SFC<Props> = ({ transactions }) => (
+const TransactionsTableBody: React.SFC<IProps> = ({ transactions }) => (
   <Table striped responsive hover id="transactions">
     <thead>
       <tr>
@@ -22,7 +22,7 @@ const TransactionsTableBody: React.SFC<Props> = ({ transactions }) => (
       </tr>
     </thead>
     <tbody>
-      { transactions.map((t) => <Row transaction={ t } key={ t.id } />) }
+      { transactions.map(t => <Row transaction={ t } key={ t.id } />) }
     </tbody>
   </Table>
 );
