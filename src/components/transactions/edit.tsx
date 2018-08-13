@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
+import { Modal, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { ID } from 'model-types';
-import { ITransaction, ITransfer } from 'services/transactions';
+import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import LoadedTransaction from './loaded-transaction';
-import EditNormal from './edit/normal';
-import EditTransfer from './edit/transfer';
+import Tabs from './edit/tabs';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
@@ -17,38 +15,10 @@ class EditTransaction extends React.PureComponent<IProps> {
     this.props.history.push('/transactions');
   }
 
-  private renderTransferTab = (orgId: ID, transaction: ITransfer) => (
-    <Tab eventKey={ 1 } title="Transfer">
-      <EditTransfer orgId={ orgId } transfer={ transaction } />
-    </Tab>
-  )
-
-  private renderNormalTab = (orgId: ID, transaction: ITransaction) => (
-    <Tab eventKey={ 1 } title={ transaction.category.type }>
-      <EditNormal
-        type={ transaction.category.type }
-        orgId={ orgId }
-        transaction={ transaction }
-      />
-    </Tab>
-  )
-
-  private renderTab = (orgId: ID, transaction: ITransaction) => {
-    if (transaction.category.name === 'Transfer') {
-      return this.renderTransferTab(orgId, transaction);
-    }
-
-    return this.renderNormalTab(orgId, transaction);
-  }
-
   private renderContent = (transaction: ITransaction) => {
     const { orgId } = this.props;
 
-    return (
-      <Tabs defaultActiveKey={ 1 } id="transactionType">
-        { this.renderTab(orgId, transaction) }
-      </Tabs>
-    );
+    return <Tabs orgId={ orgId } transaction={ transaction } />;
   }
 
   public render() {
