@@ -21,6 +21,7 @@ const InvoicesScene: React.SFC<{}> = () => (
           <Route exact path="/invoices/unpaid" component={ List } />
           <Route path="/invoices/new" component={ New } />
           <Route exact path="/invoices/:id" component={ Show } />
+          <Route exact path="/invoices/:id/complete" component={ Show } />
           <Route path="/invoices/:id/edit" component={ Edit } />
         </Switch>
       </MainLayout>

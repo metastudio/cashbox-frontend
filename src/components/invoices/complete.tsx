@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { IInvoice } from 'services/invoices';
@@ -19,7 +19,7 @@ interface IOwnProps {
 }
 
 interface IStateProps {
-  orgId:   number;
+  orgId: number;
 }
 
 interface IDispatchProps {
@@ -27,18 +27,10 @@ interface IDispatchProps {
   flashMessage: AddFlashMessageAction;
 }
 
-interface IState {
-  show: boolean;
-}
-
 type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IRouteProps & IDispatchProps & IStateProps;
 
-class CompleteInvoiceButton extends React.Component<IProps, IState> {
-  public state: IState = {
-    show: false,
-  };
-
+class CompleteInvoiceButton extends React.Component<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, create } = this.props;
     return create(orgId, {
@@ -57,11 +49,8 @@ class CompleteInvoiceButton extends React.Component<IProps, IState> {
   }
 
   private handleClose = () => {
-    this.setState({ show: false });
-  }
-
-  private handleShow = () => {
-    this.setState({ show: true });
+    const { invoice } = this.props;
+    this.props.history.push(`/invoices/${invoice.id}`);
   }
 
   private initialValues = () => {
@@ -74,29 +63,20 @@ class CompleteInvoiceButton extends React.Component<IProps, IState> {
 
   public render() {
     return(
-      <>
-        <Button
-          key="button"
-          bsStyle="primary"
-          onClick={ this.handleShow }
-        >
-          Complete Invoice
-        </Button>
-        <Modal key="modal" show={ this.state.show } onHide={ this.handleClose }>
-          <Modal.Header closeButton>
-            <Modal.Title>New Transaction</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              onSubmit={ this.handleSubmit }
-              onSubmitSuccess={ this.afterCreate }
-              initialValues={ this.initialValues() }
-              type={ CategoryType.Income }
-              action="Create"
-            />
-          </Modal.Body>
-        </Modal>
-      </>
+      <Modal key="modal" show onHide={ this.handleClose }>
+        <Modal.Header closeButton>
+          <Modal.Title>New Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form
+            onSubmit={ this.handleSubmit }
+            onSubmitSuccess={ this.afterCreate }
+            initialValues={ this.initialValues() }
+            type={ CategoryType.Income }
+            action="Create"
+          />
+        </Modal.Body>
+      </Modal>
     );
   }
 }

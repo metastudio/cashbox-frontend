@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, PageHeader } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
 
 import { Status } from 'model-types';
 import {
   IInvoice,
   loadInvoice,
   selectInvoice, selectInvoiceStatus,
+  formatInvoiceTitle,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectUserFullName } from 'services/users';
 
-import Header from './show/header';
 import InvoiceTable from './show/table';
-import CompleteInvoiceButton from './complete';
+import Complete from './complete';
 import DestroyButton from './show/destroy';
-import LoadingView from '../utils/loading-view';
+import LoadingView from 'components/utils/loading-view';
 import DownloadPDFButton from './download_pdf';
 
 interface IStateProps {
@@ -29,12 +29,31 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load:         (orgId: number, invoiceId: number) => void;
+  load: (orgId: number, invoiceId: number) => void;
 }
 
 type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
 
-class ShowInvoice extends React.Component<IProps> {
+class ShowInvoice extends React.PureComponent<IProps> {
+  private renderEditButton = (invoice: IInvoice) => (
+    <LinkContainer to={ `/invoices/${invoice.id}/edit` }>
+      <Button>Edit</Button>
+    </LinkContainer>
+  )
+
+  private renderCompleteButton = (invoice: IInvoice) => (
+    <LinkContainer to={ `/invoices/${invoice.id}/complete` }>
+      <Button bsStyle="primary">Complete</Button>
+    </LinkContainer>
+  )
+
+  public completePage = () => {
+    const { invoice } = this.props;
+    if (!invoice) { return null; }
+
+    return <Complete invoice={ invoice } />;
+  }
+
   public componentDidMount() {
     const { orgId, load, match } = this.props;
     load(orgId, Number(match.params.id));
@@ -48,17 +67,17 @@ class ShowInvoice extends React.Component<IProps> {
     const { invoice, userFullName } = this.props;
     return (
       <>
-        <div className="page-header">
+        <PageHeader>
           <ButtonGroup className="pull-right">
             <DestroyButton />
-            <LinkContainer to={ `/invoices/${ invoice.id }/edit` }>
-              <Button>Edit</Button>
-            </LinkContainer>
-            { !invoice.paidAt ? <CompleteInvoiceButton invoice={ invoice } /> : null }
+            { this.renderEditButton(invoice) }
+            { !invoice.paidAt && this.renderCompleteButton(invoice) }
             <DownloadPDFButton invoice={ invoice }/>
           </ButtonGroup>
-          <Header invoice={ invoice } />
-        </div>
+          { formatInvoiceTitle(invoice) }
+        </PageHeader>
+
+        <Route exact path="/invoices/:id/complete" component={ this.completePage } />
 
         <InvoiceTable invoice={ invoice } userFullName={ userFullName } />
       </>
