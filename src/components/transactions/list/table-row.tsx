@@ -22,7 +22,7 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
 
   private handleRowClick = () => {
     const { transaction, history } = this.props;
-    history.push(`/transactions/${transaction.id}/edit`);
+    history.push(`/transactions/${transaction.id}`);
   }
 
   public render() {

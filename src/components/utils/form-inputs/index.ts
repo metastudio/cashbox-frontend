@@ -6,5 +6,6 @@ export * from './horizontal-file-input.jsx';
 export * from './horizontal-image-input.jsx';
 export * from './select.jsx';
 export * from './currency-input.jsx';
+export * from './static';
 export * from './submit-button';
 export * from './textarea';

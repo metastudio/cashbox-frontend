@@ -7,6 +7,7 @@ import MainLayout from 'components/layouts/main-layout';
 
 import List from './list';
 import New  from './new';
+import Show from './show';
 import Edit from './edit';
 
 const TransactionsScene: React.SFC<{}> = () => (
@@ -15,6 +16,7 @@ const TransactionsScene: React.SFC<{}> = () => (
       <MainLayout>
         <Switch>
           <Route exact path="/transactions/new" component={ New } />
+          <Route exact path="/transactions/:id" component={ Show } />
           <Route exact path="/transactions/:id/edit" component={ Edit } />
         </Switch>
         <List />
