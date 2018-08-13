@@ -70,6 +70,7 @@ class CustomersSelect extends React.Component<IProps> {
 
     return (
       <Select<ICustomer>
+        isClearable
         { ...inputProps }
         name={ input.name }
         value={ selectedCustomer }
