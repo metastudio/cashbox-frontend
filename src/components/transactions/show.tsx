@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
+import { Modal, Tabs, Tab, Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { ITransaction, ITransfer } from 'services/transactions';
 
@@ -8,6 +9,8 @@ import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/c
 import LoadedTransaction from './loaded-transaction';
 import ShowNormal from './show/normal';
 import ShowTransfer from './show/transfer';
+import Destroy from './destroy';
+import Spinner from 'components/utils/spinner';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
@@ -36,13 +39,43 @@ class ShowTransaction extends React.PureComponent<IProps> {
     return this.renderNormalTab(transaction);
   }
 
-  private renderContent = (transaction: ITransaction) => {
+  private renderButtons = (transaction: ITransaction) => {
     return (
-      <Tabs defaultActiveKey={ 1 } id="transactionType">
-        { this.renderTab(transaction) }
-      </Tabs>
+      <>
+        <span className="pull-left">
+          <Destroy transaction={ transaction } />
+          <LinkContainer to={ `/transactions/${transaction.id}/edit` }>
+            <Button>Edit</Button>
+          </LinkContainer>
+        </span>
+
+        <LinkContainer exact to={ '/transactions' }>
+          <Button>Close</Button>
+        </LinkContainer>
+      </>
     );
   }
+
+  private renderContent = (transaction: ITransaction) => {
+    return (
+      <>
+        <Modal.Body>
+          <Tabs defaultActiveKey={ 1 } id="transactionType">
+            { this.renderTab(transaction) }
+          </Tabs>
+        </Modal.Body>
+        <Modal.Footer>
+          { this.renderButtons(transaction) }
+        </Modal.Footer>
+      </>
+    );
+  }
+
+  private renderSpinner = () => (
+    <Modal.Body>
+      <Spinner />
+    </Modal.Body>
+  )
 
   public render() {
     const { orgId, match: { params } } = this.props;
@@ -52,12 +85,9 @@ class ShowTransaction extends React.PureComponent<IProps> {
         <Modal.Header closeButton>
           <Modal.Title>Transaction</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) }>
-            { this.renderContent }
-          </LoadedTransaction>
-          <Clearfix />
-        </Modal.Body>
+        <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
+          { this.renderContent }
+        </LoadedTransaction>
       </Modal>
     );
   }

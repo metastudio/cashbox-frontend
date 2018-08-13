@@ -15,6 +15,7 @@ interface IOwnProps {
   orgId:         ID;
   transactionId: ID;
   children:      (transaction: ITransaction) => React.ReactNode;
+  spinner?:      React.ReactNode | (() => React.ReactNode);
 }
 
 interface IStateProps {
@@ -30,8 +31,10 @@ type IProps = IOwnProps & IStateProps & IDispatchProps;
 
 class LoadedTransaction extends React.PureComponent<IProps> {
   private loadData = () => {
-    const { orgId, transactionId, load } = this.props;
-    load(orgId, transactionId);
+    const { orgId, transactionId, load, status, transaction } = this.props;
+    if (status === Status.Invalid || (transaction && transaction.id !== this.props.transactionId)) {
+      load(orgId, transactionId);
+    }
   }
 
   private renderChildren = () => {
@@ -45,19 +48,15 @@ class LoadedTransaction extends React.PureComponent<IProps> {
     this.loadData();
   }
 
-  public componentDidUpdate(prevProps: IProps) {
-    const { transactionId: prevTransactionId } = prevProps;
-    const { status, transaction } = this.props;
-    if (status === Status.Invalid || (transaction && transaction.id !== prevTransactionId)) {
-      this.loadData();
-    }
+  public componentDidUpdate() {
+    this.loadData();
   }
 
   public render() {
-    const { status } = this.props;
+    const { status, spinner } = this.props;
 
     return(
-      <LoadingView status={ status }>
+      <LoadingView status={ status } spinner={ spinner }>
         { this.renderChildren }
       </LoadingView>
     );

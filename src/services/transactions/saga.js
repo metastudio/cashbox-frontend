@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getOrganizationTransactions,
@@ -89,8 +89,8 @@ function* handleDestroyTransaction({ payload: { organizationId, transactionId },
 }
 
 export default function* () {
-  yield takeEvery(loadTransactions,   handleLoadTransactions);
-  yield takeEvery(loadTransaction,    handleLoadTransaction);
+  yield takeLatest(loadTransactions,   handleLoadTransactions);
+  yield takeLatest(loadTransaction,    handleLoadTransaction);
   yield takeEvery(createTransaction,  handleCreateTransaction);
   yield takeEvery(createTransfer,     handleCreateTransfer);
   yield takeEvery(updateTransaction,  handleUpdateTransaction);
