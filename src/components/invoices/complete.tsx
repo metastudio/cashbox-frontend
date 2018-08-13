@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Modal, Clearfix } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { IInvoice } from 'services/invoices';
@@ -94,7 +94,6 @@ class CompleteInvoiceButton extends React.Component<IProps, IState> {
               type={ CategoryType.Income }
               action="Create"
             />
-            <Clearfix />
           </Modal.Body>
         </Modal>
       </>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Clearfix } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { ITransaction } from 'services/transactions';
@@ -7,6 +7,8 @@ import { ITransaction } from 'services/transactions';
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import LoadedTransaction from './loaded-transaction';
 import Tabs from './edit/tabs';
+import Buttons from './edit/buttons';
+import Spinner from 'components/utils/spinner';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
@@ -18,8 +20,23 @@ class EditTransaction extends React.PureComponent<IProps> {
   private renderContent = (transaction: ITransaction) => {
     const { orgId } = this.props;
 
-    return <Tabs orgId={ orgId } transaction={ transaction } />;
+    return (
+      <>
+        <Modal.Body>
+          <Tabs orgId={ orgId } transaction={ transaction } />
+        </Modal.Body>
+        <Modal.Footer>
+          <Buttons transaction={ transaction } />
+        </Modal.Footer>
+      </>
+    );
   }
+
+  private renderSpinner = () => (
+    <Modal.Body>
+      <Spinner />
+    </Modal.Body>
+  )
 
   public render() {
     const { orgId, match: { params } } = this.props;
@@ -29,12 +46,9 @@ class EditTransaction extends React.PureComponent<IProps> {
         <Modal.Header closeButton>
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) }>
-            { this.renderContent }
-          </LoadedTransaction>
-          <Clearfix />
-        </Modal.Body>
+        <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
+          { this.renderContent }
+        </LoadedTransaction>
       </Modal>
     );
   }

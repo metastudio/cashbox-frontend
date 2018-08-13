@@ -48,7 +48,9 @@ class EditNormalTransaction extends React.PureComponent<IProps> {
     history.push('/transactions');
   }
 
-  private initialData = (transaction: ITransaction): ITransactionFormData => {
+  private initialData = (): ITransactionFormData => {
+    const { transaction } = this.props;
+
     return ({
       amount:        formatMoneyValue(transaction.amount),
       categoryId:    transaction.category && transaction.category.id,
@@ -60,16 +62,15 @@ class EditNormalTransaction extends React.PureComponent<IProps> {
   }
 
   public render() {
-    const { type, transaction } = this.props;
+    const { type } = this.props;
 
     return(
       <Form
         onSubmit={ this.handleSubmit }
         onSubmitSuccess={ this.afterUpdate }
         type={ type }
-        initialValues={ this.initialData(transaction) }
+        initialValues={ this.initialData() }
         action="Update"
-        transaction={ transaction }
       />
     );
   }

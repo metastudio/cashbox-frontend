@@ -9,9 +9,8 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  SubmitButton,
+  HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
-import DestroyButton from './../destroy';
 
 interface IOwnProps {
   transfer?: ITransfer;
@@ -58,8 +57,7 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
       <Field name="comment" label="Comment" component={ HorizontalFormInput } />
       <Field name="date" label="Date" component={ HorizontalDatePicker } />
 
-      { isPersisted && <DestroyButton transaction={ transfer! } /> }
-      <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
+      <HorizontalSubmitButton submitting={ submitting }>{ action } Transfer</HorizontalSubmitButton>
     </Form>
   );
 };

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 import { Alert, Form } from 'react-bootstrap';
 
-import { ITransaction } from 'services/transactions';
 import { CategoryType } from 'services/categories';
 
 import { HorizontalCategoriesSelect } from 'components/categories/select-field';
@@ -12,14 +11,12 @@ import {
   HorizontalFormInput,
   HorizontalDatePicker,
   HorizontalCurrencyInput,
-  SubmitButton,
+  HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
-import DestroyButton from './../destroy';
 
 interface IOwnProps {
-  type:         CategoryType;
-  transaction?: ITransaction;
-  action:       'Create' | 'Update';
+  type:   CategoryType;
+  action: 'Create' | 'Update';
 }
 
 interface ITransactionFormData {
@@ -33,7 +30,7 @@ interface ITransactionFormData {
 
 type IProps = IOwnProps & InjectedFormProps<ITransactionFormData, IOwnProps>;
 
-const TransactionForm: React.SFC<IProps> = ({ handleSubmit, type, submitting, error, action, transaction }) => (
+const TransactionForm: React.SFC<IProps> = ({ handleSubmit, type, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
@@ -43,9 +40,7 @@ const TransactionForm: React.SFC<IProps> = ({ handleSubmit, type, submitting, er
     <Field name="comment" label="Comment" component={ HorizontalFormInput } />
     <Field name="date" label="Date" component={ HorizontalDatePicker } />
 
-    { transaction && transaction.id && <DestroyButton transaction={ transaction } /> }
-
-    <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transaction</SubmitButton>
+    <HorizontalSubmitButton submitting={ submitting }>{ action } Transaction</HorizontalSubmitButton>
   </Form>
 );
 
