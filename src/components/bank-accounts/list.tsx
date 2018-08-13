@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
 
 import { Status } from 'model-types';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   loadBankAccounts,
   selectBankAccountsCurrencies,
@@ -14,9 +13,9 @@ import {
 
 import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 
 interface IStateProps {
-  orgId:      number;
   status:     Status;
   currencies: string[];
 }
@@ -25,7 +24,7 @@ interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type IProps = IStateProps & IDispatchProps;
+type IProps = IStateProps & IDispatchProps & ICurrentOrgIdProps;
 
 class BankAccountsList extends React.Component<IProps> {
   private loadData = () => {
@@ -55,14 +54,15 @@ class BankAccountsList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId:      selectCurrentOrganizationId(state),
+const mapState = (state: {}): IStateProps => ({
   status:     selectBankAccountsStatus(state),
   currencies: selectBankAccountsCurrencies(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
 });
 
-export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsList);
+export default withCurrentOrgId(
+  connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccountsList),
+);
