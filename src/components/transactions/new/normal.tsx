@@ -10,18 +10,14 @@ import {
   ITransaction, ITransactionParams,
   createTransaction,
 } from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { formatMoneyParam } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { ITransactionFormData } from './../forms/normal';
 
 interface IOwnProps {
-  type: CategoryType;
-}
-
-interface IStateProps {
   orgId: ID;
+  type:  CategoryType;
 }
 
 interface IDispatchProps {
@@ -30,7 +26,7 @@ interface IDispatchProps {
 }
 
 type IRouteProps = RouteComponentProps<{}>;
-type IProps = IOwnProps & IStateProps & IDispatchProps & IRouteProps;
+type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
 class NewExpenseTransaction extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
@@ -63,15 +59,11 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
-});
-
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   create: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter<IOwnProps & IRouteProps>(
-  connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(NewExpenseTransaction),
+  connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(NewExpenseTransaction),
 );

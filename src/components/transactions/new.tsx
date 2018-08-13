@@ -2,11 +2,13 @@ import * as React from 'react';
 import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import NewNormal   from './new/normal';
-import NewTransfer from './new/transfer';
 import { CategoryType } from 'services/categories';
 
-type IProps = RouteComponentProps<{ id: string }>;
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
+import NewNormal   from './new/normal';
+import NewTransfer from './new/transfer';
+
+type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
 class NewTransaction extends React.PureComponent<IProps> {
   private handleClose = () => {
@@ -14,6 +16,8 @@ class NewTransaction extends React.PureComponent<IProps> {
   }
 
   public render() {
+    const { orgId } = this.props;
+
     return(
       <Modal show onHide={ this.handleClose }>
         <Modal.Header closeButton>
@@ -22,10 +26,10 @@ class NewTransaction extends React.PureComponent<IProps> {
         <Modal.Body>
           <Tabs defaultActiveKey={ 1 } mountOnEnter id="transactionType">
             <Tab eventKey={ 1 } title="Income">
-              <NewNormal type={ CategoryType.Income } />
+              <NewNormal orgId={ orgId } type={ CategoryType.Income } />
             </Tab>
             <Tab eventKey={ 2 } title="Expense">
-              <NewNormal type={ CategoryType.Expense } />
+              <NewNormal orgId={ orgId } type={ CategoryType.Expense } />
             </Tab>
             <Tab eventKey={ 3 } title="Transfer">
               <NewTransfer />
@@ -38,4 +42,4 @@ class NewTransaction extends React.PureComponent<IProps> {
   }
 }
 
-export default withRouter(NewTransaction);
+export default withRouter(withCurrentOrgId(NewTransaction));

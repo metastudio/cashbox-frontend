@@ -11,8 +11,8 @@ import {
   loadTransactions,
   selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
 } from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
 
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';
 import Paginator from 'components/utils/paginator';
@@ -23,7 +23,6 @@ interface IState {
 }
 
 interface IStateProps {
-  orgId:        number;
   status:       Status;
   transactions: ITransaction[];
   pagination:   IPagination;
@@ -33,7 +32,7 @@ interface IDispatchProps {
   load: (orgId: number, params: object) => void;
 }
 
-type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps & ICurrentOrgIdProps;
 
 class TransactionsList extends React.PureComponent<IProps, IState> {
   public state: IState = {
@@ -99,7 +98,6 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
 }
 
 const mapState = (state: {}): IStateProps => ({
-  orgId:        selectCurrentOrganizationId(state),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),
@@ -109,4 +107,8 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId, params) => dispatch(loadTransactions(orgId, params)),
 });
 
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList));
+export default withRouter(
+  withCurrentOrgId(
+    connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList),
+  ),
+);

@@ -1,21 +1,16 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { ID } from 'model-types';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { ITransaction, ITransfer } from 'services/transactions';
 
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import LoadedTransaction from './loaded-transaction';
 import EditNormal from './edit/normal';
 import EditTransfer from './edit/transfer';
 
-interface IStateProps {
-  orgId: ID;
-}
-
-type IProps = RouteComponentProps<{ id: string }> & IStateProps;
+type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
 class EditTransaction extends React.PureComponent<IProps> {
   private handleClose = () => {
@@ -75,8 +70,4 @@ class EditTransaction extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId: selectCurrentOrganizationId(state),
-});
-
-export default withRouter(connect<IStateProps>(mapState)(EditTransaction));
+export default withRouter(withCurrentOrgId(EditTransaction));

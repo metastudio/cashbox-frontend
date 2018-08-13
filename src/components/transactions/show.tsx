@@ -1,53 +1,45 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { ID } from 'model-types';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { ITransaction, ITransfer } from 'services/transactions';
 
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import LoadedTransaction from './loaded-transaction';
 import ShowNormal from './show/normal';
 import ShowTransfer from './show/transfer';
 
-interface IStateProps {
-  orgId: ID;
-}
-
-type IProps = RouteComponentProps<{ id: string }> & IStateProps;
+type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
 class ShowTransaction extends React.PureComponent<IProps> {
   private handleClose = () => {
     this.props.history.push('/transactions');
   }
 
-  private renderTransferTab = (orgId: ID, transaction: ITransfer) => (
+  private renderTransferTab = (transaction: ITransfer) => (
     <Tab eventKey={ 1 } title="Transfer">
       <ShowTransfer transfer={ transaction } />
     </Tab>
   )
 
-  private renderNormalTab = (orgId: ID, transaction: ITransaction) => (
+  private renderNormalTab = (transaction: ITransaction) => (
     <Tab eventKey={ 1 } title={ transaction.category.type }>
       <ShowNormal transaction={ transaction } />
     </Tab>
   )
 
-  private renderTab = (orgId: ID, transaction: ITransaction) => {
+  private renderTab = (transaction: ITransaction) => {
     if (transaction.category.name === 'Transfer') {
-      return this.renderTransferTab(orgId, transaction);
+      return this.renderTransferTab(transaction);
     }
 
-    return this.renderNormalTab(orgId, transaction);
+    return this.renderNormalTab(transaction);
   }
 
   private renderContent = (transaction: ITransaction) => {
-    const { orgId } = this.props;
-
     return (
       <Tabs defaultActiveKey={ 1 } id="transactionType">
-        { this.renderTab(orgId, transaction) }
+        { this.renderTab(transaction) }
       </Tabs>
     );
   }
@@ -71,8 +63,4 @@ class ShowTransaction extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
-});
-
-export default withRouter(connect<IStateProps>(mapState)(ShowTransaction));
+export default withRouter(withCurrentOrgId(ShowTransaction));

@@ -9,13 +9,12 @@ import {
   ITransfer, ITransferParams,
   createTransfer,
 } from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { formatMoneyParam } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';
 
-interface IStateProps {
+interface IOwnProps {
   orgId: ID;
 }
 
@@ -24,7 +23,8 @@ interface IDispatchProps {
   showMessage: AddFlashMessageAction;
 }
 
-type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;
+type IRouteProps = RouteComponentProps<{}>;
+type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
 class NewTransfer extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransferFormData) => {
@@ -57,13 +57,9 @@ class NewTransfer extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
-});
-
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create:  (orgId, data) => new Promise((res, rej) => dispatch(createTransfer(orgId, data, res, rej))),
+  create:      (orgId, data) => new Promise((res, rej) => dispatch(createTransfer(orgId, data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewTransfer));
+export default withRouter<IRouteProps>(connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(NewTransfer));
