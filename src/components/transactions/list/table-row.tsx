@@ -7,7 +7,7 @@ import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
-import './../css/default.css';
+import './../index.css';
 
 interface IOwnProps {
   transaction: ITransaction;
