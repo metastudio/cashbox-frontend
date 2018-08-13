@@ -1,39 +1,23 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Status, ID } from 'model-types';
+import { ID } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import {
-  ITransaction,
-  loadTransaction,
-  selectTransaction, selectTransactionStatus, ITransfer,
-} from 'services/transactions';
+import { ITransaction, ITransfer } from 'services/transactions';
 
-import LoadingView from 'components/utils/loading-view';
+import LoadedTransaction from './loaded-transaction';
 import ShowNormal from './show/normal';
 import ShowTransfer from './show/transfer';
 
 interface IStateProps {
-  orgId:       ID;
-  status:      Status;
-  transaction: ITransaction | null;
+  orgId: ID;
 }
 
-interface IDispatchProps {
-  load: (orgId: number, transactionId: number) => void;
-}
-
-type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IStateProps;
 
 class ShowTransaction extends React.PureComponent<IProps> {
-  private loadData = () => {
-    const { orgId, load, match } = this.props;
-    load(orgId, Number(match.params.id));
-  }
-
   private handleClose = () => {
     this.props.history.push('/transactions');
   }
@@ -58,9 +42,8 @@ class ShowTransaction extends React.PureComponent<IProps> {
     return this.renderNormalTab(orgId, transaction);
   }
 
-  private renderContent = () => {
-    const { orgId, transaction } = this.props;
-    if (!transaction) { return null; }
+  private renderContent = (transaction: ITransaction) => {
+    const { orgId } = this.props;
 
     return (
       <Tabs defaultActiveKey={ 1 } id="transactionType">
@@ -69,20 +52,8 @@ class ShowTransaction extends React.PureComponent<IProps> {
     );
   }
 
-  public componentDidMount() {
-    this.loadData();
-  }
-
-  public componentDidUpdate(prevProps: IProps) {
-    const { match } = prevProps;
-    const { status, transaction } = this.props;
-    if (status === Status.Invalid || (transaction && transaction.id !== Number(match.params.id))) {
-      this.loadData();
-    }
-  }
-
   public render() {
-    const { status } = this.props;
+    const { orgId, match: { params } } = this.props;
 
     return(
       <Modal show onHide={ this.handleClose }>
@@ -90,9 +61,9 @@ class ShowTransaction extends React.PureComponent<IProps> {
           <Modal.Title>Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <LoadingView status={ status }>
+          <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) }>
             { this.renderContent }
-          </LoadingView>
+          </LoadedTransaction>
           <Clearfix />
         </Modal.Body>
       </Modal>
@@ -101,13 +72,7 @@ class ShowTransaction extends React.PureComponent<IProps> {
 }
 
 const mapState = (state: {}): IStateProps => ({
-  orgId:       selectCurrentOrganizationId(state),
-  status:      selectTransactionStatus(state),
-  transaction: selectTransaction(state),
+  orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number, transactionId: number) => dispatch(loadTransaction(orgId, transactionId)),
-});
-
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(ShowTransaction));
+export default withRouter(connect<IStateProps>(mapState)(ShowTransaction));
