@@ -32,7 +32,6 @@ const BankAccountForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, a
     <Field name="currency" label="Currency" component={ HorizontalCurrencySelect } required />
     <Field name="visible" label="Visible" component={ HorizontalCheckbox } />
     <Field name="description" label="Description" component={ HorizontalFormInput } />
-    // tslint:disable-next-line
     <Field
       name="invoiceDetails"
       component={ HorizontalTextarea }
