@@ -88,6 +88,7 @@ class CategoriesSelect extends React.Component<IProps> {
 
     return (
       <Select<ICategory>
+        isClearable
         { ...inputProps }
         name={ input.name }
         value={ selectedCategory }

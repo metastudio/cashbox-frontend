@@ -88,6 +88,7 @@ class BankAccountsSelect extends React.Component<IProps> {
 
     return (
       <Select<IBankAccount>
+        isClearable
         { ...inputProps }
         isDisabled={ disabled }
         name={ input.name }

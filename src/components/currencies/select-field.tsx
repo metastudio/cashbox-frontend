@@ -79,6 +79,7 @@ class CurrencySelect extends React.Component<IProps> {
 
     return (
       <Select<ICurrencyOption>
+        isClearable
         { ...inputProps }
         name={ input.name }
         value={ selectedCurrency }
