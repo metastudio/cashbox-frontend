@@ -1,7 +1,11 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadTransaction } from '../actions.js';
+import {
+  loadTransaction,
+  updateTransaction,
+  destroyTransaction,
+} from '../actions.js';
 
 const defaultState = {
   id:     null,
@@ -27,5 +31,13 @@ export default handleActions({
     ...state,
     status: statuses.FAILURE,
     error:  payload,
+  }),
+  [updateTransaction.success]: (state, { payload }) => ({
+    ...state,
+    item: state.item.id === payload.transactionId ? payload.transaction : state.item,
+  }),
+  [destroyTransaction.success]: (state, { payload }) => ({
+    ...state,
+    status: state.item.id === payload.transactionId ? statuses.INVALID : state.status,
   }),
 }, defaultState);

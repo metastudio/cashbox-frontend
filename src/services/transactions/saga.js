@@ -78,10 +78,10 @@ function* handleUpdateTransaction({ payload: { organizationId, transactionId, da
 
 function* handleDestroyTransaction({ payload: { organizationId, transactionId }, meta: { resolve, reject } }) {
   try {
-    yield put(destroyTransaction.request(organizationId));
-    const transaction = yield call(deleteOrganizationTransaction, organizationId, transactionId);
-    yield put(destroyTransaction.success(organizationId, transaction));
-    yield call(resolve, transaction);
+    yield put(destroyTransaction.request(organizationId, transactionId));
+    yield call(deleteOrganizationTransaction, organizationId, transactionId);
+    yield put(destroyTransaction.success(organizationId, transactionId));
+    yield call(resolve, transactionId);
   } catch (error) {
     yield put(destroyTransaction.failure(error));
     yield call(reject);

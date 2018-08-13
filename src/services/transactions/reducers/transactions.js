@@ -38,13 +38,20 @@ export default handleActions({
     error:      payload,
     pagination: null,
   }),
-  [combineActions(
-    createTransaction.success,
-    createTransfer.success,
-    updateTransaction.success,
-    destroyTransaction.success,
-  )]: (state) => ({
+  [createTransaction.success]: (state, { payload }) => ({
     ...state,
-    status: statuses.INVALID,
+    items: [payload.transaction].concat(state.items),
+  }),
+  [createTransfer.success]: (state, { payload }) => ({
+    ...state,
+    items: [payload.transfer].concat(state.items),
+  }),
+  [updateTransaction.success]: (state, { payload }) => ({
+    ...state,
+    items: state.items.map(t => t.id === payload.transaction.id ? payload.transaction : t),
+  }),
+  [destroyTransaction.success]: (state, { payload }) => ({
+    ...state,
+    items: state.items.filter(t => t.id !== payload.transactionId),
   }),
 }, defaultState);
