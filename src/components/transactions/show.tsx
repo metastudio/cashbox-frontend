@@ -1,16 +1,14 @@
 import * as React from 'react';
-import { Modal, Tabs, Tab, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
 
-import { ITransaction, ITransfer } from 'services/transactions';
+import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
-import LoadedTransaction from './loaded-transaction';
-import ShowNormal from './show/normal';
-import ShowTransfer from './show/transfer';
-import Destroy from './destroy';
 import Spinner from 'components/utils/spinner';
+import LoadedTransaction from './loaded-transaction';
+import Tabs from './show/tabs';
+import Buttons from './show/buttons';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
@@ -19,53 +17,14 @@ class ShowTransaction extends React.PureComponent<IProps> {
     this.props.history.push('/transactions');
   }
 
-  private renderTransferTab = (transaction: ITransfer) => (
-    <Tab eventKey={ 1 } title="Transfer">
-      <ShowTransfer transfer={ transaction } />
-    </Tab>
-  )
-
-  private renderNormalTab = (transaction: ITransaction) => (
-    <Tab eventKey={ 1 } title={ transaction.category.type }>
-      <ShowNormal transaction={ transaction } />
-    </Tab>
-  )
-
-  private renderTab = (transaction: ITransaction) => {
-    if (transaction.category.name === 'Transfer') {
-      return this.renderTransferTab(transaction);
-    }
-
-    return this.renderNormalTab(transaction);
-  }
-
-  private renderButtons = (transaction: ITransaction) => {
-    return (
-      <>
-        <span className="pull-left">
-          <Destroy transaction={ transaction } />
-          <LinkContainer to={ `/transactions/${transaction.id}/edit` }>
-            <Button>Edit</Button>
-          </LinkContainer>
-        </span>
-
-        <LinkContainer exact to={ '/transactions' }>
-          <Button>Close</Button>
-        </LinkContainer>
-      </>
-    );
-  }
-
   private renderContent = (transaction: ITransaction) => {
     return (
       <>
         <Modal.Body>
-          <Tabs defaultActiveKey={ 1 } id="transactionType">
-            { this.renderTab(transaction) }
-          </Tabs>
+          <Tabs transaction={ transaction } />
         </Modal.Body>
         <Modal.Footer>
-          { this.renderButtons(transaction) }
+          <Buttons transaction={ transaction } />
         </Modal.Footer>
       </>
     );
