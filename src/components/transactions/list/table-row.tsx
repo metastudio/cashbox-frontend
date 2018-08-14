@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
-import { ITransaction, isTransfer } from 'services/transactions';
+import { ITransaction, ITransfer, isTransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
@@ -25,6 +25,22 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
     history.push(`/transactions/${transaction.id}`);
   }
 
+  private bankAccountTitle = (transaction: ITransaction) => {
+    if (isTransfer(transaction)) {
+      return (
+        <>
+          { formatBankAccountName((transaction as ITransfer).transferOut.bankAccount) }
+          { ' ' }
+          &rarr;
+          { ' ' }
+          { formatBankAccountName(transaction.bankAccount) }
+        </>
+      );
+    }
+
+    return formatBankAccountName(transaction.bankAccount);
+  }
+
   public render() {
     const { transaction } = this.props;
 
@@ -35,7 +51,7 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
             <MoneyAmount colorize transfer={ isTransfer(transaction) } amount={ transaction.amount } />
           </td>
           <td>{ transaction.category.name }</td>
-          <td>{ formatBankAccountName(transaction.bankAccount) }</td>
+          <td>{ this.bankAccountTitle(transaction) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
           <td>{ transaction.comment }</td>
           <td>{ formatDate(transaction.date) }</td>
