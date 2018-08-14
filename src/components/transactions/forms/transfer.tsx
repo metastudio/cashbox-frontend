@@ -8,7 +8,7 @@ import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-fi
 import {
   HorizontalFormInput,
   HorizontalDatePicker,
-  HorizontalCurrencyInput,
+  HorizontalMoneyInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
@@ -40,10 +40,10 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
       <Field
         name="toAmount"
         label="Amount"
-        component={ HorizontalCurrencyInput }
+        component={ HorizontalMoneyInput }
         required
       />
-      { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
+      { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalMoneyInput } disabled /> }
       <Field
         name="fromBankAccountId"
         component={ HorizontalBankAccountsSelect }
@@ -59,7 +59,7 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
         required
       />
       { !isPersisted && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
-      { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
+      { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalMoneyInput } /> }
       <Field name="comment" label="Comment" component={ HorizontalFormInput } />
       <Field name="date" label="Date" component={ HorizontalDatePicker } required />
 

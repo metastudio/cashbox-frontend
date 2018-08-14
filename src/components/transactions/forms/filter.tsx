@@ -6,7 +6,7 @@ import { NoLabelCategoriesSelect } from 'components/categories/select-field';
 import { NoLabelBankAccountsSelect } from 'components/bank-accounts/select-field';
 import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {
-  NoLabelCurrencyInput,
+  NoLabelMoneyInput,
   NoLabelFormInput,
   NoLabelDatePicker,
   SubmitButton,
@@ -37,7 +37,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           <Col sm={ 4 }>
             <Field
               name="q[amountEq]"
-              component={ NoLabelCurrencyInput }
+              component={ NoLabelMoneyInput }
               label="Amount"
               placeholder="Amount"
             />
