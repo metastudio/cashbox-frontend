@@ -12,8 +12,10 @@ const formatDate = (date: Date | undefined): string => {
  * Format date to format used by date picker input.
  * @param date - Date object or date string which may be parsed by Moment.js.
  */
-const formatDateValue = (date: Date | string | undefined): string => {
-  return date ? Moment(date).format('YYYY-MM-DD') : '';
+const formatDateValue = (date: Date | Moment.Moment | string | undefined | null): string | undefined => {
+  if (!date) { return undefined; }
+
+  return Moment(date).format('YYYY-MM-DD');
 };
 
 /**
