@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
-import LoadedTransaction from './loaded-transaction';
+import TransactionProvider from './providers/transaction';
 import Tabs from './edit/tabs';
 import Buttons from './edit/buttons';
 import Spinner from 'components/utils/spinner';
@@ -46,9 +46,9 @@ class EditTransaction extends React.PureComponent<IProps> {
         <Modal.Header closeButton>
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
-        <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
+        <TransactionProvider orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
           { this.renderContent }
-        </LoadedTransaction>
+        </TransactionProvider>
       </Modal>
     );
   }

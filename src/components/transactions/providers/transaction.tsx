@@ -29,7 +29,7 @@ interface IDispatchProps {
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
 
-class LoadedTransaction extends React.PureComponent<IProps> {
+class TransactionProvider extends React.PureComponent<IProps> {
   private loadData = () => {
     const { orgId, transactionId, load, status, transaction } = this.props;
     if (status === Status.Invalid || (transaction && transaction.id !== this.props.transactionId)) {
@@ -74,4 +74,4 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
 
 export default connect<IStateProps, IDispatchProps, IOwnProps>(
   mapState, mapDispatch,
-)(LoadedTransaction);
+)(TransactionProvider);

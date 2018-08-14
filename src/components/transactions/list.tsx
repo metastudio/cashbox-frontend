@@ -6,7 +6,7 @@ import { IPagination } from 'model-types';
 import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
-import TransactionsProvider from './provider';
+import TransactionsProvider from './providers/transactions';
 import Table from './list/table';
 import Paginator from 'components/utils/paginator';
 import TransactionsFilter from './filter';

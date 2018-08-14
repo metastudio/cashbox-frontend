@@ -6,7 +6,7 @@ import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import Spinner from 'components/utils/spinner';
-import LoadedTransaction from './loaded-transaction';
+import TransactionProvider from './providers/transaction';
 import Tabs from './show/tabs';
 import Buttons from './show/buttons';
 
@@ -44,9 +44,9 @@ class ShowTransaction extends React.PureComponent<IProps> {
         <Modal.Header closeButton>
           <Modal.Title>Transaction</Modal.Title>
         </Modal.Header>
-        <LoadedTransaction orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
+        <TransactionProvider orgId={ orgId } transactionId={ Number(params.id) } spinner={ this.renderSpinner }>
           { this.renderContent }
-        </LoadedTransaction>
+        </TransactionProvider>
       </Modal>
     );
   }
