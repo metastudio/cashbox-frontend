@@ -10,7 +10,7 @@ import { HorizontalCustomersSelect } from 'components/customers/select-field';
 import {
   HorizontalFormInput,
   HorizontalDatePicker,
-  HorizontalCurrencyInput,
+  HorizontalMoneyInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
@@ -33,7 +33,7 @@ type IProps = IOwnProps & InjectedFormProps<ITransactionFormData, IOwnProps>;
 const TransactionForm: React.SFC<IProps> = ({ handleSubmit, type, submitting, error, action }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
+    <Field name="amount" label="Amount" component={ HorizontalMoneyInput } />
     <Field name="categoryId" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
     <Field name="customerId" label="Customer name" component={ HorizontalCustomersSelect } />
     <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
