@@ -18,15 +18,14 @@ interface IOwnProps {
 }
 
 interface ITransferFormData {
-  amount?:        string;
-  categoryName?:  string;
-  fromAmount?:    string;
-  bankAccountId?: number;
-  referenceId?:   number;
-  exchangeRate?:  string;
-  comission?:     string;
-  comment?:       string;
-  date?:          Date;
+  toAmount?:          string;
+  fromAmount?:        string;
+  fromBankAccountId?: number;
+  toBankAccountId?:   number;
+  exchangeRate?:      string;
+  comission?:         string;
+  comment?:           string;
+  date?:              string;
 }
 
 type IProps = IOwnProps & InjectedFormProps<ITransferFormData, IOwnProps>;
@@ -38,16 +37,16 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
     <Form horizontal onSubmit={ handleSubmit }>
       { error && <Alert bsStyle="danger">{ error }</Alert> }
 
-      <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
+      <Field name="toAmount" label="Amount" component={ HorizontalCurrencyInput } />
       { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
       <Field
-        name="bankAccountId"
+        name="fromBankAccountId"
         component={ HorizontalBankAccountsSelect }
         label="From"
         disabled={ isPersisted }
       />
       <Field
-        name="referenceId"
+        name="toBankAccountId"
         label="To"
         component={ HorizontalBankAccountsSelect }
         disabled={ isPersisted }

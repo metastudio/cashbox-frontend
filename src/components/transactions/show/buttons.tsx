@@ -14,6 +14,9 @@ const ShowTransactionButtons: React.SFC<IProps> = ({ transaction }) => (
   <>
     <span className="pull-left">
       <Destroy transaction={ transaction } />
+      <LinkContainer to={ { pathname: '/transactions/new', search: `copyId=${transaction.id}` } }>
+        <Button>Copy</Button>
+      </LinkContainer>
       <LinkContainer to={ `/transactions/${transaction.id}/edit` }>
         <Button>Edit</Button>
       </LinkContainer>

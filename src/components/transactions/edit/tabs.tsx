@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import { ID } from 'model-types';
-import { ITransaction, ITransfer } from 'services/transactions';
+import { ITransaction, ITransfer, isTransfer } from 'services/transactions';
 
 import EditNormal from './normal';
 import EditTransfer from './transfer';
@@ -28,8 +28,8 @@ class ShowTransactionTabs extends React.PureComponent<IProps> {
   private renderTab = (transaction: ITransaction) => {
     const { orgId } = this.props;
 
-    if (transaction.category.name === 'Transfer') {
-      return this.renderTransferTab(orgId, transaction);
+    if (isTransfer(transaction)) {
+      return this.renderTransferTab(orgId, transaction as ITransfer);
     }
 
     return this.renderNormalTab(orgId, transaction);

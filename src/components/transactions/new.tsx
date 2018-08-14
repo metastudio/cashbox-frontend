@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Modal, Tabs, Tab, Clearfix } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import * as QS from 'query-string';
 
-import { CategoryType } from 'services/categories';
+import { ITransaction } from 'services/transactions';
 
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
-import NewNormal   from './new/normal';
-import NewTransfer from './new/transfer';
+import TransactionProvider from './providers/transaction';
+import Tabs from './new/tabs';
+import Spinner from 'components/utils/spinner';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
@@ -15,28 +17,48 @@ class NewTransaction extends React.PureComponent<IProps> {
     this.props.history.push('/transactions');
   }
 
-  public render() {
+  private renderContent = (transaction?: ITransaction) => {
     const { orgId } = this.props;
 
+    return (
+      <Modal.Body>
+        <Tabs orgId={ orgId } copyTransaction={ transaction } />
+      </Modal.Body>
+    );
+  }
+
+  private renderSpinner = () => (
+    <Modal.Body>
+      <Spinner />
+    </Modal.Body>
+  )
+
+  private renderLoadTransaction = () => {
+    const { orgId, location: { search } } = this.props;
+    const query = QS.parse(search);
+
+    if (!query.copyId) {
+      return this.renderContent();
+    }
+
+    return (
+      <TransactionProvider
+        orgId={ orgId }
+        transactionId={ Number(query.copyId) }
+        spinner={ this.renderSpinner }
+      >
+        { this.renderContent }
+      </TransactionProvider>
+    );
+  }
+
+  public render() {
     return(
       <Modal show onHide={ this.handleClose }>
         <Modal.Header closeButton>
           <Modal.Title>New Transaction</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Tabs defaultActiveKey={ 1 } mountOnEnter id="transactionType">
-            <Tab eventKey={ 1 } title="Income">
-              <NewNormal orgId={ orgId } type={ CategoryType.Income } />
-            </Tab>
-            <Tab eventKey={ 2 } title="Expense">
-              <NewNormal orgId={ orgId } type={ CategoryType.Expense } />
-            </Tab>
-            <Tab eventKey={ 3 } title="Transfer">
-              <NewTransfer />
-            </Tab>
-          </Tabs>
-          <Clearfix />
-        </Modal.Body>
+        { this.renderLoadTransaction() }
       </Modal>
     );
   }

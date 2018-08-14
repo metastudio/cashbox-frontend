@@ -25,7 +25,7 @@ interface ITransactionFormData {
   customerId?:    number;
   bankAccountId?: number;
   comment?:       string;
-  date?:          Date;
+  date?:          string;
 }
 
 type IProps = IOwnProps & InjectedFormProps<ITransactionFormData, IOwnProps>;

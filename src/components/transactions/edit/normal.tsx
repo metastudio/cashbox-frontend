@@ -12,6 +12,7 @@ import {
 import { CategoryType } from 'services/categories';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatDateValue } from 'utils/date';
 
 import Form, { ITransactionFormData } from './../forms/normal';
 
@@ -57,7 +58,7 @@ class EditNormalTransaction extends React.PureComponent<IProps> {
       customerId:    transaction.customer && transaction.customer.id,
       bankAccountId: transaction.bankAccount && transaction.bankAccount.id,
       comment:       transaction.comment,
-      date:          transaction.date,
+      date:          formatDateValue(transaction.date),
     });
   }
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
-import { ITransaction } from 'services/transactions';
+import { ITransaction, isTransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
@@ -28,13 +28,11 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
   public render() {
     const { transaction } = this.props;
 
-    const isTransfer = transaction.category && transaction.category.name === 'Transfer';
-
     return(
       <>
         <tr className={ this.rowClass(transaction) } onClick={ this.handleRowClick }>
           <td className="text-right">
-            <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
+            <MoneyAmount colorize transfer={ isTransfer(transaction) } amount={ transaction.amount } />
           </td>
           <td>{ transaction.category.name }</td>
           <td>{ formatBankAccountName(transaction.bankAccount) }</td>

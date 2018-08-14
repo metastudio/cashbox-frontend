@@ -10,14 +10,16 @@ import {
   ITransaction, ITransactionParams,
   createTransaction,
 } from 'services/transactions';
-import { formatMoneyParam } from 'utils/money';
+import { formatDateValue } from 'utils/date';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { ITransactionFormData } from './../forms/normal';
 
 interface IOwnProps {
-  orgId: ID;
-  type:  CategoryType;
+  orgId:            ID;
+  type:             CategoryType;
+  copyTransaction?: ITransaction;
 }
 
 interface IDispatchProps {
@@ -47,12 +49,34 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
     history.push('/transactions');
   }
 
+  private initialValues = (): ITransactionFormData => {
+    const { copyTransaction } = this.props;
+
+    const values = {
+      date: formatDateValue(new Date()),
+    };
+
+    if (!copyTransaction) {
+      return values;
+    }
+
+    return ({
+      ...values,
+      amount:        formatMoneyValue(copyTransaction.amount),
+      categoryId:    copyTransaction.category && copyTransaction.category.id,
+      customerId:    copyTransaction.customer && copyTransaction.customer.id,
+      bankAccountId: copyTransaction.bankAccount && copyTransaction.bankAccount.id,
+      comment:       copyTransaction.comment,
+    });
+  }
+
   public render() {
     return(
       <Form
         onSubmit={ this.handleSubmit }
         onSubmitSuccess={ this.afterCreate }
         type={ this.props.type }
+        initialValues={ this.initialValues() }
         action="Create"
       />
     );

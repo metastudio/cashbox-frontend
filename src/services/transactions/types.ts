@@ -24,7 +24,7 @@ interface ITransaction {
 }
 
 interface ITransfer extends ITransaction {
-  transferOut?: ITransferOut;
+  transferOut: ITransferOut;
 }
 
 interface ITransactionParams {
@@ -32,7 +32,7 @@ interface ITransactionParams {
   categoryId?:    number;
   customerId?:    number;
   bankAccountId?: number;
-  date?:          Date;
+  date?:          string;
   comment?:       string;
 }
 
@@ -43,7 +43,7 @@ interface ITransferParams {
   exchangeRate?:  string;
   comission?:     string;
   comment?:       string;
-  date?:          Date;
+  date?:          string;
 }
 
 export {
