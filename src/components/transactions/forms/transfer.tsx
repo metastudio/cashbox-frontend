@@ -37,24 +37,31 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
     <Form horizontal onSubmit={ handleSubmit }>
       { error && <Alert bsStyle="danger">{ error }</Alert> }
 
-      <Field name="toAmount" label="Amount" component={ HorizontalCurrencyInput } />
+      <Field
+        name="toAmount"
+        label="Amount"
+        component={ HorizontalCurrencyInput }
+        required
+      />
       { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
       <Field
         name="fromBankAccountId"
         component={ HorizontalBankAccountsSelect }
         label="From"
         disabled={ isPersisted }
+        required
       />
       <Field
         name="toBankAccountId"
         label="To"
         component={ HorizontalBankAccountsSelect }
         disabled={ isPersisted }
+        required
       />
       { !isPersisted && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
       { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
       <Field name="comment" label="Comment" component={ HorizontalFormInput } />
-      <Field name="date" label="Date" component={ HorizontalDatePicker } />
+      <Field name="date" label="Date" component={ HorizontalDatePicker } required />
 
       <HorizontalSubmitButton submitting={ submitting }>{ action } Transfer</HorizontalSubmitButton>
     </Form>
