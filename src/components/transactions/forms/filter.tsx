@@ -36,7 +36,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         <Row>
           <Col sm={ 4 }>
             <Field
-              name="q[amount_eq]"
+              name="q[amountEq]"
               component={ NoLabelCurrencyInput }
               label="Amount"
               placeholder="Amount"
@@ -44,7 +44,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[comment_cont]"
+              name="q[commentCont]"
               component={ NoLabelFormInput }
               label="Comment"
               placeholder="Comment"
@@ -62,21 +62,21 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         <Row>
           <Col sm={ 4 }>
             <Field
-              name="q[category_id_eq]"
+              name="q[categoryIdEq]"
               component={ NoLabelCategoriesSelect }
               placeholder="Category"
             />
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[bankAccount_id_eq]"
+              name="q[bankAccountIdEq]"
               component={ NoLabelBankAccountsSelect }
               placeholder="Bank Account"
             />
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[customer_id_eq]"
+              name="q[customerIdEq]"
               component={ NoLabelCustomersSelect }
               label="Customer"
               placeholder="Customer"

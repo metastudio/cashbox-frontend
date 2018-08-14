@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import * as QS from 'query-string';
+import * as QS from 'qs';
+import { isEqual, pick } from 'lodash';
 
 import { Status, IPagination, ID } from 'model-types';
 import {
@@ -33,7 +34,7 @@ type IProps = IOwnProps & IStateProps & IDispatchProps;
 class TransactionsProvider extends React.PureComponent<IProps> {
   private loadData = () => {
     const { orgId, load, search } = this.props;
-    load(orgId, QS.parse(search || ''));
+    load(orgId, pick(QS.parse(search || '', { ignoreQueryPrefix: true }), ['q', 'page']));
   }
 
   public componentDidMount() {
@@ -44,7 +45,10 @@ class TransactionsProvider extends React.PureComponent<IProps> {
     const { search: prevSearch } = prevProps;
     const { status, search } = this.props;
 
-    if (status === Status.Invalid || search !== prevSearch) {
+    const prevQuery = QS.parse(prevSearch || '', { ignoreQueryPrefix: true });
+    const query     = QS.parse(search || '', { ignoreQueryPrefix: true });
+
+    if (status === Status.Invalid || !isEqual(query.q, prevQuery.q) || !isEqual(query.page, prevQuery.page)) {
       this.loadData();
     }
   }

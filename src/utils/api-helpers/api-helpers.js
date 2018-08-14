@@ -3,6 +3,7 @@ import humps from 'humps';
 import Url   from 'url';
 import { getCookies } from 'utils/cookies';
 import { HttpError, ValidationError } from 'utils/errors';
+import * as QS from 'qs';
 
 const authorizeHeaders = (headers = {}) => {
   const token = getCookies().token;
@@ -61,7 +62,7 @@ const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
   hostname: process.env.REACT_APP_BACKEND_HOSTNAME,
   port:     process.env.REACT_APP_BACKEND_PORT,
-  query:    humps.decamelizeKeys(query),
+  search:   QS.stringify(humps.decamelizeKeys(query), { encodeValuesOnly: true }),
   pathname: pathname,
 });
 
