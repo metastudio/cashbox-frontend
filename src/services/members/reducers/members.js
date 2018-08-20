@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadMembers } from '../actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions.js';
 
 const defaultState = {
   items:  [],
@@ -27,5 +28,9 @@ export default handleActions({
     items:  [],
     status: statuses.FAILURE,
     error:  payload,
+  }),
+  [setCurrentOrganization.success]: (state) => ({
+    ...state,
+    ...defaultState,
   }),
 }, defaultState);

@@ -7,6 +7,7 @@ import {
   updateCustomer,
   deleteCustomer,
 } from '../actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions.js';
 
 const defaultState = {
   items:  [],
@@ -44,5 +45,9 @@ export default handleActions({
   [deleteCustomer.success]: (state, { payload }) => ({
     ...state,
     items:  state.items.filter(c => c.id !== payload.customer.id),
+  }),
+  [setCurrentOrganization.success]: (state) => ({
+    ...state,
+    ...defaultState,
   }),
 }, defaultState);

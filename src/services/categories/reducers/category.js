@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadCategory, clearCategory } from '../actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions.js';
 
 const defaultState = {
   data:   null,
@@ -33,5 +34,9 @@ export default handleActions({
     data:   null,
     status: statuses.INVALID,
     error:  null,
+  }),
+  [setCurrentOrganization.success]: (state) => ({
+    ...state,
+    ...defaultState,
   }),
 }, defaultState);

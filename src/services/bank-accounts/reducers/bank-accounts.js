@@ -13,6 +13,7 @@ import {
   updateTransaction,
   destroyTransaction,
 } from 'services/transactions';
+import { setCurrentOrganization } from 'services/organizations/actions.js';
 
 const defaultState = {
   items:  [],
@@ -54,5 +55,9 @@ export default handleActions({
   )]: (state) => ({
     ...state,
     status: statuses.INVALID,
+  }),
+  [setCurrentOrganization.success]: (state) => ({
+    ...state,
+    ...defaultState,
   }),
 }, defaultState);

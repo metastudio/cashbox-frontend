@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadBankAccount } from '../actions';
+import { setCurrentOrganization } from 'services/organizations/actions.js';
 
 const defaultState = {
   data:   null,
@@ -27,5 +28,9 @@ export default handleActions({
     data:   null,
     status: statuses.FAILURE,
     error:  payload,
+  }),
+  [setCurrentOrganization.success]: (state) => ({
+    ...state,
+    ...defaultState,
   }),
 }, defaultState);
