@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadInvoice } from './actions.js';
+import { loadInvoice } from '../actions.js';
 
 const defaultState = {
   id:          null,

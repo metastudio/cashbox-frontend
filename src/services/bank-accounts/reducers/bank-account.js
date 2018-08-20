@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadCustomer } from './actions.js';
+import { loadBankAccount } from '../actions';
 
 const defaultState = {
   data:   null,
@@ -10,19 +10,19 @@ const defaultState = {
 };
 
 export default handleActions({
-  [loadCustomer.request]: (state) => ({
+  [loadBankAccount.request]: (state) => ({
     ...state,
     data:   null,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadCustomer.success]: (state, { payload }) => ({
+  [loadBankAccount.success]: (state, { payload }) => ({
     ...state,
-    data:   payload.customer,
+    data:   payload.bankAccount,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadCustomer.failure]: (state, { payload }) => ({
+  [loadBankAccount.failure]: (state, { payload }) => ({
     ...state,
     data:   null,
     status: statuses.FAILURE,

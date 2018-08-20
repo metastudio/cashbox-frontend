@@ -1,31 +1,37 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadMembers } from './actions.js';
+import { loadCategory, clearCategory } from '../actions.js';
 
 const defaultState = {
-  items:  [],
+  data:   null,
   status: statuses.INVALID,
   error:  null,
 };
 
 export default handleActions({
-  [loadMembers.request]: (state) => ({
+  [loadCategory.request]: (state) => ({
     ...state,
-    items:  [],
+    data:   null,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadMembers.success]: (state, { payload }) => ({
+  [loadCategory.success]: (state, { payload }) => ({
     ...state,
-    items:  payload.members,
+    data:   payload.category,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadMembers.failure]: (state, { payload }) => ({
+  [loadCategory.failure]: (state, { payload }) => ({
     ...state,
-    items:  [],
+    data:   null,
     status: statuses.FAILURE,
     error:  payload,
+  }),
+  [clearCategory]: (state) => ({
+    ...state,
+    data:   null,
+    status: statuses.INVALID,
+    error:  null,
   }),
 }, defaultState);

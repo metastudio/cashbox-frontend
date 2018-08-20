@@ -4,7 +4,7 @@ import {
   restoreSession,
   loginUser,
   logoutUser,
-} from './actions.js';
+} from '../actions.js';
 import {
   updateProfile,
   updateAccount,

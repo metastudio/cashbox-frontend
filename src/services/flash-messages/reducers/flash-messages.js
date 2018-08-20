@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { addFlashMessage, removeFlashMessage } from 'services/flash-messages';
+import { addFlashMessage, removeFlashMessage } from '../actions';
 
 const defaultState = {
   messages: [],

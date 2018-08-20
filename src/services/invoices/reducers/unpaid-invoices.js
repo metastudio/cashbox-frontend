@@ -2,34 +2,37 @@ import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import {
-  loadUnpaidInvoicesCount,
+  loadUnpaidInvoices,
   createInvoice,
   updateInvoice,
   destroyInvoice,
-} from './actions.js';
+} from '../actions.js';
 
 const defaultState = {
-  count:  null,
-  status: statuses.INVALID,
-  error:  null,
+  items:      [],
+  status:     statuses.INVALID,
+  error:      null,
+  pagination: null,
 };
 
 export default handleActions({
-  [loadUnpaidInvoicesCount.request]: (state) => ({
+  [loadUnpaidInvoices.request]: (state) => ({
     ...state,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadUnpaidInvoicesCount.success]: (state, { payload }) => ({
+  [loadUnpaidInvoices.success]: (state, { payload }) => ({
     ...state,
-    status: statuses.SUCCESS,
-    count:  payload.unpaidCount,
+    status:     statuses.SUCCESS,
+    error:      null,
+    items:      payload.invoices,
+    pagination: payload.pagination,
   }),
   [combineActions(createInvoice.success, updateInvoice.success, destroyInvoice.success)]: (state) => ({
     ...state,
     status: statuses.INVALID,
   }),
-  [loadUnpaidInvoicesCount.failure]: (state, { payload }) => ({
+  [loadUnpaidInvoices.failure]: (state, { payload }) => ({
     ...state,
     status: statuses.FAILURE,
     error:  payload,

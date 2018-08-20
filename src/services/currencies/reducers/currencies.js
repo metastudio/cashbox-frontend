@@ -1,37 +1,30 @@
 import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
-import { loadCategory, clearCategory } from './actions.js';
+import { loadCurrencies } from '../actions.js';
 
 const defaultState = {
-  data:   null,
+  items:  null,
   status: statuses.INVALID,
   error:  null,
 };
 
 export default handleActions({
-  [loadCategory.request]: (state) => ({
+  [loadCurrencies.request]: (state) => ({
     ...state,
-    data:   null,
+    items:  null,
     status: statuses.PENDING,
     error:  null,
   }),
-  [loadCategory.success]: (state, { payload }) => ({
+  [loadCurrencies.success]: (state, { payload }) => ({
     ...state,
-    data:   payload.category,
+    items:  payload.currencies,
     status: statuses.SUCCESS,
     error:  null,
   }),
-  [loadCategory.failure]: (state, { payload }) => ({
+  [loadCurrencies.failure]: (state, { payload }) => ({
     ...state,
-    data:   null,
     status: statuses.FAILURE,
     error:  payload,
-  }),
-  [clearCategory]: (state) => ({
-    ...state,
-    data:   null,
-    status: statuses.INVALID,
-    error:  null,
   }),
 }, defaultState);

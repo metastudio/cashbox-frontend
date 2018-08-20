@@ -6,7 +6,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
-} from './actions.js';
+} from '../actions.js';
 
 const defaultState = {
   items:  [],
