@@ -7,7 +7,7 @@ export { default as bankAccount }          from './bank-accounts/entity-reducer.
 export { default as categories }           from './categories/entities-reducer.js';
 export { default as category }             from './categories/entity-reducer.js';
 export { default as currencies }           from './currencies/reducer.js';
-export { default as currentOrganization }  from './organizations/current-reducer.js';
+export { default as currentOrganization }  from './organizations/reducers/current-organization';
 export { default as customers }            from './customers/entities-reducer.js';
 export { default as customer }             from './customers/entity-reducer.js';
 export { default as debtors }              from './debtors/reducer.js';
@@ -15,7 +15,7 @@ export { default as flashMessages }        from './flash-messages/reducer.js';
 export { default as invoice }              from './invoices/entity-reducer.js';
 export { default as invoices }             from './invoices/entities-reducer.js';
 export { default as members }              from './members/reducer.js';
-export { default as organizations }        from './organizations/entities-reducer.js';
+export { default as organizations }        from './organizations/reducers/organizations';
 export { default as transaction }          from './transactions/reducers/transaction';
 export { default as transactions }         from './transactions/reducers/transactions';
 export { default as unpaidInvoices }       from './invoices/unpaid-reducer.js';

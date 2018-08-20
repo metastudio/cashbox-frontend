@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 
-import { loadOrganizations } from './actions.js';
+import { loadOrganizations } from '../actions.js';
 
 const defaultState = {
   items:  [],

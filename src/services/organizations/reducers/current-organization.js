@@ -1,6 +1,10 @@
 import { handleActions, combineActions } from 'redux-actions';
 
-import { setCurrentOrganization, restoreOrganization, clearCurrentOrganization } from './actions.js';
+import {
+  setCurrentOrganization,
+  restoreOrganization,
+  clearCurrentOrganization,
+} from '../actions.js';
 
 const defaultState = {
   id:       null,
