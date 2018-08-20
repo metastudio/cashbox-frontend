@@ -3,6 +3,7 @@ import { IMoney } from 'utils/money/types';
 import { IBankAccount } from 'services/bank-accounts/types';
 import { ICustomer } from 'services/customers/types';
 import { ICategory } from 'services/categories/types';
+import { IInvoice } from '../invoices';
 
 interface ITransferOut {
   id:          ID;
@@ -23,6 +24,7 @@ interface ITransaction {
   comment?:    string;
   isViewed:    boolean;
   invoiceId?:  ID;
+  invoice?:    IInvoice;
 }
 
 interface ITransfer extends ITransaction {
