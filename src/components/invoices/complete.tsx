@@ -9,6 +9,7 @@ import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages'
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { ITransactionParams, createTransaction, ITransaction } from 'services/transactions';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatDateValue } from 'utils/date';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
 import Form, { ITransactionFormData } from 'components/transactions/forms/normal';
@@ -32,12 +33,13 @@ type IProps = IOwnProps & IRouteProps & IDispatchProps & IStateProps;
 
 class CompleteInvoiceButton extends React.Component<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
-    const { orgId, create } = this.props;
+    const { orgId, create, invoice } = this.props;
     return create(orgId, {
       amount:        formatMoneyParam(values.amount),
       categoryId:    values.categoryId,
       customerId:    values.customerId,
       bankAccountId: values.bankAccountId,
+      invoiceId:     invoice.id,
       comment:       values.comment,
       date:          values.date,
     }).catch(prepareSubmissionError);
@@ -58,6 +60,7 @@ class CompleteInvoiceButton extends React.Component<IProps> {
     return({
       amount:     formatMoneyValue(invoice.amount),
       customerId: invoice.customerId,
+      date:       formatDateValue(new Date()),
     });
   }
 

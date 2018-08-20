@@ -1,10 +1,11 @@
+import { ID } from 'model-types';
 import { IMoney } from 'utils/money/types';
 import { IBankAccount } from 'services/bank-accounts/types';
 import { ICustomer } from 'services/customers/types';
 import { ICategory } from 'services/categories/types';
 
 interface ITransferOut {
-  id:          number;
+  id:          ID;
   amount:      IMoney;
   category:    ICategory;
   bankAccount: IBankAccount;
@@ -13,7 +14,7 @@ interface ITransferOut {
 }
 
 interface ITransaction {
-  id:          number;
+  id:          ID;
   amount:      IMoney;
   category:    ICategory;
   bankAccount: IBankAccount;
@@ -21,6 +22,7 @@ interface ITransaction {
   date?:       Date;
   comment?:    string;
   isViewed:    boolean;
+  invoiceId?:  ID;
 }
 
 interface ITransfer extends ITransaction {
@@ -34,6 +36,7 @@ interface ITransactionParams {
   bankAccountId?: number;
   date?:          string;
   comment?:       string;
+  invoiceId?:     number;
 }
 
 interface ITransferParams {
