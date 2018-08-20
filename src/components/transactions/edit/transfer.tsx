@@ -9,6 +9,7 @@ import {
   ITransfer, ITransferParams,
   updateTransaction,
 } from 'services/transactions';
+import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';
@@ -31,7 +32,7 @@ class EditTransfer extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransferFormData) => {
     const { orgId, transfer, update } = this.props;
     return update(orgId, transfer.id, {
-      amount:  formatMoneyParam(values.amount),
+      amount:  formatMoneyParam(values.toAmount),
       comment: values.comment,
       date:    values.date,
     }).catch(prepareSubmissionError);
@@ -46,13 +47,12 @@ class EditTransfer extends React.PureComponent<IProps> {
 
   private initialData = (tranfer: ITransfer): ITransferFormData => {
     return ({
-      amount:        formatMoneyValue(tranfer.amount),
-      fromAmount:    tranfer.transferOut && formatMoneyValue(tranfer.transferOut.amount),
-      categoryName:  tranfer.category && tranfer.category.name,
-      referenceId:   tranfer.bankAccount && tranfer.bankAccount.id,
-      bankAccountId: tranfer.transferOut && tranfer.transferOut.bankAccount.id,
-      comment:       tranfer.comment,
-      date:          tranfer.date,
+      toAmount:          formatMoneyValue(tranfer.amount),
+      fromAmount:        formatMoneyValue(tranfer.transferOut.amount),
+      toBankAccountId:   tranfer.bankAccount.id,
+      fromBankAccountId: tranfer.transferOut.bankAccount.id,
+      comment:           tranfer.comment,
+      date:              formatDateValue(tranfer.date),
     });
   }
 

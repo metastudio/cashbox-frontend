@@ -8,10 +8,9 @@ import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-fi
 import {
   HorizontalFormInput,
   HorizontalDatePicker,
-  HorizontalCurrencyInput,
-  SubmitButton,
+  HorizontalMoneyInput,
+  HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
-import DestroyButton from './../destroy';
 
 interface IOwnProps {
   transfer?: ITransfer;
@@ -19,15 +18,14 @@ interface IOwnProps {
 }
 
 interface ITransferFormData {
-  amount?:        string;
-  categoryName?:  string;
-  fromAmount?:    string;
-  bankAccountId?: number;
-  referenceId?:   number;
-  exchangeRate?:  string;
-  comission?:     string;
-  comment?:       string;
-  date?:          Date;
+  toAmount?:          string;
+  fromAmount?:        string;
+  fromBankAccountId?: number;
+  toBankAccountId?:   number;
+  exchangeRate?:      string;
+  comission?:         string;
+  comment?:           string;
+  date?:              string;
 }
 
 type IProps = IOwnProps & InjectedFormProps<ITransferFormData, IOwnProps>;
@@ -39,27 +37,33 @@ const TransferForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
     <Form horizontal onSubmit={ handleSubmit }>
       { error && <Alert bsStyle="danger">{ error }</Alert> }
 
-      <Field name="amount" label="Amount" component={ HorizontalCurrencyInput } />
-      { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalCurrencyInput } disabled /> }
       <Field
-        name="bankAccountId"
+        name="toAmount"
+        label="Amount"
+        component={ HorizontalMoneyInput }
+        required
+      />
+      { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalMoneyInput } disabled /> }
+      <Field
+        name="fromBankAccountId"
         component={ HorizontalBankAccountsSelect }
         label="From"
         disabled={ isPersisted }
+        required
       />
       <Field
-        name="referenceId"
+        name="toBankAccountId"
         label="To"
         component={ HorizontalBankAccountsSelect }
         disabled={ isPersisted }
+        required
       />
       { !isPersisted && <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } /> }
-      { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalCurrencyInput } /> }
+      { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalMoneyInput } /> }
       <Field name="comment" label="Comment" component={ HorizontalFormInput } />
-      <Field name="date" label="Date" component={ HorizontalDatePicker } />
+      <Field name="date" label="Date" component={ HorizontalDatePicker } required />
 
-      { isPersisted && <DestroyButton transaction={ transfer! } /> }
-      <SubmitButton className="pull-right" submitting={ submitting }>{ action } Transfer</SubmitButton>
+      <HorizontalSubmitButton submitting={ submitting }>{ action } Transfer</HorizontalSubmitButton>
     </Form>
   );
 };

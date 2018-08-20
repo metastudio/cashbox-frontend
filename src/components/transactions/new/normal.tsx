@@ -10,18 +10,16 @@ import {
   ITransaction, ITransactionParams,
   createTransaction,
 } from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
-import { formatMoneyParam } from 'utils/money';
+import { formatDateValue } from 'utils/date';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { ITransactionFormData } from './../forms/normal';
 
 interface IOwnProps {
-  type: CategoryType;
-}
-
-interface IStateProps {
-  orgId: ID;
+  orgId:            ID;
+  type:             CategoryType;
+  copyTransaction?: ITransaction;
 }
 
 interface IDispatchProps {
@@ -30,7 +28,7 @@ interface IDispatchProps {
 }
 
 type IRouteProps = RouteComponentProps<{}>;
-type IProps = IOwnProps & IStateProps & IDispatchProps & IRouteProps;
+type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
 class NewExpenseTransaction extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
@@ -51,21 +49,39 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
     history.push('/transactions');
   }
 
+  private initialValues = (): ITransactionFormData => {
+    const { copyTransaction } = this.props;
+
+    const values = {
+      date: formatDateValue(new Date()),
+    };
+
+    if (!copyTransaction) {
+      return values;
+    }
+
+    return ({
+      ...values,
+      amount:        formatMoneyValue(copyTransaction.amount),
+      categoryId:    copyTransaction.category && copyTransaction.category.id,
+      customerId:    copyTransaction.customer && copyTransaction.customer.id,
+      bankAccountId: copyTransaction.bankAccount && copyTransaction.bankAccount.id,
+      comment:       copyTransaction.comment,
+    });
+  }
+
   public render() {
     return(
       <Form
         onSubmit={ this.handleSubmit }
         onSubmitSuccess={ this.afterCreate }
         type={ this.props.type }
+        initialValues={ this.initialValues() }
         action="Create"
       />
     );
   }
 }
-
-const mapState = (state: {}): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
-});
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   create: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
@@ -73,5 +89,5 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
 });
 
 export default withRouter<IOwnProps & IRouteProps>(
-  connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(NewExpenseTransaction),
+  connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(NewExpenseTransaction),
 );

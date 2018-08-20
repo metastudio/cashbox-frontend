@@ -15,7 +15,7 @@ class TransactionsFilter extends React.PureComponent<IProps> {
   private handleSubmit = (values: object) => {
     const { history, location: { pathname } } = this.props;
 
-    history.push({ pathname, search: QS.stringify(values) });
+    history.push({ pathname, search: QS.stringify(values, { encodeValuesOnly: true }) });
   }
 
   private handleReset = () => {

@@ -5,7 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import {
   VerticalFormInput,
   VerticalDatePicker,
-  VerticalCurrencyInput,
+  VerticalMoneyInput,
 } from 'components/utils/form-inputs';
 import { VerticalCurrencySelect } from 'components/currencies/select-field';
 import { VerticalCustomersSelect } from 'components/customers/select-field';
@@ -22,7 +22,7 @@ const InvoieMainFields = () => (
     </Col>
     <Col xs={ 12 } sm={ 6 }>
       <Field name="number" component={ VerticalFormInput } label="Number" />
-      <Field name="amount" component={ VerticalCurrencyInput } label="Amount" required />
+      <Field name="amount" component={ VerticalMoneyInput } label="Amount" required />
       <Field name="sentAt" component={ VerticalDatePicker } label="Sent at" />
       <Field name="paidAt" component={ VerticalDatePicker } label="Paid at" />
     </Col>

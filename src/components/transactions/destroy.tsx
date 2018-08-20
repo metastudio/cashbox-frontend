@@ -5,25 +5,22 @@ import { Button } from 'react-bootstrap';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import { ITransaction, destroyTransaction } from 'services/transactions';
-import { addFlashMessage } from 'services/flash-messages';
-import { selectCurrentOrganizationId } from 'services/organizations';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import { confirm } from 'components/utils/confirm';
 
 interface IOwnProps {
   transaction: ITransaction;
 }
 
-interface IStateProps {
-  orgId: number;
-}
-
 interface IDispatchProps {
   destroy:      (orgId: number, transactionId: number) => Promise<{}>;
-  flashMessage: (message: string) => void;
+  flashMessage: AddFlashMessageAction;
 }
 
-type IProps = RouteComponentProps<{ id: string }> & IOwnProps & IStateProps & IDispatchProps;
+type IRouteProps = RouteComponentProps<{}>;
+type IProps = IRouteProps & IOwnProps & IDispatchProps & ICurrentOrgIdProps;
 
 class DestroyButton extends React.Component<IProps> {
   private handleDestroy = () => {
@@ -47,14 +44,13 @@ class DestroyButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId: selectCurrentOrganizationId(state),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  destroy: (orgId, transId) => new Promise((res, rej) => dispatch(destroyTransaction(orgId, transId, res, rej))),
+  flashMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  destroy: (orgId: number, transactionId: number) =>
-    new Promise((res, rej) => { dispatch(destroyTransaction(orgId, transactionId, res, rej)); }),
-  flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
-});
-
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DestroyButton));
+export default withRouter<IOwnProps & IRouteProps>(
+  withCurrentOrgId(
+    connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(DestroyButton),
+  ),
+);

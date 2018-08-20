@@ -102,6 +102,7 @@ Use `production` branch to deploy to production.
    Output should looks something like this:
    ```
    === rcashbox Config Vars
+   NODE_ENV:                   production
    REACT_APP_BACKEND_HOSTNAME: cashbox.metastudiohq.com
    REACT_APP_BACKEND_PORT:     443
    REACT_APP_BACKEND_PROTOCOL: https
@@ -113,5 +114,5 @@ Use `production` branch to deploy to production.
    ```
 3. Deploy:
    ```sh
-   $ git push heroku-production master
+   $ git push heroku-production production:master
    ```

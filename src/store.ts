@@ -3,7 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
-import * as reducers from 'services/reducers.js';
+import * as reducers from 'services/reducers';
 import rootSaga from 'services/sagas.js';
 
 function createAppStore() {

@@ -10,9 +10,10 @@ interface IProps {
   error?:      string;
   onTryAgain?: () => void;
   children?:   React.ReactNode | ((status?: Status) => React.ReactNode);
+  spinner?:    React.ReactNode | (() => React.ReactNode);
 }
 
-class LoadingView extends React.PureComponent<IProps> {
+class LoadingView extends React.Component<IProps> {
   public static defaultProps = {
     error: 'Error on data loading.',
   };
@@ -41,7 +42,15 @@ class LoadingView extends React.PureComponent<IProps> {
     return children;
   }
 
-  private renderSpinner = () => <Spinner />;
+  private renderSpinner = () => {
+    const { spinner } = this.props;
+
+    if (spinner && typeof spinner === 'function') {
+      return spinner();
+    }
+
+    return spinner || <Spinner />;
+  }
 
   public render() {
     const { status } = this.props;

@@ -12,6 +12,7 @@ import {
 import { CategoryType } from 'services/categories';
 import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatDateValue } from 'utils/date';
 
 import Form, { ITransactionFormData } from './../forms/normal';
 
@@ -48,28 +49,29 @@ class EditNormalTransaction extends React.PureComponent<IProps> {
     history.push('/transactions');
   }
 
-  private initialData = (transaction: ITransaction): ITransactionFormData => {
+  private initialData = (): ITransactionFormData => {
+    const { transaction } = this.props;
+
     return ({
       amount:        formatMoneyValue(transaction.amount),
       categoryId:    transaction.category && transaction.category.id,
       customerId:    transaction.customer && transaction.customer.id,
       bankAccountId: transaction.bankAccount && transaction.bankAccount.id,
       comment:       transaction.comment,
-      date:          transaction.date,
+      date:          formatDateValue(transaction.date),
     });
   }
 
   public render() {
-    const { type, transaction } = this.props;
+    const { type } = this.props;
 
     return(
       <Form
         onSubmit={ this.handleSubmit }
         onSubmitSuccess={ this.afterUpdate }
         type={ type }
-        initialValues={ this.initialData(transaction) }
+        initialValues={ this.initialData() }
         action="Update"
-        transaction={ transaction }
       />
     );
   }

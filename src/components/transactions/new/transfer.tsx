@@ -9,14 +9,15 @@ import {
   ITransfer, ITransferParams,
   createTransfer,
 } from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
-import { formatMoneyParam } from 'utils/money';
+import { formatDateValue } from 'utils/date';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';
 
-interface IStateProps {
-  orgId: ID;
+interface IOwnProps {
+  orgId:         ID;
+  copyTransfer?: ITransfer;
 }
 
 interface IDispatchProps {
@@ -24,15 +25,16 @@ interface IDispatchProps {
   showMessage: AddFlashMessageAction;
 }
 
-type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;
+type IRouteProps = RouteComponentProps<{}>;
+type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
 class NewTransfer extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransferFormData) => {
     const { orgId, create } = this.props;
     return create(orgId, {
-      bankAccountId: values.bankAccountId,
-      amount:        formatMoneyParam(values.amount),
-      referenceId:   values.referenceId,
+      bankAccountId: values.fromBankAccountId,
+      amount:        formatMoneyParam(values.toAmount),
+      referenceId:   values.toBankAccountId,
       exchangeRate:  values.exchangeRate,
       comission:     formatMoneyParam(values.comission),
       comment:       values.comment,
@@ -46,24 +48,43 @@ class NewTransfer extends React.PureComponent<IProps> {
     history.push('/transactions');
   }
 
+  private initialValues = (): ITransferFormData => {
+    const { copyTransfer } = this.props;
+
+    const values = {
+      date: formatDateValue(new Date()),
+    };
+
+    if (!copyTransfer) {
+      return values;
+    }
+
+    return ({
+      ...values,
+      toAmount:          formatMoneyValue(copyTransfer.amount),
+      fromAmount:        formatMoneyValue(copyTransfer.transferOut.amount),
+      toBankAccountId:   copyTransfer.bankAccount.id,
+      fromBankAccountId: copyTransfer.transferOut.bankAccount.id,
+    });
+  }
+
   public render() {
     return(
       <TransferForm
         onSubmit={ this.handleSubmit }
         onSubmitSuccess={ this.afterCreate }
         action="Create"
+        initialValues={ this.initialValues() }
       />
     );
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
-});
-
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create:  (orgId, data) => new Promise((res, rej) => dispatch(createTransfer(orgId, data, res, rej))),
+  create:      (orgId, data) => new Promise((res, rej) => dispatch(createTransfer(orgId, data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewTransfer));
+export default withRouter<IOwnProps & IRouteProps>(
+  connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(NewTransfer),
+);

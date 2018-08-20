@@ -81,10 +81,10 @@ export const destroyTransaction = createAction(
 );
 destroyTransaction.request = createAction(
   'DESTROY_TRANSACTION_REQUEST',
-  (organizationId) => ({ organizationId }),
+  (organizationId, transactionId) => ({ organizationId, transactionId }),
 );
 destroyTransaction.success = createAction(
   'DESTROY_TRANSACTION_SUCCESS',
-  (organizationId, transaction) => ({ organizationId, transaction }),
+  (organizationId, transactionId) => ({ organizationId, transactionId }),
 );
 destroyTransaction.failure = createAction('DESTROY_TRANSACTION_FAILURE');

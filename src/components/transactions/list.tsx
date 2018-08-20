@@ -1,19 +1,12 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { PageHeader } from 'react-bootstrap';
-import * as QS from 'query-string';
 
-import { Status, IPagination } from 'model-types';
-import {
-  ITransaction,
-  loadTransactions,
-  selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
-} from 'services/transactions';
-import { selectCurrentOrganizationId } from 'services/organizations';
+import { IPagination } from 'model-types';
+import { ITransaction } from 'services/transactions';
 
-import LoadingView from 'components/utils/loading-view';
+import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
+import TransactionsProvider from './providers/transactions';
 import Table from './list/table';
 import Paginator from 'components/utils/paginator';
 import TransactionsFilter from './filter';
@@ -22,28 +15,12 @@ interface IState {
   isFilterOpened: boolean;
 }
 
-interface IStateProps {
-  orgId:        number;
-  status:       Status;
-  transactions: ITransaction[];
-  pagination:   IPagination;
-}
-
-interface IDispatchProps {
-  load: (orgId: number, params: object) => void;
-}
-
-type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
 class TransactionsList extends React.PureComponent<IProps, IState> {
   public state: IState = {
     isFilterOpened: false,
   };
-
-  private loadData = () => {
-    const { orgId, load, location: { search } } = this.props;
-    load(orgId, QS.parse(search));
-  }
 
   private handleToggleFilter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -58,31 +35,16 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
     </small>
   )
 
-  private renderTransactions = () => {
-    const { transactions, pagination } = this.props;
-
-    return (
-      <>
-        <Table transactions={ transactions } />
-        <Paginator data={ pagination } />
-      </>
-    );
-  }
-
-  public componentDidMount() {
-    this.loadData();
-  }
-
-  public componentDidUpdate(prevProps: IProps) {
-    const { location: { search: prevSearch } } = prevProps;
-    const { status, location: { search } } = this.props;
-
-    if (status === Status.Invalid || search !== prevSearch) {
-      this.loadData();
-    }
-  }
+  private renderTransactions = (transactions: ITransaction[], pagination: IPagination) => (
+    <>
+      <Table transactions={ transactions } />
+      <Paginator data={ pagination } />
+    </>
+  )
 
   public render() {
+    const { orgId, location: { search } } = this.props;
+
     return (
       <>
         <PageHeader>
@@ -90,23 +52,12 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
           Transactions&nbsp;{ this.renderToggleFilter() }
         </PageHeader>
         <TransactionsFilter open={ this.state.isFilterOpened } />
-        <LoadingView status={ this.props.status }>
+        <TransactionsProvider orgId={ orgId } search={ search }>
           { this.renderTransactions }
-        </LoadingView>
+        </TransactionsProvider>
       </>
     );
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
-  orgId:        selectCurrentOrganizationId(state),
-  status:       selectTransactionsStatus(state),
-  transactions: selectTransactions(state),
-  pagination:   selectTransactionsPagination(state),
-});
-
-const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId, params) => dispatch(loadTransactions(orgId, params)),
-});
-
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(TransactionsList));
+export default withRouter(withCurrentOrgId(TransactionsList));

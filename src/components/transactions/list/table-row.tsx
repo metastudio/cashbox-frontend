@@ -2,12 +2,12 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { formatBankAccountName } from 'services/bank-accounts';
-import { ITransaction } from 'services/transactions';
+import { ITransaction, ITransfer, isTransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
 
-import './../css/default.css';
+import './../index.css';
 
 interface IOwnProps {
   transaction: ITransaction;
@@ -22,22 +22,36 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
 
   private handleRowClick = () => {
     const { transaction, history } = this.props;
-    history.push(`/transactions/${transaction.id}/edit`);
+    history.push(`/transactions/${transaction.id}`);
+  }
+
+  private bankAccountTitle = (transaction: ITransaction) => {
+    if (isTransfer(transaction)) {
+      return (
+        <>
+          { formatBankAccountName((transaction as ITransfer).transferOut.bankAccount) }
+          { ' ' }
+          &rarr;
+          { ' ' }
+          { formatBankAccountName(transaction.bankAccount) }
+        </>
+      );
+    }
+
+    return formatBankAccountName(transaction.bankAccount);
   }
 
   public render() {
     const { transaction } = this.props;
 
-    const isTransfer = transaction.category && transaction.category.name === 'Transfer';
-
     return(
       <>
         <tr className={ this.rowClass(transaction) } onClick={ this.handleRowClick }>
           <td className="text-right">
-            <MoneyAmount colorize transfer={ isTransfer } amount={ transaction.amount } />
+            <MoneyAmount colorize transfer={ isTransfer(transaction) } amount={ transaction.amount } />
           </td>
           <td>{ transaction.category.name }</td>
-          <td>{ formatBankAccountName(transaction.bankAccount) }</td>
+          <td>{ this.bankAccountTitle(transaction) }</td>
           <td>{ transaction.customer && transaction.customer.name }</td>
           <td>{ transaction.comment }</td>
           <td>{ formatDate(transaction.date) }</td>
