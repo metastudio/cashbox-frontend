@@ -75,6 +75,7 @@ class InvoicesTableHeader extends React.PureComponent<IProps> {
     return(
       <thead>
         <tr>
+          <th />
           { this.renderHeaders() }
           <th />
         </tr>

@@ -25,6 +25,9 @@ export interface IInvoice {
   customerDetails?:      string;
   hasIncomeTransaction?: boolean;
 
+  isCompleted: boolean;
+  isOverdue:   boolean;
+
   invoiceItems: InvoiceItem[];
 }
 
