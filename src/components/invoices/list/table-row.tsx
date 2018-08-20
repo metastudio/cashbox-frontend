@@ -5,13 +5,15 @@ import { IInvoice } from 'services/invoices';
 import { formatDate, formatDateRange } from 'utils/date';
 
 import { MoneyAmount } from 'components/utils/money';
+import Status from './status';
 
 interface IProps {
   invoice: IInvoice;
 }
 
 const InvoiceRow: React.SFC<IProps> = ({ invoice }) => (
-  <tr className={ invoice.paidAt ? 'bg-success' : '' }>
+  <tr className={ invoice.isCompleted ? 'text-muted' : '' }>
+    <td className="text-center"><Status invoice={ invoice } /></td>
     <td>{ invoice.customerName }</td>
     <td>{ formatDateRange(invoice.startsAt, invoice.endsAt) }</td>
     <td><MoneyAmount amount={ invoice.amount } /></td>
