@@ -3,7 +3,6 @@ import { handleActions, combineActions } from 'redux-actions';
 import {
   setCurrentOrganization,
   restoreOrganization,
-  clearCurrentOrganization,
 } from '../actions.js';
 
 const defaultState = {
@@ -28,11 +27,5 @@ export default handleActions({
   [restoreOrganization.failure]: (state) => ({
     ...state,
     isLoaded: true,
-  }),
-  [clearCurrentOrganization]: (state) => ({
-    ...state,
-    id:       null,
-    data:     null,
-    isLoaded: false,
   }),
 }, defaultState);

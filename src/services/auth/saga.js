@@ -12,8 +12,6 @@ import {
 
 import { fetchAuthToken, storeAuthToken, clearAuthToken } from './storage-utils';
 
-import { clearCurrentOrganization } from 'services/organizations';
-
 function* handleRestoreSession({ meta: { resolve, reject } }) {
   try {
     yield put(restoreSession.request());
