@@ -1,12 +1,14 @@
 import fetch from 'isomorphic-fetch';
 import humps from 'humps';
 import Url   from 'url';
-import { getCookies } from 'utils/cookies';
-import { HttpError, ValidationError } from 'utils/errors';
 import * as QS from 'qs';
 
+import { HttpError, ValidationError } from 'utils/errors';
+
+import { fetchAuthToken } from 'services/auth/storage-utils';
+
 const authorizeHeaders = (headers = {}) => {
-  const token = getCookies().token;
+  const token = fetchAuthToken();
   const basicAuth = token ? { 'Authorization': token } : null;
 
   return {
