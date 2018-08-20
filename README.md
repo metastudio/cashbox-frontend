@@ -76,7 +76,6 @@ Use `master` branch to deploy to staging:
    REACT_APP_BACKEND_HOSTNAME: staging.cashbox.metastudiohq.com
    REACT_APP_BACKEND_PORT:     443
    REACT_APP_BACKEND_PROTOCOL: https
-   REACT_APP_COOKIES_KEY:      cashbox_frontend_staging
    ```
    Set a new env variable if required (see `.env.sample` for list of used variables):
    ```sh
@@ -106,7 +105,6 @@ Use `production` branch to deploy to production.
    REACT_APP_BACKEND_HOSTNAME: cashbox.metastudiohq.com
    REACT_APP_BACKEND_PORT:     443
    REACT_APP_BACKEND_PROTOCOL: https
-   REACT_APP_COOKIES_KEY:      cashbox_frontend
    ```
    Set a new env variable if required (see `.env.sample` for list of used variables):
    ```sh
