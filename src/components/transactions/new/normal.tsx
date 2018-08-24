@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Checkbox } from 'react-bootstrap';
 
 import { CategoryType } from 'services/categories';
 import { ID } from 'model-types';
@@ -22,6 +23,10 @@ interface IOwnProps {
   copyTransaction?: ITransaction;
 }
 
+interface IState {
+  leaveOpen: boolean;
+}
+
 interface IDispatchProps {
   create: (orgId: ID, data: ITransactionParams) => Promise<ITransaction>;
   showMessage: AddFlashMessageAction;
@@ -30,7 +35,18 @@ interface IDispatchProps {
 type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
-class NewExpenseTransaction extends React.PureComponent<IProps> {
+class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
+  public readonly state: IState = {
+    leaveOpen: false,
+  };
+
+  private handleLeaveOpenChange = (e: React.FormEvent<Checkbox>) => {
+    // react-bootstrap has bad type definitions for onChange handlers
+    const event = (e as any as React.ChangeEvent<HTMLInputElement>);
+
+    this.setState({ leaveOpen: event.target.checked });
+  }
+
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, create } = this.props;
     return create(orgId, {
@@ -46,7 +62,10 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
   private afterCreate = () => {
     const { showMessage, history } = this.props;
     showMessage('Transaction successfully created.');
-    history.push('/transactions');
+
+    if (!this.state.leaveOpen) {
+      history.push('/transactions');
+    }
   }
 
   private initialValues = (): ITransactionFormData => {
@@ -78,6 +97,8 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
         type={ this.props.type }
         initialValues={ this.initialValues() }
         action="Create"
+        leaveOpenValue={ this.state.leaveOpen }
+        onLeaveOpenChange={ this.handleLeaveOpenChange }
       />
     );
   }

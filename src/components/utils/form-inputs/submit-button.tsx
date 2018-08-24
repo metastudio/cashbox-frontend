@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, FormGroup } from 'react-bootstrap';
 
 interface IProps {
   submitting:       boolean;
@@ -50,12 +50,18 @@ SubmitButton.defaultProps = {
   submitSucceeded: false,
 };
 
-const HorizontalSubmitButton: React.SFC<IProps> = props => (
-  <Row>
+interface IHorizontalSubmitButtonProps {
+  additionalContent?: React.ReactNode;
+}
+
+const HorizontalSubmitButton: React.SFC<IHorizontalSubmitButtonProps & IProps> =
+  ({ additionalContent, ...props }) => (
+  <FormGroup>
     <Col smOffset={ 3 } sm={ 9 }>
       <SubmitButton { ...props } />
+      { additionalContent }
     </Col>
-  </Row>
+  </FormGroup>
 );
 
 const VerticalSubmitButton: React.SFC<IProps> = props => (
