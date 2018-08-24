@@ -16,7 +16,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
-import { Paginator } from 'components/utils/paginator';
+import { SimplePaginator } from 'components/utils/paginator';
 
 interface IStateProps {
   orgId:      number;
@@ -64,7 +64,7 @@ class AllInvoices extends React.Component<Props> {
           <TableHeader />
           <TableBody invoices={ invoices } />
         </Table>
-        <Paginator data={ this.props.pagination } />
+        <SimplePaginator data={ this.props.pagination } />
       </>
     );
   }
