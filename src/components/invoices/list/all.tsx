@@ -16,7 +16,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
-import Paginator from 'components/utils/paginator';
+import { Paginator } from 'components/utils/paginator';
 
 interface IStateProps {
   orgId:      number;

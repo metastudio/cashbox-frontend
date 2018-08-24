@@ -8,7 +8,7 @@ import { ITransaction } from 'services/transactions';
 import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 import TransactionsProvider from './providers/transactions';
 import Table from './list/table';
-import Paginator from 'components/utils/paginator';
+import { SimplePaginator } from 'components/utils/paginator';
 import TransactionsFilter from './filter';
 
 interface IState {
@@ -38,7 +38,7 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
   private renderTransactions = (transactions: ITransaction[], pagination: IPagination) => (
     <>
       <Table transactions={ transactions } />
-      <Paginator data={ pagination } />
+      <SimplePaginator data={ pagination } />
     </>
   )
 

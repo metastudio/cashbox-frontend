@@ -57,11 +57,14 @@ class Paginator extends React.PureComponent<IProps> {
   }
 
   private lastPageItem = () => {
-    if (this.props.data.current >= this.props.data.pages) { return null; }
+    const { data: { current, pages } } = this.props;
+
+    if (!pages) { return null; }
+    if (current >= pages) { return null; }
 
     return (
       <li key="last">
-        <Link to={ this.location(this.props.data.pages) }>Last&nbsp;»</Link>
+        <Link to={ this.location(pages) }>Last&nbsp;»</Link>
       </li>
     );
   }
@@ -69,7 +72,7 @@ class Paginator extends React.PureComponent<IProps> {
   public render() {
     const { data: { pages } } = this.props;
 
-    if (pages <= 1) { return null; }
+    if (!pages ||  pages <= 1) { return null; }
 
     const items = [];
 
