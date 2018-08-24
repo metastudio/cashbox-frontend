@@ -1,8 +1,13 @@
 import { LocationDescriptorObject, Search } from 'history';
 import * as QS from 'qs';
 
-const parseQuery = (search?: Search): any => QS.parse(search || '', { ignoreQueryPrefix: true });
-const stringifyQuery = (query: any): Search => QS.stringify(query, { encodeValuesOnly: true });
+type QueryValue =  string | number | null | undefined | IQuery;
+interface IQuery {
+  [key: string]: QueryValue;
+}
+
+const parseQuery = (search?: Search): IQuery => QS.parse(search || '', { ignoreQueryPrefix: true });
+const stringifyQuery = (query: IQuery): Search => QS.stringify(query, { encodeValuesOnly: true });
 
 const locationWithoutKey = (
   location: LocationDescriptorObject,
@@ -19,7 +24,7 @@ const locationWithoutKey = (
 
 const locationWithKeys = (
   location: LocationDescriptorObject,
-  keys: { [key: string]: string | number | null },
+  keys: IQuery,
 ): LocationDescriptorObject => {
   const query = {
     ...parseQuery(location.search),
@@ -32,11 +37,21 @@ const locationWithKeys = (
   };
 };
 
+const locationWithQuery = (
+  location: LocationDescriptorObject,
+  query: IQuery,
+): LocationDescriptorObject => {
+  return {
+    ...location,
+    search: stringifyQuery(query),
+  };
+};
+
 const keyFromLocation = <T>(
   location: LocationDescriptorObject,
   key: string,
-  defaultValue?: T,
-): T | undefined => {
+  defaultValue?: QueryValue,
+): QueryValue => {
   const query = parseQuery(location.search);
 
   if (!(key in query)) { return defaultValue; }
@@ -45,10 +60,13 @@ const keyFromLocation = <T>(
 };
 
 export {
+  IQuery,
+
   parseQuery,
   stringifyQuery,
 
   locationWithoutKey,
   locationWithKeys,
+  locationWithQuery,
   keyFromLocation,
 };

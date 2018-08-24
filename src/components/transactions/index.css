@@ -5,3 +5,14 @@
 .nav.nav-tabs {
   margin-bottom: 10px;
 }
+
+.filter-link {
+  color: #333; /* TODO: get link color from variable */
+}
+
+.filter-link:hover, .filter-link:focus {
+  color: #333; /* TODO: get link color from variable */
+  outline: none;
+  text-decoration: none;
+  border-bottom: 1px dashed #999;
+}
