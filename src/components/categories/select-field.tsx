@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { GroupedOptionsType } from 'react-select/lib/types';
+import { Dispatch } from 'redux';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import {
-  ICategory, CategoryType,
+  CategoryType, ICategory,
   loadCategories,
-  selectCategoriesStatus, selectCategories,
+  selectCategories, selectCategoriesStatus,
 } from 'services/categories';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
@@ -81,7 +82,7 @@ class CategoriesSelect extends React.Component<IProps> {
   public render() {
     const { orgId, type, input, meta, status, categories, ...inputProps } = this.props;
 
-    let selectedCategory;
+    let selectedCategory = null;
     if (input.value && status === Status.Success && categories) {
       selectedCategory = categories.find(c => c.id === input.value);
     }

@@ -1,25 +1,26 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { WrappedFieldProps } from 'redux-form';
 import { GroupedOptionsType } from 'react-select/lib/types';
+import { Dispatch } from 'redux';
+import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import {
+  formatBankAccountName,
   IBankAccount,
   loadVisibleBankAccounts,
-  selectVisibleBankAccountsStatus,
   selectVisibleBankAccounts,
-  formatBankAccountName,
   selectVisibleBankAccountsCurrencies,
+  selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
+import { Currency } from 'services/currencies';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
-import { Currency } from 'services/currencies';
 
 interface IOwnProps {
   disabled?: boolean;
@@ -81,7 +82,7 @@ class BankAccountsSelect extends React.Component<IProps> {
   public render () {
     const { disabled, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
 
-    let selectedBankAccount;
+    let selectedBankAccount = null;
     if (input.value && status === Status.Success && bankAccounts) {
       selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
     }

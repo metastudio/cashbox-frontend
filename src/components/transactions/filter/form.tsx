@@ -1,22 +1,36 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Alert, Form, ButtonGroup, Button, Col, Row } from 'react-bootstrap';
 
-import { NoLabelCategoriesSelect } from 'components/categories/select-field';
+import { Alert, Button, ButtonGroup, Col, Form, Row } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
 import { NoLabelBankAccountsSelect } from 'components/bank-accounts/select-field';
+import { NoLabelCategoriesSelect } from 'components/categories/select-field';
 import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {
-  NoLabelMoneyInput,
-  NoLabelFormInput,
   NoLabelDatePicker,
+  NoLabelFormInput,
+  NoLabelMoneyInput,
   SubmitButton,
 } from 'components/utils/form-inputs';
+
+interface ITransactionFilterFormData {
+  q: {
+    amountEq?:        string;
+    commentCont?:     string;
+    period?:          string;
+    categoryIdEq?:    number;
+    bankAccountIdEq?: number;
+    customerIdEq?:    number;
+  };
+}
 
 interface IOwnProps {
   onReset: () => void;
 }
 
-type IProps = IOwnProps & InjectedFormProps<{}, IOwnProps>;
+type IProps = IOwnProps & InjectedFormProps<ITransactionFilterFormData, IOwnProps>;
+
+const transactionFilterFormName = 'transactionFilterForm';
 
 class TransactionsFilterForm extends React.PureComponent<IProps> {
   private handleReset = () => {
@@ -85,13 +99,19 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         </Row>
         <ButtonGroup className="pull-right">
           <SubmitButton submitting={ submitting }>Search</SubmitButton>
-          <Button onClick={ this.handleReset }>Clear</Button>
+          <Button onClick={ this.handleReset }>Reset</Button>
         </ButtonGroup>
       </Form>
     );
   }
 }
 
-export default reduxForm<{}, IOwnProps>({
-  form: 'transactionFilterForm',
+const ReduxTransactionFilterForm = reduxForm<ITransactionFilterFormData, IOwnProps>({
+  form: transactionFilterFormName,
 })(TransactionsFilterForm);
+
+export {
+  ReduxTransactionFilterForm as default,
+  ITransactionFilterFormData,
+  transactionFilterFormName,
+};

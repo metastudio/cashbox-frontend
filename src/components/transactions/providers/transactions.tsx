@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { isEqual, pick } from 'lodash';
 
-import { Status, IPagination, ID } from 'model-types';
+import { isEqual, pick } from 'lodash';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { ID, IPagination, Status } from 'model-types';
 import {
   ITransaction,
   loadTransactions,
-  selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
+  selectTransactions, selectTransactionsPagination, selectTransactionsStatus,
 } from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';

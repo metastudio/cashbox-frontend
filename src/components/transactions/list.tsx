@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+
 import { PageHeader } from 'react-bootstrap';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { IPagination } from 'model-types';
 import { ITransaction } from 'services/transactions';
 
-import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
-import TransactionsProvider from './providers/transactions';
-import Table from './list/table';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import { SimplePaginator } from 'components/utils/paginator';
-import TransactionsFilter from './filter';
+
+import TransactionsFilter from './filter/filter';
+import Table from './list/table';
+import TransactionsProvider from './providers/transactions';
 
 interface IState {
   isFilterOpened: boolean;
