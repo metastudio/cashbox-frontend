@@ -39,10 +39,10 @@ class EditTransfer extends React.PureComponent<IProps> {
   }
 
   private afterUpdate = () => {
-    const { showMessage, history } = this.props;
+    const { showMessage, history, location: { search } } = this.props;
 
     showMessage('Transfer successfully updated.');
-    history.push('/transactions');
+    history.push({ search, pathname: '/transactions' });
   }
 
   private initialData = (tranfer: ITransfer): ITransferFormData => {

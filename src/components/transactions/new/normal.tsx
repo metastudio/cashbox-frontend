@@ -16,6 +16,7 @@ import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { ITransactionFormData } from './../forms/normal';
+import { locationWithoutKey } from 'utils/url-helpers';
 
 interface IOwnProps {
   orgId:            ID;
@@ -60,11 +61,17 @@ class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
   }
 
   private afterCreate = () => {
-    const { showMessage, history } = this.props;
+    const { showMessage, history, location: { search } } = this.props;
     showMessage('Transaction successfully created.');
 
     if (!this.state.leaveOpen) {
-      history.push('/transactions');
+      history.push(locationWithoutKey(
+        {
+          search,
+          pathname: '/transactions',
+        },
+        'copyId',
+      ));
     }
   }
 

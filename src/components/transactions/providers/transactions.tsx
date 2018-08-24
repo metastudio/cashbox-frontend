@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import * as QS from 'qs';
 import { isEqual, pick } from 'lodash';
 
 import { Status, IPagination, ID } from 'model-types';
@@ -12,6 +11,7 @@ import {
 } from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';
+import { parseQuery } from 'utils/url-helpers';
 
 interface IOwnProps {
   orgId:    ID;
@@ -34,7 +34,7 @@ type IProps = IOwnProps & IStateProps & IDispatchProps;
 class TransactionsProvider extends React.PureComponent<IProps> {
   private loadData = () => {
     const { orgId, load, search } = this.props;
-    load(orgId, pick(QS.parse(search || '', { ignoreQueryPrefix: true }), ['q', 'page']));
+    load(orgId, pick(parseQuery(search), ['q', 'page']));
   }
 
   public componentDidMount() {
@@ -45,8 +45,8 @@ class TransactionsProvider extends React.PureComponent<IProps> {
     const { search: prevSearch } = prevProps;
     const { status, search } = this.props;
 
-    const prevQuery = QS.parse(prevSearch || '', { ignoreQueryPrefix: true });
-    const query     = QS.parse(search || '', { ignoreQueryPrefix: true });
+    const prevQuery = parseQuery(prevSearch);
+    const query     = parseQuery(search);
 
     if (status === Status.Invalid || !isEqual(query.q, prevQuery.q) || !isEqual(query.page, prevQuery.page)) {
       this.loadData();

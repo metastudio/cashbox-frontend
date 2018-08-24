@@ -21,8 +21,8 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
   }
 
   private handleRowClick = () => {
-    const { transaction, history } = this.props;
-    history.push(`/transactions/${transaction.id}`);
+    const { transaction, history, location: { search } } = this.props;
+    history.push({ search, pathname: `/transactions/${transaction.id}` });
   }
 
   private bankAccountTitle = (transaction: ITransaction) => {

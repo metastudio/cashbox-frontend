@@ -48,7 +48,12 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
     return (
       <>
         <PageHeader>
-          <Link to="/transactions/new" className="btn btn-default pull-right">New Transaction...</Link>
+          <Link
+            to={ { search, pathname: '/transactions/new' } }
+            className="btn btn-default pull-right"
+          >
+            New Transaction...
+          </Link>
           Transactions&nbsp;{ this.renderToggleFilter() }
         </PageHeader>
         <TransactionsFilter open={ this.state.isFilterOpened } />

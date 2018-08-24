@@ -14,7 +14,8 @@ type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 
 class ShowTransaction extends React.PureComponent<IProps> {
   private handleClose = () => {
-    this.props.history.push('/transactions');
+    const { location: { search } } = this.props;
+    this.props.history.push({ search, pathname: '/transactions' });
   }
 
   private renderContent = (transaction: ITransaction) => {
@@ -24,7 +25,7 @@ class ShowTransaction extends React.PureComponent<IProps> {
           <Tabs transaction={ transaction } />
         </Modal.Body>
         <Modal.Footer>
-          <Buttons transaction={ transaction } />
+          <Buttons transaction={ transaction } onCancel={ this.handleClose } />
         </Modal.Footer>
       </>
     );

@@ -12,6 +12,7 @@ import {
 import { formatDateValue } from 'utils/date';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { locationWithoutKey } from 'utils/url-helpers';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';
 
@@ -43,9 +44,16 @@ class NewTransfer extends React.PureComponent<IProps> {
   }
 
   private afterCreate = () => {
-    const { showMessage, history } = this.props;
+    const { showMessage, history, location: { search } } = this.props;
     showMessage('Transfer successfully created.');
-    history.push('/transactions');
+
+    history.push(locationWithoutKey(
+      {
+        search,
+        pathname: '/transactions',
+      },
+      'copyId',
+    ));
   }
 
   private initialValues = (): ITransferFormData => {
