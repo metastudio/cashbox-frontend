@@ -1,9 +1,9 @@
 import fetch from 'isomorphic-fetch';
 import humps from 'humps';
 import Url   from 'url';
-import * as QS from 'qs';
 
 import { HttpError, ValidationError } from 'utils/errors';
+import { stringifyQuery } from '../url-helpers';
 
 import { fetchAuthToken } from 'services/auth/storage-utils';
 
@@ -64,7 +64,7 @@ const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
   hostname: process.env.REACT_APP_BACKEND_HOSTNAME,
   port:     process.env.REACT_APP_BACKEND_PORT,
-  search:   QS.stringify(humps.decamelizeKeys(query), { encodeValuesOnly: true }),
+  search:   stringifyQuery(humps.decamelizeKeys(query)),
   pathname: pathname,
 });
 

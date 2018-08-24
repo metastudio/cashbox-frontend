@@ -2,8 +2,9 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Pager } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import * as QS from 'query-string';
+
 import { IPagination } from 'model-types';
+import { locationWithKeys } from 'utils/url-helpers';
 
 interface IOwnProps {
   data: IPagination;
@@ -13,11 +14,9 @@ type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IRouteProps;
 
 class SimplePaginator extends React.PureComponent<IProps> {
-  private location = (page: number) => {
-    const { location: { pathname, search } } = this.props;
-    const query = QS.parse(search);
-
-    return { pathname, search: QS.stringify({ ...query, page }) };
+  private locationWithPage = (page: number) => {
+    const { location } = this.props;
+    return locationWithKeys(location, { page });
   }
 
   private prevPageItem = () => {
@@ -25,7 +24,7 @@ class SimplePaginator extends React.PureComponent<IProps> {
     if (!previous) { return null; }
 
     return (
-      <LinkContainer to={ this.location(previous) }>
+      <LinkContainer to={ this.locationWithPage(previous) }>
         <Pager.Item previous>
           &larr; Previous Page
         </Pager.Item>
@@ -38,7 +37,7 @@ class SimplePaginator extends React.PureComponent<IProps> {
     if (!next) { return null; }
 
     return (
-      <LinkContainer to={ this.location(next) }>
+      <LinkContainer to={ this.locationWithPage(next) }>
         <Pager.Item next>
           Next Page &rarr;
         </Pager.Item>

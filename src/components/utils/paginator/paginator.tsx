@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
-import * as QS from 'query-string';
 
 import { IPagination } from 'model-types';
+import { locationWithKeys } from 'utils/url-helpers';
 
 interface IOwnProps {
   data:         IPagination;
@@ -13,11 +13,9 @@ type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IRouteProps;
 
 class Paginator extends React.PureComponent<IProps> {
-  private location = (page: number) => {
-    const { location: { pathname, search } } = this.props;
-    const query = QS.parse(search);
-
-    return { pathname, search: QS.stringify({ ...query, page }) };
+  private locationWithPage = (page: number) => {
+    const { location } = this.props;
+    return locationWithKeys(location, { page });
   }
 
   private firstPageItem = () => {
@@ -25,7 +23,7 @@ class Paginator extends React.PureComponent<IProps> {
 
     return (
       <li key="first">
-        <Link to={ this.location(1) }>«&nbsp;First</Link>
+        <Link to={ this.locationWithPage(1) }>«&nbsp;First</Link>
       </li>
     );
   }
@@ -35,14 +33,14 @@ class Paginator extends React.PureComponent<IProps> {
 
     return (
       <li key="prev">
-        <Link to={ this.location(this.props.data.previous) }>‹&nbsp;Prev</Link>
+        <Link to={ this.locationWithPage(this.props.data.previous) }>‹&nbsp;Prev</Link>
       </li>
     );
   }
 
   private pageItem = (page: number) => (
     <li key={ page } className={ page === this.props.data.current ? 'active' : undefined }>
-      <Link to={ this.location(page) }>{ page }</Link>
+      <Link to={ this.locationWithPage(page) }>{ page }</Link>
     </li>
   )
 
@@ -51,7 +49,7 @@ class Paginator extends React.PureComponent<IProps> {
 
     return (
       <li key="next">
-        <Link to={ this.location(this.props.data.next) }>Next&nbsp;›</Link>
+        <Link to={ this.locationWithPage(this.props.data.next) }>Next&nbsp;›</Link>
       </li>
     );
   }
@@ -64,7 +62,7 @@ class Paginator extends React.PureComponent<IProps> {
 
     return (
       <li key="last">
-        <Link to={ this.location(pages) }>Last&nbsp;»</Link>
+        <Link to={ this.locationWithPage(pages) }>Last&nbsp;»</Link>
       </li>
     );
   }
