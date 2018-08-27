@@ -7,13 +7,16 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { clearFields, initialize } from 'redux-form';
 
+import { ITransactionsFilter } from 'services/transactions';
+
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
-import { IQuery, parseQuery, stringifyQuery } from 'utils/url-helpers';
+import { IQuery, stringifyQuery } from 'utils/url-helpers';
 
 import FilterForm, { ITransactionFilterFormData, transactionFilterFormName } from './form';
 
 interface IOwnProps {
-  open: boolean;
+  open:   boolean;
+  filter: ITransactionsFilter;
 }
 
 interface IDispatchProps {
@@ -44,31 +47,25 @@ class TransactionsFilter extends React.PureComponent<IProps> {
     history.push({ pathname });
   }
 
-  private filterQuery = (props: IProps) => {
-    const { location: { search } } = props;
-
-    return parseQuery(search).q || {};
-  }
-
   private initialValues = (): ITransactionFilterFormData => {
-    const filterQuery = this.filterQuery(this.props);
+    const { filter } = this.props;
 
     return {
       q: {
-        amountEq:        formatMoneyValue(filterQuery['amountEq']),
-        commentCont:     filterQuery['commentCont'],
-        period:          filterQuery['period'],
-        categoryIdEq:    filterQuery['categoryIdEq'] && Number(filterQuery['categoryIdEq']),
-        bankAccountIdEq: filterQuery['bankAccountIdEq'] && Number(filterQuery['bankAccountIdEq']),
-        customerIdEq:    filterQuery['customerIdEq'] && Number(filterQuery['customerIdEq']),
+        amountEq:        formatMoneyValue(filter.amountEq),
+        commentCont:     filter.commentCont,
+        period:          filter.period,
+        categoryIdEq:    filter.categoryIdEq    ? Number(filter.categoryIdEq) : undefined,
+        bankAccountIdEq: filter.bankAccountIdEq ? Number(filter.bankAccountIdEq) : undefined,
+        customerIdEq:    filter.customerIdEq    ? Number(filter.customerIdEq) : undefined,
       },
     };
   }
 
   public componentDidUpdate(prevProps: IProps) {
-    const currQuery = this.filterQuery(this.props);
-    const prevQuery = this.filterQuery(prevProps);
-    if (!isEqual(currQuery, prevQuery)) {
+    const { filter: currFilter } = this.props;
+    const { filter: prevFilter } = prevProps;
+    if (!isEqual(currFilter, prevFilter)) {
       this.props.reinitialize(this.initialValues());
     }
   }

@@ -67,8 +67,18 @@ interface ITransactionState {
   error:  Error | null;
 }
 
+interface ITransactionsFilter {
+  amountEq?:        string;
+  commentCont?:     string;
+  period?:          string;
+  categoryIdEq?:    string;
+  bankAccountIdEq?: string;
+  customerIdEq?:    string;
+}
+
 export {
   ITransaction, ITransactionParams,
   ITransfer, ITransferParams,
   ITransactionsState, ITransactionState,
+  ITransactionsFilter,
 };
