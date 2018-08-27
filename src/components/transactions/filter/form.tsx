@@ -7,11 +7,12 @@ import { NoLabelBankAccountsSelect } from 'components/bank-accounts/select-field
 import { NoLabelCategoriesSelect } from 'components/categories/select-field';
 import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {
-  NoLabelDatePicker,
   NoLabelFormInput,
   NoLabelMoneyInput,
   SubmitButton,
 } from 'components/utils/form-inputs';
+
+import { NoLabelFilterPeriodSelect } from './period-select';
 
 interface ITransactionFilterFormData {
   q: {
@@ -67,9 +68,9 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           <Col sm={ 4 }>
             <Field
               name="q[period]"
-              component={ NoLabelDatePicker }
-              label="Date"
-              placeholder="Date"
+              component={ NoLabelFilterPeriodSelect }
+              label="Period"
+              placeholder="Period"
             />
           </Col>
         </Row>
