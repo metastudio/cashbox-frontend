@@ -2,6 +2,8 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
+import { HORIZONTAL_FORM_LABEL_WIDTH } from 'constants/forms';
+
 interface IOwnProps {
   help?:     string;
   label?:    string;
@@ -17,7 +19,7 @@ class HorizontalFormGroup extends React.PureComponent<IProps> {
     if (!label) { return null; }
 
     return (
-      <Col componentClass={ ControlLabel } sm={ 3 }>
+      <Col componentClass={ ControlLabel } sm={ HORIZONTAL_FORM_LABEL_WIDTH }>
         { label }{ required && <span className="required">*</span> }
       </Col>
     );
@@ -49,7 +51,7 @@ class HorizontalFormGroup extends React.PureComponent<IProps> {
     return (
       <FormGroup controlId={ input.name } validationState={ meta.invalid ? 'error' : null } >
         { this.labelBlock() }
-        <Col smOffset={ label ? undefined : 3 } sm={ 9 } >
+        <Col smOffset={ label ? undefined : HORIZONTAL_FORM_LABEL_WIDTH } sm={ 12 - HORIZONTAL_FORM_LABEL_WIDTH } >
           { children }
           { this.errorBlock() }
           { this.helpBlock() }

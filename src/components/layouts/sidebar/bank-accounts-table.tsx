@@ -4,10 +4,10 @@ import { Table } from 'react-bootstrap';
 
 import {
   IBankAccount,
-  formatBankAccountName,
   selectVisibleBankAccountsWithCurrency,
 } from 'services/bank-accounts';
 
+import BankAccountFilterLink from 'components/bank-accounts/filter-link';
 import { MoneyAmount } from 'components/utils/money';
 
 interface IOwnProps {
@@ -25,7 +25,7 @@ const SidebarBankAccountsTable: React.SFC<IProps> = ({ bankAccounts }) => {
   const accounts = bankAccounts.map((bankAccount) => {
     return (
       <tr key={ bankAccount.id }>
-        <td>{ formatBankAccountName(bankAccount) }</td>
+        <td><BankAccountFilterLink bankAccount={ bankAccount } /></td>
         <td className="text-right">
           <MoneyAmount colorize="onlyNegative" amount={ bankAccount.balance } />
         </td>

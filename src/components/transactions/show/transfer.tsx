@@ -5,32 +5,32 @@ import { ITransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
 import { formatMoney } from 'utils/money';
 
-import TransferForm, { ITransferShowFormData } from './transfer-form';
+import { HorizontalStaticField } from 'components/utils/static-field';
 
 interface IProps {
   transfer: ITransfer;
 }
 
-class ShowTransfer extends React.PureComponent<IProps> {
-  private initialValues = (): ITransferShowFormData => {
-    const { transfer } = this.props;
+const ShowTransfer: React.SFC<IProps> = ({ transfer }) => {
+  const bankAccount = (
+    <>
+      { formatBankAccountName(transfer.transferOut.bankAccount) }
+      { ' ' }
+      &rarr;
+      { ' ' }
+      { formatBankAccountName(transfer.bankAccount) }
+    </>
+  );
 
-    return ({
-      amount:        formatMoney(transfer.amount),
-      fromAmount:    transfer.transferOut && formatMoney(transfer.transferOut.amount),
-      category:      transfer.category && transfer.category.name,
-      reference:     transfer.bankAccount && formatBankAccountName(transfer.bankAccount),
-      bankAccount:   transfer.transferOut && formatBankAccountName(transfer.transferOut.bankAccount),
-      comment:       transfer.comment,
-      date:          formatDate(transfer.date),
-    });
-  }
-
-  public render() {
-    return(
-      <TransferForm initialValues={ this.initialValues() } />
-    );
-  }
-}
+  return (
+    <div className="form-horizontal">
+      <HorizontalStaticField label="Amount" value={ formatMoney(transfer.amount) } />
+      <HorizontalStaticField label="From Amount" value={ formatMoney(transfer.transferOut.amount) } />
+      <HorizontalStaticField label="BankAccount" value={ bankAccount }/>
+      <HorizontalStaticField label="Comment" value={ transfer.comment } />
+      <HorizontalStaticField label="Date" value={ formatDate(transfer.date) } />
+    </div>
+  );
+};
 
 export default ShowTransfer;

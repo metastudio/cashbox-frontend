@@ -1,8 +1,11 @@
-import { ID } from 'model-types';
+import { ID, IPagination, Status } from 'model-types';
 import { IMoney } from 'utils/money/types';
+
 import { IBankAccount } from 'services/bank-accounts/types';
-import { ICustomer } from 'services/customers/types';
 import { ICategory } from 'services/categories/types';
+import { ICustomer } from 'services/customers/types';
+
+import { IInvoice } from '../invoices';
 
 interface ITransferOut {
   id:          ID;
@@ -23,6 +26,7 @@ interface ITransaction {
   comment?:    string;
   isViewed:    boolean;
   invoiceId?:  ID;
+  invoice?:    IInvoice;
 }
 
 interface ITransfer extends ITransaction {
@@ -49,7 +53,32 @@ interface ITransferParams {
   date?:          string;
 }
 
+interface ITransactionsState {
+  items:      ITransaction[];
+  status:     Status;
+  error:      Error | null;
+  pagination: IPagination | null;
+}
+
+interface ITransactionState {
+  id:     ID;
+  item:   ITransaction | null;
+  status: Status;
+  error:  Error | null;
+}
+
+interface ITransactionsFilter {
+  amountEq?:        string;
+  commentCont?:     string;
+  period?:          string;
+  categoryIdEq?:    string;
+  bankAccountIdEq?: string;
+  customerIdEq?:    string;
+}
+
 export {
   ITransaction, ITransactionParams,
   ITransfer, ITransferParams,
+  ITransactionsState, ITransactionState,
+  ITransactionsFilter,
 };

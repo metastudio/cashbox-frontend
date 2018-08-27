@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 
 import { ITransaction } from 'services/transactions';
 
@@ -8,17 +7,16 @@ import Destroy from '../destroy';
 
 interface IProps {
   transaction: ITransaction;
+  onCancel: () => void;
 }
 
-const EditTransactionButtons: React.SFC<IProps> = ({ transaction }) => (
+const EditTransactionButtons: React.SFC<IProps> = ({ transaction, onCancel }) => (
   <>
     <span className="pull-left">
       <Destroy transaction={ transaction } />
     </span>
 
-    <LinkContainer exact to={ '/transactions' }>
-      <Button>Cancel</Button>
-    </LinkContainer>
+    <Button onClick={ onCancel } >Cancel</Button>
   </>
 );
 

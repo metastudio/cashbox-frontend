@@ -1,7 +1,5 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
-import { getCookies, setCookies } from 'utils/cookies';
-
 import { getOrganizations, getOrganization, postOrganization } from './api.js';
 import { selectUserId } from 'services/users';
 
@@ -11,6 +9,8 @@ import {
   setCurrentOrganization,
   restoreOrganization,
 } from './actions.js';
+
+import { fetchCurrentOrganizationId, storeCurrentOrganizationId } from './storage-utils';
 
 function* handleLoadOrganizations() {
   try {
@@ -35,10 +35,7 @@ function* handleCreateOrganization({ payload: { data }, meta: { resolve, reject 
 }
 
 function* handleSetCurrentOrganization({ payload: { organization }, meta: { resolve } }) {
-  const userId = yield select(selectUserId);
-  if (userId) {
-    setCookies({ userId: userId, currentOrganizationId: organization.id });
-  }
+  yield call(storeCurrentOrganizationId, organization.id);
   yield put(setCurrentOrganization.success(organization));
   yield call(resolve, organization);
 }
@@ -46,8 +43,9 @@ function* handleSetCurrentOrganization({ payload: { organization }, meta: { reso
 function* handleRestoreOrganization() {
   try {
     yield put(restoreOrganization.request());
+    const currentOrganizationId = yield call(fetchCurrentOrganizationId);
+
     let organization;
-    const currentOrganizationId = getCookies().currentOrganizationId;
     try {
       organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
     } catch (error) {

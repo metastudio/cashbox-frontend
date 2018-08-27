@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
-import * as QS from 'query-string';
+
+import { parseQuery, stringifyQuery } from 'utils/url-helpers';
 
 interface IHeader {
   field:  string;
@@ -23,15 +24,14 @@ const headers: IHeader[] = [
   { field: 'paid_at',       title: 'Paid date' },
 ];
 
-const SORT_PARAM = 'q[s]';
 const ASC_SYMBOL  = '▼';
 const DESC_SYMBOL = '▲';
 
 class InvoicesTableHeader extends React.PureComponent<IProps> {
   private toggleOrder = (order: string) => order === 'asc' ? 'desc' : 'asc';
 
-  private queryToSort = (query: {}): ISort => {
-    const sortParam = query[SORT_PARAM];
+  private queryToSort = (query: any): ISort => {
+    const sortParam = query.q && query.q.s;
     if (!sortParam) {
       return { field: 'ends_at', order: 'desc' };
     }
@@ -40,7 +40,7 @@ class InvoicesTableHeader extends React.PureComponent<IProps> {
     return { field, order };
   }
 
-  private sortToQuery = (sort: ISort) => ({ [SORT_PARAM]: `${sort.field} ${sort.order}` });
+  private sortToQuery = (sort: ISort) => ({ q: { s: `${sort.field} ${sort.order}` } });
 
   private prepareTitle = (sort: ISort, current: ISort) => {
     if (current.field !== sort.field) {
@@ -52,7 +52,7 @@ class InvoicesTableHeader extends React.PureComponent<IProps> {
 
   private renderHeaders = () => {
     const { location: { pathname, search } } = this.props;
-    const query = QS.parse(search);
+    const query = parseQuery(search);
     const current = this.queryToSort(query);
 
     return headers.map((header) => {
@@ -63,7 +63,7 @@ class InvoicesTableHeader extends React.PureComponent<IProps> {
 
       return (
         <th key={ sort.field }>
-          <Link to={ { pathname, search: QS.stringify({ ...query, ...this.sortToQuery(sort) }) } }>
+          <Link to={ { pathname, search: stringifyQuery({ ...query, ...this.sortToQuery(sort) }) } }>
             { this.prepareTitle(sort, current) }
           </Link>
         </th>

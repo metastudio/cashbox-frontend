@@ -29,10 +29,10 @@ class DestroyButton extends React.Component<IProps> {
 
     confirm('Are you sure?').then(() => {
       destroy(orgId, transaction.id).then(() => {
-        const { flashMessage, history } = this.props;
+        const { flashMessage, history, location: { search } } = this.props;
 
         flashMessage('Transaction successfully removed');
-        history.push('/transactions');
+        history.push({ search, pathname: '/transactions' });
       });
     });
   }

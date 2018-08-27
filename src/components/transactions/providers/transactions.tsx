@@ -1,28 +1,35 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import * as QS from 'qs';
-import { isEqual, pick } from 'lodash';
 
-import { Status, IPagination, ID } from 'model-types';
+import { isEqual } from 'lodash';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { ID, IPagination, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
-  ITransaction,
+  ITransaction, ITransactionsFilter,
   loadTransactions,
-  selectTransactions, selectTransactionsStatus, selectTransactionsPagination,
+  selectTransactions, selectTransactionsPagination, selectTransactionsQueryFilter,
+  selectTransactionsQueryPage, selectTransactionsStatus,
 } from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';
 
 interface IOwnProps {
   orgId:    ID;
-  search?:  string;
-  children: (transactions: ITransaction[], pagination?: IPagination) => React.ReactNode;
+  search:   string;
+  children: (
+    transactions: ITransaction[],
+    pagination:   IPagination | null,
+  ) => React.ReactNode;
 }
 
 interface IStateProps {
+  filter:       ITransactionsFilter;
+  page:         number | undefined;
   status:       Status;
   transactions: ITransaction[];
-  pagination:   IPagination;
+  pagination:   IPagination | null;
 }
 
 interface IDispatchProps {
@@ -33,8 +40,8 @@ type IProps = IOwnProps & IStateProps & IDispatchProps;
 
 class TransactionsProvider extends React.PureComponent<IProps> {
   private loadData = () => {
-    const { orgId, load, search } = this.props;
-    load(orgId, pick(QS.parse(search || '', { ignoreQueryPrefix: true }), ['q', 'page']));
+    const { orgId, load, filter, page } = this.props;
+    load(orgId, { page, q: filter });
   }
 
   public componentDidMount() {
@@ -42,13 +49,10 @@ class TransactionsProvider extends React.PureComponent<IProps> {
   }
 
   public componentDidUpdate(prevProps: IProps) {
-    const { search: prevSearch } = prevProps;
-    const { status, search } = this.props;
+    const { filter: prevFilter, page: prevPage } = prevProps;
+    const { status, filter: currFilter, page: currPage } = this.props;
 
-    const prevQuery = QS.parse(prevSearch || '', { ignoreQueryPrefix: true });
-    const query     = QS.parse(search || '', { ignoreQueryPrefix: true });
-
-    if (status === Status.Invalid || !isEqual(query.q, prevQuery.q) || !isEqual(query.page, prevQuery.page)) {
+    if (status === Status.Invalid || currPage !== prevPage || !isEqual(currFilter, prevFilter)) {
       this.loadData();
     }
   }
@@ -68,7 +72,9 @@ class TransactionsProvider extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
+  filter:       selectTransactionsQueryFilter(props.search),
+  page:         selectTransactionsQueryPage(props.search),
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),

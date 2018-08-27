@@ -4,50 +4,51 @@ import { connect } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
 import { IMoney, formatMoney } from 'utils/money';
 
+import { Status, ID } from 'model-types';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import {
   IBalance,
   loadOrganizationBalances,
-  selectBalancesTotalAmount, selectBalancesDefaultCurrency, selectBalancesTotals,
+  selectBalancesStatus,
+  selectBalancesTotalAmount,
+  selectBalancesDefaultCurrency,
+  selectBalancesTotals,
 } from 'services/balances';
 
 import BalanceItem from './balance-item';
 
 interface IStateProps {
-  organizationId?:  number;
+  orgId?:           ID;
+  status:           Status;
   totalAmount?:     IMoney;
   defaultCurrency?: string;
   balances:         IBalance[];
 }
 
 interface IDispatchProps {
-  loadData: (organizationId: number) => void;
+  load: (orgId: ID) => void;
 }
 
 class Balances extends React.Component<IStateProps & IDispatchProps> {
-  // private balanceTitle = (balance: IBalance): string => {
-  //   if (!balance.rate) {
-  //     return '';
-  //   }
-
-  //   const { defaultCurrency } = this.props;
-
-  //   return `${ balance.currency }/${ defaultCurrency }, `
-  //     + `rate: ${ balance.rate }, `
-  //     + `by: ${ moment(balance.updatedAt).format('L') }`;
-  // }
-
-  public componentDidMount() {
-    const { organizationId, loadData } = this.props;
-    if (organizationId) {
-      loadData(organizationId);
+  private loadData = () => {
+    const { orgId, load, status } = this.props;
+    if (orgId && status === Status.Invalid) {
+      load(orgId);
     }
   }
 
-  public render() {
-    const { organizationId, totalAmount, balances, defaultCurrency } = this.props;
+  public componentDidMount() {
+    this.loadData();
+  }
 
-    if (!organizationId || !totalAmount) { return null; }
+  public componentDidUpdate() {
+    this.loadData();
+  }
+
+  public render() {
+    const { orgId, totalAmount, balances, defaultCurrency } = this.props;
+
+    if (!orgId || !totalAmount) { return null; }
 
     return (
       <NavDropdown title={ 'Total: ' + formatMoney(totalAmount) } id="balances-nav-dropdown">
@@ -57,15 +58,16 @@ class Balances extends React.Component<IStateProps & IDispatchProps> {
   }
 }
 
-const mapState = (state: object) => ({
-  organizationId:  selectCurrentOrganizationId(state),
+const mapState = (state: object): IStateProps => ({
+  orgId:           selectCurrentOrganizationId(state),
+  status:          selectBalancesStatus(state),
   totalAmount:     selectBalancesTotalAmount(state),
   defaultCurrency: selectBalancesDefaultCurrency(state),
   balances:        selectBalancesTotals(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  loadData: (organizationId: number) => dispatch(loadOrganizationBalances(organizationId)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: orgId => dispatch(loadOrganizationBalances(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(Balances);

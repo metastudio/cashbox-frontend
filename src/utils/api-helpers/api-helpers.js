@@ -1,12 +1,14 @@
 import fetch from 'isomorphic-fetch';
 import humps from 'humps';
 import Url   from 'url';
-import { getCookies } from 'utils/cookies';
+
 import { HttpError, ValidationError } from 'utils/errors';
-import * as QS from 'qs';
+import { stringifyQuery } from '../url-helpers';
+
+import { fetchAuthToken } from 'services/auth/storage-utils';
 
 const authorizeHeaders = (headers = {}) => {
-  const token = getCookies().token;
+  const token = fetchAuthToken();
   const basicAuth = token ? { 'Authorization': token } : null;
 
   return {
@@ -62,7 +64,7 @@ const prepareURL = (pathname, query = {}) => Url.format({
   protocol: process.env.REACT_APP_BACKEND_PROTOCOL,
   hostname: process.env.REACT_APP_BACKEND_HOSTNAME,
   port:     process.env.REACT_APP_BACKEND_PORT,
-  search:   QS.stringify(humps.decamelizeKeys(query), { encodeValuesOnly: true }),
+  search:   stringifyQuery(humps.decamelizeKeys(query)),
   pathname: pathname,
 });
 

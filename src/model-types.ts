@@ -8,10 +8,10 @@ enum Status {
 }
 
 interface IPagination {
-  current: number;
+  current:   number;
   previous?: number;
-  pages: number;
-  next?: number;
+  pages?:    number;
+  next?:     number;
 }
 
 export { ID, Status, IPagination };

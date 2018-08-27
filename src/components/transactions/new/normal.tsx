@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Checkbox } from 'react-bootstrap';
 
 import { CategoryType } from 'services/categories';
 import { ID } from 'model-types';
@@ -15,11 +16,16 @@ import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form, { ITransactionFormData } from './../forms/normal';
+import { locationWithoutKey } from 'utils/url-helpers';
 
 interface IOwnProps {
   orgId:            ID;
   type:             CategoryType;
   copyTransaction?: ITransaction;
+}
+
+interface IState {
+  leaveOpen: boolean;
 }
 
 interface IDispatchProps {
@@ -30,7 +36,18 @@ interface IDispatchProps {
 type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IDispatchProps & IRouteProps;
 
-class NewExpenseTransaction extends React.PureComponent<IProps> {
+class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
+  public readonly state: IState = {
+    leaveOpen: false,
+  };
+
+  private handleLeaveOpenChange = (e: React.FormEvent<Checkbox>) => {
+    // react-bootstrap has bad type definitions for onChange handlers
+    const event = (e as any as React.ChangeEvent<HTMLInputElement>);
+
+    this.setState({ leaveOpen: event.target.checked });
+  }
+
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, create } = this.props;
     return create(orgId, {
@@ -44,9 +61,18 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
   }
 
   private afterCreate = () => {
-    const { showMessage, history } = this.props;
+    const { showMessage, history, location: { search } } = this.props;
     showMessage('Transaction successfully created.');
-    history.push('/transactions');
+
+    if (!this.state.leaveOpen) {
+      history.push(locationWithoutKey(
+        {
+          search,
+          pathname: '/transactions',
+        },
+        'copyId',
+      ));
+    }
   }
 
   private initialValues = (): ITransactionFormData => {
@@ -78,6 +104,8 @@ class NewExpenseTransaction extends React.PureComponent<IProps> {
         type={ this.props.type }
         initialValues={ this.initialValues() }
         action="Create"
+        leaveOpenValue={ this.state.leaveOpen }
+        onLeaveOpenChange={ this.handleLeaveOpenChange }
       />
     );
   }

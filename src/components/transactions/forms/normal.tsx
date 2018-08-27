@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Alert, Form } from 'react-bootstrap';
+import { Alert, Form, Checkbox } from 'react-bootstrap';
 
 import { CategoryType } from 'services/categories';
 
@@ -15,8 +15,10 @@ import {
 } from 'components/utils/form-inputs';
 
 interface IOwnProps {
-  type:   CategoryType;
-  action: 'Create' | 'Update';
+  type:              CategoryType;
+  action:            'Create' | 'Update';
+  leaveOpenValue?:    boolean;
+  onLeaveOpenChange?: (e: React.FormEvent<Checkbox>) => void;
 }
 
 interface ITransactionFormData {
@@ -30,19 +32,44 @@ interface ITransactionFormData {
 
 type IProps = IOwnProps & InjectedFormProps<ITransactionFormData, IOwnProps>;
 
-const TransactionForm: React.SFC<IProps> = ({ handleSubmit, type, submitting, error, action }) => (
-  <Form horizontal onSubmit={ handleSubmit }>
-    { error && <Alert bsStyle="danger">{ error }</Alert> }
-    <Field name="amount" label="Amount" component={ HorizontalMoneyInput } />
-    <Field name="categoryId" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
-    <Field name="customerId" label="Customer name" component={ HorizontalCustomersSelect } />
-    <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
-    <Field name="comment" label="Comment" component={ HorizontalFormInput } />
-    <Field name="date" label="Date" component={ HorizontalDatePicker } />
+class TransactionForm extends React.PureComponent<IProps> {
+  private renderLeaveOpen = () => {
+    const { leaveOpenValue, onLeaveOpenChange } = this.props;
 
-    <HorizontalSubmitButton submitting={ submitting }>{ action } Transaction</HorizontalSubmitButton>
-  </Form>
-);
+    if (leaveOpenValue === undefined || onLeaveOpenChange === undefined) { return null; }
+
+    return (
+      <Checkbox
+        inline
+        value={ leaveOpenValue ? 'true' : '' }
+        onChange={ onLeaveOpenChange }
+        className="pull-right"
+      >
+        Leave open
+      </Checkbox>
+    );
+  }
+
+  public render() {
+    const { handleSubmit, type, submitting, error, action } = this.props;
+
+    return (
+      <Form horizontal onSubmit={ handleSubmit }>
+        { error && <Alert bsStyle="danger">{ error }</Alert> }
+        <Field name="amount" label="Amount" component={ HorizontalMoneyInput } />
+        <Field name="categoryId" label="Category" component={ HorizontalCategoriesSelect } type={ type } />
+        <Field name="customerId" label="Customer name" component={ HorizontalCustomersSelect } />
+        <Field name="bankAccountId" label="Bank account" component={ HorizontalBankAccountsSelect } />
+        <Field name="comment" label="Comment" component={ HorizontalFormInput } />
+        <Field name="date" label="Date" component={ HorizontalDatePicker } />
+
+        <HorizontalSubmitButton submitting={ submitting } additionalContent={ this.renderLeaveOpen() }>
+          { action } Transaction
+        </HorizontalSubmitButton>
+      </Form>
+    );
+  }
+}
 
 const ReduxTransactionForm = reduxForm<ITransactionFormData, IOwnProps>({
   form: 'transactionForm',

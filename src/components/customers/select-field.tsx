@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import { Dispatch } from 'redux';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
@@ -63,7 +64,7 @@ class CustomersSelect extends React.Component<IProps> {
   public render() {
     const { orgId, status, input, meta, customers, ...inputProps } = this.props;
 
-    let selectedCustomer;
+    let selectedCustomer = null;
     if (input.value && status === Status.Success && customers) {
       selectedCustomer = customers.find(c => c.id === input.value);
     }

@@ -26,5 +26,3 @@ export const restoreOrganization  = createAction('RESTORE_ORGANIZATION');
 restoreOrganization.request = createAction('RESTORE_ORGANIZATION_REQUEST');
 restoreOrganization.success = createAction('RESTORE_ORGANIZATION_SUCCESS', (organization) => ({ organization }));
 restoreOrganization.failure = createAction('RESTORE_ORGANIZATION_FAILURE');
-
-export const clearCurrentOrganization = createAction('CLEAR_CURRENT_ORGANIZATION');

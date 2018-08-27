@@ -1,7 +1,7 @@
 import * as accounting from 'accounting';
 
-import { IMoney, IMoneyLocale } from './types';
 import Locales from './locales';
+import { IMoney, IMoneyLocale } from './types';
 
 const defaultMoneyLocale: IMoneyLocale = Locales.ru_RU;
 
@@ -29,16 +29,24 @@ const formatMoney = (money?: IMoney, locale: IMoneyLocale = defaultMoneyLocale):
  * @param {IMoney} money - money value to format
  * @param {IMoneyLocale} locale - locale in which format money value
  */
-const formatMoneyValue = (money?: IMoney, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
+const formatMoneyValue = (money?: IMoney | string, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
   if (!money) { return undefined; }
 
-  const amount = Number(money.fractional) / money.currency.subunitToUnit;
+  let amount;
+  let precision;
+  if (typeof money === 'string') {
+    amount = money;
+    precision = 2;
+  } else {
+    amount = Number(money.fractional) / money.currency.subunitToUnit;
+    precision = Math.log10(money.currency.subunitToUnit);
+  }
 
   return accounting.formatMoney(amount, {
+    precision,
     format:    '%v',
     decimal:   locale.decimalMark,
     thousand:  locale.thousandsSeparator,
-    precision: Math.log10(money.currency.subunitToUnit),
   });
 };
 

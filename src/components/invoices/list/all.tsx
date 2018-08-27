@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import * as QS from 'query-string';
 import { Table } from 'react-bootstrap';
 
 import { Status, IPagination } from 'model-types';
@@ -12,11 +11,12 @@ import {
   selectInvoices, selectInvoicesStatus, selectInvoicesPagination,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
+import { parseQuery } from 'utils/url-helpers';
 
 import LoadingView from 'components/utils/loading-view';
 import TableHeader from './table-header';
 import TableBody from './table-body';
-import Paginator from 'components/utils/paginator';
+import { SimplePaginator } from 'components/utils/paginator';
 
 interface IStateProps {
   orgId:      number;
@@ -34,7 +34,7 @@ type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 class AllInvoices extends React.Component<Props> {
   private loadData = (props: Props) => {
     const { orgId, load, location: { search } } = props;
-    load(orgId, QS.parse(search));
+    load(orgId, parseQuery(search));
   }
 
   public componentDidMount() {
@@ -64,7 +64,7 @@ class AllInvoices extends React.Component<Props> {
           <TableHeader />
           <TableBody invoices={ invoices } />
         </Table>
-        <Paginator data={ this.props.pagination } />
+        <SimplePaginator data={ this.props.pagination } />
       </>
     );
   }
