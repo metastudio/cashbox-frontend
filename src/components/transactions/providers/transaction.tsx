@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 
-import { Status, ID } from 'model-types';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { ID, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   ITransaction,
   loadTransaction,
@@ -63,7 +65,7 @@ class TransactionProvider extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   status:      selectTransactionStatus(state),
   transaction: selectTransaction(state),
 });

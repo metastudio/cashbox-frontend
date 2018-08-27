@@ -37,10 +37,10 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
     </small>
   )
 
-  private renderTransactions = (transactions: ITransaction[], pagination: IPagination) => (
+  private renderTransactions = (transactions: ITransaction[], pagination: IPagination | null) => (
     <>
       <Table transactions={ transactions } />
-      <SimplePaginator data={ pagination } />
+      { pagination && <SimplePaginator data={ pagination } /> }
     </>
   )
 

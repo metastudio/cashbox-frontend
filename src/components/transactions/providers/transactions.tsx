@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { ID, IPagination, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   ITransaction,
   loadTransactions,
@@ -17,13 +18,13 @@ import { parseQuery } from 'utils/url-helpers';
 interface IOwnProps {
   orgId:    ID;
   search?:  string;
-  children: (transactions: ITransaction[], pagination?: IPagination) => React.ReactNode;
+  children: (transactions: ITransaction[], pagination: IPagination | null) => React.ReactNode;
 }
 
 interface IStateProps {
   status:       Status;
   transactions: ITransaction[];
-  pagination:   IPagination;
+  pagination:   IPagination | null;
 }
 
 interface IDispatchProps {
@@ -69,7 +70,7 @@ class TransactionsProvider extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   status:       selectTransactionsStatus(state),
   transactions: selectTransactions(state),
   pagination:   selectTransactionsPagination(state),
