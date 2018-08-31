@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import {
   loadVisibleBankAccounts,
-  selectVisibleBankAccountsStatus,
   selectVisibleBankAccountsCurrencies,
+  selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -56,6 +57,7 @@ class BankAccounts extends React.Component<Props> {
         <LoadingView status={ status }>
           { () => currencies.map(c => <BankAccountsTable key={ c } currency={ c } />) }
         </LoadingView>
+        <Link to="/bank_accounts/new">Create a new one</Link>
       </>
     );
   }

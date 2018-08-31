@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-
-import { IBankAccount, deleteBankAccount as deleteBankAccountAction } from 'services/bank-accounts';
-import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { confirm } from 'components/utils/confirm';
+import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IOwnProps {

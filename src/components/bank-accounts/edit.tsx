@@ -1,23 +1,23 @@
 import * as React from 'react';
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from '../../../node_modules/redux';
 
 import { ID, Status } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
   IBankAccount, IBankAccountParams,
   loadBankAccount,
-  updateBankAccount,
   selectBankAccount,
   selectBankAccountStatus,
+  updateBankAccount,
 } from 'services/bank-accounts';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
 import Form, { IBankAccountFormData } from './form';
-import { Dispatch } from '../../../node_modules/redux';
 
 interface IStateProps {
   orgId:        ID;

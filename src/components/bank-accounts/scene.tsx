@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
-import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
 import AppLayout from 'components/layouts/app-layout';
+import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
+import RequireLogin from 'components/utils/require-login';
 
+import Edit from './edit';
 import List from './list';
 import New  from './new';
-import Edit from './edit';
 
 const BankAccountsScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>

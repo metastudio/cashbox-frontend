@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PageHeader } from 'react-bootstrap';
+import { Dispatch } from 'redux';
+
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import LoadingView from 'components/utils/loading-view';
 
 import { Status } from 'model-types';
 import {
@@ -10,10 +13,7 @@ import {
   selectBankAccountsCurrencies,
   selectBankAccountsStatus,
 } from 'services/bank-accounts';
-
 import Table from './list/table';
-import LoadingView from 'components/utils/loading-view';
-import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
 
 interface IStateProps {
   status:     Status;

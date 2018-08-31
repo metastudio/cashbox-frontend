@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
-  IBankAccountParams,
-  IBankAccount,
   createBankAccount,
+  IBankAccount,
+  IBankAccountParams,
 } from 'services/bank-accounts';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
-
 import Form, { IBankAccountFormData } from './form';
 
 interface IStateProps {
