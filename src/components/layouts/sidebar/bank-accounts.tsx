@@ -35,6 +35,12 @@ class BankAccounts extends React.Component<Props> {
     }
   }
 
+  private renderNewBankAccountIcon = () => (
+    <small>
+      <Link to="/bank_accounts/new" title="New Bank Acoount"><i className="fa fa-plus" /></Link>
+    </small>
+  )
+
   public componentDidMount() {
     this.loadData(this.props);
   }
@@ -53,11 +59,12 @@ class BankAccounts extends React.Component<Props> {
 
     return (
       <>
-        <PageHeader>Accounts</PageHeader>
+        <PageHeader>
+          Accounts&nbsp;{ this.renderNewBankAccountIcon() }
+        </PageHeader>
         <LoadingView status={ status }>
           { () => currencies.map(c => <BankAccountsTable key={ c } currency={ c } />) }
         </LoadingView>
-        <Link to="/bank_accounts/new">Create a new one</Link>
       </>
     );
   }

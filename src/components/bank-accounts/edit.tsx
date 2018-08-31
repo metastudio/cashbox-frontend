@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Dispatch } from '../../../node_modules/redux';
+import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
 import {
