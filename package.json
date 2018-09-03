@@ -33,7 +33,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "lint": "tslint 'src/**/*{.ts,.tsx,.js,.jsx}' -t verbose"
+    "lint": "tslint --project tsconfig.json 'src/**/*{.ts,.tsx,.js,.jsx}' -t verbose"
   },
   "devDependencies": {
     "@types/accounting": "^0.4.1",
@@ -52,6 +52,7 @@
     "@types/react-select": "^2.0.2",
     "@types/redux-form": "^7.4.4",
     "@types/redux-logger": "^3.0.6",
+    "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "typescript": "3.0.3"
   }
