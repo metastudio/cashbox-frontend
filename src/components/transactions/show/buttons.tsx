@@ -1,7 +1,8 @@
 import * as React from 'react';
+
 import { Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { ITransaction } from 'services/transactions';
 import { locationWithKeys } from 'utils/url-helpers';
@@ -23,7 +24,9 @@ const ShowTransactionButtons: React.SFC<IProps> = ({
   return (
     <>
       <span className="pull-left">
-        <Destroy transaction={ transaction } />
+        <Destroy transaction={ transaction }>
+          <Button bsStyle="danger">Remove</Button>
+        </Destroy>
         <LinkContainer
           to={ locationWithKeys({ search, pathname: '/transactions/new' }, { copyId: String(transaction.id) }) }
         >

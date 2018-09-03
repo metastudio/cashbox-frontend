@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
@@ -13,6 +12,7 @@ import { confirm } from 'components/utils/confirm';
 
 interface IOwnProps {
   transaction: ITransaction;
+  children:    React.ReactElement<{ onClick: () => void }>;
 }
 
 interface IDispatchProps {
@@ -39,9 +39,8 @@ class DestroyButton extends React.Component<IProps> {
   }
 
   public render() {
-    return(
-      <Button bsStyle="danger" onClick={ this.handleDestroy }>Remove</Button>
-    );
+    // <Button bsStyle="danger" onClick={ this.handleDestroy }>Remove</Button>
+    return React.cloneElement(this.props.children, { onClick: this.handleDestroy });
   }
 }
 
