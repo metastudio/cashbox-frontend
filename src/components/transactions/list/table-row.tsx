@@ -6,12 +6,14 @@ import { isTransfer, ITransaction, ITransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
 import { locationWithKeys } from 'utils/url-helpers';
 
-import { FaLink } from 'components/utils/links';
+import { FaButton, FaLink } from 'components/utils/fa';
 import { MoneyAmount } from 'components/utils/money';
 
 import BankAccountFilterLink from 'components/bank-accounts/filter-link';
 import CategoryFilterLink from 'components/categories/filter-link';
 import CustomerFilterLink from 'components/customers/filter-link';
+
+import Destroy from '../destroy';
 
 import './../index.css';
 
@@ -73,11 +75,15 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
           <td>
             <FaLink
               to={ locationWithKeys({ search, pathname: '/transactions/new' }, { copyId: String(transaction.id) }) }
-              icon="copy"
+              icon="clone"
               title="Copy Transactoin"
             />
           </td>
-          <td></td>
+          <td>
+            <Destroy transaction={ transaction }>
+              <FaButton icon="trash-o" title="Remove Transaction"/>
+            </Destroy>
+          </td>
         </tr>
       </>
     );

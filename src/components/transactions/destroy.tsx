@@ -12,7 +12,7 @@ import { confirm } from 'components/utils/confirm';
 
 interface IOwnProps {
   transaction: ITransaction;
-  children:    React.ReactElement<{ onClick: () => void }>;
+  children:    React.ReactElement<{ onClick: (e: MouseEvent) => void }>;
 }
 
 interface IDispatchProps {
@@ -24,7 +24,9 @@ type IRouteProps = RouteComponentProps<{}>;
 type IProps = IRouteProps & IOwnProps & IDispatchProps & ICurrentOrgIdProps;
 
 class DestroyButton extends React.Component<IProps> {
-  private handleDestroy = () => {
+  private handleDestroy = (e: MouseEvent) => {
+    e.preventDefault();
+
     const { orgId, transaction, destroy } = this.props;
     if (!transaction) { return; }
 
