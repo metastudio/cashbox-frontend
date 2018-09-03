@@ -41,7 +41,6 @@ class DestroyButton extends React.Component<IProps> {
   }
 
   public render() {
-    // <Button bsStyle="danger" onClick={ this.handleDestroy }>Remove</Button>
     return React.cloneElement(this.props.children, { onClick: this.handleDestroy });
   }
 }
