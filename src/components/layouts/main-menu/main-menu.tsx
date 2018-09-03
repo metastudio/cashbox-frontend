@@ -1,11 +1,12 @@
 import * as React from 'react';
+
+import { Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
 
 import Balances from './balances';
+import Invoices from './invoices';
 import OrganizationItem from './organization-item';
 import ProfileItem from './profile-item';
-import Invoices from './invoices';
 
 const MainMenu = () => (
   <Navbar inverse fluid>
@@ -13,21 +14,19 @@ const MainMenu = () => (
       <Navbar.Brand>
         <NavLink to="/" exact>CashBox</NavLink>
       </Navbar.Brand>
+      <Navbar.Toggle />
     </Navbar.Header>
+    <Navbar.Collapse>
+      <Nav>
+        <OrganizationItem />
+        <Balances />
+      </Nav>
 
-    <OrganizationItem />
-
-    <Nav>
-      <Balances />
-    </Nav>
-
-    <Nav pullRight>
-      <ProfileItem />
-    </Nav>
-
-    <Nav pullRight>
-      <Invoices />
-    </Nav>
+      <Nav pullRight>
+        <Invoices />
+        <ProfileItem />
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
