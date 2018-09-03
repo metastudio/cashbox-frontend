@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Dispatch } from 'redux';
 
-import { ITransaction, destroyTransaction } from 'services/transactions';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { destroyTransaction, ITransaction } from 'services/transactions';
 
-import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import { confirm } from 'components/utils/confirm';
 
 interface IOwnProps {
   transaction: ITransaction;
+  children:    React.ReactElement<{ onClick: (e: MouseEvent) => void }>;
 }
 
 interface IDispatchProps {
@@ -23,7 +24,9 @@ type IRouteProps = RouteComponentProps<{}>;
 type IProps = IRouteProps & IOwnProps & IDispatchProps & ICurrentOrgIdProps;
 
 class DestroyButton extends React.Component<IProps> {
-  private handleDestroy = () => {
+  private handleDestroy = (e: MouseEvent) => {
+    e.preventDefault();
+
     const { orgId, transaction, destroy } = this.props;
     if (!transaction) { return; }
 
@@ -38,9 +41,7 @@ class DestroyButton extends React.Component<IProps> {
   }
 
   public render() {
-    return(
-      <Button bsStyle="danger" onClick={ this.handleDestroy }>Remove</Button>
-    );
+    return React.cloneElement(this.props.children, { onClick: this.handleDestroy });
   }
 }
 

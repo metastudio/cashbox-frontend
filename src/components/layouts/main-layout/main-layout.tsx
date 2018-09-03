@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Col, Grid, Row } from 'react-bootstrap';
 
 import MainMenu      from 'components/layouts/main-menu';
 import Sidebar       from 'components/layouts/sidebar';
@@ -23,11 +23,11 @@ const MainLayout: React.SFC<IProps> = ({ children, sidebar }) => {
       </header>
       <Grid fluid>
         <Row>
-          <Col xs={ 12 } md={ 8 }>
+          <Col xs={ 12 } sm={ 8 } md={ 9 }>
             <FlashMessages />
             { children }
           </Col>
-          <Col xs={ 12 } md={ 4 }>
+          <Col xs={ 12 } sm={ 4 } md={ 3 }>
             { renderSidebar() }
           </Col>
         </Row>

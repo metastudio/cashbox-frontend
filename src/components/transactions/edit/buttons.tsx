@@ -13,7 +13,9 @@ interface IProps {
 const EditTransactionButtons: React.SFC<IProps> = ({ transaction, onCancel }) => (
   <>
     <span className="pull-left">
-      <Destroy transaction={ transaction } />
+      <Destroy transaction={ transaction }>
+        <Button bsStyle="danger">Remove</Button>
+      </Destroy>
     </span>
 
     <Button onClick={ onCancel } >Cancel</Button>
