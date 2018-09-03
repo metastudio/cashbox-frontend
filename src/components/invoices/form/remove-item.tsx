@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { change, FieldsProps } from 'redux-form';
+
 import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { change, FieldsProps } from 'redux-form';
+
 import { InvoiceItemFormData } from './item-fields';
 
 interface IOwnProps {

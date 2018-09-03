@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Grid, Col, Row } from 'react-bootstrap';
+
+import { Col, Grid, Row } from 'react-bootstrap';
 
 import MainMenu from 'components/layouts/main-menu';
 import FlashMessages from 'components/utils/flash-messages';

@@ -1,25 +1,27 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Button, ButtonGroup, PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { ButtonGroup, Button, PageHeader } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
+import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import {
+  formatInvoiceTitle,
   IInvoice,
   loadInvoice,
-  selectInvoice, selectInvoiceStatus,
-  formatInvoiceTitle,
+  selectInvoice,
+  selectInvoiceStatus,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectUserFullName } from 'services/users';
 
-import InvoiceTable from './show/table';
-import Complete from './complete';
-import DestroyButton from './show/destroy';
 import LoadingView from 'components/utils/loading-view';
+import Complete from './complete';
 import DownloadPDFButton from './download_pdf';
+import DestroyButton from './show/destroy';
+import InvoiceTable from './show/table';
 
 interface IStateProps {
   orgId:        number;

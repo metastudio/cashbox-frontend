@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
-import { PageHeader } from 'react-bootstrap';
 
-import Navigation     from './list/navigation';
+import { PageHeader } from 'react-bootstrap';
+import { Link, Route, Switch } from 'react-router-dom';
+
 import AllInvoices    from './list/all';
+import Navigation     from './list/navigation';
 import UnpaidInvoices from './list/unpaid';
 
 const InvoicesList: React.SFC<{}> = () => {

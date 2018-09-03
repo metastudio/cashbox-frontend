@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { reduxForm, InjectedFormProps } from 'redux-form';
-import { Form, Alert } from 'react-bootstrap';
-import { SubmitButton } from 'components/utils/form-inputs';
 
-import MainFields from './main-fields';
+import { Alert, Form } from 'react-bootstrap';
+import { InjectedFormProps, reduxForm } from 'redux-form';
+
+import { SubmitButton } from 'components/utils/form-inputs';
 import { InvoiceItemFormData } from './item-fields';
 import ItemsFields, { InvoiceItemsArray } from './items-fields';
+import MainFields from './main-fields';
 
 interface IOwnProps {
   action: string;

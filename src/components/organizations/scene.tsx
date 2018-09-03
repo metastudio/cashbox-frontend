@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
 import AppLayout from 'components/layouts/app-layout';
+import RequireLogin from 'components/utils/require-login';
 
-import Select from './select';
-import New    from './new';
 import List   from './list';
+import New    from './new';
+import Select from './select';
 
 const OrganizationsScene: React.SFC<{}> = () => (
   <RequireLogin>

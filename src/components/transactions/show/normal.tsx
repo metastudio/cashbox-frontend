@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { formatBankAccountName } from 'services/bank-accounts';
-import { ITransaction } from 'services/transactions';
 import { formatInvoiceTitle } from 'services/invoices';
+import { ITransaction } from 'services/transactions';
 import { formatDate } from 'utils/date';
 import { formatMoney } from 'utils/money';
 

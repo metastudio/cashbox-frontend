@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { IPagination } from 'model-types';
 import { locationWithKeys } from 'utils/url-helpers';

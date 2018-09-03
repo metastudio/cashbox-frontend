@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import { Pager } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { RouteComponentProps, withRouter  } from 'react-router-dom';
 
 import { IPagination } from 'model-types';
 import { locationWithKeys } from 'utils/url-helpers';

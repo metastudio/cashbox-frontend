@@ -1,21 +1,23 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
-import { addFlashMessage } from 'services/flash-messages';
 import {
-  ICategoryParams, ICategory,
-  loadCategory, updateCategory,
-  selectCategoryStatus, selectCategory,
+  ICategory, ICategoryParams,
+  loadCategory,
+  selectCategory, selectCategoryStatus,
+  updateCategory,
 } from 'services/categories';
+import { addFlashMessage } from 'services/flash-messages';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from '../utils/loading-view';
 import Form from './form.jsx';
-import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
   orgId:    number;

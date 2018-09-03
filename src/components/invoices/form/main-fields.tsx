@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Field } from 'redux-form';
-import { Row, Col } from 'react-bootstrap';
 
-import {
-  VerticalFormInput,
-  VerticalDatePicker,
-  VerticalMoneyInput,
-} from 'components/utils/form-inputs';
+import { Col, Row } from 'react-bootstrap';
+import { Field } from 'redux-form';
+
+import { VerticalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import { VerticalCurrencySelect } from 'components/currencies/select-field';
 import { VerticalCustomersSelect } from 'components/customers/select-field';
-import { VerticalBankAccountsSelect } from 'components/bank-accounts/select-field';
+import {
+  VerticalDatePicker,
+  VerticalFormInput,
+  VerticalMoneyInput,
+} from 'components/utils/form-inputs';
 
 const InvoieMainFields = () => (
   <Row>

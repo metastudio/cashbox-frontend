@@ -1,20 +1,22 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
 
-import { selectCurrentOrganizationId } from 'services/organizations/selectors.js';
+import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { Status } from 'model-types';
 import {
-  selectDebtors,
-  selectTotal,
-  selectTotalsByCurrency,
-  selectDebtorsStatus,
   IDebtor,
   ITotalByCurrency,
   loadDebtors,
+  selectDebtors,
+  selectDebtorsStatus,
+  selectTotal,
+  selectTotalsByCurrency,
 } from 'services/debtors';
-import { Status } from 'model-types';
+import { selectCurrentOrganizationId } from 'services/organizations/selectors.js';
 import { IMoney } from 'utils/money';
+
 import LoadingView from 'components/utils/loading-view';
 
 import Debtors from './debtors';

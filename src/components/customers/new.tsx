@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
+import { createCustomer, ICustomer, ICustomerParams } from 'services/customers';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
-import { ICustomer, ICustomerParams, createCustomer } from 'services/customers';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 

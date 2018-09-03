@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
 
-import { ITransaction, ITransfer, isTransfer } from 'services/transactions';
+import { Tab, Tabs } from 'react-bootstrap';
+
+import { isTransfer, ITransaction, ITransfer } from 'services/transactions';
 
 import ShowNormal from './normal';
 import ShowTransfer from './transfer';

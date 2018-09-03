@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
 import { selectIsAuthorized } from 'services/auth';
+import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 
 interface IStateProps {
   isAuthorized: boolean;

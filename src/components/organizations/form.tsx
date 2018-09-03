@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Alert, Form } from 'react-bootstrap';
 
+import { Alert, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
+import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 import {
   HorizontalFormInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
-import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 
 interface IOrganizationFormData {
   name?:            string;

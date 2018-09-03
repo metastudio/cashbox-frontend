@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import {
   IOrganization,
   restoreOrganization,
-  selectIsOrganizationLoaded,
   selectCurrentOrganization,
+  selectIsOrganizationLoaded,
 } from 'services/organizations';
 import Context from './context';
 

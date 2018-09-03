@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+
 import { PageHeader } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
 import {
   IMember,
   loadMembers,
-  selectMembersStatus, selectMembers,
+  selectMembers,
+  selectMembersStatus,
 } from 'services/members';
 import { selectCurrentOrganizationId } from 'services/organizations';
 

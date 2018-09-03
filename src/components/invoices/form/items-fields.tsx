@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { FieldArray, WrappedFieldArrayProps, GenericFieldArray } from 'redux-form';
-import { Button, Row, Col } from 'react-bootstrap';
+
+import { Button, Col, Row } from 'react-bootstrap';
+import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
 import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
 import RemoveItemButton from './remove-item';

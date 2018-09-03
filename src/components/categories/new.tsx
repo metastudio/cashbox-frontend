@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
 
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
+import { createCategory, ICategoryParams } from 'services/categories';
 import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { ICategoryParams, createCategory } from 'services/categories';
 
 import { prepareSubmissionError } from 'utils/errors';
 

@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
-  ITransfer, ITransferParams,
   createTransfer,
+  ITransfer,
+  ITransferParams,
 } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
-import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { locationWithoutKey } from 'utils/url-helpers';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';

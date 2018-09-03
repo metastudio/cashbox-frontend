@@ -1,12 +1,13 @@
 import * as React from 'react';
+
 import { Field } from 'redux-form';
 
+import { VerticalCustomersSelect } from 'components/customers/select-field';
 import {
-  VerticalFormInput,
   VerticalDatePicker,
+  VerticalFormInput,
   VerticalMoneyInput,
 } from 'components/utils/form-inputs';
-import { VerticalCustomersSelect } from 'components/customers/select-field';
 
 interface InvoiceItemFormData {
   _destroy?:    boolean;

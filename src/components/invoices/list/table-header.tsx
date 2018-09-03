@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { parseQuery, stringifyQuery } from 'utils/url-helpers';
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Button, Row, Col, FormGroup } from 'react-bootstrap';
+
+import { Button, Col, FormGroup, Row } from 'react-bootstrap';
 
 interface IProps {
   submitting:       boolean;

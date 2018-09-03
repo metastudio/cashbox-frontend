@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
 
-import { Status, IPagination } from 'model-types';
+import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
+import { IPagination, Status } from 'model-types';
 import {
   IInvoice,
   loadInvoices,
-  selectInvoices, selectInvoicesStatus, selectInvoicesPagination,
+  selectInvoices, selectInvoicesPagination, selectInvoicesStatus,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { parseQuery } from 'utils/url-helpers';
 
 import LoadingView from 'components/utils/loading-view';
-import TableHeader from './table-header';
-import TableBody from './table-body';
 import { SimplePaginator } from 'components/utils/paginator';
+import TableBody from './table-body';
+import TableHeader from './table-header';
 
 interface IStateProps {
   orgId:      number;

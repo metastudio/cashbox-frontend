@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Alert, Form, Checkbox } from 'react-bootstrap';
+
+import { Alert, Checkbox, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import { CategoryType } from 'services/categories';
 
-import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
+import { HorizontalCategoriesSelect } from 'components/categories/select-field';
 import { HorizontalCustomersSelect } from 'components/customers/select-field';
 import {
-  HorizontalFormInput,
   HorizontalDatePicker,
+  HorizontalFormInput,
   HorizontalMoneyInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';

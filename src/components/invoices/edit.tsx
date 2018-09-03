@@ -1,22 +1,24 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+
 import { Col, PageHeader } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router';
-import { formatMoneyValue, formatMoneyParam } from 'utils/money';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { addFlashMessage } from 'services/flash-messages';
 import {
   IInvoice, InvoiceParams,
-  loadInvoice, updateInvoice,
+  loadInvoice,
   selectInvoice, selectInvoiceStatus,
+  updateInvoice,
 } from 'services/invoices';
-import { addFlashMessage } from 'services/flash-messages';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
+import LoadingView from 'components/utils/loading-view';
 import Form, { IInvoiceFormData } from './form';
-import LoadingView from '../utils/loading-view';
 
 interface IStateProps {
   orgId:   number;

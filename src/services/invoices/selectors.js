@@ -6,8 +6,8 @@ const selectUnpaidInvoices           = (state) => state.unpaidInvoices.items;
 const selectUnpaidInvoicesStatus     = (state) => state.unpaidInvoices.status;
 const selectUnpaidInvoicesPagination = (state) => state.unpaidInvoices.pagination;
 
-const selectUnpaidInvoicesCount        = (state) => state.unpaidInvoicesCount.count;
-const selectUnpaidInvoicesCountsStatus = (state) => state.unpaidInvoicesCount.status;
+const selectUnpaidInvoicesCount       = (state) => state.unpaidInvoicesCount.count;
+const selectUnpaidInvoicesCountStatus = (state) => state.unpaidInvoicesCount.status;
 
 const selectInvoice       = (state) => state.invoice.item;
 const selectInvoiceStatus = (state) => state.invoice.status;
@@ -22,7 +22,7 @@ export {
   selectUnpaidInvoicesPagination,
 
   selectUnpaidInvoicesCount,
-  selectUnpaidInvoicesCountsStatus,
+  selectUnpaidInvoicesCountStatus,
 
   selectInvoice,
   selectInvoiceStatus,

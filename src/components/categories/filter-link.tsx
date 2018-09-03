@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { ICategory } from 'services/categories';
 import { locationWithQuery } from 'utils/url-helpers';

@@ -1,15 +1,16 @@
 import * as React from 'react';
+
 import { Route, Switch } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
-import RequireOrganization from 'components/require-organization';
 import MainLayout from 'components/layouts/main-layout';
+import RequireOrganization from 'components/require-organization';
+import RequireLogin from 'components/utils/require-login';
 
 import Sidebar from './debtors-sidebar';
+import Edit from './edit';
 import List from './list';
 import New from './new';
 import Show from './show';
-import Edit from './edit';
 
 const InvoicesScene: React.SFC<{}> = () => (
   // tslint:disable:jsx-no-lambda

@@ -1,11 +1,12 @@
 import * as React from 'react';
+
 import { FormControl } from 'react-bootstrap';
 import { WrappedFieldProps } from 'redux-form';
 
-import { wrapInlineFormGroup }     from './inline-form-group';
 import { wrapHorizontalFormGroup } from './horizontal-form-group';
-import { wrapVerticalFormGroup }   from './vertical-form-group';
+import { wrapInlineFormGroup }     from './inline-form-group';
 import { wrapNoLabelFormGroup } from './no-label-form-group';
+import { wrapVerticalFormGroup }   from './vertical-form-group';
 
 type IProps = FormControl.FormControlProps & WrappedFieldProps;
 

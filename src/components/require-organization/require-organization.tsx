@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import {
   restoreOrganization,
-  selectIsOrganizationLoaded,
   selectHasCurrentOrganization,
+  selectIsOrganizationLoaded,
 } from 'services/organizations';
+
 import Spinner from 'components/utils/spinner';
 
 interface IStateProps {

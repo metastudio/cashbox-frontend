@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import { Dispatch } from 'redux';
 import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import {
   Currency,
   loadCurrencies,
-  selectCurrenciesStatus, selectCurrencies,
+  selectCurrencies, selectCurrenciesStatus,
 } from 'services/currencies';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';

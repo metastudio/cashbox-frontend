@@ -1,19 +1,20 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PageHeader } from 'react-bootstrap';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import {
   IOrganization,
+  loadOrganizations,
   selectOrganizations,
   selectOrganizationsStatus,
-  loadOrganizations,
 } from 'services/organizations';
 
-import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
+import Table from './list/table';
 
 interface IStateProps {
   status:        Status;

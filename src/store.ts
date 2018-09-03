@@ -1,4 +1,4 @@
-import { combineReducers, applyMiddleware, createStore, Middleware } from 'redux';
+import { applyMiddleware, combineReducers, createStore, Middleware } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';

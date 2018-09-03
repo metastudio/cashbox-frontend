@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import * as FileSaver from 'file-saver';
 
-import { selectCurrentOrganizationId } from 'services/organizations';
+import * as FileSaver from 'file-saver';
+import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
 import { addFlashMessage } from 'services/flash-messages';
-import { IInvoice, downloadInvoicePDF } from 'services/invoices';
+import { downloadInvoicePDF, IInvoice } from 'services/invoices';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
   orgId: number;

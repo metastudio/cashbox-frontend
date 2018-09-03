@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { MenuItem } from 'react-bootstrap';
 
-import { addFlashMessage } from 'services/flash-messages';
 import { logoutUser, selectIsAuthorized } from 'services/auth';
+import { addFlashMessage } from 'services/flash-messages';
 
 interface IStateProps {
   isAuthorized?: boolean;

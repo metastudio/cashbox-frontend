@@ -1,22 +1,24 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Checkbox } from 'react-bootstrap';
 
-import { CategoryType } from 'services/categories';
+import { Checkbox } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
 import { ID } from 'model-types';
+import { CategoryType } from 'services/categories';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
-  ITransaction, ITransactionParams,
   createTransaction,
+  ITransaction,
+  ITransactionParams,
 } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
-import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
-import Form, { ITransactionFormData } from './../forms/normal';
 import { locationWithoutKey } from 'utils/url-helpers';
+import Form, { ITransactionFormData } from '../forms/normal';
 
 interface IOwnProps {
   orgId:            ID;

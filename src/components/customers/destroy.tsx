@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
-import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
+import { deleteCustomer, ICustomer } from 'services/customers';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
-import { ICustomer, deleteCustomer } from 'services/customers';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';

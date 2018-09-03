@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { formatMoney, IConvertedAmount } from 'utils/money';
 import { formatDate } from 'utils/date';
+import { formatMoney, IConvertedAmount } from 'utils/money';
 
 interface IProps {
   amount: IConvertedAmount;

@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
+
 import { Alert, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import { ITransfer } from 'services/transactions';
 
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import {
-  HorizontalFormInput,
   HorizontalDatePicker,
+  HorizontalFormInput,
   HorizontalMoneyInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';

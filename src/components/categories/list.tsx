@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PageHeader } from 'react-bootstrap';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { ICategory, loadCategories, selectCategories, selectCategoriesStatus } from 'services/categories';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { ICategory, selectCategories, selectCategoriesStatus, loadCategories } from 'services/categories';
 
-import Table from './list/table';
 import LoadingView from 'components/utils/loading-view';
+import Table from './list/table';
 
 interface IStateProps {
   orgId:      number;
