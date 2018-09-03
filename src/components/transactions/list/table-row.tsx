@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { ITransaction, ITransfer, isTransfer } from 'services/transactions';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+import { isTransfer, ITransaction, ITransfer } from 'services/transactions';
 import { formatDate } from 'utils/date';
+import { locationWithKeys } from 'utils/url-helpers';
 
+import { FaLink } from 'components/utils/links';
 import { MoneyAmount } from 'components/utils/money';
+
 import BankAccountFilterLink from 'components/bank-accounts/filter-link';
 import CategoryFilterLink from 'components/categories/filter-link';
 import CustomerFilterLink from 'components/customers/filter-link';
@@ -46,7 +50,7 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
   }
 
   public render() {
-    const { transaction } = this.props;
+    const { transaction, location: { search } } = this.props;
 
     return(
       <>
@@ -59,6 +63,21 @@ class TransactionsTableRow extends React.PureComponent<IProps> {
           <td>{ transaction.customer && <CustomerFilterLink customer={ transaction.customer } /> }</td>
           <td>{ transaction.comment }</td>
           <td>{ formatDate(transaction.date) }</td>
+          <td>
+            <FaLink
+              to={ { search, pathname: `/transactions/${transaction.id}/edit` } }
+              icon="edit"
+              title="Edit Transactoin"
+            />
+          </td>
+          <td>
+            <FaLink
+              to={ locationWithKeys({ search, pathname: '/transactions/new' }, { copyId: String(transaction.id) }) }
+              icon="copy"
+              title="Copy Transactoin"
+            />
+          </td>
+          <td></td>
         </tr>
       </>
     );

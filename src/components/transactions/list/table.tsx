@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Table } from 'react-bootstrap';
 
 import { ITransaction } from 'services/transactions';
@@ -19,6 +20,7 @@ const TransactionsTableBody: React.SFC<IProps> = ({ transactions }) => (
         <th>Customer</th>
         <th>Comment</th>
         <th>Date</th>
+        <th colSpan={ 3 } />
       </tr>
     </thead>
     <tbody>
