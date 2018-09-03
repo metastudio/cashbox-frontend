@@ -54,7 +54,7 @@
     "@types/react-select": "^2.0.2",
     "@types/redux-form": "^7.4.4",
     "@types/redux-logger": "^3.0.6",
-    "tslint-config-airbnb": "^5.9.2",
-    "typescript": "3.0.1"
+    "tslint-config-airbnb": "^5.11.0",
+    "typescript": "3.0.3"
   }
 }
