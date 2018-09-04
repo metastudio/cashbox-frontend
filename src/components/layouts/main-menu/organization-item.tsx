@@ -10,9 +10,9 @@ import { selectCurrentOrganization } from 'services/organizations';
 import 'components/app/css/default.css';
 
 interface IStatePropTypes {
-  organization?: {
+  organization: {
     name: string,
-  };
+  } | null;
 }
 
 const MenuOrganizationItem: React.SFC<IStatePropTypes> = ({ organization }) => {

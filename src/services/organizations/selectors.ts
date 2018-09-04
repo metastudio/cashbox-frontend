@@ -10,6 +10,9 @@ const selectIsOrganizationLoaded   = (state: IGlobalState) => state.currentOrgan
 const selectOrganizations       = (state: IGlobalState) => state.organizations.items;
 const selectOrganizationsStatus = (state: IGlobalState) => state.organizations.status;
 
+const selectOrganization       = (state: IGlobalState) => state.organization.data;
+const selectOrganizationStatus = (state: IGlobalState) => state.organization.status;
+
 export {
   selectCurrentOrganization,
   selectCurrentOrganizationId,
@@ -17,4 +20,6 @@ export {
   selectIsOrganizationLoaded,
   selectOrganizations,
   selectOrganizationsStatus,
+  selectOrganization,
+  selectOrganizationStatus,
 };

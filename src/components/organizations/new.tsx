@@ -35,7 +35,7 @@ class NewOrganization extends React.PureComponent<IProps> {
     const { showMessage, history } = this.props;
 
     showMessage('Organization successfully created.');
-    history.push('/organizations/select');
+    history.push('/organizations');
   }
 
   public render() {
@@ -45,7 +45,11 @@ class NewOrganization extends React.PureComponent<IProps> {
           <PageHeader>New Organization</PageHeader>
           <Panel>
             <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
+              <Form
+                onSubmit={ this.handleSubmit }
+                onSubmitSuccess={ this.afterCreate }
+                action="Create"
+              />
             </Panel.Body>
           </Panel>
         </Col>

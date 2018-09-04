@@ -13,9 +13,9 @@ const OrganizationsTable: React.SFC<IProps> = ({ organizations }) => (
   <Table striped responsive hover id="organizations">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Currency</th>
-        <th/>
+        <th className="col-xs-6 col-sm-10">Name</th>
+        <th className="col-xs-6 col-sm-2">Currency</th>
+        <th colSpan={ 2 } />
       </tr>
     </thead>
     <tbody>

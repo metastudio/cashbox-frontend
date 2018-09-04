@@ -9,12 +9,16 @@ import {
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
 
+interface IOwnProps {
+  action: string;
+}
+
 interface IOrganizationFormData {
   name?:            string;
   defaultCurrency?: string;
 }
 
-type IProps = InjectedFormProps<IOrganizationFormData>;
+type IProps = IOwnProps & InjectedFormProps<IOrganizationFormData, IOwnProps>;
 
 const OrganizationForm: React.SFC<IProps> = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
@@ -25,8 +29,8 @@ const OrganizationForm: React.SFC<IProps> = ({ handleSubmit, submitting, error }
   </Form>
 );
 
-const ReduxOrganizationForm = reduxForm<IOrganizationFormData>({
-  form: 'organization-form',
+const ReduxOrganizationForm = reduxForm<IOrganizationFormData, IOwnProps>({
+  form: 'organizationForm',
 })(OrganizationForm);
 
 export { ReduxOrganizationForm as default, IOrganizationFormData };

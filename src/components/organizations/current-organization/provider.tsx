@@ -18,7 +18,7 @@ import Spinner from 'components/utils/spinner';
 
 interface IStateProps {
   isLoaded:     boolean;
-  organization: IOrganization;
+  organization: IOrganization | null;
 }
 
 interface IDispatchProps {
