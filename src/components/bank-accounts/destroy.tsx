@@ -56,11 +56,11 @@ class DestroyBankAccount extends React.Component<Props> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   deleteBankAccount:
     (orgId: number, bankAccountId: number) => (
       new Promise((res, rej) => dispatch(deleteBankAccountAction(orgId, bankAccountId, res, rej)))
