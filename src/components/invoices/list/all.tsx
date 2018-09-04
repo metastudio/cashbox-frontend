@@ -23,8 +23,8 @@ import TableHeader from './table-header';
 interface IStateProps {
   orgId:      number;
   status:     Status;
-  invoices:   IInvoice[] | null;
-  pagination: IPagination;
+  invoices:   IInvoice[];
+  pagination: IPagination | null;
 }
 
 interface IDispatchProps {
@@ -54,7 +54,7 @@ class AllInvoices extends React.Component<Props> {
   }
 
   public render() {
-    const { status, invoices } = this.props;
+    const { status, invoices, pagination } = this.props;
 
     if (status !== Status.Success || !invoices) {
       return <LoadingView status={ this.props.status } />;
@@ -66,20 +66,20 @@ class AllInvoices extends React.Component<Props> {
           <TableHeader />
           <TableBody invoices={ invoices } />
         </Table>
-        <SimplePaginator data={ this.props.pagination } />
+        { pagination && <SimplePaginator data={ pagination } /> }
       </>
     );
   }
 }
 
-const mapState = (state: IGlobalState) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectInvoicesStatus(state),
   invoices:   selectInvoices(state),
   pagination: selectInvoicesPagination(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number, params: object) => dispatch(loadInvoices(orgId, params)),
 });
 
