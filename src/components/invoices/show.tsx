@@ -4,38 +4,27 @@ import { Button, ButtonGroup, PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Dispatch } from 'redux';
 
-import { Status } from 'model-types';
 import { IGlobalState } from 'services/global-state';
 import {
   formatInvoiceTitle,
   IInvoice,
-  loadInvoice,
-  selectInvoice,
-  selectInvoiceStatus,
 } from 'services/invoices';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { selectUserFullName } from 'services/users';
 
-import LoadingView from 'components/utils/loading-view';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import Spinner from 'components/utils/spinner';
 import Complete from './complete';
 import DownloadPDFButton from './download_pdf';
+import Provider from './providers/invoice';
 import DestroyButton from './show/destroy';
 import InvoiceTable from './show/table';
 
 interface IStateProps {
-  orgId:        number;
-  status:       Status;
-  invoice:      IInvoice | null;
   userFullName: string;
 }
 
-interface IDispatchProps {
-  load: (orgId: number, invoiceId: number) => void;
-}
-
-type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps & IStateProps;
 
 class ShowInvoice extends React.PureComponent<IProps> {
   private renderEditButton = (invoice: IInvoice) => (
@@ -50,24 +39,18 @@ class ShowInvoice extends React.PureComponent<IProps> {
     </LinkContainer>
   )
 
-  public completePage = () => {
-    const { invoice } = this.props;
-    if (!invoice) { return null; }
-
-    return <Complete invoice={ invoice } />;
+  private renderSpinner = () => {
+    return (
+      <>
+        <PageHeader>Invoice</PageHeader>
+        <Spinner />
+      </>
+    );
   }
 
-  public componentDidMount() {
-    const { orgId, load, match } = this.props;
-    load(orgId, Number(match.params.id));
-  }
+  private renderContent = (invoice: IInvoice) => {
+    const { userFullName } = this.props;
 
-  public render() {
-    if (this.props.status !== Status.Success || !this.props.invoice) {
-      return <LoadingView status={ this.props.status } />;
-    }
-
-    const { invoice, userFullName } = this.props;
     return (
       <>
         <PageHeader>
@@ -80,23 +63,35 @@ class ShowInvoice extends React.PureComponent<IProps> {
           { formatInvoiceTitle(invoice) }
         </PageHeader>
 
-        <Route exact path="/invoices/:id/complete" component={ this.completePage } />
+        <Route
+          exact
+          path="/invoices/:id/complete"
+          // tslint:disable-next-line:jsx-no-lambda
+          component={ () => <Complete invoice={ invoice } /> }
+        />
 
         <InvoiceTable invoice={ invoice } userFullName={ userFullName } />
       </>
     );
   }
+
+  public render() {
+    const { orgId, match: { params: { id } } } = this.props;
+
+    return (
+      <Provider
+        orgId={ orgId }
+        invoiceId={ Number(id) }
+        spinner={ this.renderSpinner }
+      >
+        { this.renderContent }
+      </Provider>
+    );
+  }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:        selectCurrentOrganizationId(state),
-  status:       selectInvoiceStatus(state),
-  invoice:      selectInvoice(state),
+const mapState = (state: IGlobalState): IStateProps => ({
   userFullName: selectUserFullName(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load:         (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
-});
-
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(ShowInvoice));
+export default withRouter(withCurrentOrgId(connect<IStateProps>(mapState)(ShowInvoice)));

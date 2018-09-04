@@ -1,66 +1,22 @@
 import * as React from 'react';
 
 import { Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Dispatch } from 'redux';
 
-import { IPagination, Status } from 'model-types';
-import { IGlobalState } from 'services/global-state';
-import {
-  IInvoice,
-  loadInvoices,
-  selectInvoices, selectInvoicesPagination, selectInvoicesStatus,
-} from 'services/invoices';
-import { selectCurrentOrganizationId } from 'services/organizations';
-import { parseQuery } from 'utils/url-helpers';
+import { IPagination } from 'model-types';
+import { IInvoice } from 'services/invoices';
 
-import LoadingView from 'components/utils/loading-view';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import { SimplePaginator } from 'components/utils/paginator';
+import Provider from '../providers/invoices';
 import TableBody from './table-body';
 import TableHeader from './table-header';
 
-interface IStateProps {
-  orgId:      number;
-  status:     Status;
-  invoices:   IInvoice[];
-  pagination: IPagination | null;
-}
+type Props = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
-interface IDispatchProps {
-  load: (orgId: number, params: object) => void;
-}
-
-type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
-
-class AllInvoices extends React.Component<Props> {
-  private loadData = (props: Props) => {
-    const { orgId, load, location: { search } } = props;
-    load(orgId, parseQuery(search));
-  }
-
-  public componentDidMount() {
-    this.loadData(this.props);
-  }
-
-  public componentDidUpdate(prevProps: Props) {
-    const { location: { search: prevSearch } } = prevProps;
-    const { status, location: { search } } = this.props;
-
-    if (status === Status.Invalid || search !== prevSearch) {
-      this.loadData(this.props);
-    }
-
-  }
-
-  public render() {
-    const { status, invoices, pagination } = this.props;
-
-    if (status !== Status.Success || !invoices) {
-      return <LoadingView status={ this.props.status } />;
-    }
-
-    return(
+class AllInvoices extends React.PureComponent<Props> {
+  private renderInvoices = (invoices: IInvoice[], pagination: IPagination | null) => {
+    return (
       <>
         <Table hover striped responsive>
           <TableHeader />
@@ -70,17 +26,15 @@ class AllInvoices extends React.Component<Props> {
       </>
     );
   }
+  public render() {
+    const { orgId, location: { search } } = this.props;
+
+    return(
+      <Provider orgId={ orgId } search={ search }>
+        { this.renderInvoices }
+      </Provider>
+    );
+  }
 }
 
-const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:      selectCurrentOrganizationId(state),
-  status:     selectInvoicesStatus(state),
-  invoices:   selectInvoices(state),
-  pagination: selectInvoicesPagination(state),
-});
-
-const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number, params: object) => dispatch(loadInvoices(orgId, params)),
-});
-
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(AllInvoices));
+export default withRouter(withCurrentOrgId(AllInvoices));

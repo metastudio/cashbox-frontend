@@ -14,7 +14,7 @@ const defaultState = {
 export default handleActions({
   [loadInvoice.request]: (state, { payload }) => ({
     ...state,
-    id:     payload.id,
+    id:     payload.invoiceId,
     status: statuses.PENDING,
     error:  null,
   }),
