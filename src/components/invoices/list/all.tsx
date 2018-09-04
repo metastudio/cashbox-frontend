@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { IPagination, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   IInvoice,
   loadInvoices,
@@ -71,7 +72,7 @@ class AllInvoices extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectInvoicesStatus(state),
   invoices:   selectInvoices(state),

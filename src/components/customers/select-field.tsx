@@ -7,11 +7,12 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import { ICustomer, loadCustomers, selectCustomers, selectCustomersStatus } from 'services/customers';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
+import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
-import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IStateProps {
   orgId:       number;
@@ -86,7 +87,7 @@ class CustomersSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:     selectCurrentOrganizationId(state),
   status:    selectCustomersStatus(state),
   customers: selectCustomers(state),

@@ -4,6 +4,7 @@ import { NavDropdown, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganization } from 'services/organizations';
 
 import 'components/app/css/default.css';
@@ -53,7 +54,7 @@ const MenuOrganizationItem: React.SFC<IStatePropTypes> = ({ organization }) => {
   );
 };
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   organization: selectCurrentOrganization(state),
 });
 

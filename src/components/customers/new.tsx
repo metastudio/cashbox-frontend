@@ -8,6 +8,7 @@ import { Dispatch } from 'redux';
 import { ID } from 'model-types';
 import { createCustomer, ICustomer, ICustomerParams } from 'services/customers';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
@@ -59,7 +60,7 @@ class NewCustomer extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

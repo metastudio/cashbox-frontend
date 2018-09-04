@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { createInvoice, IInvoice, InvoiceParams } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
@@ -68,7 +69,7 @@ class NewInvoice extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

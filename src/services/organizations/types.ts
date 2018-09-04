@@ -1,3 +1,5 @@
+import { ID, Status } from 'model-types';
+
 interface IOrganization {
   id:              number;
   name:            string;
@@ -9,4 +11,21 @@ interface IOrganizationParams {
   defaultCurrency?: string | null;
 }
 
-export { IOrganization, IOrganizationParams };
+interface ICurrentOrganizationState {
+  id:       ID;
+  data:     IOrganization;
+  isLoaded: boolean;
+}
+
+interface IOrganizationsState {
+  items:  IOrganization[];
+  status: Status;
+  error:  Error | null;
+}
+
+export {
+  IOrganization,
+  IOrganizationParams,
+  ICurrentOrganizationState,
+  IOrganizationsState,
+};

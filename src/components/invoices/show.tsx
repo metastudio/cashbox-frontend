@@ -7,6 +7,7 @@ import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   formatInvoiceTitle,
   IInvoice,
@@ -87,7 +88,7 @@ class ShowInvoice extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectInvoiceStatus(state),
   invoice:      selectInvoice(state),

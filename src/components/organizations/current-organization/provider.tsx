@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import {
   IOrganization,
   restoreOrganization,
@@ -63,7 +64,7 @@ class CurrentOrganizationProvider extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: object): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   isLoaded:     selectIsOrganizationLoaded(state),
   organization: selectCurrentOrganization(state),
 });

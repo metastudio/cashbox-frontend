@@ -11,6 +11,7 @@ import {
   IBankAccountParams,
 } from 'services/bank-accounts';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 import Form, { IBankAccountFormData } from './form';
@@ -64,7 +65,7 @@ class NewBankAccount extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

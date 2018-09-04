@@ -6,9 +6,10 @@ import { Dispatch } from 'redux';
 
 import { deleteCategory as deleteCategoryAction, ICategory } from 'services/categories';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
-import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IOwnProps {
   category: ICategory;
@@ -55,7 +56,7 @@ class DestroyCategory extends React.Component<Props> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

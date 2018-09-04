@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   loadUnpaidInvoicesCount,
   selectUnpaidInvoicesCount, selectUnpaidInvoicesCountStatus,
@@ -49,7 +50,7 @@ class UnpaidInvoicesCountBadge extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:  selectCurrentOrganizationId(state),
   status: selectUnpaidInvoicesCountStatus(state),
   count:  selectUnpaidInvoicesCount(state),

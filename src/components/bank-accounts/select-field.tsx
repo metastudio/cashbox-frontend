@@ -16,6 +16,7 @@ import {
   selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
 import { Currency } from 'services/currencies';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
@@ -105,7 +106,7 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),

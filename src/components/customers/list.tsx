@@ -12,6 +12,7 @@ import {
   selectCustomers,
   selectCustomersStatus,
 } from 'services/customers';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -62,7 +63,7 @@ class CustomersList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:     selectCurrentOrganizationId(state),
   customers: selectCustomers(state),
   status:    selectCustomersStatus(state),

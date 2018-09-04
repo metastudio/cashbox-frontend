@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { downloadInvoicePDF, IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -40,7 +41,7 @@ class DownloadPDFButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

@@ -10,6 +10,7 @@ import {
   selectVisibleBankAccountsCurrencies,
   selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -70,7 +71,7 @@ class BankAccounts extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),

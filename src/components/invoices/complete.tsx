@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import { CategoryType } from 'services/categories';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { createTransaction, ITransaction, ITransactionParams } from 'services/transactions';
@@ -14,7 +16,6 @@ import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
 import Form, { ITransactionFormData } from 'components/transactions/forms/normal';
-import { CategoryType } from 'services/categories';
 
 interface IOwnProps {
   invoice: IInvoice;
@@ -85,7 +86,7 @@ class CompleteInvoiceButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: { show: boolean; }): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

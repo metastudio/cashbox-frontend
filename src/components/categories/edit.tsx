@@ -13,10 +13,11 @@ import {
   updateCategory,
 } from 'services/categories';
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import LoadingView from '../utils/loading-view';
+import LoadingView from 'components/utils/loading-view';
 import Form from './form.jsx';
 
 interface IStateProps {
@@ -98,7 +99,7 @@ class EditCategory extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:    selectCurrentOrganizationId(state),
   status:   selectCategoryStatus(state),
   category: selectCategory(state),

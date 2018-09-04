@@ -7,8 +7,8 @@ import { Dispatch } from 'redux';
 
 import { createCategory, ICategoryParams } from 'services/categories';
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
-
 import { prepareSubmissionError } from 'utils/errors';
 
 import Form from './form.jsx';
@@ -62,7 +62,7 @@ class NewCategory extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

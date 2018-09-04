@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   IOrganization,
   loadOrganizations,
@@ -81,7 +82,7 @@ class SelectOrganization extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   organizations: selectOrganizations(state),
   status:        selectOrganizationsStatus(state),
 });

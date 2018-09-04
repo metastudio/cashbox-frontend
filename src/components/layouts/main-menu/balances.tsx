@@ -13,6 +13,7 @@ import {
   selectBalancesTotalAmount,
   selectBalancesTotals,
 } from 'services/balances';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { formatMoney, IMoney } from 'utils/money';
 
@@ -59,7 +60,7 @@ class Balances extends React.Component<IStateProps & IDispatchProps> {
   }
 }
 
-const mapState = (state: object): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:           selectCurrentOrganizationId(state),
   status:          selectBalancesStatus(state),
   totalAmount:     selectBalancesTotalAmount(state),

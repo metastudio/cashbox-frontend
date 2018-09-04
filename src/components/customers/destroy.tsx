@@ -7,6 +7,7 @@ import { Dispatch } from 'redux';
 import { ID } from 'model-types';
 import { deleteCustomer, ICustomer } from 'services/customers';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
@@ -54,7 +55,7 @@ class DestroyCustomer extends React.Component<IProps> {
   }
 }
 
-const select = (state: {}): IStateProps => ({
+const select = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

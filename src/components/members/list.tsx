@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   IMember,
   loadMembers,
@@ -61,7 +62,7 @@ class MembersList extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:   selectCurrentOrganizationId(state),
   status:  selectMembersStatus(state),
   members: selectMembers(state),

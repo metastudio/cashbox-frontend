@@ -14,11 +14,11 @@ import {
   selectTotal,
   selectTotalsByCurrency,
 } from 'services/debtors';
-import { selectCurrentOrganizationId } from 'services/organizations/selectors.js';
+import { IGlobalState } from 'services/global-state';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { IMoney } from 'utils/money';
 
 import LoadingView from 'components/utils/loading-view';
-
 import Debtors from './debtors';
 import Total from './total';
 import TotalsByCurrency from './totals_by_currency';
@@ -75,7 +75,7 @@ class DebtorSidebar extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => {
+const mapState = (state: IGlobalState) => {
   return({
     orgId:            selectCurrentOrganizationId(state),
     debtors:          selectDebtors(state),

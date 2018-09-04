@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   IOrganization,
   loadOrganizations,
@@ -55,7 +56,7 @@ class OrganizationsList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   status:        selectOrganizationsStatus(state),
   organizations: selectOrganizations(state),
 });

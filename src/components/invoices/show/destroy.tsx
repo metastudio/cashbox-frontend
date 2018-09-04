@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { destroyInvoice, IInvoice, selectInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -41,7 +42,7 @@ class DestroyButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:        selectCurrentOrganizationId(state),
   invoice:      selectInvoice(state),
 });

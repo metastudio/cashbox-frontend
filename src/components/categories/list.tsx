@@ -7,6 +7,7 @@ import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import { ICategory, loadCategories, selectCategories, selectCategoriesStatus } from 'services/categories';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -54,7 +55,7 @@ class CategoriesList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectCategoriesStatus(state),
   categories: selectCategories(state),

@@ -1,12 +1,15 @@
 import * as React from 'react';
+
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { confirm } from 'components/utils/confirm';
 import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
+
+import { confirm } from 'components/utils/confirm';
 
 interface IOwnProps {
   bankAccount: IBankAccount;
@@ -53,7 +56,7 @@ class DestroyBankAccount extends React.Component<Props> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
