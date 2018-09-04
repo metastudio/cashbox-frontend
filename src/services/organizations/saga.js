@@ -15,7 +15,7 @@ import { fetchCurrentOrganizationId, storeCurrentOrganizationId } from './storag
 function* handleLoadOrganizations() {
   try {
     yield put(loadOrganizations.request());
-    const organizations = yield call(getOrganizations);
+    const { organizations } = yield call(getOrganizations);
     yield put(loadOrganizations.success(organizations));
   } catch (error) {
     yield put(loadOrganizations.failure(error));
@@ -25,7 +25,7 @@ function* handleLoadOrganizations() {
 function* handleCreateOrganization({ payload: { data }, meta: { resolve, reject } }) {
   try {
     yield put(createOrganization.request());
-    const organization = yield call(postOrganization, data);
+    const { organization } = yield call(postOrganization, data);
     yield put(createOrganization.success(organization));
     yield call(resolve, organization);
   } catch (error) {
@@ -47,7 +47,8 @@ function* handleRestoreOrganization() {
 
     let organization;
     try {
-      organization = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
+      const response = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
+      organization = response.organization;
     } catch (error) {
       organization = null;
     }
