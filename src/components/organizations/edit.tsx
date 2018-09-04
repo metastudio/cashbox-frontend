@@ -5,40 +5,25 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { ID, Status } from 'model-types';
+import { ID } from 'model-types';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
-import { IGlobalState } from 'services/global-state';
 import {
   IOrganization, IOrganizationParams,
-  loadOrganization,
-  selectOrganization, selectOrganizationStatus,
   updateOrganization,
 } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import LoadingView from 'components/utils/loading-view';
 import Form, { IOrganizationFormData } from './form';
-
-interface IStateProps {
-  status: Status;
-  org:    IOrganization | null;
-}
+import Provider from './providers/organization';
 
 interface IDispatchProps {
-  load:    (orgId: ID) => void;
   update:  (orgId: ID, data: IOrganizationParams) => Promise<IOrganization>;
   message: AddFlashMessageAction;
 }
 
-type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & IDispatchProps;
 
 class EditOrganization extends React.PureComponent<IProps> {
-  private loadData = () => {
-    const { load, match: { params: { id } } } = this.props;
-
-    load(Number(id));
-  }
-
   private handleSubmit = (values: IOrganizationFormData) => {
     const { update, match: { params: { id } } } = this.props;
     return update(
@@ -57,25 +42,19 @@ class EditOrganization extends React.PureComponent<IProps> {
     history.push('/organizations');
   }
 
-  public componentDidMount() {
-    this.loadData();
-  }
-
-  public componentDidUpdate(prevProps: IProps) {
-    const { match: { params: { id: prevId } } } = prevProps;
-    const { status, match: { params: { id } } } = this.props;
-
-    if (status === Status.Invalid || id !== prevId) {
-      this.loadData();
-    }
+  private renderForm = (org: IOrganization) => {
+    return (
+      <Form
+        onSubmit={ this.handleSubmit }
+        onSubmitSuccess={ this.afterUpdate }
+        initialValues={ org }
+        action="Update"
+      />
+    );
   }
 
   public render() {
-    const { status, org } = this.props;
-
-    if (status === Status.Invalid || !org) {
-      return <LoadingView status={ status } />;
-    }
+    const { match: { params: { id } } } = this.props;
 
     return(
       <Row>
@@ -83,12 +62,9 @@ class EditOrganization extends React.PureComponent<IProps> {
           <PageHeader>Edit Organization</PageHeader>
           <Panel>
             <Panel.Body>
-              <Form
-                onSubmit={ this.handleSubmit }
-                onSubmitSuccess={ this.afterUpdate }
-                initialValues={ org }
-                action="Update"
-              />
+              <Provider orgId={ Number(id) }>
+                { this.renderForm }
+              </Provider>
             </Panel.Body>
           </Panel>
         </Col>
@@ -97,17 +73,11 @@ class EditOrganization extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState): IStateProps => ({
-  status: selectOrganizationStatus(state),
-  org:    selectOrganization(state),
-});
-
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load:    orgId => dispatch(loadOrganization(orgId)),
   update:  (orgId, data) => (
     new Promise((res, rej) => dispatch(updateOrganization(orgId, data, res, rej)))
   ),
   message: msg => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditOrganization));
+export default withRouter(connect<{}, IDispatchProps>(undefined, mapDispatch)(EditOrganization));
