@@ -13,6 +13,7 @@ import {
 } from 'services/currencies';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
+import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
 interface ICurrencyOption {
@@ -51,13 +52,6 @@ class CurrencySelect extends React.Component<IProps> {
     return currencies.map(c => ({ value: c, label: c }));
   }
 
-  private styles = () => ({
-    menu: (styles: {}) => ({
-      ...styles,
-      zIndex: 3,
-    }),
-  })
-
   public componentDidMount() {
     this.loadData(this.props);
   }
@@ -87,7 +81,7 @@ class CurrencySelect extends React.Component<IProps> {
         onChange={ this.handleChange }
         isLoading={ status !== Status.Success }
         options={ this.options() }
-        styles={ this.styles() }
+        styles={ ReactSelectStyles }
       />
     );
   }
