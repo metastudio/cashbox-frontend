@@ -34,7 +34,7 @@ const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoi
       <Field name={ `${name}.customerId` } component={ NoLabelCustomersSelect } label="Customer" />
     </td>
     <td>
-      <Field name={ `${name}.amount` } component={ NoLabelMoneyInput } label="Amount" required />
+      <Field name={ `${name}.description` } component={ NoLabelFormInput } type="textarea" label="Task" />
     </td>
     <td>
       <Field name={ `${name}.date` } component={ NoLabelDatePicker } label="Date" />
@@ -43,7 +43,7 @@ const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoi
       <Field name={ `${name}.hours` } component={ NoLabelFormInput } type="number" label="Hours" />
     </td>
     <td>
-      <Field name={ `${name}.description` } component={ NoLabelFormInput } type="textarea" label="Description" />
+      <Field name={ `${name}.amount` } component={ NoLabelMoneyInput } label="Amount" required />
     </td>
     <td style={ { verticalAlign: 'middle' } }>
       <RemoveItemButton

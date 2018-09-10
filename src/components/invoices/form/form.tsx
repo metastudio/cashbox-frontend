@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { SubmitButton } from 'components/utils/form-inputs';
+import { VerticalSubmitButton } from 'components/utils/form-inputs';
 import { InvoiceItemFormData } from './item-fields';
 import ItemsFields, { InvoiceItemsArray } from './items-fields';
 import MainFields from './main-fields';
@@ -33,14 +33,14 @@ const InvoiceForm: React.SFC<IProps> = props => (
     <MainFields />
     <InvoiceItemsArray name="invoiceItems" component={ ItemsFields } />
 
-    <SubmitButton
+    <VerticalSubmitButton
       submitting={ props.submitting }
       invalid={ props.invalid }
       submitSucceeded={ props.submitSucceeded }
       submitFailed={ props.submitFailed }
     >
       { props.action } Invoice
-    </SubmitButton>
+    </VerticalSubmitButton>
   </Form>
 );
 

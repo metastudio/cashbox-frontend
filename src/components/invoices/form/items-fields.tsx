@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
+import { Fa } from 'components/utils/fa';
 import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
 
 class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItemFormData>> {
@@ -26,24 +27,26 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
     const { fields } = this.props;
     return(
       <fieldset className="form-table">
-        <h3>Items</h3>
         <Table>
           <thead>
             <tr>
               <th>#</th>
-              <th className="col-xs-4">Customer</th>
-              <th className="col-xs-2">Amount</th>
+              <th className="col-xs-3">Customer</th>
+              <th className="col-xs-3">Task</th>
               <th className="col-xs-2">Date</th>
               <th className="col-xs-2">Hours</th>
-              <th className="col-xs-2">Description</th>
+              <th className="col-xs-2">Amount</th>
               <th />
             </tr>
           </thead>
           <tbody>
             { fields.map(this.renderField) }
             <tr>
-              <td colSpan={ 7 }>
-                <Button onClick={ this.handleAddItem }>Add Item...</Button>
+              <td />
+              <td colSpan={ 6 }>
+                <Button bsStyle="link" onClick={ this.handleAddItem }>
+                  <Fa icon="plus" /> Add Item...
+                </Button>
               </td>
             </tr>
           </tbody>
