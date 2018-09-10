@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import { Field } from 'redux-form';
 
-import { VerticalCustomersSelect } from 'components/customers/select-field';
+import { HorizontalCustomersSelect } from 'components/customers/select-field';
 import {
-  VerticalDatePicker,
-  VerticalFormInput,
-  VerticalMoneyInput,
+  HorizontalDatePicker,
+  HorizontalFormInput,
+  HorizontalMoneyInput,
 } from 'components/utils/form-inputs';
 
 interface InvoiceItemFormData {
@@ -27,12 +27,12 @@ interface InvoiceItemFieldsProps {
 const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
   <>
     <h4>Item { idx + 1 }</h4>
-    <Field name={ `${name}._destroy` } component={ VerticalFormInput } type="hidden" />
-    <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
-    <Field name={ `${name}.amount` } component={ VerticalMoneyInput } label="Amount" required />
-    <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />
-    <Field name={ `${name}.hours` } component={ VerticalFormInput } type="number" label="Hours" />
-    <Field name={ `${name}.description` } component={ VerticalFormInput } type="textarea" label="Description" />
+    <Field name={ `${name}._destroy` } component={ HorizontalFormInput } type="hidden" />
+    <Field name={ `${name}.customerId` } component={ HorizontalCustomersSelect } label="Customer" />
+    <Field name={ `${name}.amount` } component={ HorizontalMoneyInput } label="Amount" required />
+    <Field name={ `${name}.date` } component={ HorizontalDatePicker } label="Date" />
+    <Field name={ `${name}.hours` } component={ HorizontalFormInput } type="number" label="Hours" />
+    <Field name={ `${name}.description` } component={ HorizontalFormInput } type="textarea" label="Description" />
   </>
 );
 

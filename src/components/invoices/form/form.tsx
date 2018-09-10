@@ -27,7 +27,7 @@ export interface IInvoiceFormData {
 type IProps = IOwnProps & InjectedFormProps<IInvoiceFormData, IOwnProps>;
 
 const InvoiceForm: React.SFC<IProps> = props => (
-  <Form onSubmit={ props.handleSubmit }>
+  <Form onSubmit={ props.handleSubmit } horizontal>
     { props.error && <Alert bsStyle="danger">{ props.error }</Alert> }
 
     <MainFields />

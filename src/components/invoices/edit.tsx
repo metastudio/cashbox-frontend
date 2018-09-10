@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Col, PageHeader } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
@@ -98,12 +98,12 @@ class EditInvoice extends React.Component<IProps> {
     const { orgId, match: { params: { id } } } = this.props;
 
     return(
-      <Col sm={ 6 } smOffset={ 3 }>
+      <>
         <PageHeader>Edit Invoice</PageHeader>
         <Provider orgId={ orgId } invoiceId={ Number(id) }>
           { this.renderForm }
         </Provider>
-      </Col>
+      </>
     );
   }
 }
