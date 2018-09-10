@@ -15,7 +15,7 @@ import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
-import Form, { IInvoiceFormData } from './form';
+import Form, { IInvoiceFormData } from './form/form';
 import Provider from './providers/invoice';
 
 interface IDispatchProps {

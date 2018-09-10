@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
 import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
-import RemoveItemButton from './remove-item';
 
 class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItemFormData>> {
   private renderField = (name: string, idx: number) => {
@@ -15,12 +14,7 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
     }
 
     return(
-      <Row key={ idx }>
-        <Col xs={ 12 }>
-          <RemoveItemButton name={ name } idx={ idx } fields={ this.props.fields } invoiceItem={ invoiceItem } />
-          <InvoiceItemFields name={ name } idx={ idx } />
-        </Col>
-      </Row>
+      <InvoiceItemFields key={ idx } name={ name } idx={ idx } invoiceItem={ invoiceItem } />
     );
   }
 
@@ -31,10 +25,30 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
   public render () {
     const { fields } = this.props;
     return(
-      <>
-        { fields.map(this.renderField) }
-        <Button onClick={ this.handleAddItem }>Add Item...</Button>
-      </>
+      <fieldset className="form-table">
+        <h3>Items</h3>
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th className="col-xs-4">Customer</th>
+              <th className="col-xs-2">Amount</th>
+              <th className="col-xs-2">Date</th>
+              <th className="col-xs-2">Hours</th>
+              <th className="col-xs-2">Description</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            { fields.map(this.renderField) }
+            <tr>
+              <td colSpan={ 7 }>
+                <Button onClick={ this.handleAddItem }>Add Item...</Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </fieldset>
     );
   }
 }

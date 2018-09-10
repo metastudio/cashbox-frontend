@@ -11,7 +11,7 @@ import MainFields from './main-fields';
 interface IOwnProps {
   action: string;
 }
-export interface IInvoiceFormData {
+interface IInvoiceFormData {
   currency:       string;
   bankAccountId?: number;
   number?:        number;
@@ -27,12 +27,10 @@ export interface IInvoiceFormData {
 type IProps = IOwnProps & InjectedFormProps<IInvoiceFormData, IOwnProps>;
 
 const InvoiceForm: React.SFC<IProps> = props => (
-  <Form onSubmit={ props.handleSubmit } horizontal>
+  <Form onSubmit={ props.handleSubmit }>
     { props.error && <Alert bsStyle="danger">{ props.error }</Alert> }
 
     <MainFields />
-
-    <h3>Items</h3>
     <InvoiceItemsArray name="invoiceItems" component={ ItemsFields } />
 
     <SubmitButton
@@ -46,6 +44,8 @@ const InvoiceForm: React.SFC<IProps> = props => (
   </Form>
 );
 
-export default reduxForm<IInvoiceFormData, IOwnProps>({
+const InvoiceFormContainer = reduxForm<IInvoiceFormData, IOwnProps>({
   form: 'invoiceForm',
 })(InvoiceForm);
+
+export { InvoiceFormContainer as default, IInvoiceFormData };

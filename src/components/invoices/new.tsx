@@ -12,7 +12,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam } from 'utils/money';
 
-import Form, { IInvoiceFormData } from './form';
+import Form, { IInvoiceFormData } from './form/form';
 
 interface IStateProps {
   orgId: number;

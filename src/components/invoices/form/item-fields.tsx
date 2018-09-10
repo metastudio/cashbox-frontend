@@ -2,12 +2,14 @@ import * as React from 'react';
 
 import { Field } from 'redux-form';
 
-import { HorizontalCustomersSelect } from 'components/customers/select-field';
+import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {
-  HorizontalDatePicker,
-  HorizontalFormInput,
-  HorizontalMoneyInput,
+  NoLabelDatePicker,
+  NoLabelFormInput,
+  NoLabelMoneyInput,
 } from 'components/utils/form-inputs';
+
+import RemoveItemButton from './remove-item';
 
 interface InvoiceItemFormData {
   _destroy?:    boolean;
@@ -20,20 +22,37 @@ interface InvoiceItemFormData {
 }
 
 interface InvoiceItemFieldsProps {
-  name: string;
-  idx:  number;
+  name:        string;
+  idx:         number;
+  invoiceItem: InvoiceItemFormData;
 }
 
-const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
-  <>
-    <h4>Item { idx + 1 }</h4>
-    <Field name={ `${name}._destroy` } component={ HorizontalFormInput } type="hidden" />
-    <Field name={ `${name}.customerId` } component={ HorizontalCustomersSelect } label="Customer" />
-    <Field name={ `${name}.amount` } component={ HorizontalMoneyInput } label="Amount" required />
-    <Field name={ `${name}.date` } component={ HorizontalDatePicker } label="Date" />
-    <Field name={ `${name}.hours` } component={ HorizontalFormInput } type="number" label="Hours" />
-    <Field name={ `${name}.description` } component={ HorizontalFormInput } type="textarea" label="Description" />
-  </>
+const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoiceItem }) => (
+  <tr>
+    <td style={ { verticalAlign: 'middle' } }>{ idx + 1 }</td>
+    <td>
+      <Field name={ `${name}.customerId` } component={ NoLabelCustomersSelect } label="Customer" />
+    </td>
+    <td>
+      <Field name={ `${name}.amount` } component={ NoLabelMoneyInput } label="Amount" required />
+    </td>
+    <td>
+      <Field name={ `${name}.date` } component={ NoLabelDatePicker } label="Date" />
+    </td>
+    <td>
+      <Field name={ `${name}.hours` } component={ NoLabelFormInput } type="number" label="Hours" />
+    </td>
+    <td>
+      <Field name={ `${name}.description` } component={ NoLabelFormInput } type="textarea" label="Description" />
+    </td>
+    <td style={ { verticalAlign: 'middle' } }>
+      <RemoveItemButton
+        name={ name }
+        idx={ idx }
+        invoiceItem={ invoiceItem }
+      />
+    </td>
+  </tr>
 );
 
 export { InvoiceItemFields as default, InvoiceItemFormData };
