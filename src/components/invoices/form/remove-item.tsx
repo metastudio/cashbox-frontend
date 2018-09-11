@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { arrayRemove, change } from 'redux-form';
 
+import { INVOICE_FORM } from 'constants/forms';
+import { IInvoiceItemFormData } from 'services/redux-form';
+
 import { FaButton } from 'components/utils/fa';
-import { InvoiceItemFormData } from './item-fields';
 
 interface IOwnProps {
   name:        string;
   idx:         number;
-  invoiceItem: InvoiceItemFormData;
+  invoiceItem: IInvoiceItemFormData;
 }
 
 interface IDispatchProps {
@@ -27,9 +29,9 @@ class RemoveItemButton extends React.PureComponent<Props> {
     const { name, idx, invoiceItem, changeField, removeField } = this.props;
 
     if (invoiceItem.id) {
-      changeField('invoiceForm', `${name}._destroy`, 'true');
+      changeField(INVOICE_FORM, `${name}._destroy`, 'true');
     } else {
-      removeField('invoiceForm', 'invoiceItems', idx);
+      removeField(INVOICE_FORM, 'invoiceItems', idx);
     }
   }
 

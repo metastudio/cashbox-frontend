@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import { Field } from 'redux-form';
 
+import { IInvoiceItemFormData } from 'services/redux-form';
+
 import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {
   NoLabelDatePicker,
@@ -11,20 +13,10 @@ import {
 
 import RemoveItemButton from './remove-item';
 
-interface InvoiceItemFormData {
-  _destroy?:    boolean;
-  id?:          number;
-  customerId?:  number;
-  amount?:      string;
-  date?:        Date;
-  hours?:       number;
-  description?: string;
-}
-
 interface InvoiceItemFieldsProps {
   name:        string;
   idx:         number;
-  invoiceItem: InvoiceItemFormData;
+  invoiceItem: IInvoiceItemFormData;
 }
 
 const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoiceItem }) => (
@@ -55,4 +47,4 @@ const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoi
   </tr>
 );
 
-export { InvoiceItemFields as default, InvoiceItemFormData };
+export default InvoiceItemFields;

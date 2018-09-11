@@ -3,10 +3,12 @@ import * as React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
-import { Fa } from 'components/utils/fa';
-import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
+import { IInvoiceItemFormData } from 'services/redux-form';
 
-class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItemFormData>> {
+import { Fa } from 'components/utils/fa';
+import InvoiceItemFields from './item-fields';
+
+class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<IInvoiceItemFormData>> {
   private renderField = (name: string, idx: number) => {
     const invoiceItem = this.props.fields.get(idx);
 
@@ -56,6 +58,6 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
   }
 }
 
-const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<InvoiceItemFormData>;
+const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<IInvoiceItemFormData>;
 
 export { ItemsFields as default, InvoiceItemsArray };

@@ -1,7 +1,10 @@
 import * as React from 'react';
 
 import { Col, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Field } from 'redux-form';
+
+import { selectInvoiceFormHasItems } from 'services/redux-form';
 
 import { VerticalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import { VerticalCurrencySelect } from 'components/currencies/select-field';
@@ -11,8 +14,13 @@ import {
   VerticalFormInput,
   VerticalMoneyInput,
 } from 'components/utils/form-inputs';
+import { IGlobalState } from 'services/global-state';
 
-const InvoieMainFields = () => (
+interface IStateProps {
+  hasItems: boolean;
+}
+
+const InvoieMainFields: React.SFC<IStateProps> = ({ hasItems }) => (
   <Row>
     <Col xs={ 12 } md={ 6 }>
       <Field name="currency" component={ VerticalCurrencySelect } label="Currency" required />
@@ -23,11 +31,15 @@ const InvoieMainFields = () => (
     </Col>
     <Col xs={ 12 } md={ 6 }>
       <Field name="number" component={ VerticalFormInput } label="Number" />
-      <Field name="amount" component={ VerticalMoneyInput } label="Amount" required />
+      <Field name="amount" component={ VerticalMoneyInput } label="Amount" required disabled={ hasItems } />
       <Field name="sentAt" component={ VerticalDatePicker } label="Sent at" />
       <Field name="paidAt" component={ VerticalDatePicker } label="Paid at" />
     </Col>
   </Row>
 );
 
-export default InvoieMainFields;
+const mapState = (state: IGlobalState): IStateProps => ({
+  hasItems: selectInvoiceFormHasItems(state),
+});
+
+export default connect<IStateProps>(mapState)(InvoieMainFields);
