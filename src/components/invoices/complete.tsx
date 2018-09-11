@@ -57,12 +57,13 @@ class CompleteInvoiceButton extends React.Component<IProps> {
     this.props.history.push(`/invoices/${invoice.id}`);
   }
 
-  private initialValues = () => {
+  private initialValues = (): ITransactionFormData => {
     const { invoice } = this.props;
     return({
-      amount:     formatMoneyValue(invoice.amount),
-      customerId: invoice.customerId,
-      date:       formatDateValue(new Date()),
+      amount:        formatMoneyValue(invoice.amount),
+      customerId:    invoice.customerId,
+      bankAccountId: invoice.bankAccountId,
+      date:          formatDateValue(new Date()),
     });
   }
 

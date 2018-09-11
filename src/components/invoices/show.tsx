@@ -67,7 +67,7 @@ class ShowInvoice extends React.PureComponent<IProps> {
           exact
           path="/invoices/:id/complete"
           // tslint:disable-next-line:jsx-no-lambda
-          component={ () => <Complete invoice={ invoice } /> }
+          render={ () => <Complete invoice={ invoice } /> }
         />
 
         <InvoiceTable invoice={ invoice } userFullName={ userFullName } />
