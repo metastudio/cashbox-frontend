@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import MainLayout from 'components/layouts/main-layout';
-import RequireOrganization from 'components/require-organization';
+import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
 import RequireLogin from 'components/utils/require-login';
 
 import Sidebar from './debtors-sidebar';
@@ -15,7 +15,7 @@ import Show from './show';
 const InvoicesScene: React.SFC<{}> = () => (
   // tslint:disable:jsx-no-lambda
   <RequireLogin>
-    <RequireOrganization>
+    <CurrentOrganizationProvider>
       <MainLayout sidebar={ () => <Sidebar /> } >
         <Switch>
           <Route exact path="/invoices" component={ List } />
@@ -26,7 +26,7 @@ const InvoicesScene: React.SFC<{}> = () => (
           <Route path="/invoices/:id/edit" component={ Edit } />
         </Switch>
       </MainLayout>
-    </RequireOrganization>
+    </CurrentOrganizationProvider>
   </RequireLogin>
   // tslint:enable:jsx-no-lambda
 );

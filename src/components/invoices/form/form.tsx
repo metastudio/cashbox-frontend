@@ -3,27 +3,16 @@ import * as React from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { SubmitButton } from 'components/utils/form-inputs';
-import { InvoiceItemFormData } from './item-fields';
+import { INVOICE_FORM } from 'constants/forms';
+import { IInvoiceFormData } from 'services/redux-form';
+
+import { VerticalSubmitButton } from 'components/utils/form-inputs';
 import ItemsFields, { InvoiceItemsArray } from './items-fields';
 import MainFields from './main-fields';
 
 interface IOwnProps {
   action: string;
 }
-export interface IInvoiceFormData {
-  currency:       string;
-  bankAccountId?: number;
-  number?:        number;
-  customerId?:    number;
-  startsAt?:      Date;
-  endsAt?:        Date;
-  amount?:        string;
-  sentAt?:        Date;
-  paidAt?:        Date;
-  invoiceItems:   InvoiceItemFormData[];
-}
-
 type IProps = IOwnProps & InjectedFormProps<IInvoiceFormData, IOwnProps>;
 
 const InvoiceForm: React.SFC<IProps> = props => (
@@ -31,21 +20,21 @@ const InvoiceForm: React.SFC<IProps> = props => (
     { props.error && <Alert bsStyle="danger">{ props.error }</Alert> }
 
     <MainFields />
+    <InvoiceItemsArray name="invoiceItems" component={ ItemsFields } rerenderOnEveryChange />
 
-    <h3>Items</h3>
-    <InvoiceItemsArray name="invoiceItems" component={ ItemsFields } />
-
-    <SubmitButton
+    <VerticalSubmitButton
       submitting={ props.submitting }
       invalid={ props.invalid }
       submitSucceeded={ props.submitSucceeded }
       submitFailed={ props.submitFailed }
     >
       { props.action } Invoice
-    </SubmitButton>
+    </VerticalSubmitButton>
   </Form>
 );
 
-export default reduxForm<IInvoiceFormData, IOwnProps>({
-  form: 'invoiceForm',
+const InvoiceFormContainer = reduxForm<IInvoiceFormData, IOwnProps>({
+  form: INVOICE_FORM,
 })(InvoiceForm);
+
+export { InvoiceFormContainer as default, IInvoiceFormData };

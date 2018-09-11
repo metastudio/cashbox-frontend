@@ -1,3 +1,4 @@
+import { ID, IPagination, Status } from 'model-types';
 import { IMoney } from 'utils/money';
 
 export interface InvoiceItem {
@@ -51,4 +52,31 @@ export interface InvoiceParams {
   paidAt?:        Date;
 
   invoiceItemsAttributes: InvoiceItemParams[];
+}
+
+export interface IInvoiceState {
+  id:     ID | null;
+  item:   IInvoice;
+  status: Status;
+  error:  Error | null;
+}
+
+export interface IInvoicesState {
+  items:      IInvoice[];
+  status:     Status;
+  error:      Error | null;
+  pagination: IPagination | null;
+}
+
+export interface IUnpaidInvoicesCountState {
+  count:  number | null;
+  status: Status;
+  error:  Error | null;
+}
+
+export interface IUnpaidInvoicesState {
+  items:      IInvoice[];
+  status:     Status;
+  error:      Error | null;
+  pagination: IPagination | null;
 }

@@ -12,6 +12,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
+import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
 interface IStateProps {
@@ -44,13 +45,6 @@ class CustomersSelect extends React.Component<IProps> {
     return customers;
   }
 
-  private styles = () => ({
-    menu: (styles: {}) => ({
-      ...styles,
-      zIndex: 3,
-    }),
-  })
-
   private formatLabel = (c: ICustomer) => c.name;
   private formatValue = (c: ICustomer) => String(c.id);
 
@@ -79,7 +73,7 @@ class CustomersSelect extends React.Component<IProps> {
         onChange={ this.handleChange }
         isLoading={ status !== Status.Success }
         options={ this.options() }
-        styles={ this.styles() }
+        styles={ ReactSelectStyles }
         getOptionLabel={ this.formatLabel }
         getOptionValue={ this.formatValue }
       />

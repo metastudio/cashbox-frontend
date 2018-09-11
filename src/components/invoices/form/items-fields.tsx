@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
-import InvoiceItemFields, { InvoiceItemFormData } from './item-fields';
-import RemoveItemButton from './remove-item';
+import { IInvoiceItemFormData } from 'services/redux-form';
 
-class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItemFormData>> {
+import { Fa } from 'components/utils/fa';
+import InvoiceItemFields from './item-fields';
+
+class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<IInvoiceItemFormData>> {
   private renderField = (name: string, idx: number) => {
     const invoiceItem = this.props.fields.get(idx);
 
@@ -15,12 +17,7 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
     }
 
     return(
-      <Row key={ idx }>
-        <Col xs={ 12 }>
-          <RemoveItemButton name={ name } idx={ idx } fields={ this.props.fields } invoiceItem={ invoiceItem } />
-          <InvoiceItemFields name={ name } idx={ idx } />
-        </Col>
-      </Row>
+      <InvoiceItemFields key={ idx } name={ name } idx={ idx } invoiceItem={ invoiceItem } />
     );
   }
 
@@ -31,14 +28,36 @@ class ItemsFields extends React.PureComponent<WrappedFieldArrayProps<InvoiceItem
   public render () {
     const { fields } = this.props;
     return(
-      <>
-        { fields.map(this.renderField) }
-        <Button onClick={ this.handleAddItem }>Add Item...</Button>
-      </>
+      <fieldset className="form-table">
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th className="col-xs-3">Customer</th>
+              <th className="col-xs-3">Task</th>
+              <th className="col-xs-2">Date</th>
+              <th className="col-xs-2">Hours</th>
+              <th className="col-xs-2">Amount</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            { fields.map(this.renderField) }
+            <tr>
+              <td />
+              <td colSpan={ 6 }>
+                <Button bsStyle="link" onClick={ this.handleAddItem }>
+                  <Fa icon="plus" /> Add Item...
+                </Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </fieldset>
     );
   }
 }
 
-const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<InvoiceItemFormData>;
+const InvoiceItemsArray = FieldArray as new () => GenericFieldArray<IInvoiceItemFormData>;
 
 export { ItemsFields as default, InvoiceItemsArray };
