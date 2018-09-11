@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
@@ -32,7 +33,7 @@ interface IDispatchProps {
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
 
-class TransactionProvider extends React.PureComponent<IProps> {
+class InvoiceProvider extends React.PureComponent<IProps> {
   private loadData = () => {
     const { orgId, invoiceId, load, status, invoice } = this.props;
 
@@ -76,6 +77,10 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId, invoiceId) => dispatch(loadInvoice(orgId, invoiceId)),
 });
 
-export default connect<IStateProps, IDispatchProps, IOwnProps>(
-  mapState, mapDispatch,
-)(TransactionProvider);
+// `withRouter` added to prevent update blocking
+// https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/blocked-updates.md
+export default withRouter<RouteComponentProps<IOwnProps> & IOwnProps>(
+  connect<IStateProps, IDispatchProps, RouteComponentProps<IOwnProps>>(
+    mapState, mapDispatch,
+  )(InvoiceProvider),
+);
