@@ -22,9 +22,9 @@ import LoadingView from 'components/utils/loading-view';
 import Form from './form.jsx';
 
 interface IStateProps {
-  orgId:     number;
-  status:    Status;
-  category?: ICategory;
+  orgId:    number;
+  status:   Status;
+  category: ICategory | null;
 }
 
 interface IDispatchProps {
