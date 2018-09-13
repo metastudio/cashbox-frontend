@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Route, Switch } from 'react-router-dom';
 
 import AppLayout from 'components/layouts/app-layout';
@@ -12,6 +13,9 @@ import Select from './select';
 const OrganizationsScene: React.SFC<{}> = () => (
   <RequireLogin>
     <AppLayout>
+      <BreadcrumbsItem to={ '/organizations' }>
+        Organizations
+      </BreadcrumbsItem>
       <Switch>
         <Route exact path="/organizations" component={ List } />
         <Route path="/organizations/new" component={ New } />

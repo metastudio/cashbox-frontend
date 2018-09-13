@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -71,17 +72,26 @@ class EditBankAccount extends React.Component<IProps> {
   }
 
   public render() {
-    const { status } = this.props;
+    const { status, bankAccount } = this.props;
+
+    if (status === Status.Invalid || !bankAccount) {
+      return <LoadingView status={ status } />;
+    }
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Bank Account</PageHeader>
-          <LoadingView status={ status }>
-            { this.renderForm }
-          </LoadingView>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/bank_accounts/${bankAccount.id}/edit` }>
+          { `Edit Bank Account #${bankAccount.id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Bank Account</PageHeader>
+            <LoadingView status={ status }>
+              { this.renderForm }
+            </LoadingView>
+          </Col>
+        </Row>
+      </>
     );
   }
 }

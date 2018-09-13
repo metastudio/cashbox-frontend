@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { BreadcrumbsProvider } from 'react-breadcrumbs-dynamic';
 
 import { restoreSession } from 'services/auth';
 
@@ -28,20 +29,22 @@ class App extends React.Component {
     } else {
       return (
         <BrowserRouter>
-          <div>
-            <Switch>
-              <Route exact path="/" component={ TransactionsScene } />
-              <Route path="/transactions" component={ TransactionsScene } />
-              <Route path="/login" component={ LoginScene } />
-              <Route path="/organizations" component={ OrganizationsScene } />
-              <Route path="/customers" component={ CustomersScene } />
-              <Route path="/categories" component={ CategoriesScene } />
-              <Route path="/bank_accounts" component={BankAccountsScene} />
-              <Route path="/members" component={ MembersScene } />
-              <Route path="/user" component={ UserScene }/>
-              <Route path="/invoices" component={ InvoicesScene }/>
-            </Switch>
-          </div>
+          <BreadcrumbsProvider>
+            <div>
+              <Switch>
+                <Route exact path="/" component={ TransactionsScene } />
+                <Route path="/transactions" component={ TransactionsScene } />
+                <Route path="/login" component={ LoginScene } />
+                <Route path="/organizations" component={ OrganizationsScene } />
+                <Route path="/customers" component={ CustomersScene } />
+                <Route path="/categories" component={ CategoriesScene } />
+                <Route path="/bank_accounts" component={BankAccountsScene} />
+                <Route path="/members" component={ MembersScene } />
+                <Route path="/user" component={ UserScene }/>
+                <Route path="/invoices" component={ InvoicesScene }/>
+              </Switch>
+            </div>
+          </BreadcrumbsProvider>
         </BrowserRouter>
       );
     }

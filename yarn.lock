@@ -135,6 +135,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-breadcrumbs-dynamic@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-breadcrumbs-dynamic/-/react-breadcrumbs-dynamic-1.0.2.tgz#6e02d08d933abddda99f504c83dee40bd35ed183"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-datepicker@^1.1.7":
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-1.1.7.tgz#0722040fbd0d3d39c3fdec21d2559acb9b15ec0a"
@@ -6300,6 +6306,12 @@ react-bootstrap@^0.32.1:
     uncontrollable "^5.0.0"
     warning "^3.0.0"
 
+react-breadcrumbs-dynamic@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-breadcrumbs-dynamic/-/react-breadcrumbs-dynamic-1.1.1.tgz#f7de3abd9da8abaaf723f1c6cc5ec0283263d240"
+  dependencies:
+    react-through "^1.0.3"
+
 react-datepicker@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.6.0.tgz#6b7a87e949f3bbd94872554be6a0119bd908a987"
@@ -6498,6 +6510,10 @@ react-test-renderer@^16.0.0-0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
     react-is "^16.4.2"
+
+react-through@^1.0.3, react-through@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-through/-/react-through-1.1.1.tgz#4a0465ad1f870e74d45df98fd3f78114deca4717"
 
 react-transition-group@^2.0.0, react-transition-group@^2.2.0, react-transition-group@^2.2.1:
   version "2.4.0"
@@ -8016,8 +8032,8 @@ unzip-response@^2.0.1:
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-2.0.1.tgz#d2f0f737d16b0615e72a6935ed04214572d56f97"
 
 upath@^1.0.0:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.4.tgz#ee2321ba0a786c50973db043a50b7bcba822361d"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/upath/-/upath-1.1.0.tgz#35256597e46a581db4793d0ce47fa9aebfc9fabd"
 
 update-notifier@^2.3.0:
   version "2.4.0"

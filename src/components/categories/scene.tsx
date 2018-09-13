@@ -1,6 +1,6 @@
 import * as React from 'react';
-
-import { Route } from 'react-router-dom';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
+import { Route, Switch } from 'react-router-dom';
 
 import AppLayout from 'components/layouts/app-layout';
 import RequireOrganization from 'components/require-organization';
@@ -14,9 +14,14 @@ const CategoriesScene: React.SFC<{}> = () => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
-        <Route exact path="/categories" component={ List } />
-        <Route path="/categories/new" component={ New } />
-        <Route path="/categories/:id/edit" component={ Edit } />
+        <BreadcrumbsItem to={ '/categories' }>
+          Categories
+        </BreadcrumbsItem>
+        <Switch>
+          <Route exact path="/categories" component={ List } />
+          <Route path="/categories/new" component={ New } />
+          <Route path="/categories/:id/edit" component={ Edit } />
+        </Switch>
       </AppLayout>
     </RequireOrganization>
   </RequireLogin>

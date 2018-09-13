@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -21,9 +22,9 @@ import LoadingView from 'components/utils/loading-view';
 import Form from './form.jsx';
 
 interface IStateProps {
-  orgId:    number;
-  status:   Status;
-  category: ICategory | null;
+  orgId:     number;
+  status:    Status;
+  category?: ICategory;
 }
 
 interface IDispatchProps {
@@ -80,21 +81,26 @@ class EditCategory extends React.Component<IProps> {
     }
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Category</PageHeader>
-          <Panel>
-            <Panel.Body>
-              <Form
-                onSubmit={ this.handleSubmit }
-                onSubmitSuccess={ this.afterUpdate }
-                initialValues={ category }
-                action="Update"
-              />
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/categories/${category.id}/edit` }>
+          { `Edit Category #${category.id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Category</PageHeader>
+            <Panel>
+              <Panel.Body>
+                <Form
+                  onSubmit={ this.handleSubmit }
+                  onSubmitSuccess={ this.afterUpdate }
+                  initialValues={ category }
+                  action="Update"
+                />
+              </Panel.Body>
+            </Panel>
+          </Col>
+        </Row>
+      </>
     );
   }
 }

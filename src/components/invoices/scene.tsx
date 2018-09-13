@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Route, Switch } from 'react-router-dom';
 
 import MainLayout from 'components/layouts/main-layout';
@@ -17,6 +18,9 @@ const InvoicesScene: React.SFC<{}> = () => (
   <RequireLogin>
     <CurrentOrganizationProvider>
       <MainLayout sidebar={ () => <Sidebar /> } >
+        <BreadcrumbsItem to={ '/invoices' }>
+          Invoices
+        </BreadcrumbsItem>
         <Switch>
           <Route exact path="/invoices" component={ List } />
           <Route exact path="/invoices/unpaid" component={ List } />

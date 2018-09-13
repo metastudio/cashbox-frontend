@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Button, ButtonGroup, PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
@@ -79,13 +80,18 @@ class ShowInvoice extends React.PureComponent<IProps> {
     const { orgId, match: { params: { id } } } = this.props;
 
     return (
-      <Provider
-        orgId={ orgId }
-        invoiceId={ Number(id) }
-        spinner={ this.renderSpinner }
-      >
-        { this.renderContent }
-      </Provider>
+      <>
+        <BreadcrumbsItem to={ `/invoices/${id}` }>
+          { `Invoice #${id}` }
+        </BreadcrumbsItem>
+        <Provider
+          orgId={ orgId }
+          invoiceId={ Number(id) }
+          spinner={ this.renderSpinner }
+        >
+          { this.renderContent }
+        </Provider>
+      </>
     );
   }
 }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
@@ -99,6 +100,9 @@ class EditInvoice extends React.Component<IProps> {
 
     return(
       <>
+        <BreadcrumbsItem to={ `/invoices/${id}/edit` }>
+          { `Edit Invoice #${id}` }
+        </BreadcrumbsItem>
         <PageHeader>Edit Invoice</PageHeader>
         <Provider orgId={ orgId } invoiceId={ Number(id) }>
           { this.renderForm }

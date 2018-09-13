@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -57,18 +58,23 @@ class EditOrganization extends React.PureComponent<IProps> {
     const { match: { params: { id } } } = this.props;
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Organization</PageHeader>
-          <Panel>
-            <Panel.Body>
-              <Provider orgId={ Number(id) }>
-                { this.renderForm }
-              </Provider>
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/organizations/${id}/edit` }>
+          { `Edit Organization #${id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Organization</PageHeader>
+            <Panel>
+              <Panel.Body>
+                <Provider orgId={ Number(id) }>
+                  { this.renderForm }
+                </Provider>
+              </Panel.Body>
+            </Panel>
+          </Col>
+        </Row>
+      </>
     );
   }
 }
