@@ -70,16 +70,12 @@ class EditCustomer extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, customer } = this.props;
-
-    if (status === Status.Invalid || !customer) {
-      return <LoadingView status={ status } />;
-    }
+    const { status, match: { params: { id } } } = this.props;
 
     return(
       <>
-        <BreadcrumbsItem to={ `/customers/${customer.id}/edit` }>
-          { `Edit Customer #${customer.id}` }
+        <BreadcrumbsItem to={ `/customers/${id}/edit` }>
+          { `Edit Customer #${id}` }
         </BreadcrumbsItem>
         <Row>
           <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >

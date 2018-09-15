@@ -72,16 +72,12 @@ class EditBankAccount extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, bankAccount } = this.props;
-
-    if (status === Status.Invalid || !bankAccount) {
-      return <LoadingView status={ status } />;
-    }
+    const { status, match: { params: { id } } } = this.props;
 
     return(
       <>
-        <BreadcrumbsItem to={ `/bank_accounts/${bankAccount.id}/edit` }>
-          { `Edit Bank Account #${bankAccount.id}` }
+        <BreadcrumbsItem to={ `/bank_accounts/${id}/edit` }>
+          { `Edit Bank Account #${id}` }
         </BreadcrumbsItem>
         <Row>
           <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
