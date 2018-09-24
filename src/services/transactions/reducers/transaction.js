@@ -35,7 +35,7 @@ export default handleActions({
   }),
   [updateTransaction.success]: (state, { payload }) => ({
     ...state,
-    item: state.item.id === payload.transactionId ? payload.transaction : state.item,
+    item: state.item.id === payload.transaction.id ? payload.transaction : state.item,
   }),
   [destroyTransaction.success]: (state, { payload }) => ({
     ...state,
