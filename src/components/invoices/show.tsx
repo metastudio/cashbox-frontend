@@ -15,9 +15,9 @@ import { selectUserFullName } from 'services/users';
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import Spinner from 'components/utils/spinner';
 import Complete from './complete';
+import DestroyButton from './destroy';
 import DownloadPDFButton from './download_pdf';
 import Provider from './providers/invoice';
-import DestroyButton from './show/destroy';
 import InvoiceTable from './show/table';
 
 interface IStateProps {

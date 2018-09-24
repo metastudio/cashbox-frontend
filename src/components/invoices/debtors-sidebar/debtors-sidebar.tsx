@@ -37,18 +37,14 @@ interface IDispatchProps {
 
 type IProps = IStateProps & IDispatchProps;
 
-class DebtorSidebar extends React.Component<IProps> {
-  public componentDidMount() {
+class DebtorSidebar extends React.PureComponent<IProps> {
+  private loadData = () => {
     const { orgId, load } = this.props;
     load(orgId);
   }
 
-  public render() {
-    const { status, debtors, totalsByCurrency, total } = this.props;
-
-    if (status !== Status.Success || !debtors) {
-      return <LoadingView status={ status } />;
-    }
+  private renderContent = () => {
+    const { debtors, totalsByCurrency, total } = this.props;
 
     if (!debtors) {
       return(<p>No debtors</p>);
@@ -57,7 +53,7 @@ class DebtorSidebar extends React.Component<IProps> {
     return(
       <>
         <h2>Debtor customers</h2>
-        <Table striped responsive bordered id="bankAccounts">
+        <Table striped responsive id="debtors">
           <thead>
             <tr>
               <th>Debtor</th>
@@ -71,6 +67,24 @@ class DebtorSidebar extends React.Component<IProps> {
           <Total total={ total } />
         </Table>
       </>
+    );
+  }
+
+  public componentDidMount() {
+    this.loadData();
+  }
+
+  public componentDidUpdate(oldProps: IProps) {
+    if (this.props.status === Status.Invalid || this.props.orgId !== oldProps.orgId) {
+      this.loadData();
+    }
+  }
+
+  public render() {
+    return (
+      <LoadingView status={ this.props.status }>
+        { this.renderContent }
+      </LoadingView>
     );
   }
 }
