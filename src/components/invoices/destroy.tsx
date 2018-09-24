@@ -10,6 +10,8 @@ import { IGlobalState } from 'services/global-state';
 import { destroyInvoice, IInvoice, selectInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
+import { confirm } from 'components/utils/confirm';
+
 interface IStateProps {
   orgId:        number;
   invoice:      IInvoice | null;
@@ -27,11 +29,13 @@ class DestroyButton extends React.Component<IProps> {
     const { orgId, invoice, destroy } = this.props;
     if (!invoice) { return; }
 
-    destroy(orgId, invoice.id).then(() => {
-      const { flashMessage, history } = this.props;
+    confirm('Are you sure?').then(() => {
+      destroy(orgId, invoice.id).then(() => {
+        const { flashMessage, history } = this.props;
 
-      flashMessage('Invoice successfully destroyed');
-      history.push('/invoices');
+        flashMessage('Invoice successfully destroyed');
+        history.push('/invoices');
+      });
     });
   }
 
