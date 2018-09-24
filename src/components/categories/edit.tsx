@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -59,6 +60,19 @@ class EditCategory extends React.Component<IProps> {
     history.push('/categories');
   }
 
+  private renderForm = () => (
+    <Panel>
+      <Panel.Body>
+        <Form
+          onSubmit={ this.handleSubmit }
+          onSubmitSuccess={ this.afterUpdate }
+          initialValues={ this.props.category }
+          action="Update"
+        />
+      </Panel.Body>
+    </Panel>
+  )
+
   public componentDidMount() {
     this.loadData();
   }
@@ -73,28 +87,22 @@ class EditCategory extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, category } = this.props;
-
-    if (status === Status.Invalid || !category) {
-      return <LoadingView status={ status } />;
-    }
+    const { status, match: { params: { id } } } = this.props;
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Category</PageHeader>
-          <Panel>
-            <Panel.Body>
-              <Form
-                onSubmit={ this.handleSubmit }
-                onSubmitSuccess={ this.afterUpdate }
-                initialValues={ category }
-                action="Update"
-              />
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/categories/${id}/edit` }>
+          { `Edit Category #${id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Category</PageHeader>
+            <LoadingView status={ status }>
+              { this.renderForm }
+            </LoadingView>
+          </Col>
+        </Row>
+      </>
     );
   }
 }

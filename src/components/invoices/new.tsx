@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -58,6 +59,9 @@ class NewInvoice extends React.Component<Props> {
   public render() {
     return(
       <>
+        <BreadcrumbsItem to={ '/invoices/new' }>
+          New
+        </BreadcrumbsItem>
         <PageHeader>New Invoice</PageHeader>
         <Form
           onSubmit={ this.handleSubmit }
