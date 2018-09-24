@@ -4,10 +4,10 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { defaultMoneyLocale } from 'utils/money';
 
-import { wrapInlineFormGroup }     from './inline-form-group';
 import { wrapHorizontalFormGroup } from './horizontal-form-group';
+import { wrapInlineFormGroup }     from './inline-form-group';
+import { wrapNoLabelFormGroup }    from './no-label-form-group';
 import { wrapVerticalFormGroup }   from './vertical-form-group';
-import { wrapNoLabelFormGroup } from './no-label-form-group';
 
 type IProps = NumberFormatProps & WrappedFieldProps;
 

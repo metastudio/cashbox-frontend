@@ -1,21 +1,26 @@
 import * as React from 'react';
+
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Route, Switch } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
-import RequireOrganization from 'components/require-organization';
 import MainLayout from 'components/layouts/main-layout';
+import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
+import RequireLogin from 'components/utils/require-login';
 
 import Sidebar from './debtors-sidebar';
+import Edit from './edit';
 import List from './list';
 import New from './new';
 import Show from './show';
-import Edit from './edit';
 
 const InvoicesScene: React.SFC<{}> = () => (
   // tslint:disable:jsx-no-lambda
   <RequireLogin>
-    <RequireOrganization>
+    <CurrentOrganizationProvider>
       <MainLayout sidebar={ () => <Sidebar /> } >
+        <BreadcrumbsItem to={ '/invoices' }>
+          Invoices
+        </BreadcrumbsItem>
         <Switch>
           <Route exact path="/invoices" component={ List } />
           <Route exact path="/invoices/unpaid" component={ List } />
@@ -25,7 +30,7 @@ const InvoicesScene: React.SFC<{}> = () => (
           <Route path="/invoices/:id/edit" component={ Edit } />
         </Switch>
       </MainLayout>
-    </RequireOrganization>
+    </CurrentOrganizationProvider>
   </RequireLogin>
   // tslint:enable:jsx-no-lambda
 );

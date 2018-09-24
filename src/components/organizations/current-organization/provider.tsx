@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import {
   IOrganization,
   restoreOrganization,
-  selectIsOrganizationLoaded,
   selectCurrentOrganization,
+  selectIsOrganizationLoaded,
 } from 'services/organizations';
 import Context from './context';
 
@@ -16,7 +18,7 @@ import Spinner from 'components/utils/spinner';
 
 interface IStateProps {
   isLoaded:     boolean;
-  organization: IOrganization;
+  organization: IOrganization | null;
 }
 
 interface IDispatchProps {
@@ -62,7 +64,7 @@ class CurrentOrganizationProvider extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: object): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   isLoaded:     selectIsOrganizationLoaded(state),
   organization: selectCurrentOrganization(state),
 });

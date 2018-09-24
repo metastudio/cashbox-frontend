@@ -1,45 +1,50 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
-import { change, FieldsProps } from 'redux-form';
-import { Button } from 'react-bootstrap';
-import { InvoiceItemFormData } from './item-fields';
+import { Dispatch } from 'redux';
+import { arrayRemove, change } from 'redux-form';
+
+import { INVOICE_FORM } from 'constants/forms';
+import { IInvoiceItemFormData } from 'services/redux-form';
+
+import { FaButton } from 'components/utils/fa';
 
 interface IOwnProps {
-  name:   string;
-  idx:    number;
-  fields: FieldsProps<InvoiceItemFormData>;
-  invoiceItem: InvoiceItemFormData;
+  name:        string;
+  idx:         number;
+  invoiceItem: IInvoiceItemFormData;
 }
 
 interface IDispatchProps {
-  changeField: (formName: string, formField: string, value: string) => void;
+  changeField: (form: string, field: string, value: string) => void;
+  removeField: (form: string, field: string, idx: number) => void;
 }
 
 type Props = IOwnProps & IDispatchProps;
 
 class RemoveItemButton extends React.PureComponent<Props> {
-  private handleRemove = () => {
-    const { name, idx, invoiceItem, changeField, fields } = this.props;
+  private handleRemove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const { name, idx, invoiceItem, changeField, removeField } = this.props;
 
     if (invoiceItem.id) {
-      changeField('invoiceForm', `${name}._destroy`, 'true');
+      changeField(INVOICE_FORM, `${name}._destroy`, 'true');
     } else {
-      fields.remove(idx);
+      removeField(INVOICE_FORM, 'invoiceItems', idx);
     }
   }
 
   public render() {
     return(
-      <Button bsStyle="danger" onClick={ this.handleRemove }>
-        Remove Item
-      </Button>
+      <FaButton icon="trash-o" onClick={ this.handleRemove } />
     );
   }
 }
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  changeField: (formName: string, formField: string, value: string) => dispatch(change(formName, formField, value)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  changeField: (form, field, value) => dispatch(change(form, field, value)),
+  removeField: (form, field, idx) => dispatch(arrayRemove(form, field, idx)),
 });
 
-export default connect<{}, IDispatchProps>(undefined, mapDispatch)(RemoveItemButton);
+export default connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(RemoveItemButton);

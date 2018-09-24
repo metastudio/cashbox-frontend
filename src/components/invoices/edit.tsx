@@ -1,44 +1,38 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Col, PageHeader } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router';
-import { formatMoneyValue, formatMoneyParam } from 'utils/money';
 
-import { Status } from 'model-types';
+import { PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Dispatch } from 'redux';
+
+import { ID } from 'model-types';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
   IInvoice, InvoiceParams,
-  loadInvoice, updateInvoice,
-  selectInvoice, selectInvoiceStatus,
+  updateInvoice,
 } from 'services/invoices';
-import { addFlashMessage } from 'services/flash-messages';
-import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
-import Form, { IInvoiceFormData } from './form';
-import LoadingView from '../utils/loading-view';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import Form, { IInvoiceFormData } from './form/form';
+import Provider from './providers/invoice';
 
-interface IStateProps {
-  orgId:   number;
-  status:  Status;
-  invoice: IInvoice | null;
-}
 interface IDispatchProps {
-  load:         (orgId: number, invoiceId: number) => void;
-  update:       (orgId: number, invoiceId: number, data: InvoiceParams) => Promise<IInvoice>;
-  flashMessage: (msg: string) => void;
+  update:  (orgId: ID, invoiceId: ID, data: InvoiceParams) => Promise<IInvoice>;
+  message: AddFlashMessageAction;
 }
 
-type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
+type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps & IDispatchProps;
 
 class EditInvoice extends React.Component<IProps> {
   private handleSubmit = (values: IInvoiceFormData) => {
-    const { orgId, update, invoice } = this.props;
-    if (!invoice) { return; }
+    const { orgId, update, match: { params: { id } } } = this.props;
 
     return update(
       orgId,
-      invoice.id,
+      Number(id),
       {
         currency:      values.currency,
         bankAccountId: values.bankAccountId,
@@ -85,50 +79,48 @@ class EditInvoice extends React.Component<IProps> {
   }
 
   private afterUpdate = () => {
-    const { flashMessage, history } = this.props;
-    flashMessage('Invoice was updated successfully');
+    const { message, history } = this.props;
+    message('Invoice has been updated');
     history.push('/invoices');
   }
 
-  public componentDidMount() {
-    const { orgId, match, load } = this.props;
-
-    load(orgId, Number(match.params.id));
+  private renderForm = (invoice: IInvoice) => {
+    return (
+      <Form
+        onSubmit={ this.handleSubmit }
+        onSubmitSuccess={ this.afterUpdate }
+        initialValues={ this.initialPrepare(invoice) }
+        action="Update"
+      />
+    );
   }
 
   public render() {
-    const { status, invoice } = this.props;
-
-    if (status !== Status.Success || !invoice) {
-      return <LoadingView status={ status } />;
-    }
+    const { orgId, match: { params: { id } } } = this.props;
 
     return(
-      <Col sm={ 6 } smOffset={ 3 }>
+      <>
+        <BreadcrumbsItem to={ `/invoices/${id}/edit` }>
+          { `Edit Invoice #${id}` }
+        </BreadcrumbsItem>
         <PageHeader>Edit Invoice</PageHeader>
-        <Form
-          onSubmit={ this.handleSubmit }
-          onSubmitSuccess={ this.afterUpdate }
-          initialValues={ this.initialPrepare(invoice) }
-          action="Update"
-        />
-      </Col>
+        <Provider orgId={ orgId } invoiceId={ Number(id) }>
+          { this.renderForm }
+        </Provider>
+      </>
     );
   }
 }
 
-const mapState = (state: {}) => ({
-  orgId:   selectCurrentOrganizationId(state),
-  status:  selectInvoiceStatus(state),
-  invoice: selectInvoice(state),
-});
-
-const mapDispatch = (dispatch: Dispatch) => ({
-  load:          (orgId: number, invoiceId: number) => dispatch(loadInvoice(orgId, invoiceId)),
-  update:        (orgId: number, invoiceId: number, data: InvoiceParams) => new Promise<IInvoice>((res, rej) => {
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  update: (orgId, invoiceId, data) => new Promise<IInvoice>((res, rej) => {
     dispatch(updateInvoice(orgId, invoiceId, data, res, rej));
   }),
-  flashMessage:  (msg: string) => dispatch(addFlashMessage(msg)),
+  message: msg => dispatch(addFlashMessage(msg)),
 });
 
-export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditInvoice));
+export default withRouter(
+  withCurrentOrgId(
+    connect<{}, IDispatchProps>(undefined, mapDispatch)(EditInvoice),
+  ),
+);

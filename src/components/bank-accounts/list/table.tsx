@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 import { IBankAccount, selectBankAccountsWithCurrency } from 'services/bank-accounts';
 

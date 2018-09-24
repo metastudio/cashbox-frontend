@@ -1,16 +1,19 @@
-import { combineReducers, applyMiddleware, createStore, Middleware } from 'redux';
+import { applyMiddleware, combineReducers, createStore, Middleware } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
+import { INVOICE_FORM } from 'constants/forms';
+
 import * as reducers from 'services/reducers';
+import invoiceFormReducer from 'services/redux-form/reducers/invoice-form.js';
 import rootSaga from 'services/sagas.js';
 
 function createAppStore() {
 
   const reducer = combineReducers({
     ...reducers,
-    form: formReducer,
+    form: formReducer.plugin({ [INVOICE_FORM]: invoiceFormReducer }),
   });
 
   const sagaMiddleware = createSagaMiddleware();
@@ -19,6 +22,7 @@ function createAppStore() {
     sagaMiddleware,
   ];
   if (process.env.REACT_APP_ENABLE_REDUX_LOGGER === 'true') {
+    const logger = createLogger({ collapsed: true });
     middlewares.push(logger);
   }
 

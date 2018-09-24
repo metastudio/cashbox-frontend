@@ -1,38 +1,50 @@
 import * as React from 'react';
+
 import { Field } from 'redux-form';
 
-import {
-  VerticalFormInput,
-  VerticalDatePicker,
-  VerticalMoneyInput,
-} from 'components/utils/form-inputs';
-import { VerticalCustomersSelect } from 'components/customers/select-field';
+import { IInvoiceItemFormData } from 'services/redux-form';
 
-interface InvoiceItemFormData {
-  _destroy?:    boolean;
-  id?:          number;
-  customerId?:  number;
-  amount?:      string;
-  date?:        Date;
-  hours?:       number;
-  description?: string;
-}
+import { NoLabelCustomersSelect } from 'components/customers/select-field';
+import {
+  NoLabelDatePicker,
+  NoLabelFormInput,
+  NoLabelMoneyInput,
+} from 'components/utils/form-inputs';
+
+import RemoveItemButton from './remove-item';
 
 interface InvoiceItemFieldsProps {
-  name: string;
-  idx:  number;
+  name:        string;
+  idx:         number;
+  invoiceItem: IInvoiceItemFormData;
 }
 
-const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx }) => (
-  <>
-    <h4>Item { idx + 1 }</h4>
-    <Field name={ `${name}._destroy` } component={ VerticalFormInput } type="hidden" />
-    <Field name={ `${name}.customerId` } component={ VerticalCustomersSelect } label="Customer" />
-    <Field name={ `${name}.amount` } component={ VerticalMoneyInput } label="Amount" required />
-    <Field name={ `${name}.date` } component={ VerticalDatePicker } label="Date" />
-    <Field name={ `${name}.hours` } component={ VerticalFormInput } type="number" label="Hours" />
-    <Field name={ `${name}.description` } component={ VerticalFormInput } type="textarea" label="Description" />
-  </>
+const InvoiceItemFields: React.SFC<InvoiceItemFieldsProps> = ({ name, idx, invoiceItem }) => (
+  <tr>
+    <td style={ { verticalAlign: 'middle' } }>{ idx + 1 }</td>
+    <td>
+      <Field name={ `${name}.customerId` } component={ NoLabelCustomersSelect } label="Customer" />
+    </td>
+    <td>
+      <Field name={ `${name}.description` } component={ NoLabelFormInput } type="textarea" label="Task" />
+    </td>
+    <td>
+      <Field name={ `${name}.date` } component={ NoLabelDatePicker } label="Date" />
+    </td>
+    <td>
+      <Field name={ `${name}.hours` } component={ NoLabelFormInput } type="number" label="Hours" />
+    </td>
+    <td>
+      <Field name={ `${name}.amount` } component={ NoLabelMoneyInput } label="Amount" required />
+    </td>
+    <td style={ { verticalAlign: 'middle' } }>
+      <RemoveItemButton
+        name={ name }
+        idx={ idx }
+        invoiceItem={ invoiceItem }
+      />
+    </td>
+  </tr>
 );
 
-export { InvoiceItemFields as default, InvoiceItemFormData };
+export default InvoiceItemFields;

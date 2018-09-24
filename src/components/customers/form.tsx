@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 
 import { Alert, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
 import {
   HorizontalFormInput,
-  HorizontalTextarea,
   HorizontalSubmitButton,
+  HorizontalTextarea,
 } from 'components/utils/form-inputs';
 
 interface IOwnProps {

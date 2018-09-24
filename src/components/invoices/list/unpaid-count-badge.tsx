@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+
 import { Badge } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   loadUnpaidInvoicesCount,
-  selectUnpaidInvoicesCountsStatus, selectUnpaidInvoicesCount,
+  selectUnpaidInvoicesCount, selectUnpaidInvoicesCountStatus,
 } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -48,9 +50,9 @@ class UnpaidInvoicesCountBadge extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:  selectCurrentOrganizationId(state),
-  status: selectUnpaidInvoicesCountsStatus(state),
+  status: selectUnpaidInvoicesCountStatus(state),
   count:  selectUnpaidInvoicesCount(state),
 });
 

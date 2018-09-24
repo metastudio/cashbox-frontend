@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import {
   loadVisibleBankAccounts,
-  selectVisibleBankAccountsStatus,
   selectVisibleBankAccountsCurrencies,
+  selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -34,6 +36,12 @@ class BankAccounts extends React.Component<Props> {
     }
   }
 
+  private renderNewBankAccountIcon = () => (
+    <small>
+      <Link to="/bank_accounts/new" title="New Bank Acoount"><i className="fa fa-plus" /></Link>
+    </small>
+  )
+
   public componentDidMount() {
     this.loadData(this.props);
   }
@@ -52,7 +60,9 @@ class BankAccounts extends React.Component<Props> {
 
     return (
       <>
-        <PageHeader>Accounts</PageHeader>
+        <PageHeader>
+          Accounts&nbsp;{ this.renderNewBankAccountIcon() }
+        </PageHeader>
         <LoadingView status={ status }>
           { () => currencies.map(c => <BankAccountsTable key={ c } currency={ c } />) }
         </LoadingView>
@@ -61,7 +71,7 @@ class BankAccounts extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),

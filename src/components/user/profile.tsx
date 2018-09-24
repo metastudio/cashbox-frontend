@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Col } from 'react-bootstrap';
 
 import AccountWrapper from './account-wrapper.jsx';
-import ProfileWrapper from './profile-wrapper.jsx';
 import CancelAccount from './cancel-account.jsx';
+import ProfileWrapper from './profile-wrapper.jsx';
 
 const Profile = () => {
   return (

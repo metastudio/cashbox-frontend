@@ -29,12 +29,15 @@ const formatMoney = (money?: IMoney, locale: IMoneyLocale = defaultMoneyLocale):
  * @param {IMoney} money - money value to format
  * @param {IMoneyLocale} locale - locale in which format money value
  */
-const formatMoneyValue = (money?: IMoney | string, locale: IMoneyLocale = defaultMoneyLocale): string | undefined => {
+const formatMoneyValue = (
+  money?: IMoney | string | number,
+  locale: IMoneyLocale = defaultMoneyLocale,
+): string | undefined => {
   if (!money) { return undefined; }
 
   let amount;
   let precision;
-  if (typeof money === 'string') {
+  if (typeof money === 'string' || typeof money === 'number') {
     amount = money;
     precision = 2;
   } else {
@@ -48,6 +51,17 @@ const formatMoneyValue = (money?: IMoney | string, locale: IMoneyLocale = defaul
     decimal:   locale.decimalMark,
     thousand:  locale.thousandsSeparator,
   });
+};
+
+/**
+ * Parse money value from money input to number
+ * @param {string} str - string representation of money
+ * @param {IMoneyLocale} locale - locale in which money is formatted
+ */
+const parseMoneyValue = (str?: string, locale: IMoneyLocale = defaultMoneyLocale): number | undefined => {
+  if (!str) { return undefined; }
+
+  return accounting.unformat(str, locale.decimalMark);
 };
 
 /**
@@ -68,4 +82,11 @@ const formatMoneyParam = (str?: string, locale: IMoneyLocale = defaultMoneyLocal
   );
 };
 
-export { IMoney, formatMoney, formatMoneyValue, formatMoneyParam, defaultMoneyLocale };
+export {
+  IMoney,
+  formatMoney,
+  formatMoneyValue,
+  parseMoneyValue,
+  formatMoneyParam,
+  defaultMoneyLocale,
+};

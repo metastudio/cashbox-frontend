@@ -1,6 +1,7 @@
 import * as React from 'react';
+
+import { ControlLabel, FormGroup, HelpBlock } from 'react-bootstrap';
 import { WrappedFieldProps } from 'redux-form';
-import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 interface IOwnProps {
   help?:     string;

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
+
+import { Tab, Tabs } from 'react-bootstrap';
 
 import { ID } from 'model-types';
 import { CategoryType } from 'services/categories';
-import { ITransaction, isTransfer, ITransfer } from 'services/transactions';
+import { isTransfer, ITransaction, ITransfer } from 'services/transactions';
 
 import NewNormal   from './normal';
 import NewTransfer from './transfer';
@@ -16,14 +17,15 @@ interface IProps {
 const NewTransactionTabs: React.SFC<IProps> = ({ orgId, copyTransaction }) => {
   let activeTab = 1;
 
+  let copyTrans = copyTransaction;
   let copyTransfer;
 
-  if (copyTransaction) {
-    if (isTransfer(copyTransaction)) {
+  if (copyTrans) {
+    if (isTransfer(copyTrans)) {
       activeTab = 3;
-      copyTransfer = copyTransaction as ITransfer;
-      copyTransaction = undefined;
-    } else if (copyTransaction.category.type === CategoryType.Expense) {
+      copyTransfer = copyTrans as ITransfer;
+      copyTrans = undefined;
+    } else if (copyTrans.category.type === CategoryType.Expense) {
       activeTab = 2;
     }
   }
@@ -34,14 +36,14 @@ const NewTransactionTabs: React.SFC<IProps> = ({ orgId, copyTransaction }) => {
         <NewNormal
           orgId={ orgId }
           type={ CategoryType.Income }
-          copyTransaction={ copyTransaction }
+          copyTransaction={ copyTrans }
         />
       </Tab>
       <Tab eventKey={ 2 } title="Expense">
         <NewNormal
           orgId={ orgId }
           type={ CategoryType.Expense }
-          copyTransaction={ copyTransaction }
+          copyTransaction={ copyTrans }
         />
       </Tab>
       <Tab eventKey={ 3 } title="Transfer">

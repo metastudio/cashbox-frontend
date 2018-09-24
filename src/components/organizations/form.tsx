@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { reduxForm, Field, InjectedFormProps } from 'redux-form';
-import { Alert, Form } from 'react-bootstrap';
 
+import { Alert, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
+import { HorizontalCurrencySelect } from 'components/currencies/select-field';
 import {
   HorizontalFormInput,
   HorizontalSubmitButton,
 } from 'components/utils/form-inputs';
-import { HorizontalCurrencySelect } from 'components/currencies/select-field';
+
+interface IOwnProps {
+  action: string;
+}
 
 interface IOrganizationFormData {
   name?:            string;
   defaultCurrency?: string;
 }
 
-type IProps = InjectedFormProps<IOrganizationFormData>;
+type IProps = IOwnProps & InjectedFormProps<IOrganizationFormData, IOwnProps>;
 
 const OrganizationForm: React.SFC<IProps> = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
@@ -24,8 +29,8 @@ const OrganizationForm: React.SFC<IProps> = ({ handleSubmit, submitting, error }
   </Form>
 );
 
-const ReduxOrganizationForm = reduxForm<IOrganizationFormData>({
-  form: 'organization-form',
+const ReduxOrganizationForm = reduxForm<IOrganizationFormData, IOwnProps>({
+  form: 'organizationForm',
 })(OrganizationForm);
 
 export { ReduxOrganizationForm as default, IOrganizationFormData };

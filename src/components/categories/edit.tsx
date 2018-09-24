@@ -1,21 +1,25 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Row, Col, PageHeader, Panel } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
-import { addFlashMessage } from 'services/flash-messages';
 import {
-  ICategoryParams, ICategory,
-  loadCategory, updateCategory,
-  selectCategoryStatus, selectCategory,
+  ICategory, ICategoryParams,
+  loadCategory,
+  selectCategory, selectCategoryStatus,
+  updateCategory,
 } from 'services/categories';
+import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import LoadingView from '../utils/loading-view';
+import LoadingView from 'components/utils/loading-view';
 import Form from './form.jsx';
-import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
   orgId:    number;
@@ -56,6 +60,19 @@ class EditCategory extends React.Component<IProps> {
     history.push('/categories');
   }
 
+  private renderForm = () => (
+    <Panel>
+      <Panel.Body>
+        <Form
+          onSubmit={ this.handleSubmit }
+          onSubmitSuccess={ this.afterUpdate }
+          initialValues={ this.props.category }
+          action="Update"
+        />
+      </Panel.Body>
+    </Panel>
+  )
+
   public componentDidMount() {
     this.loadData();
   }
@@ -70,33 +87,27 @@ class EditCategory extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, category } = this.props;
-
-    if (status === Status.Invalid || !category) {
-      return <LoadingView status={ status } />;
-    }
+    const { status, match: { params: { id } } } = this.props;
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Category</PageHeader>
-          <Panel>
-            <Panel.Body>
-              <Form
-                onSubmit={ this.handleSubmit }
-                onSubmitSuccess={ this.afterUpdate }
-                initialValues={ category }
-                action="Update"
-              />
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/categories/${id}/edit` }>
+          { `Edit Category #${id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Category</PageHeader>
+            <LoadingView status={ status }>
+              { this.renderForm }
+            </LoadingView>
+          </Col>
+        </Row>
+      </>
     );
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:    selectCurrentOrganizationId(state),
   status:   selectCategoryStatus(state),
   category: selectCategory(state),

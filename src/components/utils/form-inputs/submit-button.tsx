@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Button, Row, Col, FormGroup } from 'react-bootstrap';
+
+import { Button, Clearfix, Col, FormGroup } from 'react-bootstrap';
 
 interface IProps {
   submitting:       boolean;
@@ -65,11 +66,10 @@ const HorizontalSubmitButton: React.SFC<IHorizontalSubmitButtonProps & IProps> =
 );
 
 const VerticalSubmitButton: React.SFC<IProps> = props => (
-  <Row>
-    <Col sm={ 12 }>
-      <SubmitButton className="pull-right" { ...props } />
-    </Col>
-  </Row>
+  <FormGroup>
+    <SubmitButton className="pull-right" { ...props } />
+    <Clearfix />
+  </FormGroup>
 );
 
 export { SubmitButton, HorizontalSubmitButton, VerticalSubmitButton };

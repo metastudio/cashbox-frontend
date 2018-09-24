@@ -1,10 +1,12 @@
 import * as React from 'react';
+
+import { MenuItem, NavDropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import LogoutItem from './logout-item';
 import { selectUserFullName } from 'services/users';
+
+import LogoutItem from './logout-item';
 
 interface IStateProps {
   userFullName: string;
@@ -21,6 +23,7 @@ const ProfileItem: React.SFC<IStateProps> = ({ userFullName }) => (
     <LinkContainer to="/user/profile">
       <MenuItem>Edit profile</MenuItem>
     </LinkContainer>
+    <MenuItem divider />
     <LogoutItem />
   </NavDropdown>
 );

@@ -1,20 +1,26 @@
 import * as React from 'react';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Route, Switch } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
 import AppLayout from 'components/layouts/app-layout';
+import RequireLogin from 'components/utils/require-login';
 
-import Select from './select';
-import New    from './new';
+import Edit   from './edit';
 import List   from './list';
+import New    from './new';
+import Select from './select';
 
 const OrganizationsScene: React.SFC<{}> = () => (
   <RequireLogin>
     <AppLayout>
+      <BreadcrumbsItem to={ '/organizations' }>
+        Organizations
+      </BreadcrumbsItem>
       <Switch>
         <Route exact path="/organizations" component={ List } />
         <Route path="/organizations/new" component={ New } />
         <Route path="/organizations/select" component={ Select } />
+        <Route path="/organizations/:id/edit" component={ Edit } />
       </Switch>
     </AppLayout>
   </RequireLogin>

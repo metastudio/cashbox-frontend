@@ -12,11 +12,13 @@ import {
   loadCategories,
   selectCategories, selectCategoriesStatus,
 } from 'services/categories';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
+import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
+import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
-import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IOwnProps {
   type?: CategoryType;
@@ -61,13 +63,6 @@ class CategoriesSelect extends React.Component<IProps> {
     }));
   }
 
-  private styles = () => ({
-    menu: (styles: {}) => ({
-      ...styles,
-      zIndex: 3,
-    }),
-  })
-
   private formatLabel = (c: ICategory) => c.name;
   private formatValue = (c: ICategory) => String(c.id);
 
@@ -96,7 +91,7 @@ class CategoriesSelect extends React.Component<IProps> {
         onChange={ this.handleChange }
         isLoading={ status !== Status.Success }
         options={ this.options() }
-        styles={ this.styles() }
+        styles={ ReactSelectStyles }
         getOptionLabel={ this.formatLabel }
         getOptionValue={ this.formatValue }
       />
@@ -104,7 +99,7 @@ class CategoriesSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}, props: IOwnProps) => ({
+const mapState = (state: IGlobalState, props: IOwnProps) => ({
   orgId:      selectCurrentOrganizationId(state),
   status:     selectCategoriesStatus(state),
   categories: selectCategories(state, props.type),

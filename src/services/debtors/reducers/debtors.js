@@ -1,8 +1,9 @@
-import { handleActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadDebtors } from '../actions.js';
 import { setCurrentOrganization } from 'services/organizations/actions.js';
+import { createInvoice, updateInvoice, destroyInvoice } from 'services/invoices/actions.js';
 
 const defaultState = {
   items:  [],
@@ -36,6 +37,10 @@ export default handleActions({
     totalsByCurrency: [],
     status: statuses.FAILURE,
     error:  payload,
+  }),
+  [combineActions(createInvoice.success, updateInvoice.success, destroyInvoice.success)]: (state) => ({
+    ...state,
+    status: statuses.INVALID,
   }),
   [setCurrentOrganization.success]: (state) => ({
     ...state,

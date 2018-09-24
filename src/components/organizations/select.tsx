@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Button, Col, ListGroup, PageHeader, Panel, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Panel, ListGroup, PageHeader } from 'react-bootstrap';
+import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
+  IOrganization,
   loadOrganizations,
   selectOrganizations,
   selectOrganizationsStatus,
-  IOrganization,
 } from 'services/organizations';
 
 import LoadingView from 'components/utils/loading-view';
@@ -80,7 +82,7 @@ class SelectOrganization extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   organizations: selectOrganizations(state),
   status:        selectOrganizationsStatus(state),
 });

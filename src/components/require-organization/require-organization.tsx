@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import {
   restoreOrganization,
-  selectIsOrganizationLoaded,
   selectHasCurrentOrganization,
+  selectIsOrganizationLoaded,
 } from 'services/organizations';
+
 import Spinner from 'components/utils/spinner';
 
 interface IStateProps {
@@ -59,7 +62,7 @@ class RequireOrganization extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState) => ({
   isLoaded:        selectIsOrganizationLoaded(state),
   hasOrganization: selectHasCurrentOrganization(state),
 });

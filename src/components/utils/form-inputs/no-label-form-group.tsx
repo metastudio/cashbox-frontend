@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { ControlLabel, FormGroup, HelpBlock } from 'react-bootstrap';
 import { WrappedFieldProps } from 'redux-form';
 
 interface IOwnProps {

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import { ListGroupItem } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
-import { setCurrentOrganization, IOrganization } from 'services/organizations';
+import { IOrganization, setCurrentOrganization } from 'services/organizations';
 
 interface IOwnProps {
   organization: IOrganization;

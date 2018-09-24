@@ -1,66 +1,33 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { PageHeader } from 'react-bootstrap';
 
-import { Status } from 'model-types';
-import {
-  IOrganization,
-  selectOrganizations,
-  selectOrganizationsStatus,
-  loadOrganizations,
-} from 'services/organizations';
+import { PageHeader } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import { IOrganization } from 'services/organizations';
 
 import Table from './list/table';
-import LoadingView from 'components/utils/loading-view';
+import Provider from './providers/organizations';
 
-interface IStateProps {
-  status:        Status;
-  organizations: IOrganization[];
-}
-
-interface IDispatchProps {
-  load: () => void;
-}
-
-type IProps = IStateProps & IDispatchProps;
-
-class OrganizationsList extends React.Component<IProps> {
-  private loadData = () => {
-    const { load } = this.props;
-
-    load();
-  }
-
-  public componentDidMount() {
-    this.loadData();
+class OrganizationsList extends React.Component<{}> {
+  private renderOrganizations(organizations: IOrganization[]) {
+    return <Table organizations={ organizations } />;
   }
 
   public render() {
-    const { status, organizations } = this.props;
-
     return (
       <>
         <PageHeader>
-          <Link to="/organizations/new" className="btn btn-default pull-right">Add Organization...</Link>
+          <Link to="/organizations/new" className="btn btn-default pull-right">
+            Add Organization...
+          </Link>
           Organizations
         </PageHeader>
-        <LoadingView status={ status }>
-          { () => <Table organizations={ organizations } /> }
-        </LoadingView>
+        <Provider>
+          { this.renderOrganizations }
+        </Provider>
       </>
     );
   }
 }
 
-const mapState = (state: {}) => ({
-  status:        selectOrganizationsStatus(state),
-  organizations: selectOrganizations(state),
-});
-
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: () => dispatch(loadOrganizations()),
-});
-
-export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(OrganizationsList);
+export default OrganizationsList;

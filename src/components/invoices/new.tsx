@@ -1,16 +1,19 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { PageHeader } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { formatMoneyParam } from 'utils/money';
 
-import { IInvoice, InvoiceParams, createInvoice } from 'services/invoices';
+import { PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { createInvoice, IInvoice, InvoiceParams } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam } from 'utils/money';
 
-import Form, { IInvoiceFormData } from './form';
+import Form, { IInvoiceFormData } from './form/form';
 
 interface IStateProps {
   orgId: number;
@@ -56,6 +59,9 @@ class NewInvoice extends React.Component<Props> {
   public render() {
     return(
       <>
+        <BreadcrumbsItem to={ '/invoices/new' }>
+          New
+        </BreadcrumbsItem>
         <PageHeader>New Invoice</PageHeader>
         <Form
           onSubmit={ this.handleSubmit }
@@ -67,7 +73,7 @@ class NewInvoice extends React.Component<Props> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

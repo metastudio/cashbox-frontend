@@ -1,19 +1,21 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Modal } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { IInvoice } from 'services/invoices';
+import { Modal } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
+import { CategoryType } from 'services/categories';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { ITransactionParams, createTransaction, ITransaction } from 'services/transactions';
-import { prepareSubmissionError } from 'utils/errors';
+import { createTransaction, ITransaction, ITransactionParams } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
-import { formatMoneyValue, formatMoneyParam } from 'utils/money';
+import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
 import Form, { ITransactionFormData } from 'components/transactions/forms/normal';
-import { CategoryType } from 'services/categories';
 
 interface IOwnProps {
   invoice: IInvoice;
@@ -55,12 +57,13 @@ class CompleteInvoiceButton extends React.Component<IProps> {
     this.props.history.push(`/invoices/${invoice.id}`);
   }
 
-  private initialValues = () => {
+  private initialValues = (): ITransactionFormData => {
     const { invoice } = this.props;
     return({
-      amount:     formatMoneyValue(invoice.amount),
-      customerId: invoice.customerId,
-      date:       formatDateValue(new Date()),
+      amount:        formatMoneyValue(invoice.amount),
+      customerId:    invoice.customerId,
+      bankAccountId: invoice.bankAccountId,
+      date:          formatDateValue(new Date()),
     });
   }
 
@@ -84,7 +87,7 @@ class CompleteInvoiceButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: { show: boolean; }): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 

@@ -1,14 +1,15 @@
 import * as React from 'react';
+
 import { Modal } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { ITransaction } from 'services/transactions';
 
-import { withCurrentOrgId, ICurrentOrgIdProps } from 'components/organizations/current-organization';
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import Spinner from 'components/utils/spinner';
 import TransactionProvider from './providers/transaction';
-import Tabs from './show/tabs';
 import Buttons from './show/buttons';
+import Tabs from './show/tabs';
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps;
 

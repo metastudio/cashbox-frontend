@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+
 import { PageHeader } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
+import { IGlobalState } from 'services/global-state';
 import {
   IMember,
   loadMembers,
-  selectMembersStatus, selectMembers,
+  selectMembers,
+  selectMembersStatus,
 } from 'services/members';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -59,7 +62,7 @@ class MembersList extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:   selectCurrentOrganizationId(state),
   status:  selectMembersStatus(state),
   members: selectMembers(state),

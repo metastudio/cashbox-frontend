@@ -1,22 +1,27 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Checkbox } from 'react-bootstrap';
 
-import { CategoryType } from 'services/categories';
+import { Checkbox } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
 import { ID } from 'model-types';
+import { CategoryType } from 'services/categories';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import {
-  ITransaction, ITransactionParams,
   createTransaction,
+  ITransaction,
+  ITransactionParams,
+  ITransactionsFilter,
+  selectTransactionsQueryFilter,
 } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
-import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
-import Form, { ITransactionFormData } from './../forms/normal';
 import { locationWithoutKey } from 'utils/url-helpers';
+import Form, { ITransactionFormData } from '../forms/normal';
 
 interface IOwnProps {
   orgId:            ID;
@@ -28,13 +33,17 @@ interface IState {
   leaveOpen: boolean;
 }
 
+interface IStateProps {
+  filter: ITransactionsFilter;
+}
+
 interface IDispatchProps {
   create: (orgId: ID, data: ITransactionParams) => Promise<ITransaction>;
   showMessage: AddFlashMessageAction;
 }
 
 type IRouteProps = RouteComponentProps<{}>;
-type IProps = IOwnProps & IDispatchProps & IRouteProps;
+type IProps = IOwnProps & IStateProps & IDispatchProps & IRouteProps;
 
 class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
   public readonly state: IState = {
@@ -76,24 +85,29 @@ class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
   }
 
   private initialValues = (): ITransactionFormData => {
-    const { copyTransaction } = this.props;
+    const { copyTransaction, filter } = this.props;
 
     const values = {
       date: formatDateValue(new Date()),
     };
 
-    if (!copyTransaction) {
-      return values;
+    if (copyTransaction) {
+      return {
+        ...values,
+        amount:        formatMoneyValue(copyTransaction.amount),
+        categoryId:    copyTransaction.category && copyTransaction.category.id,
+        customerId:    copyTransaction.customer && copyTransaction.customer.id,
+        bankAccountId: copyTransaction.bankAccount && copyTransaction.bankAccount.id,
+        comment:       copyTransaction.comment,
+      };
     }
 
-    return ({
+    return {
+      bankAccountId: filter.bankAccountIdEq ? Number(filter.bankAccountIdEq) : undefined,
+      customerId:    filter.customerIdEq    ? Number(filter.customerIdEq) : undefined,
+      categoryId:    filter.categoryIdEq    ? Number(filter.categoryIdEq) : undefined,
       ...values,
-      amount:        formatMoneyValue(copyTransaction.amount),
-      categoryId:    copyTransaction.category && copyTransaction.category.id,
-      customerId:    copyTransaction.customer && copyTransaction.customer.id,
-      bankAccountId: copyTransaction.bankAccount && copyTransaction.bankAccount.id,
-      comment:       copyTransaction.comment,
-    });
+    };
   }
 
   public render() {
@@ -111,11 +125,15 @@ class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
   }
 }
 
+const mapState = (state: IGlobalState, { location }: IRouteProps): IStateProps => ({
+  filter: selectTransactionsQueryFilter(location.search),
+});
+
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   create: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter<IOwnProps & IRouteProps>(
-  connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatch)(NewExpenseTransaction),
+  connect<IStateProps, IDispatchProps, IRouteProps>(mapState, mapDispatch)(NewExpenseTransaction),
 );

@@ -1,23 +1,25 @@
 import * as React from 'react';
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
   IBankAccount, IBankAccountParams,
   loadBankAccount,
-  updateBankAccount,
   selectBankAccount,
   selectBankAccountStatus,
+  updateBankAccount,
 } from 'services/bank-accounts';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
 import Form, { IBankAccountFormData } from './form';
-import { Dispatch } from '../../../node_modules/redux';
 
 interface IStateProps {
   orgId:        ID;
@@ -70,22 +72,27 @@ class EditBankAccount extends React.Component<IProps> {
   }
 
   public render() {
-    const { status } = this.props;
+    const { status, match: { params: { id } } } = this.props;
 
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
-          <PageHeader>Edit Bank Account</PageHeader>
-          <LoadingView status={ status }>
-            { this.renderForm }
-          </LoadingView>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ `/bank_accounts/${id}/edit` }>
+          { `Edit Bank Account #${id}` }
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 } >
+            <PageHeader>Edit Bank Account</PageHeader>
+            <LoadingView status={ status }>
+              { this.renderForm }
+            </LoadingView>
+          </Col>
+        </Row>
+      </>
     );
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:       selectCurrentOrganizationId(state),
   status:      selectBankAccountStatus(state),
   bankAccount: selectBankAccount(state),

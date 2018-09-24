@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+
+import { Col, PageHeader, Panel, Row } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Panel, Row, Col, PageHeader } from 'react-bootstrap';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
-  IOrganization, IOrganizationParams,
   createOrganization,
+  IOrganization,
+  IOrganizationParams,
 } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
@@ -33,21 +36,30 @@ class NewOrganization extends React.PureComponent<IProps> {
     const { showMessage, history } = this.props;
 
     showMessage('Organization successfully created.');
-    history.push('/organizations/select');
+    history.push('/organizations');
   }
 
   public render() {
     return(
-      <Row>
-        <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 }>
-          <PageHeader>New Organization</PageHeader>
-          <Panel>
-            <Panel.Body>
-              <Form onSubmit={ this.handleSubmit } onSubmitSuccess={ this.afterCreate } />
-            </Panel.Body>
-          </Panel>
-        </Col>
-      </Row>
+      <>
+        <BreadcrumbsItem to={ '/organizations/new' }>
+          New
+        </BreadcrumbsItem>
+        <Row>
+          <Col xs={ 12 } smOffset={ 2 } sm={ 8 } mdOffset={ 3 } md={ 6 }>
+            <PageHeader>New Organization</PageHeader>
+            <Panel>
+              <Panel.Body>
+                <Form
+                  onSubmit={ this.handleSubmit }
+                  onSubmitSuccess={ this.afterCreate }
+                  action="Create"
+                />
+              </Panel.Body>
+            </Panel>
+          </Col>
+        </Row>
+      </>
     );
   }
 }

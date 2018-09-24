@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 
-import { IBankAccount, deleteBankAccount as deleteBankAccountAction } from 'services/bank-accounts';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
+import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
-import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IOwnProps {
   bankAccount: IBankAccount;
@@ -54,11 +56,11 @@ class DestroyBankAccount extends React.Component<Props> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId: selectCurrentOrganizationId(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   deleteBankAccount:
     (orgId: number, bankAccountId: number) => (
       new Promise((res, rej) => dispatch(deleteBankAccountAction(orgId, bankAccountId, res, rej)))

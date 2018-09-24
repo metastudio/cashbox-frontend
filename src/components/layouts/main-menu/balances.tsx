@@ -1,19 +1,21 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { NavDropdown } from 'react-bootstrap';
-import { IMoney, formatMoney } from 'utils/money';
 
-import { Status, ID } from 'model-types';
-import { selectCurrentOrganizationId } from 'services/organizations';
+import { NavDropdown } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { ID, Status } from 'model-types';
 import {
   IBalance,
   loadOrganizationBalances,
+  selectBalancesDefaultCurrency,
   selectBalancesStatus,
   selectBalancesTotalAmount,
-  selectBalancesDefaultCurrency,
   selectBalancesTotals,
 } from 'services/balances';
+import { IGlobalState } from 'services/global-state';
+import { selectCurrentOrganizationId } from 'services/organizations';
+import { formatMoney, IMoney } from 'utils/money';
 
 import BalanceItem from './balance-item';
 
@@ -51,14 +53,14 @@ class Balances extends React.Component<IStateProps & IDispatchProps> {
     if (!orgId || !totalAmount) { return null; }
 
     return (
-      <NavDropdown title={ 'Total: ' + formatMoney(totalAmount) } id="balances-nav-dropdown">
+      <NavDropdown title={ `Total:  ${formatMoney(totalAmount)}` } id="balances-nav-dropdown">
         { balances.map((b, i) => <BalanceItem key={ i } balance={ b } defaultCurrency={ defaultCurrency } />) }
       </NavDropdown>
     );
   }
 }
 
-const mapState = (state: object): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:           selectCurrentOrganizationId(state),
   status:          selectBalancesStatus(state),
   totalAmount:     selectBalancesTotalAmount(state),

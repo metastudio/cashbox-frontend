@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
+import { Redirect, Route } from 'react-router-dom';
 
-import RequireLogin from 'components/utils/require-login';
 import RequireOrganization from 'components/require-organization';
+import RequireLogin from 'components/utils/require-login';
 
 import AppLayout from 'components/layouts/app-layout';
 
@@ -12,6 +13,9 @@ const UserScene: React.SFC<{}> = ({ children }) => (
   <RequireLogin>
     <RequireOrganization>
       <AppLayout>
+        <BreadcrumbsItem to={ `/user/profile` }>
+          Edit User
+        </BreadcrumbsItem>
         { /* tslint:disable-next-line:jsx-no-lambda */ }
         <Route exact path="/user" render={ () => <Redirect to="/user/profile" /> } />
         <Route path="/user/profile" component={ Profile } />

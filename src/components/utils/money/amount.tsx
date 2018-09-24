@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IMoney, formatMoney } from 'utils/money';
+import { formatMoney, IMoney } from 'utils/money';
 
 import './index.css';
 

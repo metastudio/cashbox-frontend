@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 import { HORIZONTAL_FORM_LABEL_WIDTH } from 'constants/forms';
 

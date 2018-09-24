@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { Link } from 'react-router-dom';
-import DestroyButton from '../destroy';
+
 import { ICustomer } from 'services/customers';
+
+import DestroyButton from '../destroy';
 
 interface IProps {
   customer: ICustomer;

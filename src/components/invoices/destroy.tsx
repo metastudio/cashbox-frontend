@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import { withRouter, RouteComponentProps } from 'react-router';
 
-import { IInvoice, destroyInvoice, selectInvoice } from 'services/invoices';
+import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Dispatch } from 'redux';
+
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
+import { destroyInvoice, IInvoice, selectInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
+
+import { confirm } from 'components/utils/confirm';
 
 interface IStateProps {
   orgId:        number;
@@ -25,11 +29,13 @@ class DestroyButton extends React.Component<IProps> {
     const { orgId, invoice, destroy } = this.props;
     if (!invoice) { return; }
 
-    destroy(orgId, invoice.id).then(() => {
-      const { flashMessage, history } = this.props;
+    confirm('Are you sure?').then(() => {
+      destroy(orgId, invoice.id).then(() => {
+        const { flashMessage, history } = this.props;
 
-      flashMessage('Invoice successfully destroyed');
-      history.push('/invoices');
+        flashMessage('Invoice successfully destroyed');
+        history.push('/invoices');
+      });
     });
   }
 
@@ -40,7 +46,7 @@ class DestroyButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState) => ({
   orgId:        selectCurrentOrganizationId(state),
   invoice:      selectInvoice(state),
 });

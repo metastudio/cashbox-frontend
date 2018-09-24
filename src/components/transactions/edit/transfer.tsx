@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { formatMoneyValue, formatMoneyParam } from 'utils/money';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+
+import { ID } from 'model-types';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import {
   ITransfer, ITransferParams,
@@ -11,9 +12,9 @@ import {
 } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
+import { formatMoneyParam, formatMoneyValue } from 'utils/money';
 
 import TransferForm, { ITransferFormData } from './../forms/transfer';
-import { ID } from 'model-types';
 
 interface IOwnProps {
   orgId:    ID;

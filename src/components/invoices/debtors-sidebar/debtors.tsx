@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import { flatten } from 'lodash';
 
 import { IDebtor } from 'services/debtors';
-import { IConvertedAmount, formatMoney } from 'utils/money';
+import { formatMoney, IConvertedAmount } from 'utils/money';
 
 import ConvertedDebt from './converted-debt';
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
+
+import { Col, ControlLabel, FormGroup, HelpBlock } from 'react-bootstrap';
 import { WrappedFieldProps } from 'redux-form';
-import { Col, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 import { HORIZONTAL_FORM_LABEL_WIDTH } from 'constants/forms';
 

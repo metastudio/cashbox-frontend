@@ -16,11 +16,13 @@ import {
   selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
 import { Currency } from 'services/currencies';
+import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
+import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
+import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
-import { wrapNoLabelFormGroup } from '../utils/form-inputs/no-label-form-group';
 
 interface IOwnProps {
   disabled?: boolean;
@@ -62,13 +64,6 @@ class BankAccountsSelect extends React.Component<IProps> {
     }));
   }
 
-  private styles = () => ({
-    menu: (styles: {}) => ({
-      ...styles,
-      zIndex: 3,
-    }),
-  })
-
   private formatValue = (ba: IBankAccount) => String(ba.id);
 
   public componentDidMount() {
@@ -97,7 +92,7 @@ class BankAccountsSelect extends React.Component<IProps> {
         onChange={ this.handleChange }
         isLoading={ status !== Status.Success }
         options={ this.options() }
-        styles={ this.styles() }
+        styles={ ReactSelectStyles }
         getOptionLabel={ formatBankAccountName }
         getOptionValue={ this.formatValue }
       />
@@ -105,7 +100,7 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:        selectCurrentOrganizationId(state),
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),
