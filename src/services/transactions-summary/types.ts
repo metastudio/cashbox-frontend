@@ -1,10 +1,15 @@
 import { Status } from 'model-types';
 import { IMoney } from 'utils/money/types';
 
+interface ITransactionsSummaryLine {
+  income:     IMoney;
+  expense:    IMoney;
+  difference: IMoney;
+}
+
 interface ITransactionsSummary {
-  income:  IMoney;
-  expense: IMoney;
-  total:   IMoney;
+  [currencyCode: string]: ITransactionsSummaryLine;
+  total:   ITransactionsSummaryLine;
 }
 
 interface ITransactionsSummaryState {
@@ -15,5 +20,6 @@ interface ITransactionsSummaryState {
 
 export {
   ITransactionsSummary,
+  ITransactionsSummaryLine,
   ITransactionsSummaryState,
 };

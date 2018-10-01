@@ -2,11 +2,12 @@ import * as React from 'react';
 
 import { Col, Panel, Row, Table } from 'react-bootstrap';
 
+import { CURRENCIES } from 'constants/currencies';
 import { ID } from 'model-types';
 import { ITransactionsSummary } from 'services/transactions-summary';
 
-import { MoneyAmount } from 'components/utils/money';
-import Provider from './providers/summary';
+import Provider from './provider';
+import Line from './table-line';
 
 interface IProps {
   orgId:  ID;
@@ -26,12 +27,8 @@ class TransactionsSummary extends React.PureComponent<IProps> {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Total:</td>
-            <td className="text-right"><MoneyAmount amount={ summary.income } colorize /></td>
-            <td className="text-right"><MoneyAmount amount={ summary.expense } colorize /></td>
-            <td className="text-right"><MoneyAmount amount={ summary.total } colorize /></td>
-          </tr>
+          { CURRENCIES.map(c => <Line key={ c } title={ c } summaryLine={ summary[c] } />) }
+          <Line title="Total" summaryLine={ summary.total } />
         </tbody>
       </Table>
     );
