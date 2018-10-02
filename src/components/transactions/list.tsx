@@ -87,7 +87,7 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
         <TransactionsProvider orgId={ orgId } search={ search }>
           { this.renderTransactions }
         </TransactionsProvider>
-        { this.state.isFilterOpened && <TransactionsSummary orgId={ orgId } search={ search } /> }
+        { !isEmpty(this.props.filter) && <TransactionsSummary orgId={ orgId } search={ search } /> }
       </>
     );
   }
