@@ -24,16 +24,18 @@ const converValueToArrayNumber = (value?: string | string[]): number[] | undefin
 };
 
 const selectTransactionsQueryFilter = memoize((search: string): ITransactionsFilter => {
-  const values = parseQuery(search).q || {};
+  const query = parseQuery(search);
+
+  if (!query.q) { return {}; }
 
   // tslint:disable:no-string-literal
   return {
-    amountEq:        values['amountEq'],
-    commentCont:     values['commentCont'],
-    period:          values['period'],
-    categoryIdIn:    converValueToArrayNumber(values['categoryIdIn']),
-    bankAccountIdIn: converValueToArrayNumber(values['bankAccountIdIn']),
-    customerIdIn:    converValueToArrayNumber(values['customerIdIn']),
+    amountEq:        query.q['amountEq'],
+    commentCont:     query.q['commentCont'],
+    period:          query.q['period'],
+    categoryIdIn:    converValueToArrayNumber(query.q['categoryIdIn']),
+    bankAccountIdIn: converValueToArrayNumber(query.q['bankAccountIdIn']),
+    customerIdIn:    converValueToArrayNumber(query.q['customerIdIn']),
   };
   // tslint:enable:no-string-literal
 });
