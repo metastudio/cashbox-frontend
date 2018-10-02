@@ -33,8 +33,8 @@ class TransactionsFilter extends React.PureComponent<IProps> {
 
     const query: IQuery = {
       q: {
-        ...values.q,
-        amountEq: formatMoneyParam(values.q.amountEq),
+        ...values,
+        amountEq: formatMoneyParam(values.amountEq),
       },
     };
 
@@ -51,14 +51,8 @@ class TransactionsFilter extends React.PureComponent<IProps> {
     const { filter } = this.props;
 
     return {
-      q: {
-        amountEq:        formatMoneyValue(filter.amountEq),
-        commentCont:     filter.commentCont,
-        period:          filter.period,
-        categoryIdEq:    filter.categoryIdEq    ? Number(filter.categoryIdEq) : undefined,
-        bankAccountIdEq: filter.bankAccountIdEq ? Number(filter.bankAccountIdEq) : undefined,
-        customerIdEq:    filter.customerIdEq    ? Number(filter.customerIdEq) : undefined,
-      },
+      ...filter,
+      amountEq: formatMoneyValue(filter.amountEq),
     };
   }
 

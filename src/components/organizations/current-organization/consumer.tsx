@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
 import { ID } from 'model-types';
 
 import Context from './context';
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 interface ICurrentOrgIdProps {
   orgId: ID;

@@ -13,8 +13,29 @@ const selectTransactionsPagination  = (state: IGlobalState) => state.transaction
 const selectTransaction       = (state: IGlobalState) => state.transaction.item;
 const selectTransactionStatus = (state: IGlobalState) => state.transaction.status;
 
+const converValueToArrayNumber = (value?: string | string[]): number[] | undefined => {
+  if (!value) { return undefined; }
+
+  if (value instanceof Array) {
+    return value.map(Number);
+  }
+
+  return [Number(value)];
+};
+
 const selectTransactionsQueryFilter = memoize((search: string): ITransactionsFilter => {
-  return (parseQuery(search).q || {}) as ITransactionsFilter;
+  const values = parseQuery(search).q || {};
+
+  // tslint:disable:no-string-literal
+  return {
+    amountEq:        values['amountEq'],
+    commentCont:     values['commentCont'],
+    period:          values['period'],
+    categoryIdEq:    values['categoryIdEq'] ? Number(values['categoryIdEq']) : undefined,
+    bankAccountIdIn: converValueToArrayNumber(values['bankAccountIdIn']),
+    customerIdEq:    values['customerIdEq'] ? Number(values['customerIdEq']) : undefined,
+  };
+  // tslint:enable:no-string-literal
 });
 
 const selectTransactionsQueryPage = memoize((search: string): number | undefined => {

@@ -15,14 +15,12 @@ import {
 import { NoLabelFilterPeriodSelect } from './period-select';
 
 interface ITransactionFilterFormData {
-  q: {
-    amountEq?:        string;
-    commentCont?:     string;
-    period?:          string;
-    categoryIdEq?:    number;
-    bankAccountIdEq?: number;
-    customerIdEq?:    number;
-  };
+  amountEq?:        string;
+  commentCont?:     string;
+  period?:          string;
+  categoryIdEq?:    number;
+  bankAccountIdIn?: number[];
+  customerIdEq?:    number;
 }
 
 interface IOwnProps {
@@ -51,7 +49,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         <Row>
           <Col sm={ 4 }>
             <Field
-              name="q[amountEq]"
+              name="amountEq"
               component={ NoLabelMoneyInput }
               label="Amount"
               placeholder="Amount"
@@ -59,7 +57,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[commentCont]"
+              name="commentCont"
               component={ NoLabelFormInput }
               label="Comment"
               placeholder="Comment"
@@ -67,7 +65,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[period]"
+              name="period"
               component={ NoLabelFilterPeriodSelect }
               label="Period"
               placeholder="Period"
@@ -77,21 +75,22 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         <Row>
           <Col sm={ 4 }>
             <Field
-              name="q[categoryIdEq]"
+              name="categoryIdEq"
               component={ NoLabelCategoriesSelect }
               placeholder="Category"
             />
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[bankAccountIdEq]"
+              name="bankAccountIdIn"
               component={ NoLabelBankAccountsSelect }
               placeholder="Bank Account"
+              isMulti
             />
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="q[customerIdEq]"
+              name="customerIdEq"
               component={ NoLabelCustomersSelect }
               label="Customer"
               placeholder="Customer"
