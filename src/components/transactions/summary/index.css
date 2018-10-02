@@ -1,0 +1,26 @@
+#transactions_summary {
+  position: fixed;
+  bottom:   0;
+  width:    100%;
+  z-index:  1;
+}
+
+#transactions_summary .panel {
+  margin:        0;
+  box-shadow:    0 0 10px rgba(0,0,0,0.3);
+  border-radius: 4px 4px 0 0;
+}
+
+#transactions_summary .table-condensed>thead>tr>th, #transactions_summary .table-condensed>tbody>tr>td {
+  padding-bottom: 2px;
+  padding-top:    2px;
+}
+
+#transactions_summary .transactions-summary-toggle-button {
+  height:     20px;
+  text-align: center;
+}
+
+#transactions_summary .transactions-summary-toggle-button a {
+  display: block;
+}

@@ -14,6 +14,7 @@ import { SimplePaginator } from 'components/utils/paginator';
 import TransactionsFilter from './filter/filter';
 import Table from './list/table';
 import TransactionsProvider from './providers/transactions';
+import TransactionsSummary from './summary';
 
 interface IStateProps {
   filter: ITransactionsFilter;
@@ -86,6 +87,7 @@ class TransactionsList extends React.PureComponent<IProps, IState> {
         <TransactionsProvider orgId={ orgId } search={ search }>
           { this.renderTransactions }
         </TransactionsProvider>
+        { !isEmpty(this.props.filter) && <TransactionsSummary orgId={ orgId } search={ search } /> }
       </>
     );
   }
