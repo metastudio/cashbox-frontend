@@ -59,11 +59,12 @@ class NoLabelFormGroup extends React.PureComponent<IProps> {
 
 const wrapNoLabelFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
   // tslint:disable-next-line:max-classes-per-file
-  class NoLabelFormGroupWrapper extends React.Component<IProps> {
+  class NoLabelFormGroupWrapper extends React.PureComponent<P & IOwnProps> {
     public static displayName = `NoLabelFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
     public render() {
-      const { input, meta, label, help, ...props } = this.props;
+      // https://github.com/Microsoft/TypeScript/issues/12756#issuecomment-265812676
+      const { input, meta, label, help, ...inputProps } = this.props as any;
 
       return (
         <NoLabelFormGroup
@@ -71,8 +72,9 @@ const wrapNoLabelFormGroup = <P extends WrappedFieldProps>(Component: React.Comp
           meta={ meta }
           label={ label }
           help={ help }
+          { ...groupProps }
         >
-          <Component input={ input } meta={ meta } { ...props } />
+          <Component input={ input } meta={ meta } { ...inputProps } />
         </NoLabelFormGroup>
       );
     }

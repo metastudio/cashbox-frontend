@@ -13,7 +13,7 @@ type IProps = RouteComponentProps<{}> & IOwnProps;
 const BankAccountFilterLink: React.SFC<IProps> = ({ bankAccount, location }) => {
   return (
     <Link
-      to={ locationWithQuery(location, { q: { bankAccountIdEq: bankAccount.id } }) }
+      to={ locationWithQuery(location, { q: { bankAccountIdIn: [bankAccount.id] } }) }
       className="filter-link"
     >
       { formatBankAccountName(bankAccount) }

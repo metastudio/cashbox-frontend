@@ -103,9 +103,9 @@ class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
     }
 
     return {
-      bankAccountId: filter.bankAccountIdEq ? Number(filter.bankAccountIdEq) : undefined,
-      customerId:    filter.customerIdEq    ? Number(filter.customerIdEq) : undefined,
-      categoryId:    filter.categoryIdEq    ? Number(filter.categoryIdEq) : undefined,
+      bankAccountId: filter.bankAccountIdIn && filter.bankAccountIdIn[0],
+      customerId:    filter.customerIdIn && filter.customerIdIn[0],
+      categoryId:    filter.categoryIdIn && filter.categoryIdIn[0],
       ...values,
     };
   }
