@@ -19,7 +19,7 @@ interface IOwnProps {
   placeholder?: string;
 }
 
-type IProps = IOwnProps & ReactDatePickerProps & WrappedFieldProps;
+type IProps = IOwnProps & Partial<ReactDatePickerProps>  & WrappedFieldProps;
 
 class DatePickerInput extends React.PureComponent<IProps> {
   private handleChange = (date: moment.Moment | null) => {
