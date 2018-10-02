@@ -31,9 +31,9 @@ const selectTransactionsQueryFilter = memoize((search: string): ITransactionsFil
     amountEq:        values['amountEq'],
     commentCont:     values['commentCont'],
     period:          values['period'],
-    categoryIdEq:    values['categoryIdEq'] ? Number(values['categoryIdEq']) : undefined,
+    categoryIdIn:    converValueToArrayNumber(values['categoryIdIn']),
     bankAccountIdIn: converValueToArrayNumber(values['bankAccountIdIn']),
-    customerIdEq:    values['customerIdEq'] ? Number(values['customerIdEq']) : undefined,
+    customerIdIn:    converValueToArrayNumber(values['customerIdIn']),
   };
   // tslint:enable:no-string-literal
 });

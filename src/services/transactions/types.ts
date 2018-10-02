@@ -71,9 +71,9 @@ interface ITransactionsFilter {
   amountEq?:        string;
   commentCont?:     string;
   period?:          string;
-  categoryIdEq?:    number;
+  categoryIdIn?:    number[];
   bankAccountIdIn?: number[];
-  customerIdEq?:    number;
+  customerIdIn?:    number[];
 }
 
 export {

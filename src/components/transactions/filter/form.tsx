@@ -18,9 +18,9 @@ interface ITransactionFilterFormData {
   amountEq?:        string;
   commentCont?:     string;
   period?:          string;
-  categoryIdEq?:    number;
+  categoryIdIn?:    number[];
   bankAccountIdIn?: number[];
-  customerIdEq?:    number;
+  customerIdIn?:    number[];
 }
 
 interface IOwnProps {
@@ -75,9 +75,10 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
         <Row>
           <Col sm={ 4 }>
             <Field
-              name="categoryIdEq"
+              name="categoryIdIn"
               component={ NoLabelCategoriesSelect }
               placeholder="Category"
+              isMulti
             />
           </Col>
           <Col sm={ 4 }>
@@ -90,10 +91,11 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
           </Col>
           <Col sm={ 4 }>
             <Field
-              name="customerIdEq"
+              name="customerIdIn"
               component={ NoLabelCustomersSelect }
               label="Customer"
               placeholder="Customer"
+              isMulti
             />
           </Col>
         </Row>
