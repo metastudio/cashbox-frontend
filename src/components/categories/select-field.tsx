@@ -21,7 +21,8 @@ import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-sty
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
 interface IOwnProps {
-  type?: CategoryType;
+  type?:    CategoryType;
+  isMulti?: boolean;
 }
 
 interface IStateProps {
@@ -45,8 +46,12 @@ class CategoriesSelect extends React.Component<IProps> {
     }
   }
 
-  private handleChange = (category: ICategory) => {
-    this.props.input.onChange(category && category.id);
+  private handleChange = (values: ICategory | ICategory[]) => {
+    if (values instanceof Array) {
+      this.props.input.onChange(values.map(v => v.id));
+    } else {
+      this.props.input.onChange(values && values.id);
+    }
   }
 
   private options = (): GroupedOptionsType<ICategory> | ICategory[] => {
@@ -75,11 +80,15 @@ class CategoriesSelect extends React.Component<IProps> {
   }
 
   public render() {
-    const { orgId, type, input, meta, status, categories, ...inputProps } = this.props;
+    const { orgId, type, isMulti, input, meta, status, categories, ...inputProps } = this.props;
 
     let selectedCategory = null;
     if (input.value && status === Status.Success && categories) {
-      selectedCategory = categories.find(c => c.id === input.value);
+      if (input.value instanceof Array) {
+        selectedCategory = categories.filter(c => input.value.includes(c.id));
+      } else {
+        selectedCategory = categories.find(c => c.id === input.value);
+      }
     }
 
     return (
@@ -94,6 +103,7 @@ class CategoriesSelect extends React.Component<IProps> {
         styles={ ReactSelectStyles }
         getOptionLabel={ this.formatLabel }
         getOptionValue={ this.formatValue }
+        isMulti={ isMulti }
       />
     );
   }
@@ -112,9 +122,9 @@ const mapDispatch = (dispatch: Dispatch) => ({
 const CategoriesSelectContainer =
   connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(CategoriesSelect);
 
-const HorizontalCategoriesSelect = wrapHorizontalFormGroup(CategoriesSelectContainer);
-const VerticalCategoriesSelect   = wrapVerticalFormGroup(CategoriesSelectContainer);
-const NoLabelCategoriesSelect    = wrapNoLabelFormGroup(CategoriesSelectContainer);
+const HorizontalCategoriesSelect = wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(CategoriesSelectContainer);
+const VerticalCategoriesSelect   = wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(CategoriesSelectContainer);
+const NoLabelCategoriesSelect    = wrapNoLabelFormGroup<IOwnProps & WrappedFieldProps>(CategoriesSelectContainer);
 
 export {
   CategoriesSelectContainer as CategoriesSelect,
