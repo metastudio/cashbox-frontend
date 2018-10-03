@@ -13,7 +13,7 @@ type IProps = RouteComponentProps<{}> & IOwnProps;
 const CategoryFilterLink: React.SFC<IProps> = ({ category, location }) => {
   return (
     <Link
-      to={ locationWithQuery(location, { q: { categoryIdEq: category.id } }) }
+      to={ locationWithQuery(location, { q: { categoryIdIn: [category.id] } }) }
       className="filter-link"
     >
       { category.name }

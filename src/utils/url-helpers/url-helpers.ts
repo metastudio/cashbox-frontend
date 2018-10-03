@@ -1,13 +1,14 @@
 import { LocationDescriptorObject, Search } from 'history';
 import * as QS from 'qs';
 
-type QueryValue =  string | number | null | undefined | IQuery;
+type QueryValue =  string | string[] | number | number[] | null | undefined | IQuery;
 interface IQuery {
   [key: string]: QueryValue;
 }
 
 const parseQuery = (search?: Search): IQuery => QS.parse(search || '', { ignoreQueryPrefix: true });
-const stringifyQuery = (query: IQuery): Search => QS.stringify(query, { encodeValuesOnly: true });
+const stringifyQuery = (query: IQuery): Search =>
+  QS.stringify(query, { encodeValuesOnly: true, arrayFormat: 'brackets' });
 
 const locationWithoutKey = (
   location: LocationDescriptorObject,

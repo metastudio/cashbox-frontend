@@ -15,17 +15,21 @@ import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form
 import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
 
+interface IOwnProps {
+  isMulti?: boolean;
+}
+
 interface IStateProps {
-  orgId:       number;
-  status:      Status;
-  customers?:  ICustomer[];
+  orgId:      number;
+  status:     Status;
+  customers?: ICustomer[];
 }
 
 interface IDispatchProps {
   load: (orgId: number) => void;
 }
 
-type IProps = WrappedFieldProps & IStateProps & IDispatchProps;
+type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
 
 class CustomersSelect extends React.Component<IProps> {
   private loadData = (props: IProps) => {
@@ -34,8 +38,12 @@ class CustomersSelect extends React.Component<IProps> {
     }
   }
 
-  private handleChange = (customer: ICustomer) => {
-    this.props.input.onChange(customer && customer.id);
+  private handleChange = (values: ICustomer) => {
+    if (values instanceof Array) {
+      this.props.input.onChange(values.map(v => v.id));
+    } else {
+      this.props.input.onChange(values && values.id);
+    }
   }
 
   private options = (): ICustomer[] => {
@@ -57,11 +65,15 @@ class CustomersSelect extends React.Component<IProps> {
   }
 
   public render() {
-    const { orgId, status, input, meta, customers, ...inputProps } = this.props;
+    const { orgId, status, isMulti, input, meta, customers, ...inputProps } = this.props;
 
     let selectedCustomer = null;
     if (input.value && status === Status.Success && customers) {
-      selectedCustomer = customers.find(c => c.id === input.value);
+      if (input.value instanceof Array) {
+        selectedCustomer = customers.filter(c => input.value.includes(c.id));
+      } else {
+        selectedCustomer = customers.find(c => c.id === input.value);
+      }
     }
 
     return (
@@ -76,27 +88,31 @@ class CustomersSelect extends React.Component<IProps> {
         styles={ ReactSelectStyles }
         getOptionLabel={ this.formatLabel }
         getOptionValue={ this.formatValue }
+        isMulti={ isMulti }
       />
     );
   }
 }
 
-const mapState = (state: IGlobalState) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   orgId:     selectCurrentOrganizationId(state),
   status:    selectCustomersStatus(state),
   customers: selectCustomers(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: (orgId: number) => new Promise<ICustomer[]>((res, rej) => dispatch(loadCustomers(orgId, res, rej))),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: orgId => new Promise<ICustomer[]>((res, rej) => dispatch(loadCustomers(orgId, res, rej))),
 });
 
 const CustomersSelectContainer =
   connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(CustomersSelect);
 
-const HorizontalCustomersSelect = wrapHorizontalFormGroup(CustomersSelectContainer);
-const VerticalCustomersSelect   = wrapVerticalFormGroup(CustomersSelectContainer);
-const NoLabelCustomersSelect    = wrapNoLabelFormGroup(CustomersSelectContainer);
+const HorizontalCustomersSelect =
+  wrapHorizontalFormGroup<IOwnProps & WrappedFieldProps>(CustomersSelectContainer);
+const VerticalCustomersSelect =
+  wrapVerticalFormGroup<IOwnProps & WrappedFieldProps>(CustomersSelectContainer);
+const NoLabelCustomersSelect =
+  wrapNoLabelFormGroup<IOwnProps & WrappedFieldProps>(CustomersSelectContainer);
 
 export {
   CustomersSelectContainer as CustomersSelect,

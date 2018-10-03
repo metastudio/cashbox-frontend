@@ -26,6 +26,7 @@ import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-for
 
 interface IOwnProps {
   disabled?: boolean;
+  isMulti?:  boolean;
 }
 
 interface IStateProps {
@@ -48,8 +49,12 @@ class BankAccountsSelect extends React.Component<IProps> {
     }
   }
 
-  private handleChange = (ba: IBankAccount) => {
-    this.props.input.onChange(ba && ba.id);
+  private handleChange = (values: IBankAccount | IBankAccount[]) => {
+    if (values instanceof Array) {
+      this.props.input.onChange(values.map(v => v.id));
+    } else {
+      this.props.input.onChange(values && values.id);
+    }
   }
 
   private options = (): GroupedOptionsType<IBankAccount> => {
@@ -75,11 +80,15 @@ class BankAccountsSelect extends React.Component<IProps> {
   }
 
   public render () {
-    const { disabled, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
+    const { disabled, isMulti, status, orgId, input, meta, bankAccounts, ...inputProps } = this.props;
 
     let selectedBankAccount = null;
     if (input.value && status === Status.Success && bankAccounts) {
-      selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
+      if (input.value instanceof Array) {
+        selectedBankAccount = bankAccounts.filter(ba => input.value.includes(ba.id));
+      } else {
+        selectedBankAccount = bankAccounts.find(ba => ba.id === input.value);
+      }
     }
 
     return (
@@ -87,6 +96,7 @@ class BankAccountsSelect extends React.Component<IProps> {
         isClearable
         { ...inputProps }
         isDisabled={ disabled }
+        isMulti={ isMulti }
         name={ input.name }
         value={ selectedBankAccount }
         onChange={ this.handleChange }
