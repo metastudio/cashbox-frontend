@@ -8,8 +8,8 @@ import {
   createTransfer,
   updateTransaction,
   destroyTransaction,
-} from 'services/transactions/actions.js';
-import { setCurrentOrganization } from 'services/organizations/actions.js';
+} from 'services/transactions/actions';
+import { setCurrentOrganization } from 'services/organizations/actions';
 
 const defaultState = {
   status:          statuses.INVALID,

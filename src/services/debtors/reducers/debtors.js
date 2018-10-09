@@ -2,7 +2,7 @@ import { handleActions, combineActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadDebtors } from '../actions.js';
-import { setCurrentOrganization } from 'services/organizations/actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions';
 import { createInvoice, updateInvoice, destroyInvoice } from 'services/invoices/actions.js';
 
 const defaultState = {

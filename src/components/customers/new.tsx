@@ -67,7 +67,7 @@ class NewCustomer extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({

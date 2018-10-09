@@ -2,7 +2,7 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { postToken } from './api.js';
 import { getCurrentUser } from 'services/users/api.js';
-import { getOrganization } from 'services/organizations/api.js';
+import { getOrganization } from 'services/organizations/api';
 
 import {
   restoreSession,

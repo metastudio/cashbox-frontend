@@ -73,11 +73,11 @@ class NewInvoice extends React.Component<Props> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId: selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   create: (orgId: number, data: InvoiceParams) => new Promise<IInvoice>((res, rej) => {
     dispatch(createInvoice(orgId, data, res, rej));
   }),

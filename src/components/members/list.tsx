@@ -63,7 +63,7 @@ class MembersList extends React.PureComponent<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:   selectCurrentOrganizationId(state),
+  orgId:   selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:  selectMembersStatus(state),
   members: selectMembers(state),
 });

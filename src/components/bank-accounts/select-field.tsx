@@ -111,7 +111,7 @@ class BankAccountsSelect extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:        selectCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),
   bankAccounts: selectVisibleBankAccounts(state),

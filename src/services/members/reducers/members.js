@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 
 import * as statuses from 'constants/statuses.js';
 import { loadMembers } from '../actions.js';
-import { setCurrentOrganization } from 'services/organizations/actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions';
 
 const defaultState = {
   items:  [],

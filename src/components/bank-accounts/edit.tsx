@@ -93,7 +93,7 @@ class EditBankAccount extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:       selectCurrentOrganizationId(state),
+  orgId:       selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:      selectBankAccountStatus(state),
   bankAccount: selectBankAccount(state),
 });

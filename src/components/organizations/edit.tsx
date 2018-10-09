@@ -81,7 +81,7 @@ class EditOrganization extends React.PureComponent<IProps> {
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   update:  (orgId, data) => (
-    new Promise((res, rej) => dispatch(updateOrganization(orgId, data, res, rej)))
+    new Promise((res, rej) => dispatch(updateOrganization.request(orgId, data, res, rej)))
   ),
   message: msg => dispatch(addFlashMessage(msg)),
 });

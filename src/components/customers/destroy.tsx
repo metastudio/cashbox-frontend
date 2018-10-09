@@ -56,7 +56,7 @@ class DestroyCustomer extends React.Component<IProps> {
 }
 
 const select = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const dispatcher = (dispatch: Dispatch): IDispatchProps => ({

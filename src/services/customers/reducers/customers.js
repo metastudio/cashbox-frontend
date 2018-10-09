@@ -7,7 +7,7 @@ import {
   updateCustomer,
   deleteCustomer,
 } from '../actions.js';
-import { setCurrentOrganization } from 'services/organizations/actions.js';
+import { setCurrentOrganization } from 'services/organizations/actions';
 
 const defaultState = {
   items:  [],

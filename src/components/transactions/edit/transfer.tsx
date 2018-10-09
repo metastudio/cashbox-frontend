@@ -6,10 +6,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
-import {
-  ITransfer, ITransferParams,
-  updateTransaction,
-} from 'services/transactions';
+import { ITransfer, updateTransaction } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
@@ -22,7 +19,7 @@ interface IOwnProps {
 }
 
 interface IDispatchProps {
-  update: (orgId: ID, transferId: ID, data: ITransferParams) => Promise<ITransfer>;
+  update: typeof updateTransaction.request;
   showMessage: AddFlashMessageAction;
 }
 
@@ -32,10 +29,18 @@ type IProps = IOwnProps & IDispatchProps & IRouteProps;
 class EditTransfer extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransferFormData) => {
     const { orgId, transfer, update } = this.props;
-    return update(orgId, transfer.id, {
-      amount:  formatMoneyParam(values.toAmount),
-      comment: values.comment,
-      date:    values.date,
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        transfer.id,
+        {
+          amount:  formatMoneyParam(values.toAmount),
+          comment: values.comment,
+          date:    values.date,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -73,9 +78,7 @@ class EditTransfer extends React.PureComponent<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  update: (orgId, transferId, data) => (
-    new Promise((res, rej) => dispatch(updateTransaction(orgId, transferId, data, res, rej)))
-  ),
+  update: (orgId, transId, data, res, rej) => dispatch(updateTransaction.request(orgId, transId, data, res, rej)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

@@ -71,13 +71,13 @@ class BankAccounts extends React.Component<Props> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:        selectCurrentOrganizationId(state),
-  status:       selectVisibleBankAccountsStatus(state),
-  currencies:   selectVisibleBankAccountsCurrencies(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:      selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
+  status:     selectVisibleBankAccountsStatus(state),
+  currencies: selectVisibleBankAccountsCurrencies(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
 });
 

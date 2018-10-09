@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import { ID } from 'model-types';
 import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
 import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
@@ -16,7 +17,7 @@ interface IOwnProps {
 }
 
 interface IStateProps {
-  orgId: number;
+  orgId: ID;
 }
 
 interface IDispatchProps {
@@ -57,7 +58,7 @@ class DestroyBankAccount extends React.Component<Props> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({

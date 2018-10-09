@@ -68,11 +68,11 @@ class NewCategory extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId: selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   create: (orgId: number, data: ICategoryParams) => (
     new Promise((res, rej) => dispatch(createCategory(orgId, data, res, rej)))
   ),

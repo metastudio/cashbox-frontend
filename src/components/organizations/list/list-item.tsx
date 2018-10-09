@@ -44,7 +44,7 @@ class OrganizationsListItem extends React.PureComponent<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  setOrganization: org => new Promise((res, rej) => dispatch(setCurrentOrganization(org, res, rej))),
+  setOrganization: org => new Promise((res, rej) => dispatch(setCurrentOrganization.request(org, res, rej))),
   showMessage:     msg => dispatch(addFlashMessage(msg)),
 });
 

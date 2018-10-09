@@ -61,7 +61,7 @@ interface ITransactionsState {
 }
 
 interface ITransactionState {
-  id:     ID;
+  id:     ID | null;
   item:   ITransaction | null;
   status: Status;
   error:  Error | null;

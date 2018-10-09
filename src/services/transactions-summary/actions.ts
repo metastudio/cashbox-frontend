@@ -1,5 +1,6 @@
-import { ID } from 'model-types';
 import { createAction } from 'typesafe-actions';
+
+import { ID } from 'model-types';
 import { ITransactionsSummary } from './types';
 
 const loadTransactionsSummary = {
