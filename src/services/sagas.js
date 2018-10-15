@@ -2,7 +2,7 @@ import { fork, all } from 'redux-saga/effects';
 
 import authSaga                from './auth/saga.js';
 import balancesSaga            from './balances/saga.js';
-import bankAccountsSaga        from './bank-accounts/saga.js';
+import bankAccountsSaga        from './bank-accounts/saga';
 import categoriesSaga          from './categories/saga.js';
 import currenciesSaga          from './currencies/saga.js';
 import customersSaga           from './customers/saga.js';

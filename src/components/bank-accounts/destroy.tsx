@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
-import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -21,8 +21,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  deleteBankAccount: (orgId: number, bankAccountId: number) => Promise<{}>;
-  message:           (msg: string, type?: IFlashMessageOptions) => void;
+  deleteBankAccount: typeof deleteBankAccountAction.request;
+  message:           AddFlashMessageAction;
 }
 
 type Props = IOwnProps & IStateProps & IDispatchProps & RouteComponentProps<{}>;
@@ -34,7 +34,9 @@ class DestroyBankAccount extends React.Component<Props> {
     const { orgId, bankAccount, message, history, deleteBankAccount } = this.props;
 
     confirm(`Are you sure you want to remove bank account "${bankAccount.name}"?`).then(() => {
-      deleteBankAccount(orgId, bankAccount.id).then(() => {
+      new Promise((res, rej) => {
+        deleteBankAccount(orgId, bankAccount.id, res, rej);
+      }).then(() => {
         message(`Bank Account "${bankAccount.name}" has been removed.`);
         history.push('/bank_accounts');
       }).catch((error) => {
@@ -62,11 +64,8 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  deleteBankAccount:
-    (orgId: number, bankAccountId: number) => (
-      new Promise((res, rej) => dispatch(deleteBankAccountAction(orgId, bankAccountId, res, rej)))
-    ),
-  message: (msg: string, type?: IFlashMessageOptions) => dispatch(addFlashMessage(msg, type)),
+  deleteBankAccount: (orgId, bankAccountId) => dispatch(deleteBankAccountAction.request(orgId, bankAccountId)),
+  message:           (msg, type) => dispatch(addFlashMessage(msg, type)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(DestroyBankAccount));

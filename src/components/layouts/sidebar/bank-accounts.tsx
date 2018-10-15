@@ -23,7 +23,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadVisibleBankAccounts.request;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -78,7 +78,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
+  load: orgId => dispatch(loadVisibleBankAccounts.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(BankAccounts);

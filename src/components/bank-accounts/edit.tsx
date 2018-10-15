@@ -7,7 +7,7 @@ import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
 import {
-  IBankAccount, IBankAccountParams,
+  IBankAccount,
   loadBankAccount,
   selectBankAccount,
   selectBankAccountStatus,
@@ -28,8 +28,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load:   (orgId: ID, bankAccountId: ID) => void;
-  update: (orgId: ID, bankAccountId: ID, data: IBankAccountParams) => Promise<IBankAccount>;
+  load:        typeof loadBankAccount.request;
+  update:      typeof updateBankAccount.request;
   showMessage: AddFlashMessageAction;
 }
 
@@ -38,12 +38,20 @@ type IProps = IStateProps & IDispatchProps & RouteComponentProps<{ id: string }>
 class EditBankAccount extends React.Component<IProps> {
   private handleSubmit = (values: IBankAccountFormData) => {
     const { orgId, bankAccount, update } = this.props;
-    return update(orgId, bankAccount!.id, {
-      name:           values.name,
-      description:    values.description,
-      invoiceDetails: values.invoiceDetails,
-      currency:       values.currency,
-      visible:        values.visible,
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        bankAccount!.id,
+        {
+          name:           values.name,
+          description:    values.description,
+          invoiceDetails: values.invoiceDetails,
+          currency:       values.currency,
+          visible:        values.visible,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -99,8 +107,8 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load:   (orgId, baId) => dispatch(loadBankAccount(orgId, baId)),
-  update: (orgId, baId, data) => new Promise((res, rej) => dispatch(updateBankAccount(orgId, baId, data, res, rej))),
+  load:   (orgId, baId) => dispatch(loadBankAccount.request(orgId, baId)),
+  update: (orgId, baId, data) => dispatch(updateBankAccount.request(orgId, baId, data)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
