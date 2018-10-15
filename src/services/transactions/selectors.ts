@@ -1,10 +1,7 @@
 import { memoize } from 'lodash';
-import { formValueSelector } from 'redux-form';
 
-import { IBankAccount, selectVisibleBankAccountById } from 'services/bank-accounts';
 import { IGlobalState } from 'services/global-state';
 
-import { TRANSFER_FORM } from 'constants/forms';
 import { parseQuery } from 'utils/url-helpers';
 
 import { ITransactionsFilter } from './types';
@@ -48,22 +45,6 @@ const selectTransactionsQueryPage = memoize((search: string): number | undefined
   return page ? Number(page) : undefined;
 });
 
-const transferFormSelector = formValueSelector(TRANSFER_FORM);
-
-function selectTransferFormFromBankAccount(state: IGlobalState): IBankAccount | undefined {
-  const fromBankAccountId = transferFormSelector(state, 'fromBankAccountId');
-  if (!fromBankAccountId) { return undefined; }
-
-  return selectVisibleBankAccountById(state, fromBankAccountId);
-}
-
-function selectTransferFormToBankAccount(state: IGlobalState): IBankAccount | undefined {
-  const toBankAccountId = transferFormSelector(state, 'toBankAccountId');
-  if (!toBankAccountId) { return undefined; }
-
-  return selectVisibleBankAccountById(state, toBankAccountId);
-}
-
 export {
   selectTransactions,
   selectTransactionsStatus,
@@ -73,7 +54,4 @@ export {
 
   selectTransaction,
   selectTransactionStatus,
-
-  selectTransferFormFromBankAccount,
-  selectTransferFormToBankAccount,
 };

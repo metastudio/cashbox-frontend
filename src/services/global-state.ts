@@ -6,7 +6,7 @@ import {
   IUnpaidInvoicesState,
 } from 'services/invoices/types';
 import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } from 'services/organizations/types';
-import { IReduxFormState } from 'services/redux-form/invoice-form/types';
+import { IReduxFormState } from 'services/redux-form/types';
 import { ITransactionsSummaryState } from 'services/transactions-summary/types';
 import { ITransactionsState, ITransactionState } from 'services/transactions/types';
 

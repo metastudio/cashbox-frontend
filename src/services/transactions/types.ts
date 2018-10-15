@@ -33,6 +33,11 @@ interface ITransfer extends ITransaction {
   transferOut: ITransferOut;
 }
 
+interface ITransferOutParams {
+  id:      ID;
+  amount?: string;
+}
+
 interface ITransactionParams {
   amount?:        string;
   categoryId?:    number;
@@ -41,6 +46,7 @@ interface ITransactionParams {
   date?:          string;
   comment?:       string;
   invoiceId?:     number;
+  transferOutAttributes?: ITransferOutParams;
 }
 
 interface ITransferParams {

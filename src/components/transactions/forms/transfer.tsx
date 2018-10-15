@@ -7,10 +7,11 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { TRANSFER_FORM } from 'constants/forms';
 import { IBankAccount } from 'services/bank-accounts';
 import {
-  ITransfer,
+  ITransferFormData,
   selectTransferFormFromBankAccount,
   selectTransferFormToBankAccount,
-} from 'services/transactions';
+} from 'services/redux-form/transfer-form';
+import { ITransfer } from 'services/transactions';
 
 import { HorizontalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import {
@@ -31,17 +32,6 @@ interface IStateProps {
   toBankAccount?:   IBankAccount;
 }
 
-interface ITransferFormData {
-  toAmount?:          string;
-  fromAmount?:        string;
-  fromBankAccountId?: number;
-  toBankAccountId?:   number;
-  exchangeRate?:      string;
-  comission?:         string;
-  comment?:           string;
-  date?:              string;
-}
-
 type IProps = IOwnProps & InjectedFormProps<ITransferFormData, IOwnProps> & IStateProps;
 
 class TransferForm extends React.PureComponent<IProps> {
@@ -50,20 +40,48 @@ class TransferForm extends React.PureComponent<IProps> {
 
     return !!(transfer && transfer.id);
   }
-  private isDifferentCurrencies = (): boolean => {
+  private isCurrencyMismatch = (): boolean => {
     const { fromBankAccount, toBankAccount } = this.props;
     if (!fromBankAccount || !toBankAccount) { return false; }
 
     return fromBankAccount.currency !== toBankAccount.currency;
   }
 
-  private renderExchangeRateField = (): React.ReactNode => {
-    const isPersisted      = this.isPersisted();
-    const isDiffCurrencies = this.isDifferentCurrencies();
-    if (isPersisted)       { return null; }
-    if (!isDiffCurrencies) { return null; }
+  private renderFromAmountField = (): React.ReactNode => {
+    return (
+      <Field
+        name="fromAmount"
+        label={ this.isCurrencyMismatch() ? 'From Amount' : 'Amount' }
+        component={ HorizontalMoneyInput }
+        required
+      />
+    );
+  }
 
-    return <Field name="exchangeRate" label="Exchange Rate" component={ HorizontalFormInput } />;
+  private renderToAmountField = (): React.ReactNode => {
+    if (!this.isCurrencyMismatch()) { return null; }
+
+    return (
+      <Field
+        name="toAmount"
+        label="To Amount"
+        component={ HorizontalMoneyInput }
+      />
+    );
+  }
+
+  private renderExchangeRateField = (): React.ReactNode => {
+    if (this.isPersisted()) { return null; }
+    if (!this.isCurrencyMismatch()) { return null; }
+
+    return (
+      <Field
+        name="exchangeRate"
+        label="Exchange Rate"
+        component={ HorizontalFormInput }
+        required={ this.isCurrencyMismatch() }
+      />
+    );
   }
 
   public render() {
@@ -74,13 +92,6 @@ class TransferForm extends React.PureComponent<IProps> {
       <Form horizontal onSubmit={ handleSubmit }>
         { error && <Alert bsStyle="danger">{ error }</Alert> }
 
-        <Field
-          name="toAmount"
-          label="Amount"
-          component={ HorizontalMoneyInput }
-          required
-        />
-        { isPersisted && <Field name="fromAmount" label="From Amount" component={ HorizontalMoneyInput } disabled /> }
         <Field
           name="fromBankAccountId"
           component={ HorizontalBankAccountsSelect }
@@ -95,6 +106,8 @@ class TransferForm extends React.PureComponent<IProps> {
           disabled={ isPersisted }
           required
         />
+        { this.renderFromAmountField() }
+        { this.renderToAmountField() }
         { this.renderExchangeRateField() }
         { !isPersisted && <Field name="comission" label="Comission" component={ HorizontalMoneyInput } /> }
         <Field name="comment" label="Comment" component={ HorizontalFormInput } />

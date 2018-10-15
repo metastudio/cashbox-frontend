@@ -37,6 +37,10 @@ class EditTransfer extends React.PureComponent<IProps> {
           amount:  formatMoneyParam(values.toAmount),
           comment: values.comment,
           date:    values.date,
+          transferOutAttributes: {
+            id:     transfer.transferOut.id,
+            amount: formatMoneyParam(values.fromAmount),
+          },
         },
         resolve,
         reject,

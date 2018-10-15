@@ -24,8 +24,8 @@ const ShowTransfer: React.SFC<IProps> = ({ transfer }) => {
 
   return (
     <div className="form-horizontal">
-      <HorizontalStaticField label="Amount" value={ formatMoney(transfer.amount) } />
       <HorizontalStaticField label="From Amount" value={ formatMoney(transfer.transferOut.amount) } />
+      <HorizontalStaticField label="To Amount" value={ formatMoney(transfer.amount) } />
       <HorizontalStaticField label="BankAccount" value={ bankAccount }/>
       <HorizontalStaticField label="Comment" value={ transfer.comment } />
       <HorizontalStaticField label="Date" value={ formatDate(transfer.date) } />

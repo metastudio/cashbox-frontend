@@ -25,15 +25,8 @@ interface IInvoiceFormState {
   values: IInvoiceFormData;
 }
 
-interface IReduxFormState {
-  form: {
-    invoiceForm?: IInvoiceFormState;
-  };
-}
-
 export {
   IInvoiceItemFormData,
   IInvoiceFormData,
   IInvoiceFormState,
-  IReduxFormState,
 };

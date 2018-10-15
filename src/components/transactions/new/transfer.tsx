@@ -38,9 +38,9 @@ class NewTransfer extends React.PureComponent<IProps> {
         orgId,
         {
           bankAccountId: values.fromBankAccountId,
-          amount:        formatMoneyParam(values.toAmount),
+          amount:        formatMoneyParam(values.fromAmount),
           referenceId:   values.toBankAccountId,
-          exchangeRate:  values.exchangeRate,
+          exchangeRate:  formatMoneyParam(values.exchangeRate),
           comission:     formatMoneyParam(values.comission),
           comment:       values.comment,
           date:          values.date,
