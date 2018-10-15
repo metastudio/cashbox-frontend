@@ -1,3 +1,4 @@
+import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts';
 import {
   IInvoicesState,
   IInvoiceState,
@@ -11,6 +12,9 @@ import { ITransactionsState, ITransactionState } from 'services/transactions/typ
 
 interface IGlobalState {
   currentOrganization: ICurrentOrganizationState;
+  bankAccount:         IBankAccountState;
+  bankAccounts:        IBankAccountsState;
+  visibleBankAccounts: IBankAccountsState;
   form:                IReduxFormState;
   organization:        IOrganizationState;
   organizations:       IOrganizationsState;

@@ -1,4 +1,4 @@
-import { ID } from 'model-types';
+import { ID, Status } from 'model-types';
 import { IMoney } from 'utils/money/types';
 
 interface IBankAccount {
@@ -19,4 +19,19 @@ interface IBankAccountParams {
   visible?:        boolean;
 }
 
-export { IBankAccount, IBankAccountParams };
+interface IBankAccountState {
+  data:   IBankAccount | null;
+  status: Status;
+  error:  Error | null;
+}
+
+interface IBankAccountsState {
+  items: IBankAccount[];
+  status: Status;
+  error:  Error | null;
+}
+
+export {
+  IBankAccount, IBankAccountParams,
+  IBankAccountState, IBankAccountsState,
+};

@@ -22,9 +22,9 @@ import LoadingView from 'components/utils/loading-view';
 import Form, { IBankAccountFormData } from './form';
 
 interface IStateProps {
-  orgId:        ID;
-  status:       Status;
-  bankAccount?: IBankAccount;
+  orgId:       ID;
+  status:      Status;
+  bankAccount: IBankAccount | null;
 }
 
 interface IDispatchProps {
@@ -59,7 +59,7 @@ class EditBankAccount extends React.Component<IProps> {
         <Form
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterUpdate }
-          initialValues={ this.props.bankAccount }
+          initialValues={ this.props.bankAccount || undefined }
           action="Update"
         />
       </Panel.Body>
