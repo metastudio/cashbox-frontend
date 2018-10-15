@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { actionTypes } from 'redux-form';
 
-import { selectInvoiceFormItemsTotalAmount } from '../selectors';
+import { selectInvoiceFormItemsTotalAmount } from './selectors';
 
 export default handleActions({
   [actionTypes.CHANGE]: (state, { meta }) => {

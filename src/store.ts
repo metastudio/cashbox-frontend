@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 import { INVOICE_FORM } from 'constants/forms';
 
 import * as reducers from 'services/reducers';
-import invoiceFormReducer from 'services/redux-form/reducers/invoice-form.js';
+import invoiceFormReducer from 'services/redux-form/invoice-form/reducer.js';
 import rootSaga from 'services/sagas.js';
 
 function createAppStore() {

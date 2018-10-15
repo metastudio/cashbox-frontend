@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FieldArray, GenericFieldArray, WrappedFieldArrayProps } from 'redux-form';
 
-import { IInvoiceItemFormData } from 'services/redux-form';
+import { IInvoiceItemFormData } from 'services/redux-form/invoice-form';
 
 import { Fa } from 'components/utils/fa';
 import InvoiceItemFields from './item-fields';

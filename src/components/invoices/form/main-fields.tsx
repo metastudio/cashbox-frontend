@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 
-import { selectInvoiceFormHasItems } from 'services/redux-form';
+import { selectInvoiceFormHasItems } from 'services/redux-form/invoice-form';
 
 import { VerticalBankAccountsSelect } from 'components/bank-accounts/select-field';
 import { VerticalCurrencySelect } from 'components/currencies/select-field';

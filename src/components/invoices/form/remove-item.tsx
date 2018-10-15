@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { arrayRemove, change } from 'redux-form';
 
 import { INVOICE_FORM } from 'constants/forms';
-import { IInvoiceItemFormData } from 'services/redux-form';
+import { IInvoiceItemFormData } from 'services/redux-form/invoice-form';
 
 import { FaButton } from 'components/utils/fa';
 
