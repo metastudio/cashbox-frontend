@@ -7,6 +7,7 @@ import {
   IBankAccount,
   selectVisibleBankAccountsWithCurrency,
 } from 'services/bank-accounts';
+import { IGlobalState } from 'services/global-state';
 
 import BankAccountFilterLink from 'components/bank-accounts/filter-link';
 import { MoneyAmount } from 'components/utils/money';
@@ -49,7 +50,7 @@ const SidebarBankAccountsTable: React.SFC<IProps> = ({ bankAccounts }) => {
   );
 };
 
-const mapState = (state: {}, props: IOwnProps) => ({
+const mapState = (state: IGlobalState, props: IOwnProps) => ({
   bankAccounts: selectVisibleBankAccountsWithCurrency(state, props.currency),
 });
 

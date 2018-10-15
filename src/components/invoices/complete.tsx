@@ -10,7 +10,7 @@ import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages'
 import { IGlobalState } from 'services/global-state';
 import { IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { createTransaction, ITransaction, ITransactionParams } from 'services/transactions';
+import { createTransaction } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
@@ -26,7 +26,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  create:       (orgId: number, data: ITransactionParams) => Promise<ITransaction>;
+  create:       typeof createTransaction.request;
   flashMessage: AddFlashMessageAction;
 }
 
@@ -36,14 +36,21 @@ type IProps = IOwnProps & IRouteProps & IDispatchProps & IStateProps;
 class CompleteInvoiceButton extends React.Component<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, create, invoice } = this.props;
-    return create(orgId, {
-      amount:        formatMoneyParam(values.amount),
-      categoryId:    values.categoryId,
-      customerId:    values.customerId,
-      bankAccountId: values.bankAccountId,
-      invoiceId:     invoice.id,
-      comment:       values.comment,
-      date:          values.date,
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          amount:        formatMoneyParam(values.amount),
+          categoryId:    values.categoryId,
+          customerId:    values.customerId,
+          bankAccountId: values.bankAccountId,
+          invoiceId:     invoice.id,
+          comment:       values.comment,
+          date:          values.date,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -88,11 +95,11 @@ class CompleteInvoiceButton extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
+  create: (orgId, data, res, rej) => dispatch(createTransaction.request(orgId, data, res, rej)),
   flashMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

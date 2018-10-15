@@ -50,13 +50,13 @@ class UnpaidInvoicesCountBadge extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:  selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:  selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status: selectUnpaidInvoicesCountStatus(state),
   count:  selectUnpaidInvoicesCount(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number) => dispatch(loadUnpaidInvoicesCount(orgId)),
 });
 

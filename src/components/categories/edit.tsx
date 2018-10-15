@@ -107,13 +107,13 @@ class EditCategory extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:    selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:    selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:   selectCategoryStatus(state),
   category: selectCategory(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load:    (orgId: number, categoyId: number) => dispatch(loadCategory(orgId, categoyId)),
   update:  (orgId: number, categoryId: number, data: ICategoryParams) => (
     new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej)))

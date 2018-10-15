@@ -9,7 +9,6 @@ import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages'
 import {
   createTransfer,
   ITransfer,
-  ITransferParams,
 } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
@@ -24,7 +23,7 @@ interface IOwnProps {
 }
 
 interface IDispatchProps {
-  create: (orgId: ID, data: ITransferParams) => Promise<ITransfer>;
+  create:      typeof createTransfer.request;
   showMessage: AddFlashMessageAction;
 }
 
@@ -34,14 +33,21 @@ type IProps = IOwnProps & IDispatchProps & IRouteProps;
 class NewTransfer extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransferFormData) => {
     const { orgId, create } = this.props;
-    return create(orgId, {
-      bankAccountId: values.fromBankAccountId,
-      amount:        formatMoneyParam(values.toAmount),
-      referenceId:   values.toBankAccountId,
-      exchangeRate:  values.exchangeRate,
-      comission:     formatMoneyParam(values.comission),
-      comment:       values.comment,
-      date:          values.date,
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          bankAccountId: values.fromBankAccountId,
+          amount:        formatMoneyParam(values.fromAmount),
+          referenceId:   values.toBankAccountId,
+          exchangeRate:  formatMoneyParam(values.exchangeRate),
+          comission:     formatMoneyParam(values.comission),
+          comment:       values.comment,
+          date:          values.date,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -91,7 +97,7 @@ class NewTransfer extends React.PureComponent<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create:      (orgId, data) => new Promise((res, rej) => dispatch(createTransfer(orgId, data, res, rej))),
+  create:      (orgId, data, res, rej) => dispatch(createTransfer.request(orgId, data, res, rej)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

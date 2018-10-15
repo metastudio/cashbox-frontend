@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
-import LoadingView from 'components/utils/loading-view';
-
 import { Status } from 'model-types';
 import {
   loadBankAccounts,
   selectBankAccountsCurrencies,
   selectBankAccountsStatus,
 } from 'services/bank-accounts';
+import { IGlobalState } from 'services/global-state';
+
+import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import LoadingView from 'components/utils/loading-view';
+
 import Table from './list/table';
 
 interface IStateProps {
@@ -21,7 +23,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadBankAccounts.request;
 }
 
 type IProps = IStateProps & IDispatchProps & ICurrentOrgIdProps;
@@ -54,13 +56,13 @@ class BankAccountsList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   status:     selectBankAccountsStatus(state),
   currencies: selectBankAccountsCurrencies(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadBankAccounts(orgId)),
+  load: orgId => dispatch(loadBankAccounts.request(orgId)),
 });
 
 export default withCurrentOrgId(

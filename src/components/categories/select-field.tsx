@@ -109,13 +109,13 @@ class CategoriesSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState, props: IOwnProps) => ({
-  orgId:      selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
+  orgId:      selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:     selectCategoriesStatus(state),
   categories: selectCategories(state, props.type),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   load: (orgId: number) => new Promise((res, rej) => dispatch(loadCategories(orgId, res, rej))),
 });
 

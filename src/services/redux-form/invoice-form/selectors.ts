@@ -4,6 +4,7 @@ import { formValueSelector } from 'redux-form';
 import { INVOICE_FORM } from 'constants/forms';
 import { IGlobalState } from 'services/global-state';
 import { formatMoneyValue, parseMoneyValue } from 'utils/money';
+
 import { IInvoiceFormState, IInvoiceItemFormData } from './types';
 
 const selectInvoiceFormItemsTotalAmount = (state: IInvoiceFormState) => {

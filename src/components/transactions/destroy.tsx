@@ -16,7 +16,7 @@ interface IOwnProps {
 }
 
 interface IDispatchProps {
-  destroy:      (orgId: number, transactionId: number) => Promise<{}>;
+  destroy:      typeof destroyTransaction.request;
   flashMessage: AddFlashMessageAction;
 }
 
@@ -31,7 +31,9 @@ class DestroyButton extends React.Component<IProps> {
     if (!transaction) { return; }
 
     confirm('Are you sure?').then(() => {
-      destroy(orgId, transaction.id).then(() => {
+      new Promise((resolve, reject) => {
+        destroy(orgId, transaction.id, resolve, reject);
+      }).then(() => {
         const { flashMessage, history, location: { search } } = this.props;
 
         flashMessage('Transaction successfully removed');
@@ -46,7 +48,7 @@ class DestroyButton extends React.Component<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  destroy: (orgId, transId) => new Promise((res, rej) => dispatch(destroyTransaction(orgId, transId, res, rej))),
+  destroy: (orgId, transId, res, rej) => dispatch(destroyTransaction.request(orgId, transId, res, rej)),
   flashMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

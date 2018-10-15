@@ -65,7 +65,7 @@ class NewOrganization extends React.PureComponent<IProps> {
 }
 
 const dispatcher = (dispatch: Dispatch): IDispatchProps => ({
-  create:      data => new Promise((res, rej) => dispatch(createOrganization(data, res, rej))),
+  create:      data => new Promise((res, rej) => dispatch(createOrganization.request(data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

@@ -51,7 +51,7 @@ class DestroyOrganization extends React.Component<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  destroy: orgId => new Promise((res, rej) => dispatch(destroyOrganization(orgId, res, rej))),
+  destroy: orgId => new Promise((res, rej) => dispatch(destroyOrganization.request(orgId, res, rej))),
   message: (msg, type) => dispatch(addFlashMessage(msg, type)),
 });
 

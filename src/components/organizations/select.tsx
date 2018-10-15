@@ -22,7 +22,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: () => void;
+  load: typeof loadOrganizations.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -88,7 +88,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: () => dispatch(loadOrganizations()),
+  load: () => dispatch(loadOrganizations.request()),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(SelectOrganization);

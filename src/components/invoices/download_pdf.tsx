@@ -41,11 +41,11 @@ class DownloadPDFButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId: selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   downloadPDF:  (orgId: number, invoiceId: number | string) => new Promise<Blob>((res, rej) => {
     dispatch(downloadInvoicePDF(orgId, invoiceId, res, rej));
   }),

@@ -91,7 +91,7 @@ class EditCustomer extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:    selectCurrentOrganizationId(state),
+  orgId:    selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   customer: selectCustomer(state),
   status:   selectCustomerStatus(state),
 });

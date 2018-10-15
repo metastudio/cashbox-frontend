@@ -12,7 +12,7 @@ interface IOrganizationParams {
 }
 
 interface ICurrentOrganizationState {
-  id:       ID; // TODO: ID may be null. But it's hard to fix it everythere.
+  id:       ID | null;
   data:     IOrganization | null;
   isLoaded: boolean;
 }

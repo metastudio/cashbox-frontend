@@ -46,12 +46,12 @@ class DestroyButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:        selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:        selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   invoice:      selectInvoice(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
   destroy:      (orgId: number, invoiceId: number) => new Promise((res, rej) => {
     dispatch(destroyInvoice(orgId, invoiceId, res, rej));
   }),

@@ -61,7 +61,7 @@ class Balances extends React.Component<IStateProps & IDispatchProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:           selectCurrentOrganizationId(state),
+  orgId:           selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:          selectBalancesStatus(state),
   totalAmount:     selectBalancesTotalAmount(state),
   defaultCurrency: selectBalancesDefaultCurrency(state),

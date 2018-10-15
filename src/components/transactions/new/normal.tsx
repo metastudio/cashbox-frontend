@@ -12,7 +12,6 @@ import { IGlobalState } from 'services/global-state';
 import {
   createTransaction,
   ITransaction,
-  ITransactionParams,
   ITransactionsFilter,
   selectTransactionsQueryFilter,
 } from 'services/transactions';
@@ -38,7 +37,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  create: (orgId: ID, data: ITransactionParams) => Promise<ITransaction>;
+  create:      typeof createTransaction.request;
   showMessage: AddFlashMessageAction;
 }
 
@@ -59,13 +58,20 @@ class NewExpenseTransaction extends React.PureComponent<IProps, IState> {
 
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, create } = this.props;
-    return create(orgId, {
-      amount:        formatMoneyParam(values.amount),
-      categoryId:    values.categoryId,
-      customerId:    values.customerId,
-      bankAccountId: values.bankAccountId,
-      comment:       values.comment,
-      date:          values.date,
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          amount:        formatMoneyParam(values.amount),
+          categoryId:    values.categoryId,
+          customerId:    values.customerId,
+          bankAccountId: values.bankAccountId,
+          comment:       values.comment,
+          date:          values.date,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -130,7 +136,7 @@ const mapState = (state: IGlobalState, { location }: IRouteProps): IStateProps =
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create: (orgId, data) => new Promise((res, rej) => dispatch(createTransaction(orgId, data, res, rej))),
+  create: (orgId, data, res, rej) => dispatch(createTransaction.request(orgId, data, res, rej)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

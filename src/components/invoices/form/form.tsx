@@ -4,7 +4,7 @@ import { Alert, Form } from 'react-bootstrap';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { INVOICE_FORM } from 'constants/forms';
-import { IInvoiceFormData } from 'services/redux-form';
+import { IInvoiceFormData } from 'services/redux-form/invoice-form';
 
 import { VerticalSubmitButton } from 'components/utils/form-inputs';
 import ItemsFields, { InvoiceItemsArray } from './items-fields';

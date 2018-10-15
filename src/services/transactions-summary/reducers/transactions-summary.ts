@@ -2,10 +2,11 @@ import { ActionType, getType } from 'typesafe-actions';
 
 import { Status } from 'model-types';
 
+import { setCurrentOrganization } from 'services/organizations/actions';
 import {
   loadTransactionsSummary,
 } from '../actions';
-import { ITransactionsSummaryState } from '../types.js';
+import { ITransactionsSummaryState } from '../types';
 
 const defaultState: ITransactionsSummaryState = {
   status:  Status.Invalid,
@@ -15,7 +16,10 @@ const defaultState: ITransactionsSummaryState = {
 
 const transactionsSummaryReducer = (
   state: ITransactionsSummaryState = defaultState,
-  action: ActionType<typeof loadTransactionsSummary>,
+  action: ActionType<
+    | typeof loadTransactionsSummary
+    | typeof setCurrentOrganization
+  >,
 ) => {
   switch (action.type) {
     case getType(loadTransactionsSummary.request):
@@ -36,12 +40,11 @@ const transactionsSummaryReducer = (
         status:  Status.Failure,
         error:   action.payload,
       };
-    // TODO
-    // case String(setCurrentOrganization.success):
-    //   return {
-    //     ...state,
-    //     ...defaultState,
-    //   };
+    case String(setCurrentOrganization.success):
+      return {
+        ...state,
+        ...defaultState,
+      };
     default:
       return state;
   }

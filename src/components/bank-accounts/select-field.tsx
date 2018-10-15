@@ -37,7 +37,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadVisibleBankAccounts.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -111,14 +111,14 @@ class BankAccountsSelect extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:        selectCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),
   bankAccounts: selectVisibleBankAccounts(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
+  load: orgId => dispatch(loadVisibleBankAccounts.request(orgId)),
 });
 
 const BankAccountsSelectContainer =

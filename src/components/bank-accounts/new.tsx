@@ -6,11 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import {
-  createBankAccount,
-  IBankAccount,
-  IBankAccountParams,
-} from 'services/bank-accounts';
+import { createBankAccount } from 'services/bank-accounts';
 import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
@@ -22,7 +18,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  create: (orgId: ID, data: IBankAccountParams) => Promise<IBankAccount>;
+  create:      typeof createBankAccount.request;
   showMessage: AddFlashMessageAction;
 }
 
@@ -31,12 +27,19 @@ type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;
 class NewBankAccount extends React.Component<IProps> {
   private handleSubmit = (values: IBankAccountFormData) => {
     const { orgId, create } = this.props;
-    return create(orgId, {
-      name:           values.name,
-      description:    values.description,
-      invoiceDetails: values.invoiceDetails,
-      currency:       values.currency,
-      visible:        values.visible,
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          name:           values.name,
+          description:    values.description,
+          invoiceDetails: values.invoiceDetails,
+          currency:       values.currency,
+          visible:        values.visible,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -72,11 +75,11 @@ class NewBankAccount extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create:      (orgId, data) => new Promise((res, rej) => dispatch(createBankAccount(orgId, data, res, rej))),
+  create:      (orgId, data) => dispatch(createBankAccount.request(orgId, data)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
