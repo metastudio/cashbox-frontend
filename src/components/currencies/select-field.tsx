@@ -7,27 +7,28 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { Status } from 'model-types';
 import {
-  Currency,
   loadCurrencies,
   selectCurrencies, selectCurrenciesStatus,
 } from 'services/currencies';
+import { CurrencyCode } from 'utils/money';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { ReactSelectStyles } from 'components/utils/form-inputs/react-select-styles';
 import { wrapVerticalFormGroup } from 'components/utils/form-inputs/vertical-form-group';
+import { IGlobalState } from 'services/global-state';
 
 interface ICurrencyOption {
   label: string;
-  value: Currency;
+  value: CurrencyCode;
 }
 
 interface IStateProps {
   status:     string;
-  currencies: Currency[] | null;
+  currencies: CurrencyCode[];
 }
 
 interface IDispatchProps {
-  load: () => void;
+  load: typeof loadCurrencies.request;
 }
 
 type IProps = WrappedFieldProps & IStateProps & IDispatchProps;
@@ -87,13 +88,13 @@ class CurrencySelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: {}) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   status:     selectCurrenciesStatus(state),
   currencies: selectCurrencies(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: () => dispatch(loadCurrencies()),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: () => dispatch(loadCurrencies.request()),
 });
 
 const CurrencySelectContainer =

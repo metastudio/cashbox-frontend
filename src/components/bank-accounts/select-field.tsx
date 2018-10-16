@@ -15,9 +15,9 @@ import {
   selectVisibleBankAccountsCurrencies,
   selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
-import { Currency } from 'services/currencies';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
+import { CurrencyCode } from 'utils/money';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
@@ -32,7 +32,7 @@ interface IOwnProps {
 interface IStateProps {
   status:       string;
   orgId:        number;
-  currencies:   Currency[];
+  currencies:   CurrencyCode[];
   bankAccounts: IBankAccount[];
 }
 

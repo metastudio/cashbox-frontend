@@ -4,7 +4,7 @@ import authSaga                from './auth/saga';
 import balancesSaga            from './balances/saga.js';
 import bankAccountsSaga        from './bank-accounts/saga';
 import categoriesSaga          from './categories/saga.js';
-import currenciesSaga          from './currencies/saga.js';
+import currenciesSaga          from './currencies/saga';
 import customersSaga           from './customers/saga.js';
 import debtorsSaga             from './debtors/saga.js';
 import invoicesSaga            from './invoices/saga.js';
