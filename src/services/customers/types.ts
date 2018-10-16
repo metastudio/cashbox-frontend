@@ -1,4 +1,4 @@
-import { ID } from 'model-types';
+import { ID, Status } from 'model-types';
 
 interface ICustomer {
   id:               ID;
@@ -11,4 +11,21 @@ interface ICustomerParams {
   invoiceDetails?: string;
 }
 
-export { ICustomer, ICustomerParams };
+interface ICustomerState {
+  data:   ICustomer | null;
+  status: Status;
+  error:  Error | null;
+}
+
+interface ICustomersState {
+  items:  ICustomer[];
+  status: Status;
+  error:  Error | null;
+}
+
+export {
+  ICustomer,
+  ICustomerParams,
+  ICustomerState,
+  ICustomersState,
+};

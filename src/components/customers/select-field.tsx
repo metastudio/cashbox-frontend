@@ -26,7 +26,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCustomers.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -101,7 +101,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: orgId => new Promise<ICustomer[]>((res, rej) => dispatch(loadCustomers(orgId, res, rej))),
+  load: orgId => dispatch(loadCustomers.request(orgId)),
 });
 
 const CustomersSelectContainer =

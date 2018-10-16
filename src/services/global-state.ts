@@ -4,6 +4,7 @@ import { IBalancesState } from 'services/balances/types';
 import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/types';
 import { ICategoriesState, ICategoryState } from 'services/categories/types';
 import { ICurrenciesState } from 'services/currencies/types';
+import { ICustomersState, ICustomerState } from 'services/customers/types';
 import { IFlashMessagesState } from 'services/flash-messages/types';
 import {
   IInvoicesState,
@@ -23,6 +24,8 @@ interface IGlobalState {
   category:            ICategoryState;
   currencies:          ICurrenciesState;
   currentOrganization: ICurrentOrganizationState;
+  customer:            ICustomerState;
+  customers:           ICustomersState;
   balances:            IBalancesState;
   bankAccount:         IBankAccountState;
   bankAccounts:        IBankAccountsState;

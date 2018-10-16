@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { createCustomer, ICustomer, ICustomerParams } from 'services/customers';
+import { createCustomer } from 'services/customers';
 import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
@@ -20,7 +20,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  create:      (orgId: ID, data: ICustomerParams) => Promise<ICustomer>;
+  create:      typeof createCustomer.request;
   showMessage: typeof addFlashMessage;
 }
 
@@ -29,9 +29,16 @@ type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;
 class NewCustomer extends React.Component<IProps> {
   private handleSubmit = (values: ICustomerFormData) => {
     const { orgId, create } = this.props;
-    return create(orgId, {
-      name:           values.name,
-      invoiceDetails: values.invoiceDetails,
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          name:           values.name,
+          invoiceDetails: values.invoiceDetails,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -71,7 +78,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create:      (orgId, data) => new Promise((res, rej) => dispatch(createCustomer(orgId, data, res, rej))),
+  create:      (orgId, data, res, rej) => dispatch(createCustomer.request(orgId, data, res, rej)),
   showMessage: (msg, opts)   => dispatch(addFlashMessage(msg, opts)),
 });
 

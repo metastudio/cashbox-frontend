@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 
 import { ID, Status } from 'model-types';
 import {
-  ICustomer, ICustomerParams,
+  ICustomer,
   loadCustomer,
   selectCustomer, selectCustomerStatus,
   updateCustomer,
@@ -22,14 +22,14 @@ import LoadingView from 'components/utils/loading-view';
 import Form, { ICustomerFormData } from './form';
 
 interface IStateProps {
-  orgId:     ID;
-  status:    Status;
-  customer?: ICustomer;
+  orgId:    ID;
+  status:   Status;
+  customer: ICustomer | null;
 }
 
 interface IDispatchProps {
-  load:        (orgId: ID, customerId: ID) => void;
-  update:      (orgId: ID, customerID: ID, data: ICustomerParams) => Promise<void>;
+  load:        typeof loadCustomer.request;
+  update:      typeof updateCustomer.request;
   showMessage: typeof addFlashMessage;
 }
 
@@ -38,9 +38,17 @@ type IProps = IStateProps & IDispatchProps & RouteComponentProps<{ id: string }>
 class EditCustomer extends React.Component<IProps> {
   private handleSubmit = (values: ICustomerFormData) => {
     const { orgId, customer, update } = this.props;
-    return update(orgId, customer!.id, {
-      name:           values.name,
-      invoiceDetails: values.invoiceDetails,
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        customer!.id,
+        {
+          name:           values.name,
+          invoiceDetails: values.invoiceDetails,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -57,7 +65,7 @@ class EditCustomer extends React.Component<IProps> {
         <Form
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterUpdate }
-          initialValues={ this.props.customer }
+          initialValues={ this.props.customer || {} }
           action="Update"
         />
       </Panel.Body>
@@ -97,11 +105,9 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load:    (orgId, customerId) => dispatch(loadCustomer(orgId, customerId)),
-  update:  (orgId, customerId, data) => (
-    new Promise((res, rej) => dispatch(updateCustomer(orgId, customerId, data, res, rej)))
-  ),
-  showMessage: (message, type) => dispatch(addFlashMessage(message, type)),
+  load:    (orgId, customerId) => dispatch(loadCustomer.request(orgId, customerId)),
+  update:  (orgId, customerId, data, res, rej) => dispatch(updateCustomer.request(orgId, customerId, data, res, rej)),
+  showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditCustomer));
