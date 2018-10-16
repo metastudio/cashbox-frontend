@@ -19,7 +19,7 @@ import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
 import LoadingView from 'components/utils/loading-view';
-import Form from './form.jsx';
+import Form, { ICategoryFormData } from './form';
 
 interface IStateProps {
   orgId:    number;
@@ -42,7 +42,7 @@ class EditCategory extends React.Component<IProps> {
     load(orgId, Number(id));
   }
 
-  private handleSubmit = (values: ICategoryParams) => {
+  private handleSubmit = (values: ICategoryFormData) => {
     const { update, orgId, match: { params: { id } } } = this.props;
     return update(
       orgId, Number(id),
@@ -66,7 +66,7 @@ class EditCategory extends React.Component<IProps> {
         <Form
           onSubmit={ this.handleSubmit }
           onSubmitSuccess={ this.afterUpdate }
-          initialValues={ this.props.category }
+          initialValues={ this.props.category || {} }
           action="Update"
         />
       </Panel.Body>

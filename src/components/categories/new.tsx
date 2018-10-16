@@ -12,7 +12,7 @@ import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form from './form.jsx';
+import Form, { ICategoryFormData } from './form';
 
 interface IStateProps {
   orgId: number;
@@ -26,7 +26,7 @@ interface IDispatchProps {
 type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
 class NewCategory extends React.Component<IProps> {
-  private handleSubmit = (values: ICategoryParams) => {
+  private handleSubmit = (values: ICategoryFormData) => {
     const { create, orgId } = this.props;
     return create(
       orgId,
