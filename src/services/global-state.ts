@@ -1,5 +1,6 @@
 import { IAppState } from 'services/app/types';
 import { IAuthState } from 'services/auth/types';
+import { IBalancesState } from 'services/balances/types';
 import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/types';
 import { ICurrenciesState } from 'services/currencies/types';
 import { IFlashMessagesState } from 'services/flash-messages/types';
@@ -19,6 +20,7 @@ interface IGlobalState {
   auth:                IAuthState;
   currencies:          ICurrenciesState;
   currentOrganization: ICurrentOrganizationState;
+  balances:            IBalancesState;
   bankAccount:         IBankAccountState;
   bankAccounts:        IBankAccountsState;
   visibleBankAccounts: IBankAccountsState;

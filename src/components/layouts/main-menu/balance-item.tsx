@@ -9,7 +9,7 @@ import { MoneyAmount } from 'components/utils/money';
 
 interface IProps {
   balance:          IBalance;
-  defaultCurrency?: string;
+  defaultCurrency: string | null;
 }
 
 const MenuBalanceItem: React.SFC<IProps> = ({ balance, defaultCurrency }) => {

@@ -15,20 +15,20 @@ import {
 } from 'services/balances';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
-import { formatMoney, IMoney } from 'utils/money';
+import { CurrencyCode, formatMoney, IMoney } from 'utils/money';
 
 import BalanceItem from './balance-item';
 
 interface IStateProps {
-  orgId?:           ID;
-  status:           Status;
-  totalAmount?:     IMoney;
-  defaultCurrency?: string;
-  balances:         IBalance[];
+  orgId?:          ID;
+  status:          Status;
+  totalAmount:     IMoney | null;
+  defaultCurrency: CurrencyCode | null;
+  balances:        IBalance[];
 }
 
 interface IDispatchProps {
-  load: (orgId: ID) => void;
+  load: typeof loadOrganizationBalances.request;
 }
 
 class Balances extends React.Component<IStateProps & IDispatchProps> {
@@ -69,7 +69,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: orgId => dispatch(loadOrganizationBalances(orgId)),
+  load: orgId => dispatch(loadOrganizationBalances.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(Balances);
