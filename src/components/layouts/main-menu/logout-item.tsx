@@ -8,14 +8,15 @@ import { MenuItem } from 'react-bootstrap';
 
 import { logoutUser, selectIsAuthorized } from 'services/auth';
 import { addFlashMessage } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 
 interface IStateProps {
   isAuthorized?: boolean;
 }
 
 interface IDispatchProps {
-  logout:      () => Promise<{}>;
-  showMessage: (message: string) => void;
+  logout:      typeof logoutUser.request;
+  showMessage: typeof addFlashMessage;
 }
 
 class LogoutItem extends React.Component<IStateProps & IDispatchProps> {
@@ -24,7 +25,9 @@ class LogoutItem extends React.Component<IStateProps & IDispatchProps> {
 
     const { logout, showMessage } = this.props;
 
-    logout().then(() => {
+    new Promise((resolve, reject) => {
+      logout(resolve, reject);
+    }).then(() => {
       showMessage('You successfully signed out.');
     });
   }
@@ -42,13 +45,13 @@ class LogoutItem extends React.Component<IStateProps & IDispatchProps> {
   }
 }
 
-const mapState = (state: object) => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   isAuthorized: selectIsAuthorized(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  logout:      () => new Promise((res, rej) => dispatch(logoutUser(res, rej))),
-  showMessage: (message: string) => dispatch(addFlashMessage(message)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  logout:      (res, rej) => dispatch(logoutUser.request(res, rej)),
+  showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(LogoutItem);

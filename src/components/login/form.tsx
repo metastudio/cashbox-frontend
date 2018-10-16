@@ -1,11 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
+import * as React from 'react';
 
 import { Alert, Form } from 'react-bootstrap';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
 import { HorizontalFormInput, HorizontalSubmitButton } from 'components/utils/form-inputs';
 
-const LoginForm = ({ handleSubmit, submitting, error }) => (
+interface ILoginFormData {
+  email?:    string;
+  password?: string;
+}
+
+type IProps = InjectedFormProps<ILoginFormData>;
+
+const LoginForm: React.SFC<IProps> = ({ handleSubmit, submitting, error }) => (
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field
@@ -26,12 +33,8 @@ const LoginForm = ({ handleSubmit, submitting, error }) => (
   </Form>
 );
 
-LoginForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting:   PropTypes.bool,
-  error:        PropTypes.string,
-};
-
-export default reduxForm({
-  form: 'login-form',
+const ReduxLoginForm = reduxForm<ILoginFormData>({
+  form: 'loginForm',
 })(LoginForm);
+
+export { ReduxLoginForm as default, ILoginFormData };

@@ -1,1 +1,1 @@
-export { default } from './scene.jsx';
+export { default } from './scene';
