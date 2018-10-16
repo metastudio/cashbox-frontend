@@ -1,4 +1,4 @@
-import { fork, all } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 
 import authSaga                from './auth/saga';
 import balancesSaga            from './balances/saga';
@@ -10,8 +10,8 @@ import debtorsSaga             from './debtors/saga.js';
 import invoicesSaga            from './invoices/saga.js';
 import membersSaga             from './members/saga.js';
 import organizationsSaga       from './organizations/saga';
-import transactionsSaga        from './transactions/saga';
 import transactionsSummarySaga from './transactions-summary/saga';
+import transactionsSaga        from './transactions/saga';
 import usersSaga               from './users/saga';
 
 function* rootSaga() {
@@ -26,8 +26,8 @@ function* rootSaga() {
     fork(debtorsSaga),
     fork(invoicesSaga),
     fork(membersSaga),
-    fork(transactionsSaga),
     fork(transactionsSummarySaga),
+    fork(transactionsSaga),
     fork(usersSaga),
   ]);
 }

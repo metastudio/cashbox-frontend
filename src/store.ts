@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import * as reducers from 'services/reducers';
 import formReducers from 'services/redux-form/reducers';
-import rootSaga from 'services/sagas.js';
+import rootSaga from 'services/sagas';
 
 function createAppStore() {
 
