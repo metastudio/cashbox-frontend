@@ -2,6 +2,7 @@ import { IAppState } from 'services/app/types';
 import { IAuthState } from 'services/auth/types';
 import { IBalancesState } from 'services/balances/types';
 import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/types';
+import { ICategoriesState, ICategoryState } from 'services/categories/types';
 import { ICurrenciesState } from 'services/currencies/types';
 import { IFlashMessagesState } from 'services/flash-messages/types';
 import {
@@ -18,6 +19,8 @@ import { ITransactionsState, ITransactionState } from 'services/transactions/typ
 interface IGlobalState {
   app:                 IAppState;
   auth:                IAuthState;
+  categories:          ICategoriesState;
+  category:            ICategoryState;
   currencies:          ICurrenciesState;
   currentOrganization: ICurrentOrganizationState;
   balances:            IBalancesState;

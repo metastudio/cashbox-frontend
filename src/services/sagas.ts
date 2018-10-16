@@ -3,7 +3,7 @@ import { all, fork } from 'redux-saga/effects';
 import authSaga                from './auth/saga';
 import balancesSaga            from './balances/saga';
 import bankAccountsSaga        from './bank-accounts/saga';
-import categoriesSaga          from './categories/saga.js';
+import categoriesSaga          from './categories/saga';
 import currenciesSaga          from './currencies/saga';
 import customersSaga           from './customers/saga.js';
 import debtorsSaga             from './debtors/saga.js';

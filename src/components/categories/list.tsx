@@ -16,11 +16,11 @@ import Table from './list/table';
 interface IStateProps {
   orgId:      number;
   status:     Status;
-  categories: ICategory[] | null;
+  categories: ICategory[];
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCategories.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -62,7 +62,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadCategories(orgId)),
+  load: orgId => dispatch(loadCategories.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(CategoriesList);

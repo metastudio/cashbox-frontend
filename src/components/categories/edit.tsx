@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
 import {
-  ICategory, ICategoryParams,
+  ICategory,
   loadCategory,
   selectCategory, selectCategoryStatus,
   updateCategory,
@@ -28,9 +28,9 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load:    (orgId: number, categoryId: number) => void;
-  update:  (orgId: number, categoryId: number, data: ICategoryParams) => Promise<{}>;
-  message: (msg: string) => void;
+  load:    typeof loadCategory.request;
+  update:  typeof updateCategory.request;
+  message: typeof addFlashMessage;
 }
 
 type IProps = RouteComponentProps<{ id: string }> & IStateProps & IDispatchProps;
@@ -44,13 +44,18 @@ class EditCategory extends React.Component<IProps> {
 
   private handleSubmit = (values: ICategoryFormData) => {
     const { update, orgId, match: { params: { id } } } = this.props;
-    return update(
-      orgId, Number(id),
-      {
-        name: values.name,
-        type: values.type,
-      },
-    ).catch(prepareSubmissionError);
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        Number(id),
+        {
+          name: values.name,
+          type: values.type,
+        },
+        resolve,
+        reject,
+      );
+    }).catch(prepareSubmissionError);
   }
 
   private afterUpdate = () => {
@@ -114,11 +119,9 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load:    (orgId: number, categoyId: number) => dispatch(loadCategory(orgId, categoyId)),
-  update:  (orgId: number, categoryId: number, data: ICategoryParams) => (
-    new Promise((res, rej) => dispatch(updateCategory(orgId, categoryId, data, res, rej)))
-  ),
-  message: (msg: string) => dispatch(addFlashMessage(msg)),
+  load:    (orgId, categoyId) => dispatch(loadCategory.request(orgId, categoyId)),
+  update:  (orgId, categoryId, data, res, rej) => dispatch(updateCategory.request(orgId, categoryId, data, res, rej)),
+  message: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(EditCategory));
