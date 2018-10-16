@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import {
   IInvoice, InvoiceParams,
   updateInvoice,
@@ -21,7 +21,7 @@ import Provider from './providers/invoice';
 
 interface IDispatchProps {
   update:  (orgId: ID, invoiceId: ID, data: InvoiceParams) => Promise<IInvoice>;
-  message: AddFlashMessageAction;
+  message: typeof addFlashMessage;
 }
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps & IDispatchProps;

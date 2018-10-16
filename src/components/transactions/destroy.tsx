@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { destroyTransaction, ITransaction } from 'services/transactions';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
@@ -17,7 +17,7 @@ interface IOwnProps {
 
 interface IDispatchProps {
   destroy:      typeof destroyTransaction.request;
-  flashMessage: AddFlashMessageAction;
+  flashMessage: typeof addFlashMessage;
 }
 
 type IRouteProps = RouteComponentProps<{}>;

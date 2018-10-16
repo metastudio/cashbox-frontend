@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IOrganization, setCurrentOrganization } from 'services/organizations';
 
 interface IOwnProps {
@@ -14,7 +14,7 @@ interface IOwnProps {
 
 interface IDispatchProps {
   setOrganization: (org: IOrganization) => Promise<IOrganization>;
-  showMessage:     AddFlashMessageAction;
+  showMessage:     typeof addFlashMessage;
 }
 
 type IProps = IOwnProps & IDispatchProps & RouteComponentProps<{}>;

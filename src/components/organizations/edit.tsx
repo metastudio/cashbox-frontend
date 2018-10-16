@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import {
   IOrganization, IOrganizationParams,
   updateOrganization,
@@ -19,7 +19,7 @@ import Provider from './providers/organization';
 
 interface IDispatchProps {
   update:  (orgId: ID, data: IOrganizationParams) => Promise<IOrganization>;
-  message: AddFlashMessageAction;
+  message: typeof addFlashMessage;
 }
 
 type IProps = RouteComponentProps<{ id: string }> & IDispatchProps;

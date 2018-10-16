@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { deleteBankAccount as deleteBankAccountAction, IBankAccount } from 'services/bank-accounts';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -22,7 +22,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   deleteBankAccount: typeof deleteBankAccountAction.request;
-  message:           AddFlashMessageAction;
+  message:           typeof addFlashMessage;
 }
 
 type Props = IOwnProps & IStateProps & IDispatchProps & RouteComponentProps<{}>;

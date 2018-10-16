@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { createCustomer, ICustomer, ICustomerParams } from 'services/customers';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
@@ -21,7 +21,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   create:      (orgId: ID, data: ICustomerParams) => Promise<ICustomer>;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;

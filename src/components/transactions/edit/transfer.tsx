@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { ITransfer, updateTransaction } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
@@ -20,7 +20,7 @@ interface IOwnProps {
 
 interface IDispatchProps {
   update: typeof updateTransaction.request;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IRouteProps = RouteComponentProps<{}>;

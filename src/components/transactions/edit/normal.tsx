@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { CategoryType } from 'services/categories';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { ITransaction, updateTransaction } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
@@ -22,7 +22,7 @@ interface IOwnProps {
 
 interface IDispatchProps {
   update:      typeof updateTransaction.request;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IRouterProps = RouteComponentProps<{}>;

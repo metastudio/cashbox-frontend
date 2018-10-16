@@ -13,7 +13,7 @@ import {
   selectCustomer, selectCustomerStatus,
   updateCustomer,
 } from 'services/customers';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
@@ -30,7 +30,7 @@ interface IStateProps {
 interface IDispatchProps {
   load:        (orgId: ID, customerId: ID) => void;
   update:      (orgId: ID, customerID: ID, data: ICustomerParams) => Promise<void>;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps & RouteComponentProps<{ id: string }>;

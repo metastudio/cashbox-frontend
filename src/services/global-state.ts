@@ -1,4 +1,5 @@
-import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts';
+import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/types';
+import { IFlashMessagesState } from 'services/flash-messages/types';
 import {
   IInvoicesState,
   IInvoiceState,
@@ -15,6 +16,7 @@ interface IGlobalState {
   bankAccount:         IBankAccountState;
   bankAccounts:        IBankAccountsState;
   visibleBankAccounts: IBankAccountsState;
+  flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   organization:        IOrganizationState;
   organizations:       IOrganizationsState;
