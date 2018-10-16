@@ -12,7 +12,7 @@ import membersSaga             from './members/saga.js';
 import organizationsSaga       from './organizations/saga';
 import transactionsSaga        from './transactions/saga';
 import transactionsSummarySaga from './transactions-summary/saga';
-import usersSaga               from './users/saga.js';
+import usersSaga               from './users/saga';
 
 function* rootSaga() {
   yield all([

@@ -9,7 +9,7 @@ import { addFlashMessage } from 'services/flash-messages';
 import { destroyOrganization, IOrganization } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
-import { FaButton } from '../utils/fa';
+import { FaButton } from 'components/utils/fa';
 
 interface IOwnProps {
   organization: IOrganization;

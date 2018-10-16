@@ -4,12 +4,13 @@ import { MenuItem, NavDropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { IGlobalState } from 'services/global-state';
 import { selectUserFullName } from 'services/users';
 
 import LogoutItem from './logout-item';
 
 interface IStateProps {
-  userFullName: string;
+  userFullName: string | null;
 }
 
 const ProfileItem: React.SFC<IStateProps> = ({ userFullName }) => (
@@ -28,7 +29,7 @@ const ProfileItem: React.SFC<IStateProps> = ({ userFullName }) => (
   </NavDropdown>
 );
 
-const select = (state: object) => ({
+const select = (state: IGlobalState) => ({
   userFullName: selectUserFullName(state),
 });
 

@@ -1,3 +1,4 @@
+import { IAuthState } from 'services/auth/types';
 import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/types';
 import { IFlashMessagesState } from 'services/flash-messages/types';
 import {
@@ -12,6 +13,7 @@ import { ITransactionsSummaryState } from 'services/transactions-summary/types';
 import { ITransactionsState, ITransactionState } from 'services/transactions/types';
 
 interface IGlobalState {
+  auth:                IAuthState;
   currentOrganization: ICurrentOrganizationState;
   bankAccount:         IBankAccountState;
   bankAccounts:        IBankAccountsState;
