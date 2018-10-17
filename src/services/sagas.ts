@@ -8,7 +8,7 @@ import currenciesSaga          from './currencies/saga';
 import customersSaga           from './customers/saga';
 import debtorsSaga             from './debtors/saga';
 import invoicesSaga            from './invoices/saga';
-import membersSaga             from './members/saga.js';
+import membersSaga             from './members/saga';
 import organizationsSaga       from './organizations/saga';
 import transactionsSummarySaga from './transactions-summary/saga';
 import transactionsSaga        from './transactions/saga';

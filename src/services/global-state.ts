@@ -12,6 +12,7 @@ import {
   IInvoiceState,
   IUnpaidInvoicesCountState,
 } from 'services/invoices/types';
+import { IMembersState } from 'services/members/types';
 import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } from 'services/organizations/types';
 import { IReduxFormState } from 'services/redux-form/types';
 import { ITransactionsSummaryState } from 'services/transactions-summary/types';
@@ -33,6 +34,7 @@ interface IGlobalState {
   debtors:             IDebtorsState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
+  members:             IMembersState;
   organization:        IOrganizationState;
   organizations:       IOrganizationsState;
   transactionsSummary: ITransactionsSummaryState;
