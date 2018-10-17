@@ -1,1 +1,1 @@
-export * from './api-helpers.js';
+export * from './api-helpers';

@@ -1,5 +1,8 @@
 class HttpError extends Error {
-  constructor(response) {
+  public readonly code:     number;
+  public readonly response: Response;
+
+  constructor(response: Response) {
     super(response.statusText);
     this.code     = response.status;
     this.response = response;
