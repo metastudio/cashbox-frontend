@@ -40,7 +40,7 @@ export interface InvoiceItemParams {
   description?: string;
 }
 
-export interface InvoiceParams {
+export interface IInvoiceParams {
   currency?:      string;
   amount?:        string;
   number?:        number;
@@ -56,7 +56,7 @@ export interface InvoiceParams {
 
 export interface IInvoiceState {
   id:     ID | null;
-  item:   IInvoice;
+  item:   IInvoice | null;
   status: Status;
   error:  Error | null;
 }
@@ -72,11 +72,4 @@ export interface IUnpaidInvoicesCountState {
   count:  number | null;
   status: Status;
   error:  Error | null;
-}
-
-export interface IUnpaidInvoicesState {
-  items:      IInvoice[];
-  status:     Status;
-  error:      Error | null;
-  pagination: IPagination | null;
 }

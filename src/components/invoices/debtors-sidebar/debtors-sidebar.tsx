@@ -32,7 +32,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadDebtors.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -89,18 +89,16 @@ class DebtorSidebar extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => {
-  return({
-    orgId:            selectCurrentOrganizationId(state),
-    debtors:          selectDebtors(state),
-    total:            selectTotal(state),
-    totalsByCurrency: selectTotalsByCurrency(state),
-    status:           selectDebtorsStatus(state),
-  });
-};
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:            selectCurrentOrganizationId(state)!, // TODO: orgId may be null;
+  debtors:          selectDebtors(state),
+  total:            selectTotal(state),
+  totalsByCurrency: selectTotalsByCurrency(state),
+  status:           selectDebtorsStatus(state),
+});
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: (orgId: number) => dispatch(loadDebtors(orgId)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: (orgId: number) => dispatch(loadDebtors.request(orgId)),
 });
 
 export default connect(mapState, mapDispatch)(DebtorSidebar);

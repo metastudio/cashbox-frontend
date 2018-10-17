@@ -6,10 +6,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
-import { ID } from 'model-types';
 import { addFlashMessage } from 'services/flash-messages';
 import {
-  IInvoice, InvoiceParams,
+  IInvoice,
   updateInvoice,
 } from 'services/invoices';
 import { prepareSubmissionError } from 'utils/errors';
@@ -20,7 +19,7 @@ import Form, { IInvoiceFormData } from './form/form';
 import Provider from './providers/invoice';
 
 interface IDispatchProps {
-  update:  (orgId: ID, invoiceId: ID, data: InvoiceParams) => Promise<IInvoice>;
+  update:  typeof updateInvoice.request;
   message: typeof addFlashMessage;
 }
 
@@ -30,30 +29,34 @@ class EditInvoice extends React.Component<IProps> {
   private handleSubmit = (values: IInvoiceFormData) => {
     const { orgId, update, match: { params: { id } } } = this.props;
 
-    return update(
-      orgId,
-      Number(id),
-      {
-        currency:      values.currency,
-        bankAccountId: values.bankAccountId,
-        amount:        formatMoneyParam(values.amount),
-        number:        Number(values.number),
-        customerId:    values.customerId,
-        startsAt:      values.startsAt,
-        endsAt:        values.endsAt,
-        sentAt:        values.sentAt,
-        paidAt:        values.paidAt,
-        invoiceItemsAttributes: values.invoiceItems.map(item => ({
-          _destroy:     item._destroy,
-          id:           item.id,
-          customerId:   item.customerId,
-          date:         item.date,
-          hours:        Number(item.hours),
-          description:  item.description,
-          amount:       formatMoneyParam(item.amount),
-        })),
-      },
-    ).catch(prepareSubmissionError);
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        Number(id),
+        {
+          currency:      values.currency,
+          bankAccountId: values.bankAccountId,
+          amount:        formatMoneyParam(values.amount),
+          number:        Number(values.number),
+          customerId:    values.customerId,
+          startsAt:      values.startsAt,
+          endsAt:        values.endsAt,
+          sentAt:        values.sentAt,
+          paidAt:        values.paidAt,
+          invoiceItemsAttributes: values.invoiceItems.map(item => ({
+            _destroy:     item._destroy,
+            id:           item.id,
+            customerId:   item.customerId,
+            date:         item.date,
+            hours:        Number(item.hours),
+            description:  item.description,
+            amount:       formatMoneyParam(item.amount),
+          })),
+        },
+        resolve,
+        reject,
+      );
+    }).catch(prepareSubmissionError);
   }
 
   private initialPrepare = (invoice: IInvoice): IInvoiceFormData => {
@@ -113,9 +116,7 @@ class EditInvoice extends React.Component<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  update: (orgId, invoiceId, data) => new Promise<IInvoice>((res, rej) => {
-    dispatch(updateInvoice(orgId, invoiceId, data, res, rej));
-  }),
+  update:  (orgId, invoiceId, data, res, rej) => dispatch(updateInvoice.request(orgId, invoiceId, data, res, rej)),
   message: msg => dispatch(addFlashMessage(msg)),
 });
 

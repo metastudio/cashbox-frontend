@@ -5,12 +5,12 @@ import { IBankAccountsState, IBankAccountState } from 'services/bank-accounts/ty
 import { ICategoriesState, ICategoryState } from 'services/categories/types';
 import { ICurrenciesState } from 'services/currencies/types';
 import { ICustomersState, ICustomerState } from 'services/customers/types';
+import { IDebtorsState } from 'services/debtors/types';
 import { IFlashMessagesState } from 'services/flash-messages/types';
 import {
   IInvoicesState,
   IInvoiceState,
   IUnpaidInvoicesCountState,
-  IUnpaidInvoicesState,
 } from 'services/invoices/types';
 import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } from 'services/organizations/types';
 import { IReduxFormState } from 'services/redux-form/types';
@@ -20,16 +20,17 @@ import { ITransactionsState, ITransactionState } from 'services/transactions/typ
 interface IGlobalState {
   app:                 IAppState;
   auth:                IAuthState;
+  balances:            IBalancesState;
+  bankAccount:         IBankAccountState;
+  bankAccounts:        IBankAccountsState;
+  visibleBankAccounts: IBankAccountsState;
   categories:          ICategoriesState;
   category:            ICategoryState;
   currencies:          ICurrenciesState;
   currentOrganization: ICurrentOrganizationState;
   customer:            ICustomerState;
   customers:           ICustomersState;
-  balances:            IBalancesState;
-  bankAccount:         IBankAccountState;
-  bankAccounts:        IBankAccountsState;
-  visibleBankAccounts: IBankAccountsState;
+  debtors:             IDebtorsState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   organization:        IOrganizationState;
@@ -39,7 +40,7 @@ interface IGlobalState {
   transaction:         ITransactionState;
   invoice:             IInvoiceState;
   invoices:            IInvoicesState;
-  unpaidInvoices:      IUnpaidInvoicesState;
+  unpaidInvoices:      IInvoicesState;
   unpaidInvoicesCount: IUnpaidInvoicesCountState;
 }
 

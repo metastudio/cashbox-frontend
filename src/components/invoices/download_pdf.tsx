@@ -5,13 +5,14 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import { ID } from 'model-types';
 import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { downloadInvoicePDF, IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
-  orgId: number;
+  orgId: ID;
 }
 
 interface IParamsProps {
@@ -19,20 +20,22 @@ interface IParamsProps {
 }
 
 interface IDispatchProps {
-  downloadPDF:  (orgId: number, invoiceId: number) => Promise<Blob>;
-  errorMessage: (msg: string) => void;
+  downloadPDF: typeof downloadInvoicePDF.request;
+  message:     typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps & IParamsProps;
 
 class DownloadPDFButton extends React.Component<IProps> {
   private handleDownloadPDF = () => {
-    const { orgId, invoice, downloadPDF, errorMessage } = this.props;
+    const { orgId, invoice, downloadPDF, message } = this.props;
 
-    downloadPDF(orgId, invoice.id).then((blob) => {
+    new Promise<Blob>((resolve, reject) => {
+      downloadPDF(orgId, invoice.id, resolve, reject);
+    }).then((blob) => {
       FileSaver.saveAs(blob, 'invoice.pdf');
     }).catch((error) => {
-      errorMessage(`Error on downloading PDF: ${error.message}`);
+      message(`Error on downloading PDF: ${error.message}`, { type: 'danger' });
     });
   }
 
@@ -46,10 +49,8 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  downloadPDF:  (orgId: number, invoiceId: number | string) => new Promise<Blob>((res, rej) => {
-    dispatch(downloadInvoicePDF(orgId, invoiceId, res, rej));
-  }),
-  errorMessage: (msg: string) => dispatch(addFlashMessage(msg, { type: 'danger' })),
+  downloadPDF: (orgId, invoiceId, res, rej) => dispatch(downloadInvoicePDF.request(orgId, invoiceId, res, rej)),
+  message:     (msg, opts) => dispatch(addFlashMessage(msg, opts)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DownloadPDFButton);

@@ -4,7 +4,7 @@ import { Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { Status } from 'model-types';
+import { ID, Status } from 'model-types';
 import { IGlobalState } from 'services/global-state';
 import {
   loadUnpaidInvoicesCount,
@@ -13,13 +13,13 @@ import {
 import { selectCurrentOrganizationId } from 'services/organizations';
 
 interface IStateProps {
-  orgId:  number;
-  status: string;
+  orgId:  ID;
+  status: Status;
   count:  number | null;
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadUnpaidInvoicesCount.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -57,7 +57,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadUnpaidInvoicesCount(orgId)),
+  load: orgId => dispatch(loadUnpaidInvoicesCount.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(UnpaidInvoicesCountBadge);
