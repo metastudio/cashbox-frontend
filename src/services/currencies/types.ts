@@ -1,4 +1,10 @@
-// I added separate type for currency because in future
-// this type may changed to somthing more complex and using
-// type for currency will allow to find possible errors after type change.
-export type Currency = string;
+import { Status } from 'model-types';
+import { CurrencyCode } from 'utils/money';
+
+interface ICurrenciesState {
+  items:  CurrencyCode[];
+  status: Status;
+  error:  Error | null;
+}
+
+export { ICurrenciesState };

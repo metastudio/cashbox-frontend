@@ -25,7 +25,7 @@ function* handleLoadTransactions(
   try {
     const { transactions, pagination } = yield call(getOrganizationTransactions, orgId, query);
     yield put(loadTransactions.success(orgId, transactions, pagination));
-    yield put(updateMemberLastVisit(orgId));
+    yield put(updateMemberLastVisit.request(orgId));
   } catch (error) {
     yield put(loadTransactions.failure(error));
   }

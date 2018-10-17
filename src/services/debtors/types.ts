@@ -1,3 +1,4 @@
+import { Status } from 'model-types';
 import { IConvertedAmount, IMoney } from 'utils/money/types';
 
 interface IDebtor {
@@ -11,4 +12,16 @@ interface ITotalByCurrency {
   amount: IMoney;
 }
 
-export { IDebtor, ITotalByCurrency };
+interface IDebtorsState {
+  items:            IDebtor[];
+  total:            IMoney | null;
+  totalsByCurrency: ITotalByCurrency[];
+  status:           Status;
+  error:            Error | null;
+}
+
+export {
+  IDebtor,
+  ITotalByCurrency,
+  IDebtorsState,
+};

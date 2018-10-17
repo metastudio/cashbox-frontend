@@ -6,35 +6,39 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { createCategory, ICategoryParams } from 'services/categories';
+import { createCategory } from 'services/categories';
 import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 
-import Form from './form.jsx';
+import Form, { ICategoryFormData } from './form';
 
 interface IStateProps {
   orgId: number;
 }
 
 interface IDispatchProps {
-  create:  (orgId: number, data: ICategoryParams) => Promise<{}>;
-  message: (msg: string) => void;
+  create:  typeof createCategory.request;
+  message: typeof addFlashMessage;
 }
 
 type IProps = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
 class NewCategory extends React.Component<IProps> {
-  private handleSubmit = (values: ICategoryParams) => {
+  private handleSubmit = (values: ICategoryFormData) => {
     const { create, orgId } = this.props;
-    return create(
-      orgId,
-      {
-        name: values.name,
-        type: values.type,
-      },
-    ).catch(prepareSubmissionError);
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          name: values.name,
+          type: values.type,
+        },
+        resolve,
+        reject,
+      );
+    }).catch(prepareSubmissionError);
   }
 
   private afterCreate = () => {
@@ -73,10 +77,8 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  create: (orgId: number, data: ICategoryParams) => (
-    new Promise((res, rej) => dispatch(createCategory(orgId, data, res, rej)))
-  ),
-  message: (msg: string) => dispatch(addFlashMessage(msg)),
+  create:  (orgId, data, res, rej) => dispatch(createCategory.request(orgId, data, res, rej)),
+  message: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewCategory));

@@ -9,7 +9,7 @@ import { MoneyAmount } from 'components/utils/money';
 
 interface IProps {
   invoice:      IInvoice;
-  userFullName: string;
+  userFullName: string | null;
 }
 
 const Table: React.SFC<IProps> = ({ invoice, userFullName }) => (

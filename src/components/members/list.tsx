@@ -24,7 +24,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: ID) => void;
+  load: typeof loadMembers.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -69,7 +69,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: orgId => dispatch(loadMembers(orgId)),
+  load: orgId => dispatch(loadMembers.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(MembersList);

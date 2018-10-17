@@ -5,11 +5,11 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { destroyOrganization, IOrganization } from 'services/organizations';
 
 import { confirm } from 'components/utils/confirm';
-import { FaButton } from '../utils/fa';
+import { FaButton } from 'components/utils/fa';
 
 interface IOwnProps {
   organization: IOrganization;
@@ -17,7 +17,7 @@ interface IOwnProps {
 
 interface IDispatchProps {
   destroy: (orgId: ID) => Promise<IOrganization>;
-  message: AddFlashMessageAction;
+  message: typeof addFlashMessage;
 }
 
 type IRouteProps = IOwnProps & RouteComponentProps<{}>;

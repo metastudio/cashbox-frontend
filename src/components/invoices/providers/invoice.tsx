@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: ID, invoiceId: ID) => void;
+  load: typeof loadInvoice.request;
 }
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
@@ -74,7 +74,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId, invoiceId) => dispatch(loadInvoice(orgId, invoiceId)),
+  load: (orgId, invoiceId) => dispatch(loadInvoice.request(orgId, invoiceId)),
 });
 
 // `withRouter` added to prevent update blocking

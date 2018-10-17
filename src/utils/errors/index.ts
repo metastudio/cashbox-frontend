@@ -1,4 +1,4 @@
-export { default as HttpError }       from './http-error.js';
-export { default as ValidationError } from './validation-error.js';
+export { default as HttpError }       from './http-error';
+export { default as ValidationError } from './validation-error';
 
-export * from './errors.js';
+export * from './errors';

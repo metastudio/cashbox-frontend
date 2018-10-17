@@ -7,7 +7,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { createBankAccount } from 'services/bank-accounts';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
@@ -19,7 +19,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   create:      typeof createBankAccount.request;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps & RouteComponentProps<{}>;

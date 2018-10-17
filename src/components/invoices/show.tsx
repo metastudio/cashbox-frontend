@@ -22,7 +22,7 @@ import Provider from './providers/invoice';
 import InvoiceTable from './show/table';
 
 interface IStateProps {
-  userFullName: string;
+  userFullName: string | null;
 }
 
 type IProps = RouteComponentProps<{ id: string }> & ICurrentOrgIdProps & IStateProps;

@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { CategoryType } from 'services/categories';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { IInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
@@ -27,7 +27,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   create:       typeof createTransaction.request;
-  flashMessage: AddFlashMessageAction;
+  flashMessage: typeof addFlashMessage;
 }
 
 type IRouteProps = RouteComponentProps<{}>;

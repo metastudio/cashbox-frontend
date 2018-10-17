@@ -32,7 +32,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCategories.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -116,7 +116,7 @@ const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => new Promise((res, rej) => dispatch(loadCategories(orgId, res, rej))),
+  load: orgId => dispatch(loadCategories.request(orgId)),
 });
 
 const CategoriesSelectContainer =
