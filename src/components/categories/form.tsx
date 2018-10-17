@@ -28,8 +28,16 @@ const CategoryForm: React.SFC<IProps> = ({ handleSubmit, submitting, error, acti
   <Form horizontal onSubmit={ handleSubmit }>
     { error && <Alert bsStyle="danger">{ error }</Alert> }
     <Field name="name" label="Name" component={ HorizontalFormInput } />
-    <Field name="type" label="Type" component={ HorizontalSelect } collection={ getOptions() } prompt="Select Type" />
-    <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>{ action } Category</HorizontalSubmitButton>
+    <Field
+      name="type"
+      component={ HorizontalSelect }
+      collection={ getOptions() }
+      label="Type"
+      prompt="Select Type"
+    />
+    <HorizontalSubmitButton bsStyle="primary" submitting={ submitting }>
+      { action } Category
+    </HorizontalSubmitButton>
   </Form>
 );
 

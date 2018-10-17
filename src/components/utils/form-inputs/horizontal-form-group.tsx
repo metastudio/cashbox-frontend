@@ -64,10 +64,11 @@ class HorizontalFormGroup extends React.PureComponent<IProps> {
 
 const wrapHorizontalFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
   // tslint:disable-next-line:max-classes-per-file
-  class HorizontalFormGroupWrapper extends React.Component<IProps> {
+  class HorizontalFormGroupWrapper extends React.Component<IProps & P> {
     public static displayName = `HorizontalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
     public render() {
+      // @ts-ignore
       const { input, meta, label, required, help, ...props } = this.props;
 
       return (
