@@ -10,7 +10,6 @@ interface ICurrency {
   name:          string;
   symbol:        string;
   subunitToUnit: number;
-  htmlEntity:    string;
 }
 
 interface IConvertedAmount {
