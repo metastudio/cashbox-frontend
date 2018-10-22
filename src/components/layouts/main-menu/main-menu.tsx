@@ -7,6 +7,7 @@ import Balances from './balances';
 import Invoices from './invoices';
 import OrganizationItem from './organization-item';
 import ProfileItem from './profile-item';
+import Statistics from './statistics';
 
 const MainMenu = () => (
   <Navbar inverse fluid>
@@ -23,6 +24,7 @@ const MainMenu = () => (
       </Nav>
 
       <Nav pullRight>
+        <Statistics />
         <Invoices />
         <ProfileItem />
       </Nav>
