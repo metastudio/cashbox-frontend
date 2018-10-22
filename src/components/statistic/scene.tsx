@@ -3,7 +3,7 @@ import * as React from 'react';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Route, Switch } from 'react-router-dom';
 
-import { statisticsPath } from 'routes';
+import { statisticPath } from 'routes';
 
 import MainLayout from 'components/layouts/main-layout';
 import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
@@ -11,19 +11,19 @@ import RequireLogin from 'components/utils/require-login';
 
 import Charts from './charts';
 
-const StatisticsScene: React.SFC = () => (
+const StatisticScene: React.SFC = () => (
   <RequireLogin>
     <CurrentOrganizationProvider>
       <MainLayout >
-        <BreadcrumbsItem to={ statisticsPath() }>
-          Statistics
+        <BreadcrumbsItem to={ statisticPath() }>
+          Statistic
         </BreadcrumbsItem>
         <Switch>
-          <Route exact path={ String(statisticsPath) } component={ Charts } />
+          <Route exact path={ String(statisticPath) } component={ Charts } />
         </Switch>
       </MainLayout>
     </CurrentOrganizationProvider>
   </RequireLogin>
 );
 
-export default StatisticsScene;
+export default StatisticScene;

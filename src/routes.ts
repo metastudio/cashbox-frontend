@@ -8,4 +8,4 @@ const createPath = (path: string) => {
 
 export const rootPath = createPath('/');
 
-export const statisticsPath = createPath('/statistics');
+export const statisticPath = createPath('/statistic');

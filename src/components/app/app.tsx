@@ -19,7 +19,7 @@ import InvoicesScene      from 'components/invoices';
 import LoginScene         from 'components/login';
 import MembersScene       from 'components/members';
 import OrganizationsScene from 'components/organizations';
-import StatisticsScene    from 'components/statistics';
+import StatisticScene     from 'components/statistic';
 import TransactionsScene  from 'components/transactions';
 import UserScene          from 'components/user';
 
@@ -56,7 +56,7 @@ class App extends React.PureComponent<IProps> {
               <Route path="/login" component={ LoginScene } />
               <Route path="/members" component={ MembersScene } />
               <Route path="/organizations" component={ OrganizationsScene } />
-              <Route path={ String(routes.statisticsPath) } component={ StatisticsScene } />
+              <Route path={ String(routes.statisticPath) } component={ StatisticScene } />
               <Route path="/transactions" component={ TransactionsScene } />
               <Route path="/user" component={ UserScene }/>
             </Switch>
