@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import * as routes from 'routes';
 import { selectIsSessionLoaded } from 'services/app/selectors';
 import { restoreSession } from 'services/auth';
 import { IGlobalState } from 'services/global-state';
@@ -47,7 +48,7 @@ class App extends React.PureComponent<IProps> {
         <BreadcrumbsProvider>
           <div>
             <Switch>
-              <Route exact path="/" component={ TransactionsScene } />
+              <Route exact path={ String(routes.rootPath) } component={ TransactionsScene } />
               <Route path="/categories" component={ CategoriesScene } />
               <Route path="/customers" component={ CustomersScene } />
               <Route path="/bank_accounts" component={ BankAccountsScene } />
@@ -55,7 +56,7 @@ class App extends React.PureComponent<IProps> {
               <Route path="/login" component={ LoginScene } />
               <Route path="/members" component={ MembersScene } />
               <Route path="/organizations" component={ OrganizationsScene } />
-              <Route path="/statistics" component={ StatisticsScene } />
+              <Route path={ String(routes.statisticsPath) } component={ StatisticsScene } />
               <Route path="/transactions" component={ TransactionsScene } />
               <Route path="/user" component={ UserScene }/>
             </Switch>

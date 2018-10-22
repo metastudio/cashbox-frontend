@@ -1,0 +1,11 @@
+import * as PathToRegexp from 'path-to-regexp';
+
+const createPath = (path: string) => {
+  const toPath = PathToRegexp.compile(path);
+  toPath.toString = () => path;
+  return toPath;
+};
+
+export const rootPath = createPath('/');
+
+export const statisticsPath = createPath('/statistics');
