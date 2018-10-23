@@ -10,6 +10,7 @@ import debtorsSaga             from './debtors/saga';
 import invoicesSaga            from './invoices/saga';
 import membersSaga             from './members/saga';
 import organizationsSaga       from './organizations/saga';
+import statisticSaga           from './statistic/saga';
 import transactionsSummarySaga from './transactions-summary/saga';
 import transactionsSaga        from './transactions/saga';
 import usersSaga               from './users/saga';
@@ -26,6 +27,7 @@ function* rootSaga() {
     fork(debtorsSaga),
     fork(invoicesSaga),
     fork(membersSaga),
+    fork(statisticSaga),
     fork(transactionsSummarySaga),
     fork(transactionsSaga),
     fork(usersSaga),

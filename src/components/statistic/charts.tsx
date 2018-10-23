@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Balances from './balances-chart';
+import Balances from './balance-chart';
 
 const Charts: React.SFC = () => {
   return (
