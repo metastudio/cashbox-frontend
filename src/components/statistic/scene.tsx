@@ -15,7 +15,7 @@ const AsyncCharts = asyncComponent(() => import('./charts'));
 const StatisticScene: React.SFC = () => (
   <RequireLogin>
     <CurrentOrganizationProvider>
-      <MainLayout >
+      <MainLayout sidebar={ false }>
         <BreadcrumbsItem to={ statisticPath() }>
           Statistic
         </BreadcrumbsItem>
