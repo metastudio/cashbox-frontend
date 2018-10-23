@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { PageHeader } from 'react-bootstrap';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import {
   Bar,
   CartesianGrid,
@@ -13,6 +14,7 @@ import {
   YAxis,
 } from 'recharts';
 
+import { balanceStatisticPath } from 'routes';
 import { IBalanceStatistic } from 'services/statistic';
 import { formatMoney, ICurrency, number2Money } from 'utils/money';
 
@@ -47,8 +49,11 @@ class BalanceChart extends React.PureComponent<IProps> {
   public render() {
     return (
       <>
+        <BreadcrumbsItem to={ balanceStatisticPath() }>
+          Balance
+        </BreadcrumbsItem>
         <PageHeader>
-          Balances
+          Balance
         </PageHeader>
         <Provider orgId={ this.props.orgId }>
           { this.renderContent }

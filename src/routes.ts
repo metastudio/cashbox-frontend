@@ -9,3 +9,4 @@ const createPath = (path: string) => {
 export const rootPath = createPath('/');
 
 export const statisticPath = createPath('/statistic');
+export const balanceStatisticPath = createPath('/statistic/balance');
