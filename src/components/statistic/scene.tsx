@@ -7,9 +7,10 @@ import { statisticPath } from 'routes';
 
 import MainLayout from 'components/layouts/main-layout';
 import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
+import asyncComponent from 'components/utils/async-component';
 import RequireLogin from 'components/utils/require-login';
 
-import Charts from './charts';
+const AsyncCharts = asyncComponent(() => import('./charts'));
 
 const StatisticScene: React.SFC = () => (
   <RequireLogin>
@@ -19,7 +20,7 @@ const StatisticScene: React.SFC = () => (
           Statistic
         </BreadcrumbsItem>
         <Switch>
-          <Route exact path={ String(statisticPath) } component={ Charts } />
+          <Route exact path={ String(statisticPath) } component={ AsyncCharts } />
         </Switch>
       </MainLayout>
     </CurrentOrganizationProvider>
