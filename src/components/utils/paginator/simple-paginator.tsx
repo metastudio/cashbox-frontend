@@ -19,8 +19,8 @@ type IProps = IOwnProps & IRouteProps;
 
 class SimplePaginator extends React.PureComponent<IProps> {
   public static defaultProps = {
-    nextPageLabel: 'Next Page',
-    prevPageLabel: 'Previous Page',
+    nextPageLabel: 'Next Page →',
+    prevPageLabel: '← Previous Page',
   };
 
   private nextPage = () => {
@@ -42,12 +42,12 @@ class SimplePaginator extends React.PureComponent<IProps> {
 
   private prevPageItem = () => {
     const previous = this.prevPage();
-    if (!previous) { return null; }
+    if (previous === undefined || previous === null) { return null; }
 
     return (
       <LinkContainer to={ this.locationWithPage(previous) }>
         <Pager.Item previous>
-          &larr; { this.props.prevPageLabel }
+          { this.props.prevPageLabel }
         </Pager.Item>
       </LinkContainer>
     );
@@ -55,12 +55,12 @@ class SimplePaginator extends React.PureComponent<IProps> {
 
   private nextPageItem = () => {
     const next = this.nextPage();
-    if (!next) { return null; }
+    if (next === undefined || next === null) { return null; }
 
     return (
       <LinkContainer to={ this.locationWithPage(next) }>
         <Pager.Item next>
-          { this.props.nextPageLabel } &rarr;
+          { this.props.nextPageLabel }
         </Pager.Item>
       </LinkContainer>
     );

@@ -9,9 +9,9 @@ enum Status {
 
 interface IPagination {
   current:   number;
-  previous?: number;
-  pages?:    number;
-  next?:     number;
+  previous?: number | null;
+  pages?:    number | null;
+  next?:     number | null;
 }
 
 export { ID, Status, IPagination };

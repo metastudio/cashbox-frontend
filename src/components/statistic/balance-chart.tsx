@@ -30,6 +30,18 @@ class BalanceChart extends React.PureComponent<IProps> {
   private valueFormatter = (currency: ICurrency) => {
     return (value: number) => formatMoney(number2Money(value, currency));
   }
+
+  private renderPagination = (pagination: IPagination) => {
+    return (
+      <SimplePaginator
+        data={ pagination }
+        inverse
+        prevPageLabel="← Back"
+        nextPageLabel="Forward →"
+      />
+    );
+  }
+
   private renderContent = (balances: IBalanceStatistic, pagination: IPagination | null) => {
     return (
       <>
@@ -47,7 +59,7 @@ class BalanceChart extends React.PureComponent<IProps> {
             <Line dataKey="total" stroke="#ff7300" name="Total" />
           </ComposedChart>
         </ResponsiveContainer>
-        { pagination && <SimplePaginator data={ pagination } inverse /> }
+        { pagination && this.renderPagination(pagination) }
       </>
     );
   }
