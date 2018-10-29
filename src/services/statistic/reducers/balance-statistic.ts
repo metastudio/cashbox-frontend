@@ -9,9 +9,10 @@ import {
 import { IBalanceStatisticState } from '../types';
 
 const defaultState: IBalanceStatisticState = {
-  status: Status.Invalid,
-  error:  null,
-  data:   null,
+  status:     Status.Invalid,
+  error:      null,
+  data:       null,
+  pagination: null,
 };
 
 const transactionsSummaryReducer = (
@@ -30,9 +31,10 @@ const transactionsSummaryReducer = (
     case getType(loadBalanceStatistic.success):
       return {
         ...state,
-        status: Status.Success,
-        error:  null,
-        data:   action.payload.statistic,
+        status:     Status.Success,
+        error:      null,
+        data:       action.payload.statistic,
+        pagination: action.payload.pagination,
       };
     case getType(loadBalanceStatistic.failure):
       return {

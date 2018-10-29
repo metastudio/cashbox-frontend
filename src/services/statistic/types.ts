@@ -1,4 +1,4 @@
-import { Status } from 'model-types';
+import { IPagination, Status } from 'model-types';
 import { ICurrency } from 'utils/money/types';
 
 interface IBalanceStatisticItem {
@@ -14,9 +14,10 @@ interface IBalanceStatistic {
 }
 
 interface IBalanceStatisticState {
-  data:    IBalanceStatistic | null;
-  status:  Status;
-  error:   Error | null;
+  data:       IBalanceStatistic | null;
+  pagination: IPagination | null;
+  status:     Status;
+  error:      Error | null;
 }
 
 export {

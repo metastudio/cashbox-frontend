@@ -1,19 +1,25 @@
 import { createAction } from 'typesafe-actions';
 
-import { ID } from 'model-types';
+import { ID, IPagination } from 'model-types';
 import { IBalanceStatistic } from './types';
 
 const loadBalanceStatistic = {
   request: createAction(
     'LOAD_BALANCE_STATISTIC_REQUEST',
     (resolve) => {
-      return (orgId: ID) => resolve({ orgId });
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
     },
   ),
   success: createAction(
     'LOAD_BALANCE_STATISTIC_SUCCESS',
     (resolve) => {
-      return (orgId: ID, statistic: IBalanceStatistic) => resolve({ orgId, statistic });
+      return (
+        orgId:     ID,
+        statistic: IBalanceStatistic,
+        pagination: IPagination,
+      ) => resolve(
+        { orgId, statistic, pagination },
+      );
     },
   ),
   failure: createAction(

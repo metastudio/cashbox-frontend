@@ -8,39 +8,59 @@ import { IPagination } from 'model-types';
 import { locationWithKeys } from 'utils/url-helpers';
 
 interface IOwnProps {
-  data: IPagination;
+  data:           IPagination;
+  inverse?:       boolean;
+  nextPageLabel?: string;
+  prevPageLabel?: string;
 }
 
 type IRouteProps = RouteComponentProps<{}>;
 type IProps = IOwnProps & IRouteProps;
 
 class SimplePaginator extends React.PureComponent<IProps> {
+  public static defaultProps = {
+    nextPageLabel: 'Next Page',
+    prevPageLabel: 'Previous Page',
+  };
+
+  private nextPage = () => {
+    const { inverse, data: { next, previous } } = this.props;
+
+    return inverse ? previous : next;
+  }
+
+  private prevPage = () => {
+    const { inverse, data: { next, previous } } = this.props;
+
+    return inverse ? next : previous;
+  }
+
   private locationWithPage = (page: number) => {
     const { location } = this.props;
     return locationWithKeys(location, { page });
   }
 
   private prevPageItem = () => {
-    const { data: { previous } } = this.props;
+    const previous = this.prevPage();
     if (!previous) { return null; }
 
     return (
       <LinkContainer to={ this.locationWithPage(previous) }>
         <Pager.Item previous>
-          &larr; Previous Page
+          &larr; { this.props.prevPageLabel }
         </Pager.Item>
       </LinkContainer>
     );
   }
 
   private nextPageItem = () => {
-    const { data: { next } } = this.props;
+    const next = this.nextPage();
     if (!next) { return null; }
 
     return (
       <LinkContainer to={ this.locationWithPage(next) }>
         <Pager.Item next>
-          Next Page &rarr;
+          { this.props.nextPageLabel } &rarr;
         </Pager.Item>
       </LinkContainer>
     );

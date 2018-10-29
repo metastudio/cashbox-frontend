@@ -10,11 +10,11 @@ import {
 } from './actions';
 
 function* handleLoadBalanceStatistic(
-  { payload: { orgId } }: ActionType<typeof loadBalanceStatistic.request>,
+  { payload: { orgId, query } }: ActionType<typeof loadBalanceStatistic.request>,
 ) {
   try {
-    const { statistic } = yield call(getBalanceStatistic, orgId);
-    yield put(loadBalanceStatistic.success(orgId, statistic));
+    const { statistic, pagination } = yield call(getBalanceStatistic, orgId, query);
+    yield put(loadBalanceStatistic.success(orgId, statistic, pagination));
   } catch (error) {
     yield put(loadBalanceStatistic.failure(error));
   }
