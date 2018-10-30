@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import * as routes from 'routes';
 import { selectIsSessionLoaded } from 'services/app/selectors';
 import { restoreSession } from 'services/auth';
 import { IGlobalState } from 'services/global-state';
@@ -18,6 +19,7 @@ import InvoicesScene      from 'components/invoices';
 import LoginScene         from 'components/login';
 import MembersScene       from 'components/members';
 import OrganizationsScene from 'components/organizations';
+import StatisticScene     from 'components/statistic';
 import TransactionsScene  from 'components/transactions';
 import UserScene          from 'components/user';
 
@@ -46,16 +48,17 @@ class App extends React.PureComponent<IProps> {
         <BreadcrumbsProvider>
           <div>
             <Switch>
-              <Route exact path="/" component={ TransactionsScene } />
-              <Route path="/transactions" component={ TransactionsScene } />
-              <Route path="/login" component={ LoginScene } />
-              <Route path="/organizations" component={ OrganizationsScene } />
-              <Route path="/customers" component={ CustomersScene } />
+              <Route exact path={ String(routes.rootPath) } component={ TransactionsScene } />
               <Route path="/categories" component={ CategoriesScene } />
+              <Route path="/customers" component={ CustomersScene } />
               <Route path="/bank_accounts" component={ BankAccountsScene } />
-              <Route path="/members" component={ MembersScene } />
-              <Route path="/user" component={ UserScene }/>
               <Route path="/invoices" component={ InvoicesScene }/>
+              <Route path="/login" component={ LoginScene } />
+              <Route path="/members" component={ MembersScene } />
+              <Route path="/organizations" component={ OrganizationsScene } />
+              <Route path={ String(routes.statisticPath) } component={ StatisticScene } />
+              <Route path="/transactions" component={ TransactionsScene } />
+              <Route path="/user" component={ UserScene }/>
             </Switch>
           </div>
         </BreadcrumbsProvider>
