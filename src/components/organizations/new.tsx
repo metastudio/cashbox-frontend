@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import {
   createOrganization,
   IOrganization,
@@ -18,7 +18,7 @@ import Form, { IOrganizationFormData } from './form';
 
 interface IDispatchProps {
   create: (data: IOrganizationParams) => Promise<IOrganization>;
-  showMessage: AddFlashMessageAction;
+  showMessage: typeof addFlashMessage;
 }
 
 type IProps = IDispatchProps & RouteComponentProps<{}>;
@@ -65,7 +65,7 @@ class NewOrganization extends React.PureComponent<IProps> {
 }
 
 const dispatcher = (dispatch: Dispatch): IDispatchProps => ({
-  create:      data => new Promise((res, rej) => dispatch(createOrganization(data, res, rej))),
+  create:      data => new Promise((res, rej) => dispatch(createOrganization.request(data, res, rej))),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

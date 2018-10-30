@@ -1,9 +1,18 @@
 import * as accounting from 'accounting';
 
 import Locales from './locales';
-import { IMoney, IMoneyLocale } from './types';
+import { ICurrency, IMoney, IMoneyLocale } from './types';
 
 const defaultMoneyLocale: IMoneyLocale = Locales.ru_RU;
+
+const number2Money = (num: number | undefined | null, currency: ICurrency): IMoney | undefined => {
+  if (num === undefined || num === null) { return undefined; }
+
+  return {
+    currency,
+    fractional: String(num * currency.subunitToUnit),
+  };
+};
 
 /**
  * Format money value with default locale
@@ -84,6 +93,7 @@ const formatMoneyParam = (str?: string, locale: IMoneyLocale = defaultMoneyLocal
 
 export {
   IMoney,
+  number2Money,
   formatMoney,
   formatMoneyValue,
   parseMoneyValue,

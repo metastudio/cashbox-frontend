@@ -26,7 +26,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCustomers.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -95,13 +95,13 @@ class CustomersSelect extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:     selectCurrentOrganizationId(state),
+  orgId:     selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:    selectCustomersStatus(state),
   customers: selectCustomers(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: orgId => new Promise<ICustomer[]>((res, rej) => dispatch(loadCustomers(orgId, res, rej))),
+  load: orgId => dispatch(loadCustomers.request(orgId)),
 });
 
 const CustomersSelectContainer =

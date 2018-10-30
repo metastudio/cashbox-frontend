@@ -1,39 +1,9 @@
-interface IInvoiceItemFormData {
-  _destroy?:    boolean;
-  id?:          number;
-  customerId?:  number;
-  amount?:      string;
-  date?:        Date;
-  hours?:       number;
-  description?: string;
-}
-
-interface IInvoiceFormData {
-  currency:       string;
-  bankAccountId?: number;
-  number?:        number;
-  customerId?:    number;
-  startsAt?:      Date;
-  endsAt?:        Date;
-  amount?:        string;
-  sentAt?:        Date;
-  paidAt?:        Date;
-  invoiceItems:   IInvoiceItemFormData[];
-}
-
-interface IInvoiceFormState {
-  values: IInvoiceFormData;
-}
+import { IInvoiceFormState } from './invoice-form/types';
+import { ITransferFormState } from './transfer-form/types';
 
 interface IReduxFormState {
-  form: {
-    invoiceForm?: IInvoiceFormState;
-  };
+  invoiceForm?: IInvoiceFormState;
+  transferForm?: ITransferFormState;
 }
 
-export {
-  IInvoiceItemFormData,
-  IInvoiceFormData,
-  IInvoiceFormState,
-  IReduxFormState,
-};
+export { IReduxFormState };

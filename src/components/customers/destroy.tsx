@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { deleteCustomer, ICustomer } from 'services/customers';
-import { addFlashMessage, IFlashMessageOptions } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -21,8 +21,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  deleteCust:  (orgId: ID, customerId: ID) => Promise<ICustomer>;
-  showMessage: (msg: string, opts?: IFlashMessageOptions) => void;
+  deleteCust:  typeof deleteCustomer.request;
+  showMessage: typeof addFlashMessage;
 }
 
 type IProps = IOwnProps & IStateProps & IDispatchProps & RouteComponentProps<{}>;
@@ -32,7 +32,9 @@ class DestroyCustomer extends React.Component<IProps> {
     const { orgId, customer, deleteCust } = this.props;
 
     confirm('Are you sure?').then(() => {
-      deleteCust(orgId, customer.id).then((c: ICustomer) => {
+      new Promise((resolve, reject) => {
+        deleteCust(orgId, customer.id, resolve, reject);
+      }).then((c: ICustomer) => {
         const { showMessage, history } = this.props;
         showMessage(`Customer "${c.name}" has been deleted.`);
         history.push('/customers');
@@ -56,14 +58,12 @@ class DestroyCustomer extends React.Component<IProps> {
 }
 
 const select = (state: IGlobalState): IStateProps => ({
-  orgId: selectCurrentOrganizationId(state),
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
 const dispatcher = (dispatch: Dispatch): IDispatchProps => ({
-  deleteCust: (orgId: ID, customerId: ID) => (
-    new Promise((res, rej) => dispatch(deleteCustomer(orgId, customerId, res, rej)))
-  ),
-  showMessage: (msg: string, opts?: IFlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
+  deleteCust:  (orgId, customerId, res, rej) => dispatch(deleteCustomer.request(orgId, customerId, res, rej)),
+  showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect(select, dispatcher)(DestroyCustomer));

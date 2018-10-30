@@ -16,11 +16,11 @@ import Table from './list/table';
 interface IStateProps {
   orgId:      number;
   status:     Status;
-  categories: ICategory[] | null;
+  categories: ICategory[];
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCategories.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -55,14 +55,14 @@ class CategoriesList extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:      selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:      selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:     selectCategoriesStatus(state),
   categories: selectCategories(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: (orgId: number) => dispatch(loadCategories(orgId)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: orgId => dispatch(loadCategories.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(CategoriesList);

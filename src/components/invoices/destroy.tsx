@@ -18,8 +18,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  destroy:      (orgId: number, invoiceId: number) => Promise<{}>;
-  flashMessage: (message: string) => void;
+  destroy: typeof destroyInvoice.request;
+  message: typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps & RouteComponentProps<{ id: string }>;
@@ -30,10 +30,12 @@ class DestroyButton extends React.Component<IProps> {
     if (!invoice) { return; }
 
     confirm('Are you sure?').then(() => {
-      destroy(orgId, invoice.id).then(() => {
-        const { flashMessage, history } = this.props;
+      new Promise((resolve, reject) => {
+        destroy(orgId, invoice.id, resolve, reject);
+      }).then(() => {
+        const { message, history } = this.props;
 
-        flashMessage('Invoice successfully destroyed');
+        message('Invoice successfully destroyed');
         history.push('/invoices');
       });
     });
@@ -46,16 +48,14 @@ class DestroyButton extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId:        selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId:        selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   invoice:      selectInvoice(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  destroy:      (orgId: number, invoiceId: number) => new Promise((res, rej) => {
-    dispatch(destroyInvoice(orgId, invoiceId, res, rej));
-  }),
-  flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  destroy: (orgId, invoiceId, res, rej) => dispatch(destroyInvoice.request(orgId, invoiceId, res, rej)),
+  message: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(DestroyButton));

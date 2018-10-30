@@ -22,8 +22,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  restoreOrganization: () => void;
-  flashMessage:        (msg: string, opts?: IFlashMessageOptions) => void;
+  restoreOrganization: typeof restoreOrganization.request;
+  flashMessage:        typeof addFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -70,7 +70,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  restoreOrganization: () => dispatch(restoreOrganization()),
+  restoreOrganization: () => dispatch(restoreOrganization.request()),
   flashMessage:        (msg: string, opts: IFlashMessageOptions) => dispatch(addFlashMessage(msg, opts)),
 });
 

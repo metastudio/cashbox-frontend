@@ -8,6 +8,7 @@ import {
   removeFlashMessage,
   selectFlashMessages,
 } from 'services/flash-messages';
+import { IGlobalState } from 'services/global-state';
 
 import FlashMessage from './flash-message';
 
@@ -16,7 +17,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  removeMessage: (muid: string) => void;
+  removeMessage: typeof removeFlashMessage;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -46,12 +47,12 @@ class FlashMessages extends React.PureComponent<IProps> {
   }
 }
 
-const mapState = (state: object): IStateProps => ({
+const mapState = (state: IGlobalState): IStateProps => ({
   messages: selectFlashMessages(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  removeMessage: (muid: string) => dispatch(removeFlashMessage(muid)),
+  removeMessage: muid => dispatch(removeFlashMessage(muid)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(FlashMessages);

@@ -3,17 +3,15 @@ import { reducer as formReducer } from 'redux-form';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
-import { INVOICE_FORM } from 'constants/forms';
-
 import * as reducers from 'services/reducers';
-import invoiceFormReducer from 'services/redux-form/reducers/invoice-form.js';
-import rootSaga from 'services/sagas.js';
+import formReducers from 'services/redux-form/reducers';
+import rootSaga from 'services/sagas';
 
 function createAppStore() {
 
   const reducer = combineReducers({
     ...reducers,
-    form: formReducer.plugin({ [INVOICE_FORM]: invoiceFormReducer }),
+    form: formReducer.plugin(formReducers),
   });
 
   const sagaMiddleware = createSagaMiddleware();

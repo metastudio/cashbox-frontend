@@ -15,9 +15,9 @@ import {
   selectVisibleBankAccountsCurrencies,
   selectVisibleBankAccountsStatus,
 } from 'services/bank-accounts';
-import { Currency } from 'services/currencies';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
+import { CurrencyCode } from 'utils/money';
 
 import { wrapHorizontalFormGroup } from 'components/utils/form-inputs/horizontal-form-group';
 import { wrapNoLabelFormGroup } from 'components/utils/form-inputs/no-label-form-group';
@@ -32,12 +32,12 @@ interface IOwnProps {
 interface IStateProps {
   status:       string;
   orgId:        number;
-  currencies:   Currency[];
+  currencies:   CurrencyCode[];
   bankAccounts: IBankAccount[];
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadVisibleBankAccounts.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -111,14 +111,14 @@ class BankAccountsSelect extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:        selectCurrentOrganizationId(state),
+  orgId:        selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:       selectVisibleBankAccountsStatus(state),
   currencies:   selectVisibleBankAccountsCurrencies(state),
   bankAccounts: selectVisibleBankAccounts(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: number) => dispatch(loadVisibleBankAccounts(orgId)),
+  load: orgId => dispatch(loadVisibleBankAccounts.request(orgId)),
 });
 
 const BankAccountsSelectContainer =

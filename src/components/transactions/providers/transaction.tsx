@@ -26,7 +26,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number, transactionId: number) => void;
+  load: typeof loadTransaction.request;
 }
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
@@ -71,7 +71,7 @@ const mapState = (state: IGlobalState): IStateProps => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId, transId) => dispatch(loadTransaction(orgId, transId)),
+  load: (orgId, transId) => dispatch(loadTransaction.request(orgId, transId)),
 });
 
 export default connect<IStateProps, IDispatchProps, IOwnProps>(

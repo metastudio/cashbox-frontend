@@ -32,7 +32,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: number) => void;
+  load: typeof loadCategories.request;
 }
 
 type IProps = IOwnProps & WrappedFieldProps & IStateProps & IDispatchProps;
@@ -109,14 +109,14 @@ class CategoriesSelect extends React.Component<IProps> {
   }
 }
 
-const mapState = (state: IGlobalState, props: IOwnProps) => ({
-  orgId:      selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
+  orgId:      selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   status:     selectCategoriesStatus(state),
   categories: selectCategories(state, props.type),
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  load: (orgId: number) => new Promise((res, rej) => dispatch(loadCategories(orgId, res, rej))),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  load: orgId => dispatch(loadCategories.request(orgId)),
 });
 
 const CategoriesSelectContainer =

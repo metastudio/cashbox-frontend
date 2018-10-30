@@ -19,6 +19,7 @@ export { default as members }             from './members/reducers/members';
 export { default as currentOrganization } from './organizations/reducers/current-organization';
 export { default as organization }        from './organizations/reducers/organization';
 export { default as organizations }       from './organizations/reducers/organizations';
+export { default as balanceStatistic }    from './statistic/reducers/balance-statistic';
 export { default as transaction }         from './transactions/reducers/transaction';
 export { default as transactions }        from './transactions/reducers/transactions';
 export { default as transactionsSummary } from './transactions-summary/reducers/transactions-summary';

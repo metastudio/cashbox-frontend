@@ -9,14 +9,20 @@ import { CrumbItem } from 'components/utils/breadcrumbs';
 import FlashMessages from 'components/utils/flash-messages';
 
 interface IProps {
-  sidebar?: () => React.ReactNode;
+  sidebar?: (() => React.ReactNode) | boolean;
 }
 
 const MainLayout: React.SFC<IProps> = ({ children, sidebar }) => {
-  const renderSidebar = () => {
-    if (sidebar) { return sidebar(); }
-    return <Sidebar />;
-  };
+  const showSidebar: boolean = sidebar !== false;
+
+  let renderedSidebar = null;
+  if (showSidebar) {
+    if (typeof sidebar === 'function') {
+      renderedSidebar = sidebar();
+    } else {
+      renderedSidebar = <Sidebar />;
+    }
+  }
 
   return(
     <>
@@ -38,13 +44,11 @@ const MainLayout: React.SFC<IProps> = ({ children, sidebar }) => {
           </Col>
         </Row>
         <Row>
-          <Col xs={ 12 } sm={ 8 } md={ 9 }>
+          <Col xs={ 12 } sm={ showSidebar ? 8 : 12 } md={ showSidebar ? 9 : 12 }>
             <FlashMessages />
             { children }
           </Col>
-          <Col xs={ 12 } sm={ 4 } md={ 3 }>
-            { renderSidebar() }
-          </Col>
+          { showSidebar && <Col xs={ 12 } sm={ 4 } md={ 3 }>{ renderedSidebar }</Col> }
         </Row>
       </Grid>
     </>

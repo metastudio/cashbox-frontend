@@ -9,9 +9,9 @@ interface IOwnProps {
   required?: boolean;
 }
 
-type Props = WrappedFieldProps & IOwnProps;
+type IProps = WrappedFieldProps & IOwnProps;
 
-class VerticalFormGroup extends React.Component<Props> {
+class VerticalFormGroup extends React.Component<IProps> {
   private labelBlock = () => {
     const { label, required } = this.props;
 
@@ -60,7 +60,7 @@ class VerticalFormGroup extends React.Component<Props> {
 
 const wrapVerticalFormGroup = <P extends WrappedFieldProps>(Component: React.ComponentType<P>, groupProps = {}) => {
   // tslint:disable-next-line:max-classes-per-file
-  class VerticalFormGroupWrapper extends React.Component<Props> {
+  class VerticalFormGroupWrapper extends React.Component<IProps> {
     public static displayName = `VerticalFormGroupWrapper(${Component.displayName || Component.name || 'Component'})`;
 
     public render() {

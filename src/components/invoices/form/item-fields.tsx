@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Field } from 'redux-form';
 
-import { IInvoiceItemFormData } from 'services/redux-form';
+import { IInvoiceItemFormData } from 'services/redux-form/invoice-form';
 
 import { NoLabelCustomersSelect } from 'components/customers/select-field';
 import {

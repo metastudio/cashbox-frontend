@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import { ID } from 'model-types';
 import { addFlashMessage } from 'services/flash-messages';
 import { IGlobalState } from 'services/global-state';
-import { createInvoice, IInvoice, InvoiceParams } from 'services/invoices';
+import { createInvoice } from 'services/invoices';
 import { selectCurrentOrganizationId } from 'services/organizations';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam } from 'utils/money';
@@ -16,38 +17,42 @@ import { formatMoneyParam } from 'utils/money';
 import Form, { IInvoiceFormData } from './form/form';
 
 interface IStateProps {
-  orgId: number;
+  orgId: ID;
 }
 interface IDispatchProps {
-  create:       (orgId: number, data: InvoiceParams) => Promise<IInvoice>;
-  flashMessage: (msg: string) => void;
+  create:       typeof createInvoice.request;
+  flashMessage: typeof addFlashMessage;
 }
 type Props = RouteComponentProps<{}> & IStateProps & IDispatchProps;
 
 class NewInvoice extends React.Component<Props> {
   private handleSubmit = (values: IInvoiceFormData) => {
     const { orgId, create } = this.props;
-    return create(
-      orgId,
-      {
-        currency:      values.currency,
-        bankAccountId: values.bankAccountId,
-        amount:        formatMoneyParam(values.amount),
-        number:        Number(values.number),
-        customerId:    values.customerId,
-        startsAt:      values.startsAt,
-        endsAt:        values.endsAt,
-        sentAt:        values.sentAt,
-        paidAt:        values.paidAt,
-        invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map(item => ({
-          customerId:   item.customerId,
-          date:         item.date,
-          hours:        Number(item.hours),
-          description:  item.description,
-          amount:       formatMoneyParam(item.amount),
-        })),
-      },
-    ).catch(prepareSubmissionError);
+    return new Promise((resolve, reject) => {
+      create(
+        orgId,
+        {
+          currency:      values.currency,
+          bankAccountId: values.bankAccountId,
+          amount:        formatMoneyParam(values.amount),
+          number:        Number(values.number),
+          customerId:    values.customerId,
+          startsAt:      values.startsAt,
+          endsAt:        values.endsAt,
+          sentAt:        values.sentAt,
+          paidAt:        values.paidAt,
+          invoiceItemsAttributes: values.invoiceItems && values.invoiceItems.map(item => ({
+            customerId:   item.customerId,
+            date:         item.date,
+            hours:        Number(item.hours),
+            description:  item.description,
+            amount:       formatMoneyParam(item.amount),
+          })),
+        },
+        resolve,
+        reject,
+      );
+    }).catch(prepareSubmissionError);
   }
 
   private afterCreate = () => {
@@ -73,15 +78,13 @@ class NewInvoice extends React.Component<Props> {
   }
 }
 
-const mapState = (state: IGlobalState) => ({
-  orgId: selectCurrentOrganizationId(state),
+const mapState = (state: IGlobalState): IStateProps => ({
+  orgId: selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
 });
 
-const mapDispatch = (dispatch: Dispatch) => ({
-  create: (orgId: number, data: InvoiceParams) => new Promise<IInvoice>((res, rej) => {
-    dispatch(createInvoice(orgId, data, res, rej));
-  }),
-  flashMessage: (msg: string) => dispatch(addFlashMessage(msg)),
+const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
+  create:       (orgId, data, res, rej) => dispatch(createInvoice.request(orgId, data, res, rej)),
+  flashMessage: msg => dispatch(addFlashMessage(msg)),
 });
 
 export default withRouter(connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(NewInvoice));

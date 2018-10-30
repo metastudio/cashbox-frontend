@@ -6,12 +6,8 @@ import { Dispatch } from 'redux';
 
 import { ID } from 'model-types';
 import { CategoryType } from 'services/categories';
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
-import {
-  ITransaction,
-  ITransactionParams,
-  updateTransaction,
-} from 'services/transactions';
+import { addFlashMessage } from 'services/flash-messages';
+import { ITransaction, updateTransaction } from 'services/transactions';
 import { formatDateValue } from 'utils/date';
 import { prepareSubmissionError } from 'utils/errors';
 import { formatMoneyParam, formatMoneyValue } from 'utils/money';
@@ -25,8 +21,8 @@ interface IOwnProps {
 }
 
 interface IDispatchProps {
-  update: (orgId: ID, transactionID: ID, data: ITransactionParams) => Promise<ITransaction>;
-  showMessage: AddFlashMessageAction;
+  update:      typeof updateTransaction.request;
+  showMessage: typeof addFlashMessage;
 }
 
 type IRouterProps = RouteComponentProps<{}>;
@@ -35,13 +31,21 @@ type IProps = IOwnProps & IDispatchProps & IRouterProps;
 class EditNormalTransaction extends React.PureComponent<IProps> {
   private handleSubmit = (values: ITransactionFormData) => {
     const { orgId, transaction, update } = this.props;
-    return update(orgId, transaction.id, {
-      amount:        formatMoneyParam(values.amount),
-      categoryId:    values.categoryId,
-      customerId:    values.customerId,
-      bankAccountId: values.bankAccountId,
-      comment:       values.comment,
-      date:          values.date,
+    return new Promise((resolve, reject) => {
+      update(
+        orgId,
+        transaction.id,
+        {
+          amount:        formatMoneyParam(values.amount),
+          categoryId:    values.categoryId,
+          customerId:    values.customerId,
+          bankAccountId: values.bankAccountId,
+          comment:       values.comment,
+          date:          values.date,
+        },
+        resolve,
+        reject,
+      );
     }).catch(prepareSubmissionError);
   }
 
@@ -80,7 +84,7 @@ class EditNormalTransaction extends React.PureComponent<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  update: (orgId, tId, data) => new Promise((res, rej) => dispatch(updateTransaction(orgId, tId, data, res, rej))),
+  update: (orgId, tId, data, res, rej) => dispatch(updateTransaction.request(orgId, tId, data, res, rej)),
   showMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

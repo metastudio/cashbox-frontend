@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { IBankAccount, selectBankAccountsWithCurrency } from 'services/bank-accounts';
+import { IGlobalState } from 'services/global-state';
 
 import Row from './table-row';
 
@@ -33,7 +34,7 @@ const BankAccountsTable: React.SFC<IProps> = ({ bankAccounts }) => (
   </Table>
 );
 
-const mapState = (state: {}, props: IOwnProps) => ({
+const mapState = (state: IGlobalState, props: IOwnProps) => ({
   bankAccounts: selectBankAccountsWithCurrency(state, props.currency),
 });
 

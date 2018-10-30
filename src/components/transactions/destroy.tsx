@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 
-import { addFlashMessage, AddFlashMessageAction } from 'services/flash-messages';
+import { addFlashMessage } from 'services/flash-messages';
 import { destroyTransaction, ITransaction } from 'services/transactions';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
@@ -16,8 +16,8 @@ interface IOwnProps {
 }
 
 interface IDispatchProps {
-  destroy:      (orgId: number, transactionId: number) => Promise<{}>;
-  flashMessage: AddFlashMessageAction;
+  destroy:      typeof destroyTransaction.request;
+  flashMessage: typeof addFlashMessage;
 }
 
 type IRouteProps = RouteComponentProps<{}>;
@@ -31,7 +31,9 @@ class DestroyButton extends React.Component<IProps> {
     if (!transaction) { return; }
 
     confirm('Are you sure?').then(() => {
-      destroy(orgId, transaction.id).then(() => {
+      new Promise((resolve, reject) => {
+        destroy(orgId, transaction.id, resolve, reject);
+      }).then(() => {
         const { flashMessage, history, location: { search } } = this.props;
 
         flashMessage('Transaction successfully removed');
@@ -46,7 +48,7 @@ class DestroyButton extends React.Component<IProps> {
 }
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  destroy: (orgId, transId) => new Promise((res, rej) => dispatch(destroyTransaction(orgId, transId, res, rej))),
+  destroy: (orgId, transId, res, rej) => dispatch(destroyTransaction.request(orgId, transId, res, rej)),
   flashMessage: msg => dispatch(addFlashMessage(msg)),
 });
 

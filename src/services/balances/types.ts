@@ -1,11 +1,30 @@
-import { IMoney } from 'utils/money';
+import { Status } from 'model-types';
+import { CurrencyCode, IMoney } from 'utils/money';
 
 interface IBalance {
   total:     IMoney;
   exTotal?:  IMoney;
   rate:      string;
-  currency:  string;
+  currency:  CurrencyCode;
   updatedAt: Date;
 }
 
-export { IBalance };
+interface IOrganizationBalance {
+  totalAmount: IMoney;
+  defaultCurrency: CurrencyCode;
+  totals:          IBalance[];
+}
+
+interface IBalancesState {
+  status:          Status;
+  totalAmount:     IMoney | null;
+  defaultCurrency: CurrencyCode | null;
+  totals:          IBalance[];
+  error:           Error | null;
+}
+
+export {
+  IBalance,
+  IOrganizationBalance,
+  IBalancesState,
+};

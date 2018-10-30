@@ -10,6 +10,13 @@ interface IFlashMessageOptions {
   autoClose?: boolean;
 }
 
-type AddFlashMessageAction = (msg: string, opts?: IFlashMessageOptions | null) => void;
+interface IFlashMessagesState {
+  messages: IFlashMessage[];
+}
 
-export { IFlashMessage, IFlashMessageOptions, AddFlashMessageAction };
+export {
+  IFlashMessage,
+  IFlashMessageOptions,
+
+  IFlashMessagesState,
+};

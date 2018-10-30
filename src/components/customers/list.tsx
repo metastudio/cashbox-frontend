@@ -25,7 +25,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: (orgId: ID) => void;
+  load: typeof loadCustomers.request;
 }
 
 type IProps = IStateProps & IDispatchProps;
@@ -64,13 +64,13 @@ class CustomersList extends React.Component<IProps> {
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:     selectCurrentOrganizationId(state),
+  orgId:     selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
   customers: selectCustomers(state),
   status:    selectCustomersStatus(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  load: (orgId: ID) => dispatch(loadCustomers(orgId)),
+  load: orgId => dispatch(loadCustomers.request(orgId)),
 });
 
 export default connect<IStateProps, IDispatchProps>(mapState, mapDispatch)(CustomersList);
