@@ -22,6 +22,7 @@ import { formatMoney, ICurrency, number2Money } from 'utils/money';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import { SimplePaginator } from 'components/utils/paginator';
+import Tabs from './balance-tabs';
 import Provider from './providers/balance';
 
 type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
@@ -65,6 +66,8 @@ class BalanceChart extends React.PureComponent<IProps> {
   }
 
   public render() {
+    const { location } = this.props;
+
     return (
       <>
         <BreadcrumbsItem to={ balanceStatisticPath() }>
@@ -73,7 +76,8 @@ class BalanceChart extends React.PureComponent<IProps> {
         <PageHeader>
           Balance
         </PageHeader>
-        <Provider orgId={ this.props.orgId } search={ this.props.location.search }>
+        <Tabs location={ location } />
+        <Provider orgId={ this.props.orgId } search={ location.search }>
           { this.renderContent }
         </Provider>
       </>

@@ -11,8 +11,9 @@ import {
   selectBalanceStatistic,
   selectBalanceStatisticPagination,
   selectBalanceStatisticStatus,
+  selectStatisticsQueryPage,
+  selectStatisticsQueryScale,
 } from 'services/statistic';
-import { selectTransactionsQueryPage } from 'services/transactions';
 
 import LoadingView from 'components/utils/loading-view';
 
@@ -27,6 +28,7 @@ interface IStateProps {
   statistic:  IBalanceStatistic | null;
   pagination: IPagination | null;
   page:       number | undefined;
+  scale:      string | undefined;
 }
 
 interface IDispatchProps {
@@ -37,9 +39,9 @@ type IProps = IOwnProps & IStateProps & IDispatchProps;
 
 class BalanceStatisticProvider extends React.PureComponent<IProps> {
   private loadData = () => {
-    const { load, orgId, page } = this.props;
+    const { load, orgId, page, scale } = this.props;
 
-    load(orgId, { page });
+    load(orgId, { page, scale });
   }
 
   private renderChildren = () => {
@@ -54,10 +56,10 @@ class BalanceStatisticProvider extends React.PureComponent<IProps> {
   }
 
   public componentDidUpdate(prevProps: IProps) {
-    const { orgId: prevOrgId, page: prevPage } = prevProps;
-    const { status, orgId, page } = this.props;
+    const { orgId: prevOrgId, page: prevPage, scale: prevScale } = prevProps;
+    const { status, orgId, page, scale } = this.props;
 
-    if (status === Status.Invalid || prevOrgId !== orgId || prevPage !== page) {
+    if (status === Status.Invalid || prevOrgId !== orgId || prevPage !== page || prevScale !== scale) {
       this.loadData();
     }
   }
@@ -77,7 +79,8 @@ const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
   status:     selectBalanceStatisticStatus(state),
   statistic:  selectBalanceStatistic(state),
   pagination: selectBalanceStatisticPagination(state),
-  page:       selectTransactionsQueryPage(props.search),
+  page:       selectStatisticsQueryPage(props.search),
+  scale:      selectStatisticsQueryScale(props.search),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => bindActionCreators(
@@ -86,10 +89,6 @@ const mapDispatch = (dispatch: Dispatch): IDispatchProps => bindActionCreators(
   },
   dispatch,
 );
-
-// ({
-//   load: (orgId, page) => dispatch(loadBalanceStatistic.request(orgId, page)),
-// });
 
 export default connect<IStateProps, IDispatchProps, IOwnProps>(
   mapState, mapDispatch,
