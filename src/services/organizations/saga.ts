@@ -33,13 +33,7 @@ function* handleRestoreOrganization() {
   try {
     const currentOrganizationId = yield call(fetchCurrentOrganizationId);
 
-    let organization;
-    try {
-      const response = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
-      organization = response.organization;
-    } catch (error) {
-      organization = null;
-    }
+    const { organization } = currentOrganizationId && (yield call(getOrganization, currentOrganizationId));
 
     yield put(restoreOrganization.success(organization));
   } catch (error) {
