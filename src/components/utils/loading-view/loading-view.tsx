@@ -37,7 +37,7 @@ class LoadingView extends React.Component<IProps> {
   private renderChildren = () => {
     const { children, status } = this.props;
 
-    if (typeof children === 'function') { return children(status); }
+    if (children instanceof Function) { return children(status); }
 
     return children;
   }
@@ -45,7 +45,7 @@ class LoadingView extends React.Component<IProps> {
   private renderSpinner = () => {
     const { spinner } = this.props;
 
-    if (spinner && typeof spinner === 'function') {
+    if (spinner && spinner instanceof Function) {
       return spinner();
     }
 
