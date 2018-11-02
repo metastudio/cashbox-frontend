@@ -1,13 +1,21 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-import { ICategory } from 'services/categories';
+import { CategoryType, ICategory, selectCategories } from 'services/categories';
+import { IGlobalState } from 'services/global-state';
 
 import Row from './table-row';
 
-interface IProps {
+interface IOwnProps {
+  type: CategoryType;
+}
+
+interface IStateProps {
   categories: ICategory[];
 }
+
+type IProps = IOwnProps & IStateProps;
 
 const CategoriesTable: React.SFC<IProps> = ({ categories }) => (
   <Table striped responsive hover id="categories">
@@ -24,4 +32,8 @@ const CategoriesTable: React.SFC<IProps> = ({ categories }) => (
   </Table>
 );
 
-export default CategoriesTable;
+const mapState = (state: IGlobalState, props: IOwnProps) => ({
+  categories: selectCategories(state, props.type),
+});
+
+export default connect<IStateProps, {}, IOwnProps>(mapState)(CategoriesTable);
