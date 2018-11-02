@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { Status } from 'model-types';
-import { ICategory, loadCategories, selectCategories, selectCategoriesStatus } from 'services/categories';
+import { CategoryType, loadCategories, selectCategoriesStatus } from 'services/categories';
 import { IGlobalState } from 'services/global-state';
 import { selectCurrentOrganizationId } from 'services/organizations';
 
@@ -14,9 +14,8 @@ import LoadingView from 'components/utils/loading-view';
 import Table from './list/table';
 
 interface IStateProps {
-  orgId:      number;
-  status:     Status;
-  categories: ICategory[];
+  orgId:  number;
+  status: Status;
 }
 
 interface IDispatchProps {
@@ -37,11 +36,7 @@ class CategoriesList extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, categories } = this.props;
-
-    if (status !== Status.Success || !categories) {
-      return <LoadingView status={ status } />;
-    }
+    const { status } = this.props;
 
     return (
       <>
@@ -49,16 +44,17 @@ class CategoriesList extends React.Component<IProps> {
           <Link to="/categories/new" className="btn btn-default pull-right">Add Category...</Link>
           Categories
         </PageHeader>
-        <Table categories={ categories } />
+        <LoadingView status={ status }>
+          { () => [CategoryType.Income, CategoryType.Expense].map(t => <Table key={ t } type={ t } />) }
+        </LoadingView>
       </>
     );
   }
 }
 
 const mapState = (state: IGlobalState): IStateProps => ({
-  orgId:      selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
-  status:     selectCategoriesStatus(state),
-  categories: selectCategories(state),
+  orgId:  selectCurrentOrganizationId(state)!, // TODO: orgId may be blank
+  status: selectCategoriesStatus(state),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
