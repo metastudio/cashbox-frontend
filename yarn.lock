@@ -7323,12 +7323,11 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-number-format@^3.5.1:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-3.5.2.tgz#4c6abcb7aa28f7c6226d89030448d5957d2d3b46"
-  integrity sha512-ZkZoNXSTuswrKuQZYPjQL8Fm1GM1BdGx1nzy803w+cUbewef8SidPOLKfd43JD0IfdN4TWlkCw1yIL5A/TJO9w==
+react-number-format@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-4.0.1.tgz#b3fb8d3447a825aec814a8202048a12aebf8aea1"
+  integrity sha512-Hk0zdAFL9Tqg5L+6QPbrLP8uGIDXL0Lqih+Vbdm2EVzhD12U077lSs0Y5uhAOWLxKlL6Z4yulLsglLm9+8zKnA==
   dependencies:
-    babel-runtime "^6.26.0"
     prop-types "^15.6.0"
 
 react-onclickoutside@^6.7.1:
