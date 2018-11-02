@@ -20,7 +20,7 @@ const CategoriesTable: React.SFC<IProps> = ({ categories }) => (
     </thead>
     <tbody>
       { categories.map(c => c ? <Row category={ c } key={ c.id } /> : null) }
-  </tbody>
+    </tbody>
   </Table>
 );
 
