@@ -7,12 +7,12 @@ import { balanceStatisticPath, statisticPath } from 'routes';
 
 import MainLayout from 'components/layouts/main-layout';
 import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
-import asyncComponent from 'components/utils/async-component';
 import RequireLogin from 'components/utils/require-login';
+import Spinner from 'components/utils/spinner';
 
 import Menu from './menu';
 
-const AsyncCharts = asyncComponent(() => import('./charts'));
+const AsyncCharts = React.lazy(() => import('./charts'));
 
 const renderMenu = () => <Menu />;
 
@@ -23,10 +23,12 @@ const StatisticScene: React.SFC = () => (
         <BreadcrumbsItem to={ statisticPath() }>
           Statistic
         </BreadcrumbsItem>
-        <Switch>
-          <Route exact path={ String(balanceStatisticPath) } component={ AsyncCharts } />
-          <Redirect exact from={ String(statisticPath) } to={ balanceStatisticPath() } />
-        </Switch>
+        <React.Suspense fallback={ <Spinner /> }>
+          <Switch>
+            <Route exact path={ String(balanceStatisticPath) } component={ AsyncCharts } />
+            <Redirect exact from={ String(statisticPath) } to={ balanceStatisticPath() } />
+          </Switch>
+        </React.Suspense>
       </MainLayout>
     </CurrentOrganizationProvider>
   </RequireLogin>
