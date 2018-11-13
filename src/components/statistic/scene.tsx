@@ -3,7 +3,7 @@ import * as React from 'react';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { balanceStatisticPath, statisticPath } from 'routes';
+import { balanceStatisticPath, categoriesStatisticPath, statisticPath } from 'routes';
 
 import MainLayout from 'components/layouts/main-layout';
 import { CurrentOrganizationProvider } from 'components/organizations/current-organization';
@@ -12,7 +12,8 @@ import Spinner from 'components/utils/spinner';
 
 import Menu from './menu';
 
-const AsyncCharts = React.lazy(() => import('./balance/page'));
+const Balance = React.lazy(() => import('./balance/page'));
+const Categories = React.lazy(() => import('./categories/page'));
 
 const renderMenu = () => <Menu />;
 
@@ -25,7 +26,8 @@ const StatisticScene: React.SFC = () => (
         </BreadcrumbsItem>
         <React.Suspense fallback={ <Spinner /> }>
           <Switch>
-            <Route exact path={ String(balanceStatisticPath) } component={ AsyncCharts } />
+            <Route exact path={ String(balanceStatisticPath) } component={ Balance } />
+            <Route exact path={ String(categoriesStatisticPath) } component={ Categories } />
             <Redirect exact from={ String(statisticPath) } to={ balanceStatisticPath() } />
           </Switch>
         </React.Suspense>
