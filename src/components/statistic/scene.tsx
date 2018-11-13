@@ -12,7 +12,7 @@ import Spinner from 'components/utils/spinner';
 
 import Menu from './menu';
 
-const AsyncCharts = React.lazy(() => import('./charts'));
+const AsyncCharts = React.lazy(() => import('./balance/page'));
 
 const renderMenu = () => <Menu />;
 
