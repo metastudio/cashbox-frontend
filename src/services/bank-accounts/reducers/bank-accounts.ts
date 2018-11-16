@@ -13,6 +13,7 @@ import {
   createBankAccount,
   deleteBankAccount,
   loadBankAccounts,
+  sortBankAccounts,
   updateBankAccount,
 } from '../actions';
 import { IBankAccountsState } from '../types';
@@ -30,6 +31,7 @@ function bankAccountsReducer(
     | typeof updateBankAccount.success
     | typeof deleteBankAccount.success
     | typeof createBankAccount.success
+    | typeof sortBankAccounts.success
     | typeof createTransaction.success
     | typeof createTransfer.success
     | typeof updateTransaction.success
@@ -72,6 +74,7 @@ function bankAccountsReducer(
     case getType(createTransfer.success):
     case getType(updateTransaction.success):
     case getType(destroyTransaction.success):
+    case getType(sortBankAccounts.success):
       return {
         ...state,
         status: Status.Invalid,

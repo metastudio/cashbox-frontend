@@ -8,6 +8,7 @@ import {
   getOrganizationVisibleBankAccounts,
   postOrganizationBankAccount,
   putOrganizationBankAccount,
+  putOrganizationSortBankAccounts,
 } from './api';
 
 import {
@@ -16,6 +17,7 @@ import {
   loadBankAccount,
   loadBankAccounts,
   loadVisibleBankAccounts,
+  sortBankAccounts,
   updateBankAccount,
 } from './actions';
 
@@ -100,6 +102,22 @@ function* handleDeleteBankAccount(
   }
 }
 
+function* handleSortBankAccounts(
+  {
+    payload: { orgId, bankAccountId, data },
+    meta:    { resolve, reject },
+  }: ActionType<typeof sortBankAccounts.request>,
+) {
+  try {
+    yield call(putOrganizationSortBankAccounts, orgId, bankAccountId, data);
+    yield put(sortBankAccounts.success(orgId));
+    yield call(resolve);
+  } catch (error) {
+    yield put(sortBankAccounts.failure(error));
+    yield call(reject, error);
+  }
+}
+
 export default function* () {
   yield takeLatest(getType(loadBankAccounts.request),        handleLoadBankAccounts);
   yield takeLatest(getType(loadVisibleBankAccounts.request), handleLoadVisibleBankAccounts);
@@ -107,4 +125,5 @@ export default function* () {
   yield takeEvery(getType(createBankAccount.request),        handleCreateBankAccount);
   yield takeEvery(getType(updateBankAccount.request),        handleUpdateBankAccount);
   yield takeEvery(getType(deleteBankAccount.request),        handleDeleteBankAccount);
+  yield takeEvery(getType(sortBankAccounts.request),         handleSortBankAccounts);
 }

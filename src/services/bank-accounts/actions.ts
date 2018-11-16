@@ -156,6 +156,36 @@ const deleteBankAccount = {
   ),
 };
 
+const sortBankAccounts = {
+  request: createAction(
+    'SORT_BANK_ACCOUNTS_REQUEST',
+    (res) => {
+      return (
+        orgId:         ID,
+        bankAccountId: ID,
+        data:          IBankAccountParams,
+        resolve:       (() => void) = noop,
+        reject:        ((error: Error) => void)              = noop,
+      ) => res(
+        { orgId, bankAccountId, data },
+        { resolve, reject },
+      );
+    },
+  ),
+  success: createAction(
+    'SORT_BANK_ACCOUNTS_SUCCESS',
+    (resolve) => {
+      return (orgId: ID) => resolve({ orgId });
+    },
+  ),
+  failure: createAction(
+    'SORT_BANK_ACCOUNTS_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
 export {
   loadBankAccounts,
   loadVisibleBankAccounts,
@@ -163,4 +193,5 @@ export {
   loadBankAccount,
   updateBankAccount,
   deleteBankAccount,
+  sortBankAccounts,
 };

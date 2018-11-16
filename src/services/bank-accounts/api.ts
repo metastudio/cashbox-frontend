@@ -8,6 +8,9 @@ const visibleBankAccountsURL = (orgId: ID) => prepareURL(`/api/organizations/${o
 const bankAccountURL = (orgId: ID, bankAccountId: ID) => {
   return prepareURL(`/api/organizations/${orgId}/bank_accounts/${bankAccountId}`);
 };
+const sortBankAccountsURL = (orgId: ID, bankAccountId: ID) => {
+  return prepareURL(`/api/organizations/${orgId}/bank_accounts/${bankAccountId}/sort`);
+};
 
 export const getOrganizationBankAccounts = (orgId: ID) => getApi(bankAccountsURL(orgId));
 export const getOrganizationVisibleBankAccounts = (orgId: ID) => getApi(visibleBankAccountsURL(orgId));
@@ -19,6 +22,9 @@ export const postOrganizationBankAccount = (orgId: ID, data: IBankAccountParams)
 };
 export const putOrganizationBankAccount = (orgId: ID, bankAccountId: ID, data: IBankAccountParams) => {
   return putApi(bankAccountURL(orgId, bankAccountId), { bankAccount: data });
+};
+export const putOrganizationSortBankAccounts = (orgId: ID, bankAccountId: ID, data: IBankAccountParams) => {
+  return putApi(sortBankAccountsURL(orgId, bankAccountId), { bankAccount: data });
 };
 export const deleteOrganizationBankAccount = (orgId: ID, bankAccountId: ID) => {
   return deleteApi(bankAccountURL(orgId, bankAccountId));
