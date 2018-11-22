@@ -39,6 +39,12 @@ class BankAccountsList extends React.Component<IProps> {
     this.loadData();
   }
 
+  public componentDidUpdate(oldProps: IProps) {
+    if (this.props.status === Status.Invalid || this.props.orgId !== oldProps.orgId) {
+      this.loadData();
+    }
+  }
+
   public render() {
     const { status, currencies } = this.props;
 

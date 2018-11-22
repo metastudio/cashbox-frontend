@@ -109,9 +109,9 @@ function* handleSortBankAccounts(
   }: ActionType<typeof sortBankAccounts.request>,
 ) {
   try {
-    yield call(putOrganizationSortBankAccounts, orgId, bankAccountId, data);
-    yield put(sortBankAccounts.success(orgId));
-    yield call(resolve);
+    const bankAccount = yield call(putOrganizationSortBankAccounts, orgId, bankAccountId, data);
+    yield put(sortBankAccounts.success(orgId, bankAccount));
+    yield call(resolve, bankAccount);
   } catch (error) {
     yield put(sortBankAccounts.failure(error));
     yield call(reject, error);

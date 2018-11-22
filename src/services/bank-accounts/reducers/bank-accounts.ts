@@ -70,11 +70,11 @@ function bankAccountsReducer(
         items: state.items.filter(ba => ba.id !== action.payload.bankAccount.id),
       };
     case getType(createBankAccount.success):
+    case getType(sortBankAccounts.success):
     case getType(createTransaction.success):
     case getType(createTransfer.success):
     case getType(updateTransaction.success):
     case getType(destroyTransaction.success):
-    case getType(sortBankAccounts.success):
       return {
         ...state,
         status: Status.Invalid,

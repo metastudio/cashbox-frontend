@@ -164,7 +164,7 @@ const sortBankAccounts = {
         orgId:         ID,
         bankAccountId: ID,
         data:          IBankAccountParams,
-        resolve:       (() => void) = noop,
+        resolve:       ((bankAccount: IBankAccount) => void) = noop,
         reject:        ((error: Error) => void)              = noop,
       ) => res(
         { orgId, bankAccountId, data },
@@ -175,7 +175,7 @@ const sortBankAccounts = {
   success: createAction(
     'SORT_BANK_ACCOUNTS_SUCCESS',
     (resolve) => {
-      return (orgId: ID) => resolve({ orgId });
+      return (orgId: ID, bankAccount: IBankAccount) => resolve({ orgId, bankAccount });
     },
   ),
   failure: createAction(
