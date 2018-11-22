@@ -80,6 +80,8 @@ interface ITransactionsFilter {
   categoryIdIn?:    number[];
   bankAccountIdIn?: number[];
   customerIdIn?:    number[];
+  dateFrom?:        string;
+  dateTo?:          string;
 }
 
 export {
