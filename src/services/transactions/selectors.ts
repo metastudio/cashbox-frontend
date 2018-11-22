@@ -36,6 +36,8 @@ const selectTransactionsQueryFilter = memoize((search: string): ITransactionsFil
     categoryIdIn:    converValueToArrayNumber(query.q['categoryIdIn']),
     bankAccountIdIn: converValueToArrayNumber(query.q['bankAccountIdIn']),
     customerIdIn:    converValueToArrayNumber(query.q['customerIdIn']),
+    dateFrom:        query.q['dateFrom'],
+    dateTo:          query.q['dateTo'],
   };
   // tslint:enable:no-string-literal
 });
