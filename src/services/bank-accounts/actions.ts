@@ -156,7 +156,7 @@ const deleteBankAccount = {
   ),
 };
 
-const sortBankAccounts = {
+const updateBankAccountPosition = {
   request: createAction(
     'SORT_BANK_ACCOUNTS_REQUEST',
     (res) => {
@@ -192,6 +192,6 @@ export {
   createBankAccount,
   loadBankAccount,
   updateBankAccount,
+  updateBankAccountPosition,
   deleteBankAccount,
-  sortBankAccounts,
 };

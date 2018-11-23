@@ -13,8 +13,8 @@ import {
   createBankAccount,
   deleteBankAccount,
   loadVisibleBankAccounts,
-  sortBankAccounts,
   updateBankAccount,
+  updateBankAccountPosition,
 } from '../actions';
 import { IBankAccountsState } from '../types';
 
@@ -31,7 +31,7 @@ function visibleBankAccountsReducer(
     | typeof updateBankAccount.success
     | typeof deleteBankAccount.success
     | typeof createBankAccount.success
-    | typeof sortBankAccounts.success
+    | typeof updateBankAccountPosition.success
     | typeof createTransaction.success
     | typeof createTransfer.success
     | typeof updateTransaction.success
@@ -70,7 +70,7 @@ function visibleBankAccountsReducer(
         items: state.items.filter(ba => ba.id !== action.payload.bankAccount.id),
       };
     case getType(createBankAccount.success):
-    case getType(sortBankAccounts.success):
+    case getType(updateBankAccountPosition.success):
     case getType(createTransaction.success):
     case getType(createTransfer.success):
     case getType(updateTransaction.success):

@@ -13,7 +13,6 @@ import {
 import { IGlobalState } from 'services/global-state';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
-import LoadingView from 'components/utils/loading-view';
 
 import Table from './list/table';
 
@@ -46,7 +45,7 @@ class BankAccountsList extends React.Component<IProps> {
   }
 
   public render() {
-    const { status, currencies } = this.props;
+    const { currencies } = this.props;
 
     return (
       <>
@@ -54,9 +53,7 @@ class BankAccountsList extends React.Component<IProps> {
           <Link to="/bank_accounts/new" className="btn btn-default pull-right">Add Bank Account</Link>
           Bank Accounts
         </PageHeader>
-        <LoadingView status={ status }>
-          { () => currencies.map(c => <Table key={ c } currency={ c } />) }
-        </LoadingView>
+        { currencies.map(c => <Table key={ c } currency={ c } />) }
       </>
     );
   }

@@ -8,7 +8,7 @@ import {
   getOrganizationVisibleBankAccounts,
   postOrganizationBankAccount,
   putOrganizationBankAccount,
-  putOrganizationSortBankAccounts,
+  putOrganizationBankAccountPosition,
 } from './api';
 
 import {
@@ -17,8 +17,8 @@ import {
   loadBankAccount,
   loadBankAccounts,
   loadVisibleBankAccounts,
-  sortBankAccounts,
   updateBankAccount,
+  updateBankAccountPosition,
 } from './actions';
 
 function* handleLoadBankAccounts(
@@ -86,6 +86,22 @@ function* handleUpdateBankAccount(
   }
 }
 
+function* handleUpdateBankAccountPosition(
+  {
+    payload: { orgId, bankAccountId, data },
+    meta:    { resolve, reject },
+  }: ActionType<typeof updateBankAccountPosition.request>,
+) {
+  try {
+    const bankAccount = yield call(putOrganizationBankAccountPosition, orgId, bankAccountId, data);
+    yield put(updateBankAccountPosition.success(orgId, bankAccount));
+    yield call(resolve, bankAccount);
+  } catch (error) {
+    yield put(updateBankAccountPosition.failure(error));
+    yield call(reject, error);
+  }
+}
+
 function* handleDeleteBankAccount(
   {
     payload: { orgId, bankAccountId },
@@ -102,28 +118,12 @@ function* handleDeleteBankAccount(
   }
 }
 
-function* handleSortBankAccounts(
-  {
-    payload: { orgId, bankAccountId, data },
-    meta:    { resolve, reject },
-  }: ActionType<typeof sortBankAccounts.request>,
-) {
-  try {
-    const bankAccount = yield call(putOrganizationSortBankAccounts, orgId, bankAccountId, data);
-    yield put(sortBankAccounts.success(orgId, bankAccount));
-    yield call(resolve, bankAccount);
-  } catch (error) {
-    yield put(sortBankAccounts.failure(error));
-    yield call(reject, error);
-  }
-}
-
 export default function* () {
-  yield takeLatest(getType(loadBankAccounts.request),        handleLoadBankAccounts);
-  yield takeLatest(getType(loadVisibleBankAccounts.request), handleLoadVisibleBankAccounts);
-  yield takeLatest(getType(loadBankAccount.request),         handleLoadBankAccount);
-  yield takeEvery(getType(createBankAccount.request),        handleCreateBankAccount);
-  yield takeEvery(getType(updateBankAccount.request),        handleUpdateBankAccount);
-  yield takeEvery(getType(deleteBankAccount.request),        handleDeleteBankAccount);
-  yield takeEvery(getType(sortBankAccounts.request),         handleSortBankAccounts);
+  yield takeLatest(getType(loadBankAccounts.request),         handleLoadBankAccounts);
+  yield takeLatest(getType(loadVisibleBankAccounts.request),  handleLoadVisibleBankAccounts);
+  yield takeLatest(getType(loadBankAccount.request),          handleLoadBankAccount);
+  yield takeEvery(getType(createBankAccount.request),         handleCreateBankAccount);
+  yield takeEvery(getType(updateBankAccount.request),         handleUpdateBankAccount);
+  yield takeEvery(getType(updateBankAccountPosition.request), handleUpdateBankAccountPosition);
+  yield takeEvery(getType(deleteBankAccount.request),         handleDeleteBankAccount);
 }

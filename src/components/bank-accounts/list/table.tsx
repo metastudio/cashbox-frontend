@@ -7,7 +7,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import {
   IBankAccount,
   selectBankAccountsWithCurrency,
-  sortBankAccounts,
+  updateBankAccountPosition,
 } from 'services/bank-accounts';
 
 import { IGlobalState } from 'services/global-state';
@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  sort: typeof sortBankAccounts.request;
+  update: typeof updateBankAccountPosition.request;
 }
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
@@ -39,7 +39,7 @@ class BankAccountsTable extends React.Component<IProps> {
   })
 
   private onDragEnd = (result: any) => {
-    const { orgId, bankAccounts, sort } = this.props;
+    const { orgId, bankAccounts, update } = this.props;
 
     // dropped outside the list
     if (!result.destination) {
@@ -54,7 +54,7 @@ class BankAccountsTable extends React.Component<IProps> {
     const position = Array.from(bankAccounts)[result.destination.index].position;
 
     return new Promise((resolve, reject) => {
-      sort(
+      update(
         orgId,
         bankAccount!.id,
         { position },
@@ -107,7 +107,7 @@ const mapState = (state: IGlobalState, props: IOwnProps) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => ({
-  sort: (orgId, baId, data) => dispatch(sortBankAccounts.request(orgId, baId, data)),
+  update: (orgId, baId, data) => dispatch(updateBankAccountPosition.request(orgId, baId, data)),
 });
 
 export default connect<IStateProps, IDispatchProps, IOwnProps>(mapState, mapDispatch)(BankAccountsTable);
