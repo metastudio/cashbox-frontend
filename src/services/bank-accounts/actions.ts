@@ -158,12 +158,12 @@ const deleteBankAccount = {
 
 const updateBankAccountPosition = {
   request: createAction(
-    'SORT_BANK_ACCOUNTS_REQUEST',
+    'UPDATE_BANK_ACCOUNT_POSITION_REQUEST',
     (res) => {
       return (
         orgId:         ID,
         bankAccountId: ID,
-        data:          IBankAccountParams,
+        data:          { position: number },
         resolve:       ((bankAccount: IBankAccount) => void) = noop,
         reject:        ((error: Error) => void)              = noop,
       ) => res(
@@ -173,13 +173,13 @@ const updateBankAccountPosition = {
     },
   ),
   success: createAction(
-    'SORT_BANK_ACCOUNTS_SUCCESS',
+    'UPDATE_BANK_ACCOUNT_POSITION_SUCCESS',
     (resolve) => {
       return (orgId: ID, bankAccount: IBankAccount) => resolve({ orgId, bankAccount });
     },
   ),
   failure: createAction(
-    'SORT_BANK_ACCOUNTS_FAILURE',
+    'UPDATE_BANK_ACCOUNT_POSITION_FAILURE',
     (resolve) => {
       return (error: Error) => resolve(error);
     },
