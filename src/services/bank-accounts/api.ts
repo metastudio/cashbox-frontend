@@ -23,7 +23,7 @@ export const postOrganizationBankAccount = (orgId: ID, data: IBankAccountParams)
 export const putOrganizationBankAccount = (orgId: ID, bankAccountId: ID, data: IBankAccountParams) => {
   return putApi(bankAccountURL(orgId, bankAccountId), { bankAccount: data });
 };
-export const putOrganizationBankAccountPosition = (orgId: ID, bankAccountId: ID, data: IBankAccountParams) => {
+export const putOrganizationBankAccountPosition = (orgId: ID, bankAccountId: ID, data: { position: number }) => {
   return putApi(updateBankAccountPositionURL(orgId, bankAccountId), { bankAccount: data });
 };
 export const deleteOrganizationBankAccount = (orgId: ID, bankAccountId: ID) => {
