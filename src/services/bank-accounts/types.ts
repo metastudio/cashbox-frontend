@@ -9,6 +9,7 @@ interface IBankAccount {
   description:    string;
   invoiceDetails: string;
   visible:        boolean;
+  position:       number;
 }
 
 interface IBankAccountParams {
@@ -17,6 +18,7 @@ interface IBankAccountParams {
   description?:    string;
   invoiceDetails?: string;
   visible?:        boolean;
+  position?:       number;
 }
 
 interface IBankAccountState {

@@ -156,11 +156,42 @@ const deleteBankAccount = {
   ),
 };
 
+const updateBankAccountPosition = {
+  request: createAction(
+    'UPDATE_BANK_ACCOUNT_POSITION_REQUEST',
+    (res) => {
+      return (
+        orgId:         ID,
+        bankAccountId: ID,
+        data:          { position: number },
+        resolve:       ((bankAccount: IBankAccount) => void) = noop,
+        reject:        ((error: Error) => void)              = noop,
+      ) => res(
+        { orgId, bankAccountId, data },
+        { resolve, reject },
+      );
+    },
+  ),
+  success: createAction(
+    'UPDATE_BANK_ACCOUNT_POSITION_SUCCESS',
+    (resolve) => {
+      return (orgId: ID, bankAccount: IBankAccount) => resolve({ orgId, bankAccount });
+    },
+  ),
+  failure: createAction(
+    'UPDATE_BANK_ACCOUNT_POSITION_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
 export {
   loadBankAccounts,
   loadVisibleBankAccounts,
   createBankAccount,
   loadBankAccount,
   updateBankAccount,
+  updateBankAccountPosition,
   deleteBankAccount,
 };
