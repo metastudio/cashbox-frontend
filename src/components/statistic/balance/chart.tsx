@@ -12,6 +12,7 @@ import {
   YAxis,
 } from 'recharts';
 
+import { COLORS } from 'constants/colors';
 import { IBalanceStatistic } from 'services/statistic';
 import { formatMoney, ICurrency, number2Money } from 'utils/money';
 
@@ -38,9 +39,9 @@ class BalanceStatisticChart extends React.PureComponent<IProps> {
             <YAxis tickFormatter={ this.valueFormatter(balances.currency) } width={ 100 }/>
             <Tooltip formatter={ this.valueFormatter(balances.currency) } />
             <Legend verticalAlign="top" />
-            <Bar dataKey="income" fill="#3366cc" name="Income" />
-            <Bar dataKey="expense" fill="#dc3912" name="Expense" />
-            <Line dataKey="total" stroke="#ff7300" name="Total" />
+            <Bar dataKey="income" fill={ COLORS[0] } name="Income" />
+            <Bar dataKey="expense" fill={ COLORS[1] } name="Expense" />
+            <Line dataKey="total" stroke={ COLORS[2] } name="Total" />
           </ComposedChart>
         </ResponsiveContainer>
       </>
