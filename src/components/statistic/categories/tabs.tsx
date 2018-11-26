@@ -12,12 +12,10 @@ interface IProps {
 
 class BalanceTabs extends React.Component<IProps> {
   private isTabActive = (location: Location, tab: string): boolean => {
-    return location.search === `?scale=${tab}`;
+    return location.search === `?period=${tab}`;
   }
 
-  private isMonthsTabActive   = (_match: match<{}>, location: Location) => this.isTabActive(location, 'months');
-  private isQuartersTabActive = (_match: match<{}>, location: Location) => this.isTabActive(location, 'quarters');
-  private isYearsTabActive    = (_match: match<{}>, location: Location) => this.isTabActive(location, 'years');
+  private isCurrentMonthTabActive = (_match: match<{}>, location: Location) => this.isTabActive(location, 'months');
 
   public render() {
     const { location: { pathname, search } } = this.props;
@@ -30,14 +28,8 @@ class BalanceTabs extends React.Component<IProps> {
 
     return (
       <Nav bsStyle="tabs">
-        <LinkContainer to={ { pathname, search: 'scale=months' } } isActive={ this.isMonthsTabActive }>
-          <NavItem>Months</NavItem>
-        </LinkContainer>
-        <LinkContainer to={ { pathname, search: 'scale=quarters' } } isActive={ this.isQuartersTabActive }>
-          <NavItem>Quarters</NavItem>
-        </LinkContainer>
-        <LinkContainer to={ { pathname, search: 'scale=years' } } isActive={ this.isYearsTabActive }>
-          <NavItem>Years</NavItem>
+        <LinkContainer to={ { pathname, search: 'period=months' } } isActive={ this.isCurrentMonthTabActive }>
+          <NavItem>Current month</NavItem>
         </LinkContainer>
       </Nav>
     );
