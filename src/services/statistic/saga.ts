@@ -2,12 +2,13 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ActionType, getType } from 'typesafe-actions';
 
 import {
-  getBalanceStatistic, getIncomeCategoriesStatistic,
+  getBalanceStatistic, getIncomeCategoriesStatistic, getIncomeCustomersStatistic,
 } from './api';
 
 import {
   loadBalanceStatistic,
   loadIncomeCategoriesStatistic,
+  loadIncomeCustomersStatistic,
 } from './actions';
 
 function* handleLoadBalanceStatistic(
@@ -32,7 +33,19 @@ function* handleLoadIncomeCategoriesStatistic(
   }
 }
 
+function* handleLoadIncomeCustomersStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadIncomeCustomersStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getIncomeCustomersStatistic, orgId, query);
+    yield put(loadIncomeCustomersStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadIncomeCustomersStatistic.failure(error));
+  }
+}
+
 export default function* () {
   yield takeLatest(getType(loadBalanceStatistic.request),          handleLoadBalanceStatistic);
   yield takeLatest(getType(loadIncomeCategoriesStatistic.request), handleLoadIncomeCategoriesStatistic);
+  yield takeLatest(getType(loadIncomeCustomersStatistic.request),  handleLoadIncomeCustomersStatistic);
 }

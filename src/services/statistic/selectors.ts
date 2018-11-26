@@ -2,14 +2,20 @@ import { memoize } from 'lodash';
 
 import { IQuery, parseQuery } from 'utils/url-helpers';
 
-import { IBalanceStatisticState, IIncomeCategoriesStatisticState } from './types';
+import {
+  IBalanceStatisticState,
+  IIncomeCategoriesStatisticState,
+  IIncomeCustomersStatisticState,
+} from './types';
 
 interface IStateWithBalanceStats {
   balanceStatistic: IBalanceStatisticState;
 }
-
 interface IStateWithIncomeCategoriesStats {
   incomeCategoriesStatistic: IIncomeCategoriesStatisticState;
+}
+interface IStateWithIncomeCustomersStats {
+  incomeCustomersStatistic: IIncomeCustomersStatisticState;
 }
 
 const selectBalanceStatistic           = (state: IStateWithBalanceStats) => state.balanceStatistic.data;
@@ -21,6 +27,12 @@ function selectIncomeCategoriesStatistic(state: IStateWithIncomeCategoriesStats)
 }
 function selectIncomeCategoriesStatisticStatus(state: IStateWithIncomeCategoriesStats) {
   return state.incomeCategoriesStatistic.status;
+}
+function selectIncomeCustomersStatistic(state: IStateWithIncomeCustomersStats) {
+  return state.incomeCustomersStatistic.data;
+}
+function selectIncomeCustomersStatisticStatus(state: IStateWithIncomeCustomersStats) {
+  return state.incomeCustomersStatistic.status;
 }
 
 const selectStatisticsQuery = memoize((search: string): IQuery => parseQuery(search));
@@ -45,6 +57,9 @@ export {
 
   selectIncomeCategoriesStatistic,
   selectIncomeCategoriesStatisticStatus,
+
+  selectIncomeCustomersStatistic,
+  selectIncomeCustomersStatisticStatus,
 
   selectStatisticsQueryPage,
   selectStatisticsQueryScale,

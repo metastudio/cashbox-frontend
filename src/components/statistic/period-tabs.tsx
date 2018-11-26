@@ -12,7 +12,7 @@ interface IProps {
   location: Location;
 }
 
-class BalanceTabs extends React.Component<IProps> {
+class StatisticPeriodTabs extends React.Component<IProps> {
   private isTabActive = (tab: string): ((_match: match<{}>, location: Location) => boolean) => {
     return (_match: match<{}>, location: Location) => {
       return location.search === `?period=${tab}`;
@@ -48,4 +48,4 @@ class BalanceTabs extends React.Component<IProps> {
   }
 }
 
-export default BalanceTabs;
+export default StatisticPeriodTabs;

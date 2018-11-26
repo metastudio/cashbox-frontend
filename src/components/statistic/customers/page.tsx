@@ -4,8 +4,8 @@ import { Alert, Col, PageHeader, Row } from 'react-bootstrap';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { categoriesStatisticPath } from 'routes';
-import { IIncomeCategoriesStatistic } from 'services/statistic';
+import { customersStatisticPath } from 'routes';
+import { IIncomeCustomersStatistic } from 'services/statistic';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import Tabs from '../period-tabs';
@@ -14,8 +14,8 @@ import IncomeProvider from './income-provider';
 
 type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
-class CategoriesStatisticPage extends React.PureComponent<IProps> {
-  private renderContent = (incomeStats: IIncomeCategoriesStatistic) => {
+class CustomersStatisticPage extends React.PureComponent<IProps> {
+  private renderContent = (incomeStats: IIncomeCustomersStatistic) => {
     if (!incomeStats || !incomeStats.data || incomeStats.data.length === 0) {
       return <Alert bsStyle="info">No data</Alert>;
     }
@@ -28,11 +28,11 @@ class CategoriesStatisticPage extends React.PureComponent<IProps> {
 
     return (
       <>
-        <BreadcrumbsItem to={ categoriesStatisticPath() }>
-          Categories
+        <BreadcrumbsItem to={ customersStatisticPath() }>
+          Customers
         </BreadcrumbsItem>
         <PageHeader>
-          Categories
+          Customers
         </PageHeader>
         <Tabs location={ location } />
         <Row>
@@ -47,4 +47,4 @@ class CategoriesStatisticPage extends React.PureComponent<IProps> {
   }
 }
 
-export default withRouter(withCurrentOrgId<IProps>(CategoriesStatisticPage));
+export default withRouter(withCurrentOrgId<IProps>(CustomersStatisticPage));
