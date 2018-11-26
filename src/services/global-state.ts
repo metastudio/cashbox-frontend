@@ -15,7 +15,11 @@ import {
 import { IMembersState } from 'services/members/types';
 import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } from 'services/organizations/types';
 import { IReduxFormState } from 'services/redux-form/types';
-import { IBalanceStatisticState, IIncomeCategoriesStatisticState } from 'services/statistic/types';
+import {
+  IBalanceStatisticState,
+  IIncomeCategoriesStatisticState,
+  IIncomeCustomersStatisticState,
+} from 'services/statistic/types';
 import { ITransactionsSummaryState } from 'services/transactions-summary/types';
 import { ITransactionsState, ITransactionState } from 'services/transactions/types';
 
@@ -35,6 +39,7 @@ interface IGlobalState {
   customers:           ICustomersState;
   debtors:             IDebtorsState;
   incomeCategoriesStatistic: IIncomeCategoriesStatisticState;
+  incomeCustomersStatistic:  IIncomeCustomersStatisticState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   members:             IMembersState;
