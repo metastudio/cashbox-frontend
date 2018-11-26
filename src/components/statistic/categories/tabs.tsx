@@ -4,21 +4,13 @@ import { Location } from 'history';
 import { Nav, NavItem } from 'react-bootstrap';
 import { match, Redirect } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
+
+import { PERIODS } from 'constants/periods';
 import { selectStatisticsQueryPeriod } from 'services/statistic';
 
 interface IProps {
   location: Location;
 }
-
-const PERIODS = [
-  { value: 'current-month',   label: 'Current month'   },
-  { value: 'last-month',      label: 'Last month'      },
-  { value: 'last-3-months',   label: 'Last 3 months'   },
-  { value: 'current-quarter', label: 'Current quarter' },
-  { value: 'last-quarter',    label: 'Last quarter'    },
-  { value: 'current-year',    label: 'Current year'    },
-  { value: 'last-year',       label: 'Last year'       },
-];
 
 class BalanceTabs extends React.Component<IProps> {
   private isTabActive = (tab: string): ((_match: match<{}>, location: Location) => boolean) => {
@@ -26,13 +18,6 @@ class BalanceTabs extends React.Component<IProps> {
       return location.search === `?period=${tab}`;
     };
   }
-
-  // private isCurrentMonthTabActive = (_match: match<{}>, location: Location) => (
-  //   this.isTabActive(location, 'current-month')
-  // )
-  // private isLastMonthTabActive = (_match: match<{}>, location: Location) => (
-  //   this.isTabActive(location, 'last-month')
-  // )
 
   private renderPeriods = (pathname: string) => {
     return PERIODS.map(({ value, label }) => (
