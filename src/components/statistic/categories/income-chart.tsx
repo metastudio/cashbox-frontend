@@ -31,7 +31,7 @@ class IncomeCategoriesStatisticChart extends React.PureComponent<IProps> {
 
     return (
       <>
-        <ResponsiveContainer height={ 300 } width="50%">
+        <ResponsiveContainer height={ 300 } width="100%">
           <PieChart>
             <Pie
               animationBegin={ 100 }
