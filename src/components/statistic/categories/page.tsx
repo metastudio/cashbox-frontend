@@ -8,9 +8,9 @@ import { categoriesStatisticPath } from 'routes';
 import { IIncomeCategoriesStatistic } from 'services/statistic';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import Tabs from '../period-tabs';
 import IncomeChart from './income-chart';
 import IncomeProvider from './income-provider';
-import Tabs from './tabs';
 
 type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
