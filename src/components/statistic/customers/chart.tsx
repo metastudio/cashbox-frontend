@@ -10,11 +10,11 @@ import {
 } from 'recharts';
 
 import { COLORS } from 'constants/colors';
-import { IIncomeCustomersStatistic } from 'services/statistic';
+import { ICustomersStatistic } from 'services/statistic';
 import { formatMoney, ICurrency, number2Money } from 'utils/money';
 
 interface IProps {
-  incomeStats: IIncomeCustomersStatistic;
+  stats: ICustomersStatistic;
 }
 
 class IncomeCustomersStatisticChart extends React.PureComponent<IProps> {
@@ -27,7 +27,7 @@ class IncomeCustomersStatisticChart extends React.PureComponent<IProps> {
   }
 
   public render() {
-    const { incomeStats } = this.props;
+    const { stats } = this.props;
 
     return (
       <>
@@ -36,14 +36,14 @@ class IncomeCustomersStatisticChart extends React.PureComponent<IProps> {
             <Pie
               animationBegin={ 100 }
               animationDuration={ 1000 }
-              data={ incomeStats.data }
+              data={ stats.data }
               dataKey="value"
-              label={ this.labelFormatter(incomeStats.currency) }
+              label={ this.labelFormatter(stats.currency) }
             >
-              { incomeStats.data.map((_entry, idx) => <Cell key={ idx } fill={ COLORS[idx % COLORS.length] }/>) }
+              { stats.data.map((_entry, idx) => <Cell key={ idx } fill={ COLORS[idx % COLORS.length] }/>) }
             </Pie>
-            <Tooltip formatter={ this.valueFormatter(incomeStats.currency) } />
-            <Legend verticalAlign="top" />
+            <Tooltip formatter={ this.valueFormatter(stats.currency) } />
+            <Legend verticalAlign="bottom" />
           </PieChart>
         </ResponsiveContainer>
       </>
