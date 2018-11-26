@@ -10,7 +10,7 @@ import { IIncomeCategoriesStatistic } from 'services/statistic';
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import IncomeChart from './income-chart';
 import IncomeProvider from './income-provider';
-// import Tabs from './tabs';
+import Tabs from './tabs';
 
 type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
@@ -34,7 +34,7 @@ class CategoriesStatisticPage extends React.PureComponent<IProps> {
         <PageHeader>
           Categories
         </PageHeader>
-        {/* <Tabs location={ location } /> */}
+        <Tabs location={ location } />
         <IncomeProvider orgId={ orgId } search={ location.search }>
           { this.renderContent }
         </IncomeProvider>
