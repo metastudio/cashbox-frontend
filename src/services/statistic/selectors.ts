@@ -4,6 +4,7 @@ import { IQuery, parseQuery } from 'utils/url-helpers';
 
 import {
   IBalanceStatisticState,
+  IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
 } from './types';
@@ -16,6 +17,9 @@ interface IStateWithIncomeCategoriesStats {
 }
 interface IStateWithIncomeCustomersStats {
   incomeCustomersStatistic: IIncomeCustomersStatisticState;
+}
+interface IStateWithExpenseCustomersStats {
+  expenseCustomersStatistic: IExpenseCustomersStatisticState;
 }
 
 const selectBalanceStatistic           = (state: IStateWithBalanceStats) => state.balanceStatistic.data;
@@ -33,6 +37,12 @@ function selectIncomeCustomersStatistic(state: IStateWithIncomeCustomersStats) {
 }
 function selectIncomeCustomersStatisticStatus(state: IStateWithIncomeCustomersStats) {
   return state.incomeCustomersStatistic.status;
+}
+function selectExpenseCustomersStatistic(state: IStateWithExpenseCustomersStats) {
+  return state.expenseCustomersStatistic.data;
+}
+function selectExpenseCustomersStatisticStatus(state: IStateWithExpenseCustomersStats) {
+  return state.expenseCustomersStatistic.status;
 }
 
 const selectStatisticsQuery = memoize((search: string): IQuery => parseQuery(search));
@@ -60,6 +70,8 @@ export {
 
   selectIncomeCustomersStatistic,
   selectIncomeCustomersStatisticStatus,
+  selectExpenseCustomersStatistic,
+  selectExpenseCustomersStatisticStatus,
 
   selectStatisticsQueryPage,
   selectStatisticsQueryScale,
