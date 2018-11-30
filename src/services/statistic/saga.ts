@@ -3,10 +3,18 @@ import { ActionType, getType } from 'typesafe-actions';
 
 import {
   getBalanceStatistic,
+  getExpenseCategoriesStatistic,
+  getExpenseCustomersStatistic,
+  getIncomeCategoriesStatistic,
+  getIncomeCustomersStatistic,
 } from './api';
 
 import {
   loadBalanceStatistic,
+  loadExpenseCategoriesStatistic,
+  loadExpenseCustomersStatistic,
+  loadIncomeCategoriesStatistic,
+  loadIncomeCustomersStatistic,
 } from './actions';
 
 function* handleLoadBalanceStatistic(
@@ -20,6 +28,54 @@ function* handleLoadBalanceStatistic(
   }
 }
 
+function* handleLoadIncomeCategoriesStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadIncomeCategoriesStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getIncomeCategoriesStatistic, orgId, query);
+    yield put(loadIncomeCategoriesStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadIncomeCategoriesStatistic.failure(error));
+  }
+}
+
+function* handleLoadExpenseCategoriesStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadExpenseCategoriesStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getExpenseCategoriesStatistic, orgId, query);
+    yield put(loadExpenseCategoriesStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadExpenseCategoriesStatistic.failure(error));
+  }
+}
+
+function* handleLoadIncomeCustomersStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadIncomeCustomersStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getIncomeCustomersStatistic, orgId, query);
+    yield put(loadIncomeCustomersStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadIncomeCustomersStatistic.failure(error));
+  }
+}
+
+function* handleLoadExpenseCustomersStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadExpenseCustomersStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getExpenseCustomersStatistic, orgId, query);
+    yield put(loadExpenseCustomersStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadExpenseCustomersStatistic.failure(error));
+  }
+}
+
 export default function* () {
-  yield takeLatest(getType(loadBalanceStatistic.request), handleLoadBalanceStatistic);
+  yield takeLatest(getType(loadBalanceStatistic.request),           handleLoadBalanceStatistic);
+  yield takeLatest(getType(loadIncomeCategoriesStatistic.request),  handleLoadIncomeCategoriesStatistic);
+  yield takeLatest(getType(loadExpenseCategoriesStatistic.request), handleLoadExpenseCategoriesStatistic);
+  yield takeLatest(getType(loadIncomeCustomersStatistic.request),   handleLoadIncomeCustomersStatistic);
+  yield takeLatest(getType(loadExpenseCustomersStatistic.request),  handleLoadExpenseCustomersStatistic);
 }

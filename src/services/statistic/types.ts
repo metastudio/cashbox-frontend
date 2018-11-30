@@ -20,45 +20,59 @@ interface IBalanceStatisticState {
   error:      Error | null;
 }
 
-interface IIncomeCategoriesStatisticItem {
+interface ICategoriesStatisticItem {
   name:  string;
   value: number;
 }
 
-interface IIncomeCategoriesStatistic {
-  data:     IIncomeCategoriesStatisticItem[];
-  currency: ICurrency;
+interface ICategoriesStatistic {
+  data:       ICategoriesStatisticItem[];
+  currency:   ICurrency;
 }
 
 interface IIncomeCategoriesStatisticState {
-  data:       IIncomeCategoriesStatistic | null;
+  data:       ICategoriesStatistic | null;
   status:     Status;
   error:      Error | null;
 }
 
-interface IExpenseCategoriesStatisticItem {
+interface IExpenseCategoriesStatisticState {
+  data:       ICategoriesStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
+interface ICustomersStatisticItem {
   name:  string;
   value: number;
 }
 
-interface IExpenseCategoriesStatistic {
-  data:     IExpenseCategoriesStatisticItem[];
-  currency: ICurrency;
+interface ICustomersStatistic {
+  data:       ICustomersStatisticItem[];
+  currency:   ICurrency;
 }
 
-interface IExpenseCategoriesStatisticState {
-  data:   IExpenseCategoriesStatistic | null;
-  status: Status;
-  error:  Error | null;
+interface IIncomeCustomersStatisticState {
+  data:       ICustomersStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
+interface IExpenseCustomersStatisticState {
+  data:       ICustomersStatistic | null;
+  status:     Status;
+  error:      Error | null;
 }
 
 export {
   IBalanceStatistic,
   IBalanceStatisticState,
 
-  IIncomeCategoriesStatistic,
+  ICategoriesStatistic,
   IIncomeCategoriesStatisticState,
-
-  IExpenseCategoriesStatistic,
   IExpenseCategoriesStatisticState,
+
+  ICustomersStatistic,
+  IIncomeCustomersStatisticState,
+  IExpenseCustomersStatisticState,
 };
