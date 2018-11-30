@@ -17,7 +17,7 @@ interface IProps {
   stats: ICustomersStatistic;
 }
 
-class IncomeCustomersStatisticChart extends React.PureComponent<IProps> {
+class CustomersStatisticChart extends React.PureComponent<IProps> {
   private valueFormatter = (currency: ICurrency) => {
     return (value: number) => formatMoney(number2Money(value, currency));
   }
@@ -51,4 +51,4 @@ class IncomeCustomersStatisticChart extends React.PureComponent<IProps> {
   }
 }
 
-export default IncomeCustomersStatisticChart;
+export default CustomersStatisticChart;

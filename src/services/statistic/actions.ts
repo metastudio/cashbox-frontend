@@ -3,8 +3,8 @@ import { createAction } from 'typesafe-actions';
 import { ID, IPagination } from 'model-types';
 import {
   IBalanceStatistic,
+  ICategoriesStatistic,
   ICustomersStatistic,
-  IIncomeCategoriesStatistic,
 } from './types';
 
 const loadBalanceStatistic = {
@@ -46,7 +46,7 @@ const loadIncomeCategoriesStatistic = {
     (resolve) => {
       return (
         orgId:     ID,
-        statistic: IIncomeCategoriesStatistic,
+        statistic: ICategoriesStatistic,
       ) => resolve(
         { orgId, statistic },
       );
@@ -54,6 +54,32 @@ const loadIncomeCategoriesStatistic = {
   ),
   failure: createAction(
     'LOAD_INCOME_CATEGORIES_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
+const loadExpenseCategoriesStatistic = {
+  request: createAction(
+    'LOAD_EXPENSE_CATEGORIES_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_EXPENSE_CATEGORIES_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICategoriesStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_EXPENSE_CATEGORIES_STATISTIC_FAILURE',
     (resolve) => {
       return (error: Error) => resolve(error);
     },
@@ -115,6 +141,7 @@ const loadExpenseCustomersStatistic = {
 export {
   loadBalanceStatistic,
   loadIncomeCategoriesStatistic,
+  loadExpenseCategoriesStatistic,
   loadIncomeCustomersStatistic,
   loadExpenseCustomersStatistic,
 };

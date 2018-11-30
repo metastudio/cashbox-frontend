@@ -4,6 +4,7 @@ import { IQuery, parseQuery } from 'utils/url-helpers';
 
 import {
   IBalanceStatisticState,
+  IExpenseCategoriesStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
@@ -14,6 +15,9 @@ interface IStateWithBalanceStats {
 }
 interface IStateWithIncomeCategoriesStats {
   incomeCategoriesStatistic: IIncomeCategoriesStatisticState;
+}
+interface IStateWithExpenseCategoriesStats {
+  expenseCategoriesStatistic: IExpenseCategoriesStatisticState;
 }
 interface IStateWithIncomeCustomersStats {
   incomeCustomersStatistic: IIncomeCustomersStatisticState;
@@ -31,6 +35,12 @@ function selectIncomeCategoriesStatistic(state: IStateWithIncomeCategoriesStats)
 }
 function selectIncomeCategoriesStatisticStatus(state: IStateWithIncomeCategoriesStats) {
   return state.incomeCategoriesStatistic.status;
+}
+function selectExpenseCategoriesStatistic(state: IStateWithExpenseCategoriesStats) {
+  return state.expenseCategoriesStatistic.data;
+}
+function selectExpenseCategoriesStatisticStatus(state: IStateWithExpenseCategoriesStats) {
+  return state.expenseCategoriesStatistic.status;
 }
 function selectIncomeCustomersStatistic(state: IStateWithIncomeCustomersStats) {
   return state.incomeCustomersStatistic.data;
@@ -67,6 +77,8 @@ export {
 
   selectIncomeCategoriesStatistic,
   selectIncomeCategoriesStatisticStatus,
+  selectExpenseCategoriesStatistic,
+  selectExpenseCategoriesStatisticStatus,
 
   selectIncomeCustomersStatistic,
   selectIncomeCustomersStatisticStatus,

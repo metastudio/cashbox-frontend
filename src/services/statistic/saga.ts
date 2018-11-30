@@ -3,6 +3,7 @@ import { ActionType, getType } from 'typesafe-actions';
 
 import {
   getBalanceStatistic,
+  getExpenseCategoriesStatistic,
   getExpenseCustomersStatistic,
   getIncomeCategoriesStatistic,
   getIncomeCustomersStatistic,
@@ -10,6 +11,7 @@ import {
 
 import {
   loadBalanceStatistic,
+  loadExpenseCategoriesStatistic,
   loadExpenseCustomersStatistic,
   loadIncomeCategoriesStatistic,
   loadIncomeCustomersStatistic,
@@ -37,6 +39,17 @@ function* handleLoadIncomeCategoriesStatistic(
   }
 }
 
+function* handleLoadExpenseCategoriesStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadExpenseCategoriesStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getExpenseCategoriesStatistic, orgId, query);
+    yield put(loadExpenseCategoriesStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadExpenseCategoriesStatistic.failure(error));
+  }
+}
+
 function* handleLoadIncomeCustomersStatistic(
   { payload: { orgId, query } }: ActionType<typeof loadIncomeCustomersStatistic.request>,
 ) {
@@ -60,8 +73,9 @@ function* handleLoadExpenseCustomersStatistic(
 }
 
 export default function* () {
-  yield takeLatest(getType(loadBalanceStatistic.request),          handleLoadBalanceStatistic);
-  yield takeLatest(getType(loadIncomeCategoriesStatistic.request), handleLoadIncomeCategoriesStatistic);
-  yield takeLatest(getType(loadIncomeCustomersStatistic.request),  handleLoadIncomeCustomersStatistic);
-  yield takeLatest(getType(loadExpenseCustomersStatistic.request), handleLoadExpenseCustomersStatistic);
+  yield takeLatest(getType(loadBalanceStatistic.request),           handleLoadBalanceStatistic);
+  yield takeLatest(getType(loadIncomeCategoriesStatistic.request),  handleLoadIncomeCategoriesStatistic);
+  yield takeLatest(getType(loadExpenseCategoriesStatistic.request), handleLoadExpenseCategoriesStatistic);
+  yield takeLatest(getType(loadIncomeCustomersStatistic.request),   handleLoadIncomeCustomersStatistic);
+  yield takeLatest(getType(loadExpenseCustomersStatistic.request),  handleLoadExpenseCustomersStatistic);
 }

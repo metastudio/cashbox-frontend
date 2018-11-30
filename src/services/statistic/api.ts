@@ -12,6 +12,9 @@ export function getBalanceStatistic(orgId: ID, query: {}) {
 export function getIncomeCategoriesStatistic(orgId: ID, query: {}) {
   return getApi(statisticURL(orgId, 'income_categories', query));
 }
+export function getExpenseCategoriesStatistic(orgId: ID, query: {}) {
+  return getApi(statisticURL(orgId, 'expense_categories', query));
+}
 export function getIncomeCustomersStatistic(orgId: ID, query: {}) {
   return getApi(statisticURL(orgId, 'income_customers', query));
 }

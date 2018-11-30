@@ -20,18 +20,24 @@ interface IBalanceStatisticState {
   error:      Error | null;
 }
 
-interface IIncomeCategoriesStatisticItem {
+interface ICategoriesStatisticItem {
   name:  string;
   value: number;
 }
 
-interface IIncomeCategoriesStatistic {
-  data:     IIncomeCategoriesStatisticItem[];
-  currency: ICurrency;
+interface ICategoriesStatistic {
+  data:       ICategoriesStatisticItem[];
+  currency:   ICurrency;
 }
 
 interface IIncomeCategoriesStatisticState {
-  data:       IIncomeCategoriesStatistic | null;
+  data:       ICategoriesStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
+interface IExpenseCategoriesStatisticState {
+  data:       ICategoriesStatistic | null;
   status:     Status;
   error:      Error | null;
 }
@@ -42,8 +48,8 @@ interface ICustomersStatisticItem {
 }
 
 interface ICustomersStatistic {
-  data:     ICustomersStatisticItem[];
-  currency: ICurrency;
+  data:       ICustomersStatisticItem[];
+  currency:   ICurrency;
 }
 
 interface IIncomeCustomersStatisticState {
@@ -62,8 +68,9 @@ export {
   IBalanceStatistic,
   IBalanceStatisticState,
 
-  IIncomeCategoriesStatistic,
+  ICategoriesStatistic,
   IIncomeCategoriesStatisticState,
+  IExpenseCategoriesStatisticState,
 
   ICustomersStatistic,
   IIncomeCustomersStatisticState,

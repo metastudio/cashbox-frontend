@@ -17,6 +17,7 @@ import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } fr
 import { IReduxFormState } from 'services/redux-form/types';
 import {
   IBalanceStatisticState,
+  IExpenseCategoriesStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
@@ -39,9 +40,10 @@ interface IGlobalState {
   customer:            ICustomerState;
   customers:           ICustomersState;
   debtors:             IDebtorsState;
-  expenseCustomersStatistic: IExpenseCustomersStatisticState;
-  incomeCategoriesStatistic: IIncomeCategoriesStatisticState;
-  incomeCustomersStatistic:  IIncomeCustomersStatisticState;
+  expenseCategoriesStatistic: IExpenseCategoriesStatisticState;
+  expenseCustomersStatistic:  IExpenseCustomersStatisticState;
+  incomeCategoriesStatistic:  IIncomeCategoriesStatisticState;
+  incomeCustomersStatistic:   IIncomeCustomersStatisticState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   members:             IMembersState;

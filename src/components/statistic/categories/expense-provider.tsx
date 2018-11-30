@@ -7,9 +7,9 @@ import { ID, Status } from 'model-types';
 import { IGlobalState } from 'services/global-state';
 import {
   ICategoriesStatistic,
-  loadIncomeCategoriesStatistic,
-  selectIncomeCategoriesStatistic,
-  selectIncomeCategoriesStatisticStatus,
+  loadExpenseCategoriesStatistic,
+  selectExpenseCategoriesStatistic,
+  selectExpenseCategoriesStatisticStatus,
   selectStatisticsQueryPeriod,
 } from 'services/statistic';
 
@@ -28,12 +28,12 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  load: typeof loadIncomeCategoriesStatistic.request;
+  load: typeof loadExpenseCategoriesStatistic.request;
 }
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
 
-class IncomeCategoriesStatisticProvider extends React.PureComponent<IProps> {
+class ExpenseCategoriesStatisticProvider extends React.PureComponent<IProps> {
   private loadData = () => {
     const { load, orgId, period } = this.props;
 
@@ -72,18 +72,18 @@ class IncomeCategoriesStatisticProvider extends React.PureComponent<IProps> {
 }
 
 const mapState = (state: IGlobalState, props: IOwnProps): IStateProps => ({
-  status:     selectIncomeCategoriesStatisticStatus(state),
-  statistic:  selectIncomeCategoriesStatistic(state),
+  status:     selectExpenseCategoriesStatisticStatus(state),
+  statistic:  selectExpenseCategoriesStatistic(state),
   period:     selectStatisticsQueryPeriod(props.search),
 });
 
 const mapDispatch = (dispatch: Dispatch): IDispatchProps => bindActionCreators(
   {
-    load: loadIncomeCategoriesStatistic.request,
+    load: loadExpenseCategoriesStatistic.request,
   },
   dispatch,
 );
 
 export default connect<IStateProps, IDispatchProps, IOwnProps>(
   mapState, mapDispatch,
-)(IncomeCategoriesStatisticProvider);
+)(ExpenseCategoriesStatisticProvider);
