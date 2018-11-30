@@ -5,10 +5,11 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { categoriesStatisticPath } from 'routes';
-import { IIncomeCategoriesStatistic } from 'services/statistic';
+import { IExpenseCategoriesStatistic, IIncomeCategoriesStatistic } from 'services/statistic';
 import { ICurrency } from 'utils/money';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
+import ExpenseChart from './expense-chart';
 import IncomeChart from './income-chart';
 // import IncomeProvider from './income-provider';
 import Tabs from './tabs';
@@ -32,10 +33,11 @@ const currency: ICurrency = {
 };
 
 class CategoriesStatisticPage extends React.PureComponent<IProps> {
-  private renderContent = (incomeStats: IIncomeCategoriesStatistic) => {
+  private renderContent = (incomeStats: IIncomeCategoriesStatistic, expenseStats: IExpenseCategoriesStatistic) => {
     return (
       <>
         <IncomeChart incomeStats={ incomeStats } />
+        <ExpenseChart expenseStats={ expenseStats } />
       </>
     );
   }
@@ -52,7 +54,7 @@ class CategoriesStatisticPage extends React.PureComponent<IProps> {
           Categories
         </PageHeader>
         <Tabs location={ location } />
-        { this.renderContent({ data, currency }) }
+        { this.renderContent({ data, currency }, { data, currency }) }
       </>
     );
   }

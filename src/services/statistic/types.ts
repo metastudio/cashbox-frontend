@@ -36,10 +36,29 @@ interface IIncomeCategoriesStatisticState {
   error:      Error | null;
 }
 
+interface IExpenseCategoriesStatisticItem {
+  name:  string;
+  value: number;
+}
+
+interface IExpenseCategoriesStatistic {
+  data:     IExpenseCategoriesStatisticItem[];
+  currency: ICurrency;
+}
+
+interface IExpenseCategoriesStatisticState {
+  data:   IExpenseCategoriesStatistic | null;
+  status: Status;
+  error:  Error | null;
+}
+
 export {
   IBalanceStatistic,
   IBalanceStatisticState,
 
   IIncomeCategoriesStatistic,
   IIncomeCategoriesStatisticState,
+
+  IExpenseCategoriesStatistic,
+  IExpenseCategoriesStatisticState,
 };

@@ -7,8 +7,8 @@ import { statisticPath } from 'routes';
 
 const Statistics: React.SFC = () => (
   <LinkContainer to={ statisticPath() }>
-    <NavItem >
-      Statistic
+    <NavItem>
+      Statistics
     </NavItem>
   </LinkContainer>
 );
