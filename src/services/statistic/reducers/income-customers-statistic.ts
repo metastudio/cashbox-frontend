@@ -4,39 +4,37 @@ import { Status } from 'model-types';
 
 import { setCurrentOrganization } from 'services/organizations/actions';
 import {
-  loadBalanceStatistic,
+  loadIncomeCustomersStatistic,
 } from '../actions';
-import { IBalanceStatisticState } from '../types';
+import { IIncomeCustomersStatisticState } from '../types';
 
-const defaultState: IBalanceStatisticState = {
-  status:     Status.Invalid,
-  error:      null,
-  data:       null,
-  pagination: null,
+const defaultState: IIncomeCustomersStatisticState = {
+  status: Status.Invalid,
+  error:  null,
+  data:   null,
 };
 
-const balanceStatisticReducer = (
-  state: IBalanceStatisticState = defaultState,
+const incomeCustomersStatisticReducer = (
+  state: IIncomeCustomersStatisticState = defaultState,
   action: ActionType<
-    | typeof loadBalanceStatistic
+    | typeof loadIncomeCustomersStatistic
     | typeof setCurrentOrganization
   >,
 ) => {
   switch (action.type) {
-    case getType(loadBalanceStatistic.request):
+    case getType(loadIncomeCustomersStatistic.request):
       return {
         ...state,
         status: Status.Pending,
       };
-    case getType(loadBalanceStatistic.success):
+    case getType(loadIncomeCustomersStatistic.success):
       return {
         ...state,
         status:     Status.Success,
         error:      null,
         data:       action.payload.statistic,
-        pagination: action.payload.pagination,
       };
-    case getType(loadBalanceStatistic.failure):
+    case getType(loadIncomeCustomersStatistic.failure):
       return {
         ...state,
         status: Status.Failure,
@@ -52,4 +50,4 @@ const balanceStatisticReducer = (
   }
 };
 
-export default balanceStatisticReducer;
+export default incomeCustomersStatisticReducer;

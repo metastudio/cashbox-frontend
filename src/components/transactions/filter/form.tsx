@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Alert, Button, ButtonGroup, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Button, ButtonGroup, Col, Collapse, Form, Row } from 'react-bootstrap';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import { NoLabelBankAccountsSelect } from 'components/bank-accounts/select-field';
@@ -10,6 +10,7 @@ import {
   NoLabelFormInput,
   NoLabelMoneyInput,
   SubmitButton,
+  VerticalDatePicker,
 } from 'components/utils/form-inputs';
 
 import { NoLabelFilterPeriodSelect } from './period-select';
@@ -21,22 +22,44 @@ interface ITransactionFilterFormData {
   categoryIdIn?:    number[];
   bankAccountIdIn?: number[];
   customerIdIn?:    number[];
+  dateFrom?:        string;
+  dateTo?:          string;
 }
 
 interface IOwnProps {
   onReset: () => void;
 }
 
+interface IState {
+  isCustomPeriod: boolean;
+}
+
 type IProps = IOwnProps & InjectedFormProps<ITransactionFilterFormData, IOwnProps>;
 
 const transactionFilterFormName = 'transactionFilterForm';
 
-class TransactionsFilterForm extends React.PureComponent<IProps> {
+class TransactionsFilterForm extends React.PureComponent<IProps, IState> {
+  public state: IState = {
+    isCustomPeriod: false,
+  };
+
   private handleReset = () => {
     const { reset, onReset } = this.props;
 
     reset();
     if (onReset) { onReset(); }
+  }
+
+  private onPeriodChange = (_e: React.FormEvent<HTMLSelectElement>, value: string) => {
+    this.setState({
+      isCustomPeriod: value === 'custom',
+    });
+  }
+
+  public componentDidMount() {
+    this.setState({
+      isCustomPeriod: false,
+    });
   }
 
   public render() {
@@ -69,6 +92,7 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
               component={ NoLabelFilterPeriodSelect }
               label="Period"
               placeholder="Period"
+              onChange={ this.onPeriodChange }
             />
           </Col>
         </Row>
@@ -99,6 +123,26 @@ class TransactionsFilterForm extends React.PureComponent<IProps> {
             />
           </Col>
         </Row>
+        <Collapse in={ this.state.isCustomPeriod }>
+          <Row>
+            <Col sm={ 6 }>
+              <Field
+                name="dateFrom"
+                component={ VerticalDatePicker }
+                label="From"
+                placeholder="dd/mm/yyyy"
+              />
+            </Col>
+            <Col sm={ 6 }>
+              <Field
+                name="dateTo"
+                component={ VerticalDatePicker }
+                label="To"
+                placeholder="dd/mm/yyyy"
+              />
+            </Col>
+          </Row>
+        </Collapse>
         <ButtonGroup className="pull-right">
           <SubmitButton submitting={ submitting }>Search</SubmitButton>
           <Button onClick={ this.handleReset }>Reset</Button>

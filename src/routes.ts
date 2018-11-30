@@ -10,3 +10,5 @@ export const rootPath = createPath('/');
 
 export const statisticPath = createPath('/statistic');
 export const balanceStatisticPath = createPath('/statistic/balance');
+export const categoriesStatisticPath = createPath('/statistic/categories');
+export const customersStatisticPath = createPath('/statistic/customers');

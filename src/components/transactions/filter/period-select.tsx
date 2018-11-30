@@ -20,6 +20,7 @@ const periods: IOption[] = [
   { value: 'last-quarter',    label: 'Last quarter' },
   { value: 'current-year',    label: 'Current year' },
   { value: 'last-year',       label: 'Last year' },
+  { value: 'custom',          label: 'Custom' },
 ];
 
 class FilterPeriodSelect extends React.Component<IProps> {

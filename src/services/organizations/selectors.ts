@@ -1,10 +1,9 @@
-import { createSelector } from 'reselect';
 import { IGlobalState } from 'services/global-state';
 
 const selectCurrentOrganization   = (state: IGlobalState) => state.currentOrganization.data;
 const selectCurrentOrganizationId = (state: IGlobalState) => state.currentOrganization.id;
 
-const selectHasCurrentOrganization = createSelector(selectCurrentOrganization, org => !!org);
+const selectHasCurrentOrganization = (state: IGlobalState) => !!selectCurrentOrganization(state);
 const selectIsOrganizationLoaded   = (state: IGlobalState) => state.currentOrganization.isLoaded;
 
 const selectOrganizations       = (state: IGlobalState) => state.organizations.items;
