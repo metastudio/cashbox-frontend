@@ -20,7 +20,7 @@ export { default as currentOrganization } from './organizations/reducers/current
 export { default as organization }        from './organizations/reducers/organization';
 export { default as organizations }       from './organizations/reducers/organizations';
 export { default as balanceStatistic }    from './statistic/reducers/balance-statistic';
-export { default as expenseCategoriesStatistic } from './statistic/reducers/expense-customers-statistic';
+export { default as expenseCategoriesStatistic } from './statistic/reducers/expense-categories-statistic';
 export { default as expenseCustomersStatistic }  from './statistic/reducers/expense-customers-statistic';
 export { default as incomeCategoriesStatistic }  from './statistic/reducers/income-categories-statistic';
 export { default as incomeCustomersStatistic }   from './statistic/reducers/income-customers-statistic';
