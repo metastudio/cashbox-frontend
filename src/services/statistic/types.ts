@@ -64,6 +64,12 @@ interface IExpenseCustomersStatisticState {
   error:      Error | null;
 }
 
+interface ITotalsByCustomersStatisticState {
+  data:       ICustomersStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
 export {
   IBalanceStatistic,
   IBalanceStatisticState,
@@ -75,4 +81,5 @@ export {
   ICustomersStatistic,
   IIncomeCustomersStatisticState,
   IExpenseCustomersStatisticState,
+  ITotalsByCustomersStatisticState,
 };

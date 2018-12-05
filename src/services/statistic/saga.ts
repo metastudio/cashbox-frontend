@@ -7,6 +7,7 @@ import {
   getExpenseCustomersStatistic,
   getIncomeCategoriesStatistic,
   getIncomeCustomersStatistic,
+  getTotalsByCustomersStatistic,
 } from './api';
 
 import {
@@ -15,6 +16,7 @@ import {
   loadExpenseCustomersStatistic,
   loadIncomeCategoriesStatistic,
   loadIncomeCustomersStatistic,
+  loadTotalsByCustomersStatistic,
 } from './actions';
 
 function* handleLoadBalanceStatistic(
@@ -72,10 +74,22 @@ function* handleLoadExpenseCustomersStatistic(
   }
 }
 
+function* handleLoadTotalsByCustomersStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadTotalsByCustomersStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getTotalsByCustomersStatistic, orgId, query);
+    yield put(loadTotalsByCustomersStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadTotalsByCustomersStatistic.failure(error));
+  }
+}
+
 export default function* () {
   yield takeLatest(getType(loadBalanceStatistic.request),           handleLoadBalanceStatistic);
   yield takeLatest(getType(loadIncomeCategoriesStatistic.request),  handleLoadIncomeCategoriesStatistic);
   yield takeLatest(getType(loadExpenseCategoriesStatistic.request), handleLoadExpenseCategoriesStatistic);
   yield takeLatest(getType(loadIncomeCustomersStatistic.request),   handleLoadIncomeCustomersStatistic);
   yield takeLatest(getType(loadExpenseCustomersStatistic.request),  handleLoadExpenseCustomersStatistic);
+  yield takeLatest(getType(loadTotalsByCustomersStatistic.request), handleLoadTotalsByCustomersStatistic);
 }

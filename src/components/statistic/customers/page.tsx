@@ -12,6 +12,7 @@ import Tabs from '../period-tabs';
 import Chart from './chart';
 import ExpenseProvider from './expense-provider';
 import IncomeProvider from './income-provider';
+import TotalsByProvider from './totals-by-provider';
 
 type IProps = RouteComponentProps<{}> & ICurrentOrgIdProps;
 
@@ -48,6 +49,12 @@ class CustomersStatisticPage extends React.PureComponent<IProps> {
             <ExpenseProvider orgId={ orgId } search={ location.search }>
               { this.renderChart }
             </ExpenseProvider>
+          </Col>
+          <Col xs={ 12 } sm={ 12 }>
+            <h4 className="text-center">Totals</h4>
+            <TotalsByProvider orgId={ orgId } search={ location.search }>
+              { this.renderChart }
+            </TotalsByProvider>
           </Col>
         </Row>
       </>
