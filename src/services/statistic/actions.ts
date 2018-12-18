@@ -138,10 +138,37 @@ const loadExpenseCustomersStatistic = {
   ),
 };
 
+const loadTotalsByCustomersStatistic = {
+  request: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICustomersStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
 export {
   loadBalanceStatistic,
   loadIncomeCategoriesStatistic,
   loadExpenseCategoriesStatistic,
   loadIncomeCustomersStatistic,
   loadExpenseCustomersStatistic,
+  loadTotalsByCustomersStatistic,
 };

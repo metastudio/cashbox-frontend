@@ -21,6 +21,7 @@ import {
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
+  ITotalsByCustomersStatisticState,
 } from 'services/statistic/types';
 import { ITransactionsSummaryState } from 'services/transactions-summary/types';
 import { ITransactionsState, ITransactionState } from 'services/transactions/types';
@@ -44,6 +45,7 @@ interface IGlobalState {
   expenseCustomersStatistic:  IExpenseCustomersStatisticState;
   incomeCategoriesStatistic:  IIncomeCategoriesStatisticState;
   incomeCustomersStatistic:   IIncomeCustomersStatisticState;
+  totalsByCustomersStatistic: ITotalsByCustomersStatisticState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   members:             IMembersState;
