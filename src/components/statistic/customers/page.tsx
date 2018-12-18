@@ -5,11 +5,14 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { customersStatisticPath } from 'routes';
-import { ICustomersStatistic } from 'services/statistic';
+import { ICustomersBalancesStatistic, ICustomersStatistic } from 'services/statistic';
 
 import { ICurrentOrgIdProps, withCurrentOrgId } from 'components/organizations/current-organization';
 import Tabs from '../period-tabs';
+import BalancesChart from './balances-chart';
 import Chart from './chart';
+
+import BalancesByProvider from './balances-by-provider';
 import ExpenseProvider from './expense-provider';
 import IncomeProvider from './income-provider';
 import TotalsByProvider from './totals-by-provider';
@@ -23,6 +26,14 @@ class CustomersStatisticPage extends React.PureComponent<IProps> {
     }
 
     return <Chart stats={ stats } />;
+  }
+
+  private renderBalancesChart = (stats: ICustomersBalancesStatistic) => {
+    if (!stats || !stats.data || stats.data.length === 0) {
+      return <Alert bsStyle="info">No data</Alert>;
+    }
+
+    return <BalancesChart stats={ stats } />;
   }
 
   public render() {
@@ -55,6 +66,12 @@ class CustomersStatisticPage extends React.PureComponent<IProps> {
             <TotalsByProvider orgId={ orgId } search={ location.search }>
               { this.renderChart }
             </TotalsByProvider>
+          </Col>
+          <Col xs={ 12 } sm={ 12 }>
+            <h4 className="text-center">Balances</h4>
+            <BalancesByProvider orgId={ orgId } search={ location.search }>
+              { this.renderBalancesChart }
+            </BalancesByProvider>
           </Col>
         </Row>
       </>
