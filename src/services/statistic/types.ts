@@ -64,6 +64,29 @@ interface IExpenseCustomersStatisticState {
   error:      Error | null;
 }
 
+interface ITotalsByCustomersStatisticState {
+  data:       ICustomersStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
+interface ICustomersBalancesStatisticItem {
+  name:    string;
+  income:  number;
+  expense: number;
+}
+
+interface ICustomersBalancesStatistic {
+  data:       ICustomersBalancesStatisticItem[];
+  currency:   ICurrency;
+}
+
+interface IBalancesByCustomersStatisticState {
+  data:       ICustomersBalancesStatistic | null;
+  status:     Status;
+  error:      Error | null;
+}
+
 export {
   IBalanceStatistic,
   IBalanceStatisticState,
@@ -75,4 +98,8 @@ export {
   ICustomersStatistic,
   IIncomeCustomersStatisticState,
   IExpenseCustomersStatisticState,
+  ITotalsByCustomersStatisticState,
+
+  ICustomersBalancesStatistic,
+  IBalancesByCustomersStatisticState,
 };

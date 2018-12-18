@@ -16,11 +16,13 @@ import { IMembersState } from 'services/members/types';
 import { ICurrentOrganizationState, IOrganizationsState, IOrganizationState } from 'services/organizations/types';
 import { IReduxFormState } from 'services/redux-form/types';
 import {
+  IBalancesByCustomersStatisticState,
   IBalanceStatisticState,
   IExpenseCategoriesStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
+  ITotalsByCustomersStatisticState,
 } from 'services/statistic/types';
 import { ITransactionsSummaryState } from 'services/transactions-summary/types';
 import { ITransactionsState, ITransactionState } from 'services/transactions/types';
@@ -40,10 +42,12 @@ interface IGlobalState {
   customer:            ICustomerState;
   customers:           ICustomersState;
   debtors:             IDebtorsState;
-  expenseCategoriesStatistic: IExpenseCategoriesStatisticState;
-  expenseCustomersStatistic:  IExpenseCustomersStatisticState;
-  incomeCategoriesStatistic:  IIncomeCategoriesStatisticState;
-  incomeCustomersStatistic:   IIncomeCustomersStatisticState;
+  expenseCategoriesStatistic:   IExpenseCategoriesStatisticState;
+  expenseCustomersStatistic:    IExpenseCustomersStatisticState;
+  incomeCategoriesStatistic:    IIncomeCategoriesStatisticState;
+  incomeCustomersStatistic:     IIncomeCustomersStatisticState;
+  balancesByCustomersStatistic: IBalancesByCustomersStatisticState;
+  totalsByCustomersStatistic:   ITotalsByCustomersStatisticState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   members:             IMembersState;

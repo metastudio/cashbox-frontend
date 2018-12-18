@@ -4,6 +4,7 @@ import { ID, IPagination } from 'model-types';
 import {
   IBalanceStatistic,
   ICategoriesStatistic,
+  ICustomersBalancesStatistic,
   ICustomersStatistic,
 } from './types';
 
@@ -138,10 +139,64 @@ const loadExpenseCustomersStatistic = {
   ),
 };
 
+const loadTotalsByCustomersStatistic = {
+  request: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICustomersStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_TOTALS_BY_CUSTOMERS_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
+const loadBalancesByCustomersStatistic = {
+  request: createAction(
+    'LOAD_BALANCES_BY_CUSTOMERS_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_BALANCES_BY_CUSTOMERS_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICustomersBalancesStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_BALANCES_BY_CUSTOMERS_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
 export {
   loadBalanceStatistic,
   loadIncomeCategoriesStatistic,
   loadExpenseCategoriesStatistic,
   loadIncomeCustomersStatistic,
   loadExpenseCustomersStatistic,
+  loadTotalsByCustomersStatistic,
+  loadBalancesByCustomersStatistic,
 };

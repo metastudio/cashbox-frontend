@@ -3,11 +3,13 @@ import { memoize } from 'lodash';
 import { IQuery, parseQuery } from 'utils/url-helpers';
 
 import {
+  IBalancesByCustomersStatisticState,
   IBalanceStatisticState,
   IExpenseCategoriesStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
   IIncomeCustomersStatisticState,
+  ITotalsByCustomersStatisticState,
 } from './types';
 
 interface IStateWithBalanceStats {
@@ -24,6 +26,12 @@ interface IStateWithIncomeCustomersStats {
 }
 interface IStateWithExpenseCustomersStats {
   expenseCustomersStatistic: IExpenseCustomersStatisticState;
+}
+interface IStateWithTotalsByCustomersStats {
+  totalsByCustomersStatistic: ITotalsByCustomersStatisticState;
+}
+interface IStateWithBalancesByCustomersStats {
+  balancesByCustomersStatistic: IBalancesByCustomersStatisticState;
 }
 
 const selectBalanceStatistic           = (state: IStateWithBalanceStats) => state.balanceStatistic.data;
@@ -53,6 +61,18 @@ function selectExpenseCustomersStatistic(state: IStateWithExpenseCustomersStats)
 }
 function selectExpenseCustomersStatisticStatus(state: IStateWithExpenseCustomersStats) {
   return state.expenseCustomersStatistic.status;
+}
+function selectTotalsByCustomersStatistic(state: IStateWithTotalsByCustomersStats) {
+  return state.totalsByCustomersStatistic.data;
+}
+function selectTotalsByCustomersStatisticStatus(state: IStateWithTotalsByCustomersStats) {
+  return state.totalsByCustomersStatistic.status;
+}
+function selectBalancesByCustomersStatistic(state: IStateWithBalancesByCustomersStats) {
+  return state.balancesByCustomersStatistic.data;
+}
+function selectBalancesByCustomersStatisticStatus(state: IStateWithBalancesByCustomersStats) {
+  return state.balancesByCustomersStatistic.status;
 }
 
 const selectStatisticsQuery = memoize((search: string): IQuery => parseQuery(search));
@@ -84,6 +104,10 @@ export {
   selectIncomeCustomersStatisticStatus,
   selectExpenseCustomersStatistic,
   selectExpenseCustomersStatisticStatus,
+  selectTotalsByCustomersStatistic,
+  selectTotalsByCustomersStatisticStatus,
+  selectBalancesByCustomersStatistic,
+  selectBalancesByCustomersStatisticStatus,
 
   selectStatisticsQueryPage,
   selectStatisticsQueryScale,
