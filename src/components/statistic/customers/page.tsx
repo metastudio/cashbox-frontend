@@ -61,7 +61,7 @@ class CustomersStatisticPage extends React.PureComponent<IProps> {
               { this.renderChart }
             </ExpenseProvider>
           </Col>
-          <Col xs={ 12 } sm={ 12 }>
+          <Col xs={ 12 } sm={ 6 }>
             <h4 className="text-center">Totals</h4>
             <TotalsByProvider orgId={ orgId } search={ location.search }>
               { this.renderChart }
