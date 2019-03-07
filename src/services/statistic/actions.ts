@@ -5,6 +5,7 @@ import {
   IBalanceStatistic,
   ICategoriesStatistic,
   ICustomersBalancesStatistic,
+  ICustomersByMonthsStatistic,
   ICustomersStatistic,
 } from './types';
 
@@ -191,6 +192,58 @@ const loadBalancesByCustomersStatistic = {
   ),
 };
 
+const loadIncomeCustomersByMonthsStatistic = {
+  request: createAction(
+    'LOAD_INCOME_CUSTOMERS_BY_MONTHS_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_INCOME_CUSTOMERS_BY_MONTHS_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICustomersByMonthsStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_INCOME_CUSTOMERS_BY_MONTHS_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
+const loadExpenseCustomersByMonthsStatistic = {
+  request: createAction(
+    'LOAD_EXPENSE_CUSTOMERS_BY_MONTHS_STATISTIC_REQUEST',
+    (resolve) => {
+      return (orgId: ID, query: {}) => resolve({ orgId, query });
+    },
+  ),
+  success: createAction(
+    'LOAD_EXPENSE_CUSTOMERS_BY_MONTHS_STATISTIC_SUCCESS',
+    (resolve) => {
+      return (
+        orgId:     ID,
+        statistic: ICustomersByMonthsStatistic,
+      ) => resolve(
+        { orgId, statistic },
+      );
+    },
+  ),
+  failure: createAction(
+    'LOAD_EXPENSE_CUSTOMERS_BY_MONTHS_STATISTIC_FAILURE',
+    (resolve) => {
+      return (error: Error) => resolve(error);
+    },
+  ),
+};
+
 export {
   loadBalanceStatistic,
   loadIncomeCategoriesStatistic,
@@ -199,4 +252,6 @@ export {
   loadExpenseCustomersStatistic,
   loadTotalsByCustomersStatistic,
   loadBalancesByCustomersStatistic,
+  loadIncomeCustomersByMonthsStatistic,
+  loadExpenseCustomersByMonthsStatistic,
 };

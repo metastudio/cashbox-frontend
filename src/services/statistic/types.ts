@@ -87,6 +87,29 @@ interface IBalancesByCustomersStatisticState {
   error:      Error | null;
 }
 
+interface ICustomersByMonthsStatisticItem {
+  month:         string;
+  [key: string]: string | number;
+}
+
+interface ICustomersByMonthsStatistic {
+  header:   string[];
+  data:     ICustomersByMonthsStatisticItem[];
+  currency: ICurrency;
+}
+
+interface IIncomeCustomersByMonthsStatisticState {
+  data:     ICustomersByMonthsStatistic | null;
+  status:   Status;
+  error:    Error | null;
+}
+
+interface IExpenseCustomersByMonthsStatisticState {
+  data:     ICustomersByMonthsStatistic | null;
+  status:   Status;
+  error:    Error | null;
+}
+
 export {
   IBalanceStatistic,
   IBalanceStatisticState,
@@ -99,6 +122,10 @@ export {
   IIncomeCustomersStatisticState,
   IExpenseCustomersStatisticState,
   ITotalsByCustomersStatisticState,
+
+  ICustomersByMonthsStatistic,
+  IIncomeCustomersByMonthsStatisticState,
+  IExpenseCustomersByMonthsStatisticState,
 
   ICustomersBalancesStatistic,
   IBalancesByCustomersStatisticState,

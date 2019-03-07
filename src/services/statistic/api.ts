@@ -27,3 +27,9 @@ export function getTotalsByCustomersStatistic(orgId: ID, query: {}) {
 export function getBalancesByCustomersStatistic(orgId: ID, query: {}) {
   return getApi(statisticURL(orgId, 'balances_by_customers', query));
 }
+export function getIncomeCustomersByMonthsStatistic(orgId: ID, query: {}) {
+  return getApi(statisticURL(orgId, 'income_customers_by_months', query));
+}
+export function getExpenseCustomersByMonthsStatistic(orgId: ID, query: {}) {
+  return getApi(statisticURL(orgId, 'expense_customers_by_months', query));
+}

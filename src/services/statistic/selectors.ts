@@ -6,8 +6,10 @@ import {
   IBalancesByCustomersStatisticState,
   IBalanceStatisticState,
   IExpenseCategoriesStatisticState,
+  IExpenseCustomersByMonthsStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
+  IIncomeCustomersByMonthsStatisticState,
   IIncomeCustomersStatisticState,
   ITotalsByCustomersStatisticState,
 } from './types';
@@ -32,6 +34,12 @@ interface IStateWithTotalsByCustomersStats {
 }
 interface IStateWithBalancesByCustomersStats {
   balancesByCustomersStatistic: IBalancesByCustomersStatisticState;
+}
+interface IStateWithIncomeCustomersByMonthsStats {
+  incomeCustomersByMonthsStatistic: IIncomeCustomersByMonthsStatisticState;
+}
+interface IStateWithExpenseCustomersByMonthsStats {
+  expenseCustomersByMonthsStatistic: IExpenseCustomersByMonthsStatisticState;
 }
 
 const selectBalanceStatistic           = (state: IStateWithBalanceStats) => state.balanceStatistic.data;
@@ -74,6 +82,18 @@ function selectBalancesByCustomersStatistic(state: IStateWithBalancesByCustomers
 function selectBalancesByCustomersStatisticStatus(state: IStateWithBalancesByCustomersStats) {
   return state.balancesByCustomersStatistic.status;
 }
+function selectIncomeCustomersByMonthsStatistic(state: IStateWithIncomeCustomersByMonthsStats) {
+  return state.incomeCustomersByMonthsStatistic.data;
+}
+function selectIncomeCustomersByMonthsStatisticStatus(state: IStateWithIncomeCustomersByMonthsStats) {
+  return state.incomeCustomersByMonthsStatistic.status;
+}
+function selectExpenseCustomersByMonthsStatistic(state: IStateWithExpenseCustomersByMonthsStats) {
+  return state.expenseCustomersByMonthsStatistic.data;
+}
+function selectExpenseCustomersByMonthsStatisticStatus(state: IStateWithExpenseCustomersByMonthsStats) {
+  return state.expenseCustomersByMonthsStatistic.status;
+}
 
 const selectStatisticsQuery = memoize((search: string): IQuery => parseQuery(search));
 
@@ -108,6 +128,11 @@ export {
   selectTotalsByCustomersStatisticStatus,
   selectBalancesByCustomersStatistic,
   selectBalancesByCustomersStatisticStatus,
+
+  selectIncomeCustomersByMonthsStatistic,
+  selectIncomeCustomersByMonthsStatisticStatus,
+  selectExpenseCustomersByMonthsStatistic,
+  selectExpenseCustomersByMonthsStatisticStatus,
 
   selectStatisticsQueryPage,
   selectStatisticsQueryScale,
