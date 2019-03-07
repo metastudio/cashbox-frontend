@@ -62,7 +62,7 @@ class CategoriesStatisticChart extends React.PureComponent<IProps> {
               { stats.data.map((_entry, idx) => <Cell key={ idx } fill={ COLORS[idx % COLORS.length] }/>) }
             </Pie>
             <Tooltip formatter={ this.valueFormatter(stats.currency) } />
-            <Legend layout="vertical" verticalAlign="top" align="right" />
+            <Legend layout="vertical" verticalAlign="top" align="left" />
           </PieChart>
         </ResponsiveContainer>
       </>
