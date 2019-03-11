@@ -14,7 +14,7 @@ const Items: React.SFC<IProps> = ({ invoice: { invoiceItems, currency } }) => {
 
   const items = invoiceItems.map((item, index) => (
     <tr key={ index } >
-      <td>{ item.description }</td>
+      <td>{ item.description || item.customerName }</td>
       <td>{ formatDate(item.date) }</td>
       <td className="text-right">{ item.hours }</td>
       <td className="text-right"><MoneyAmount amount={ item.amount } /></td>
