@@ -2,12 +2,13 @@ import { ID, IPagination, Status } from 'model-types';
 import { IMoney } from 'utils/money';
 
 export interface InvoiceItem {
-  id:           number;
-  customerId:   number;
-  amount:       IMoney;
-  date?:        Date;
-  hours?:       number;
-  description?: string;
+  id:            number;
+  customerId:    number;
+  customerName?: string;
+  amount:        IMoney;
+  date?:         Date;
+  hours?:        number;
+  description?:  string;
 }
 
 export interface IInvoice {
