@@ -26,6 +26,14 @@ export { default as incomeCategoriesStatistic }    from './statistic/reducers/in
 export { default as incomeCustomersStatistic }     from './statistic/reducers/income-customers-statistic';
 export { default as balancesByCustomersStatistic } from './statistic/reducers/balances-by-customers-statistic';
 export { default as totalsByCustomersStatistic }   from './statistic/reducers/totals-by-customers-statistic';
+
+export {
+  default as incomeCustomersByMonthsStatistic,
+} from './statistic/reducers/income-customers-by-months-statistic';
+export {
+  default as expenseCustomersByMonthsStatistic,
+} from './statistic/reducers/expense-customers-by-months-statistic';
+
 export { default as transaction }         from './transactions/reducers/transaction';
 export { default as transactions }        from './transactions/reducers/transactions';
 export { default as transactionsSummary } from './transactions-summary/reducers/transactions-summary';

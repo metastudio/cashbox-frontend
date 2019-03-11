@@ -17,9 +17,9 @@ import Spinner from 'components/utils/spinner';
 
 import Menu from './menu';
 
-const Balance    = React.lazy(() => import('./balance/page'));
-const Categories = React.lazy(() => import('./categories/page'));
-const Customers  = React.lazy(() => import('./customers/page'));
+import Balance from './balance/page';
+import Categories from './categories/page';
+import Customers from './customers/page';
 
 const renderMenu = () => <Menu />;
 

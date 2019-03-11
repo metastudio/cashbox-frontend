@@ -5,8 +5,10 @@ import {
   getBalancesByCustomersStatistic,
   getBalanceStatistic,
   getExpenseCategoriesStatistic,
+  getExpenseCustomersByMonthsStatistic,
   getExpenseCustomersStatistic,
   getIncomeCategoriesStatistic,
+  getIncomeCustomersByMonthsStatistic,
   getIncomeCustomersStatistic,
   getTotalsByCustomersStatistic,
 } from './api';
@@ -15,8 +17,10 @@ import {
   loadBalancesByCustomersStatistic,
   loadBalanceStatistic,
   loadExpenseCategoriesStatistic,
+  loadExpenseCustomersByMonthsStatistic,
   loadExpenseCustomersStatistic,
   loadIncomeCategoriesStatistic,
+  loadIncomeCustomersByMonthsStatistic,
   loadIncomeCustomersStatistic,
   loadTotalsByCustomersStatistic,
 } from './actions';
@@ -98,12 +102,36 @@ function* handleLoadBalancesByCustomersStatistic(
   }
 }
 
+function* handleLoadIncomeCustomersByMonthsStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadIncomeCustomersByMonthsStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getIncomeCustomersByMonthsStatistic, orgId, query);
+    yield put(loadIncomeCustomersByMonthsStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadIncomeCustomersByMonthsStatistic.failure(error));
+  }
+}
+
+function* handleLoadExpenseCustomersByMonthsStatistic(
+  { payload: { orgId, query } }: ActionType<typeof loadExpenseCustomersByMonthsStatistic.request>,
+) {
+  try {
+    const { statistic } = yield call(getExpenseCustomersByMonthsStatistic, orgId, query);
+    yield put(loadExpenseCustomersByMonthsStatistic.success(orgId, statistic));
+  } catch (error) {
+    yield put(loadExpenseCustomersByMonthsStatistic.failure(error));
+  }
+}
+
 export default function* () {
-  yield takeLatest(getType(loadBalanceStatistic.request),             handleLoadBalanceStatistic);
-  yield takeLatest(getType(loadIncomeCategoriesStatistic.request),    handleLoadIncomeCategoriesStatistic);
-  yield takeLatest(getType(loadExpenseCategoriesStatistic.request),   handleLoadExpenseCategoriesStatistic);
-  yield takeLatest(getType(loadIncomeCustomersStatistic.request),     handleLoadIncomeCustomersStatistic);
-  yield takeLatest(getType(loadExpenseCustomersStatistic.request),    handleLoadExpenseCustomersStatistic);
-  yield takeLatest(getType(loadTotalsByCustomersStatistic.request),   handleLoadTotalsByCustomersStatistic);
-  yield takeLatest(getType(loadBalancesByCustomersStatistic.request), handleLoadBalancesByCustomersStatistic);
+  yield takeLatest(getType(loadBalanceStatistic.request),                  handleLoadBalanceStatistic);
+  yield takeLatest(getType(loadIncomeCategoriesStatistic.request),         handleLoadIncomeCategoriesStatistic);
+  yield takeLatest(getType(loadExpenseCategoriesStatistic.request),        handleLoadExpenseCategoriesStatistic);
+  yield takeLatest(getType(loadIncomeCustomersStatistic.request),          handleLoadIncomeCustomersStatistic);
+  yield takeLatest(getType(loadExpenseCustomersStatistic.request),         handleLoadExpenseCustomersStatistic);
+  yield takeLatest(getType(loadTotalsByCustomersStatistic.request),        handleLoadTotalsByCustomersStatistic);
+  yield takeLatest(getType(loadBalancesByCustomersStatistic.request),      handleLoadBalancesByCustomersStatistic);
+  yield takeLatest(getType(loadIncomeCustomersByMonthsStatistic.request),  handleLoadIncomeCustomersByMonthsStatistic);
+  yield takeLatest(getType(loadExpenseCustomersByMonthsStatistic.request), handleLoadExpenseCustomersByMonthsStatistic);
 }

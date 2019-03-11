@@ -19,8 +19,10 @@ import {
   IBalancesByCustomersStatisticState,
   IBalanceStatisticState,
   IExpenseCategoriesStatisticState,
+  IExpenseCustomersByMonthsStatisticState,
   IExpenseCustomersStatisticState,
   IIncomeCategoriesStatisticState,
+  IIncomeCustomersByMonthsStatisticState,
   IIncomeCustomersStatisticState,
   ITotalsByCustomersStatisticState,
 } from 'services/statistic/types';
@@ -48,6 +50,8 @@ interface IGlobalState {
   incomeCustomersStatistic:     IIncomeCustomersStatisticState;
   balancesByCustomersStatistic: IBalancesByCustomersStatisticState;
   totalsByCustomersStatistic:   ITotalsByCustomersStatisticState;
+  incomeCustomersByMonthsStatistic:  IIncomeCustomersByMonthsStatisticState;
+  expenseCustomersByMonthsStatistic: IExpenseCustomersByMonthsStatisticState;
   flashMessages:       IFlashMessagesState;
   form:                IReduxFormState;
   members:             IMembersState;
