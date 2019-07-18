@@ -13,6 +13,10 @@ import {
   YAxis,
 } from 'recharts';
 
+import Scrollbars from 'react-custom-scrollbars';
+// @ts-ignore
+import DefaultLegendContent from 'recharts/lib/component/DefaultLegendContent';
+
 import { COLORS } from 'constants/colors';
 import { ICustomersByMonthsStatistic }
 from 'services/statistic';
@@ -26,6 +30,19 @@ class CustomersByMonthsStatisticChart extends React.PureComponent<IProps> {
   private valueFormatter = (currency: ICurrency) => {
     return (value: number) => formatMoney(number2Money(value, currency));
   }
+
+  private renderScrollableLegend = (props: any) => (
+    <Scrollbars
+      style={ { width: 'fit-content' } }
+      autoHide
+      autoHideTimeout={ 1000 }
+      autoHideDuration={ 200 }
+      autoHeight
+      autoHeightMax={ 64 }
+    >
+      <DefaultLegendContent { ...props } />
+    </Scrollbars>
+  )
 
   public renderBar = (key: string, idx: number) => {
     return (
@@ -41,6 +58,7 @@ class CustomersByMonthsStatisticChart extends React.PureComponent<IProps> {
 
   public render() {
     const { stats } = this.props;
+
     return (
       <>
         <ResponsiveContainer height={ 300 } width="100%">
@@ -51,7 +69,7 @@ class CustomersByMonthsStatisticChart extends React.PureComponent<IProps> {
             <XAxis dataKey="month"/>
             <YAxis tickFormatter={ this.valueFormatter(stats.currency) } width={ 100 } />
             <Tooltip formatter={ this.valueFormatter(stats.currency) } />
-            <Legend verticalAlign="top" />
+            <Legend verticalAlign="top" content={ this.renderScrollableLegend } />
             { stats.header.map((key, idx) => this.renderBar(key, idx)) }
           </BarChart>
         </ResponsiveContainer>
