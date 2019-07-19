@@ -9,6 +9,10 @@ import {
   Tooltip,
 } from 'recharts';
 
+import Scrollbars from 'react-custom-scrollbars';
+// @ts-ignore
+import DefaultLegendContent from 'recharts/lib/component/DefaultLegendContent';
+
 import { COLORS } from 'constants/colors';
 import { ICustomersStatistic } from 'services/statistic';
 import { formatMoney, ICurrency, number2Money } from 'utils/money';
@@ -44,6 +48,19 @@ class CustomersStatisticChart extends React.PureComponent<IProps> {
     );
   }
 
+  private renderScrollableLegend = (props: any) => (
+    <Scrollbars
+      style={ { width: 'fit-content' } }
+      autoHide
+      autoHideTimeout={ 1000 }
+      autoHideDuration={ 200 }
+      autoHeight
+      autoHeightMax={ 400 }
+    >
+      <DefaultLegendContent { ...props } />
+    </Scrollbars>
+  )
+
   public render() {
     const { stats } = this.props;
 
@@ -62,7 +79,7 @@ class CustomersStatisticChart extends React.PureComponent<IProps> {
               { stats.data.map((_entry, idx) => <Cell key={ idx } fill={ COLORS[idx % COLORS.length] }/>) }
             </Pie>
             <Tooltip formatter={ this.valueFormatter(stats.currency) } />
-            <Legend layout="vertical" verticalAlign="top" align="left" />
+            <Legend layout="vertical" verticalAlign="top" align="left" content={ this.renderScrollableLegend } />
           </PieChart>
         </ResponsiveContainer>
       </>
