@@ -6,4 +6,5 @@ export const PERIODS = [
   { value: 'last-quarter',    label: 'Last quarter'    },
   { value: 'current-year',    label: 'Current year'    },
   { value: 'last-year',       label: 'Last year'       },
+  { value: 'all-time',        label: 'All time'        },
 ];
