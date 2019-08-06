@@ -34,6 +34,8 @@ class TransactionsFilter extends React.PureComponent<IProps> {
     const query: IQuery = {
       q: {
         ...values,
+        dateFrom: values.period === 'custom' ? values.dateFrom : '',
+        dateTo:   values.period === 'custom' ? values.dateTo : '',
         amountEq: formatMoneyParam(values.amountEq),
       },
     };
